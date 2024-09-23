@@ -1,0 +1,138 @@
+
+@import "../../app/variables";
+
+.loginHeader{
+    padding: 10px 48px;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    box-shadow: $box-shadow-1;
+    left: 0px;
+    width: 100%;
+} 
+
+
+.header {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 24px 48px;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 20px;
+  padding-left: 60px;
+}
+
+.navListItem { 
+  font-size: 14px;
+  color: #333;
+  padding-right: 10px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  &:hover{
+    color: $color-brand-1;
+  }
+}
+
+.rightNavItems {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  .navListItem { 
+    color: $color-brand-1;
+  }
+ 
+}
+
+.divider{
+  color:$color-light-grey;
+  margin: 0px 15px;
+}
+
+.ReportsDownIcon {
+  margin-left: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #333;
+}
+
+
+
+.fa-bell {
+  color: black;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.fa-bell:hover {
+  color: blue;
+}
+
+.postJob {
+  font-weight: bold;
+  color: #0045E6;
+  border: 2px dotted #0045E6;
+  border-radius: 8px;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ffe6e6;
+  }
+}
+
+.postJob i {
+  font-size: 1.2em;
+  margin-right: 5px;
+  color: #0045E6;
+}
+
+.superAdmin {
+  font-weight: bold;
+  color: #4682b4;
+  display: flex;
+  align-items: center;
+}
+
+.dropdownMenu {
+  position: absolute;
+  right: 90px;
+  top: 60px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  list-style: none;
+}
+
+.dropdownItem {
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+.dropdownItem:hover {
+  background-color: #f0f0f0;
+}
+
