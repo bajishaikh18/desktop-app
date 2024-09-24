@@ -23,16 +23,17 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ show, onClose }) 
   return (
     <Modal show={show} onHide={onClose} centered className={styles.uploadResumeModal}>
       <Modal.Header closeButton className={styles.modalHeader1}>
-        <Modal.Title className={styles.modalTitle4}>Upload Your Resume</Modal.Title>
-      </Modal.Header>
-      <Modal.Body className={styles.modalBodyResume}>
-      <p className={styles.modalDescription}>
-  You can upload your CV to find relevant jobs<br />
-  <span style={{ paddingLeft: '0.3rem'}}> 
-    and recommended jobs from Wonderly.
-  </span>
-</p>
-
+      <Modal.Title className={styles.modalTitle4}>Upload Your Resume</Modal.Title>
+        </Modal.Header>
+      
+        <Modal.Body className={styles.modalBodyResume}>
+        <p className={styles.modalDescription}>
+          You can upload your CV to find relevant jobs<br />
+          <span style={{ paddingLeft: '0.3rem' }}> 
+            and recommended jobs from Wonderly.
+          </span>
+        </p>
+        
         <div className={styles.uploadBox}>
           <h5 className={styles.uploadTitle}>Upload your CV</h5>
           <p className={styles.uploadDescription}>PDF, JPEG, Excel</p>
@@ -50,9 +51,6 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ show, onClose }) 
               <i className="fas fa-upload"></i> Choose File
             </Button>
             <input type="file" ref={videoInputRef} accept="video/*" style={{ display: 'none' }} />
-            <Button variant="outline-secondary" className={styles.takeVideoButton} onClick={handleVideoUploadClick}>
-              <i className="fas fa-camera"></i> Take Video
-            </Button>
           </div>
         </div>
       </Modal.Body>

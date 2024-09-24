@@ -28,11 +28,28 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
   const [otp, setOtp] = useState<string[]>(Array(6).fill(''));
   const [otpError, setOtpError] = useState<string | null>(null);
   const [registrationModalVisible, setRegistrationModalVisible] = useState<boolean>(false);
+  const [formErrors, setFormErrors] = useState({
+    firstName: '',
+    lastName: '',
+    dob: '',
+    phoneNumber: '',
+    email: ''
+  });
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+  
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: ''
+    }));
+  };
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/^\+?91\s*/, ''); 
+    setFormData({ ...formData, phoneNumber: value });
   };
 
   const handleDateChange = (date: Date | null) => {
@@ -46,14 +63,22 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
 
   const handleRegisterClick = () => {
     const { firstName, lastName, dob, phoneNumber, email } = formData;
+    const errors = {
+      firstName: firstName ? '' : 'Please enter your first name.',
+      lastName: lastName ? '' : 'Please enter your last name.',
+      dob: dob ? '' : 'Date of birth is required.',
+      phoneNumber: phoneNumber ? '' : 'Please enter your phone number.',
+      email: email ? '' : 'Please enter a valid email address.'
+    };
 
-    if (!firstName || !lastName || !dob || !phoneNumber || !email) {
-      alert("All fields are required.");
+    setFormErrors(errors);
+
+    if (Object.values(errors).some((error) => error)) {
       return;
     }
 
     console.log("Register button clicked", formData);
-    setOtpVisible(true);
+    setOtpVisible(true);  
   };
 
   const handleOtpChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,12 +115,112 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
           onClose(); 
         }
       }} centered>
-         <Modal.Header className={styles.modalHeader} closeButton>
-         </Modal.Header>
-        <Modal.Body className={styles.modalBodyRegister} >
-          {otpVisible ? (
+        <Modal.Header className={styles.modalHeader} closeButton>
+        </Modal.Header>
+        <Modal.Body className={styles.modalBodyRegister}>
+         
+          {!otpVisible ? (
             <>
-             <Modal.Title className={styles.modalTitle3}>OTP Verification</Modal.Title>
+              <div className={styles.logoContainer}>
+                <img src="/logo-popup.png" alt="Wonderly Logo" className={styles.logoImage} />
+              </div>
+              <Form>
+              <Form.Group className="mb-2" controlId="formFirstName">
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control type="text"   name="firstName"
+                    placeholder="Enter first name" value={formData.firstName} onChange={handleInputChange} isInvalid={!!formErrors.firstName}/>
+                  <Form.Control.Feedback type="invalid">  {formErrors.firstName}
+                  </Form.Control.Feedback>  </Form.Group>
+
+                <Form.Group className="mb-2" controlId="formLastName">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control  type="text"name="lastName"
+                    placeholder="Enter last name" value={formData.lastName} onChange={handleInputChange} isInvalid={!!formErrors.lastName} />
+                  <Form.Control.Feedback type="invalid">
+                    {formErrors.lastName}
+                  </Form.Control.Feedback> </Form.Group>
+
+                <Form.Group className="mb-2" controlId="formDOB">
+                  <Form.Label>Date of Birth</Form.Label>
+                  <div className={styles.inputGroup}>
+                    <Form.Control  type="text" placeholder="DD/MM/YYYY" value={formData.dob} onChange={handleInputChange}  readOnly isInvalid={!!formErrors.dob}
+                    />
+                    <img src="/mingcute_calendar-line.png" alt="Calendar" className={styles.calendarIcon}  onClick={() => setDatePickerVisible(!datePickerVisible)}  />
+                    <Form.Control.Feedback type="invalid">
+                      {formErrors.dob}  </Form.Control.Feedback>
+                  </div>
+                  {datePickerVisible && (
+                    <div className={styles.datePickerContainer}>
+                      <DatePicker selected={selectedDate}   onChange={handleDateChange}
+                        dateFormat="dd/MM/yyyy"
+                        inline 
+                        className={styles.datePicker}
+                        popperPlacement="bottom"
+                        onClickOutside={() => setDatePickerVisible(false)}
+                      />
+                    </div>
+                  )}
+                </Form.Group>
+              
+
+                <Form.Group className="mb-2" controlId="formPhoneNumber">
+                  <Form.Label>Phone Number</Form.Label>
+                  <Row>
+                    <Col>
+                      <div style={{ position: 'relative' }}>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter mobile number"
+                          name="phoneNumber"
+                          value={formData.phoneNumber}
+                          onChange={handlePhoneNumberChange} 
+                          isInvalid={!!formErrors.phoneNumber}
+                          style={{ paddingLeft: '60px' }} 
+                        />
+                        <span style={{
+                          position: 'absolute',
+                          left: '10px', 
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          color: '#495057',
+                          pointerEvents: 'none', 
+                          display: 'flex',
+                          alignItems: 'center'
+                        }}>
+                          +91
+                        </span>
+                        <Form.Control.Feedback type="invalid">
+                          {formErrors.phoneNumber}
+                        </Form.Control.Feedback>
+                      </div>
+                    </Col>
+                  </Row>
+                </Form.Group>
+                
+                <Form.Group className="mb-2" controlId="formEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    placeholder="Enter email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    isInvalid={!!formErrors.email}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formErrors.email}
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+               </Form>
+               <Button
+  variant="primary"  onClick={handleRegisterClick}  style={{fontSize: '8px', padding: '1px 2px',lineHeight: '1',marginBottom: '-22px',
+  }} > Register </Button>
+                </>
+          ) : (
+           
+            <>
+                <Modal.Title className={styles.modalTitle3}>OTP Verification</Modal.Title>
               <Form>
                 <Form.Group className="mb-3" controlId="otp">
                   <Form.Label style={{ marginLeft: '90px' }}>    
@@ -120,141 +245,34 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
                 </Form.Group>
                 <div className="text-center">
                   <p className={`${styles.textMuted} text-muted`}>
-                    Didn't get OTP? &nbsp;
+                    Didn&apos;t get OTP? &nbsp;
                     <a href="#" onClick={handleResendOtp} className="text-primary">
                       Resend OTP
                     </a>
                   </p>
-                
-                  <Button variant="primary" onClick={handleVerifyOtp}   style={{  fontSize: '8px', 
-    padding: '1px 2px',  lineHeight: '1',marginBottom: '-22px' }}>
-  Verify OTP
-</Button>
-
-
+                  <Button variant="primary" onClick={handleVerifyOtp} style={{ fontSize: '8px', padding: '1px 2px', lineHeight: '1', marginBottom: '-22px' }}>
+                    Verify OTP
+                  </Button>
                 </div>
               </Form>
-            </>
-          ) : (
-            <>
-              <div className={styles.logoContainer}>
-                <img src="/logo-popup.png" alt="Wonderly Logo" className={styles.logoImage} />
-             </div>
-              <Form>
-           
-             
-                <Form.Group className="mb-3" controlId="formFirstName">
-                  <Form.Label>First Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="firstName"
-                    placeholder="Enter first name"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                  />
-               
-                </Form.Group>
-                
 
-                <Form.Group className="mb-3" controlId="formLastName">
-                  <Form.Label>Last Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="lastName"
-                    placeholder="Enter last name"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formDOB">
-                  <Form.Label>Date of Birth</Form.Label>
-                  <div className={styles.datePickerWrapper}>
-                    <Form.Control
-                      type="text"
-                      name="dob"
-                      placeholder="DD/MM/YYYY"
-                      value={formData.dob}
-                      onChange={handleInputChange}
-                      readOnly
-                    />
-                    <span
-                      className={styles.datePickerIcon}
-                      onClick={() => setDatePickerVisible(!datePickerVisible)}
-                    >
-                      <FaCalendarAlt />
-                    </span>
-                    {datePickerVisible && (
-                      <DatePicker
-                        selected={selectedDate}
-                        onChange={handleDateChange}
-                        dateFormat="dd/MM/yyyy"
-                        className={styles.datePicker}
-                        popperPlacement="bottom" 
-                        onClickOutside={() => setDatePickerVisible(false)} 
-                      />
-                    )}
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formPhoneNumber">
-                  <Form.Label>Phone Number</Form.Label>
-                  <Row>
-                    <Col>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter mobile number"
-                        name="phoneNumber"
-                        value={formData.phoneNumber}
-                        onChange={handleInputChange}
-                      />
-                    </Col>
-                  </Row>
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formEmail">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    name="email"
-                    placeholder="Enter email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
-                </Form.Group>
-              </Form>
-              <div className="text-center mt-2" style={{ marginBottom: '-22px' }}> 
-                <small
-                  className={`${styles.registerText} text-primary`}
-                  onClick={handleRegisterClick}
-                  style={{ cursor: 'pointer' }}
-                >
-                  Register
-                </small>
-              </div>
-             
             </>
           )}
-           
         </Modal.Body>
         <Modal.Footer>
-        <div className={styles.loginFooter}>
-       
-          <small className="w-100">
-         
-            Copyright © 2024 Adobe. All rights reserved. 
-            <br />
-            <span className="text-black">Terms of Use</span> 
-            <span className="text-black">Privacy</span> 
-            <span className="text-black">Do not sell or share my personal information</span>
-          </small>
-</div>
+          <div className={styles.loginFooter}>
+            <small className="w-100">
+              Copyright © 2024 Adobe. All rights reserved. 
+              <br />
+              <span className="text-black">Terms of Use</span> 
+              <span className="text-black">Privacy</span> 
+              <span className="text-black">Do not sell or share my personal information</span>
+            </small>
+          </div>
         </Modal.Footer>
-      </Modal>
 
-      {registrationModalVisible && (
-        <RegistrationModal show={registrationModalVisible} onClose={() => setRegistrationModalVisible(false)} />
-      )}
+      </Modal>
+      <RegistrationModal show={registrationModalVisible} onClose={() => setRegistrationModalVisible(false)} />
     </>
   );
 };
