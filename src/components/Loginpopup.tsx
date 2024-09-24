@@ -145,7 +145,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                   </Form.Group>
                   <div className="text-center">
                     <p className={`${styles.textMuted} text-muted`}>
-                      Didn't get OTP? &nbsp;
+                      Didn&apos;t get OTP? &nbsp;
                       <a href="#" onClick={handleResendOtp} className="text-primary">
                         Resend OTP
                       </a>
