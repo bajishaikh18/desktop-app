@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import { FaCaretDown } from 'react-icons/fa'; 
 import styles from '../app/page.module.scss';
+
+
 import RegistrationPopup from './Registration';
 import '../app/globals.scss';
 

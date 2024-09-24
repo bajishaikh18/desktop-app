@@ -152,16 +152,7 @@ text-align: left;
 }
 
 
-.customCloseButton {
-  position: absolute;
-  top: 10px;
-  left: 140px;
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #000; 
-}
+
 
 
 
@@ -175,43 +166,12 @@ text-align: left;
   padding: 0px 68px !important; 
 }
 
-.datePickerWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.datePickerIcon {
-  position: absolute;
-  right: 10px; 
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  z-index: 1;
-}
-
-.datePicker {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 2;
-  margin-top: 5px; 
-}
 
 
 .logoImage2{
   margin-top: 30px;
 }
 
-.registrationFooter {
-  font-size: 12px;
-  color: #999;
-  border-top: 2px solid #eee;
-  text-align: center;
- font-weight: small;
- padding-top: 24px;
- margin-top: 48px;
-}
 
 .modalTitle3 {
   margin-top: 20px; 
@@ -224,18 +184,6 @@ text-align: left;
   padding: 0px 68px !important; 
 }
 
-.customSubmitButton {
-  background: none;
-  border: none; 
-  min-width: 80px;   
-  min-height: 30px; 
- font: inherit;
-  font-size: 12px; 
-  color: inherit; 
-  cursor: pointer;
- margin-top: -6px;
- margin-bottom : -30px;
-}
 
 .modalBackdrop {
   position: fixed;
@@ -250,12 +198,13 @@ text-align: left;
  
 }
 
+
 .modalContainerResume {
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin-top: 0;
- 
+ padding:20px;
 }
 
 
@@ -287,7 +236,7 @@ text-align: left;
   border-radius: 8px;
   padding: 10px;
   max-width: 80%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   margin-left: auto; 
   margin-right: auto;
   text-align: left; 
@@ -349,15 +298,15 @@ text-align: left;
   justify-content: space-between; 
   align-items: center;
   width: 100%; 
-  margin-top: -15px; 
-  margin-bottom: 30px;
+  margin-bottom: 18px;
+ 
 
   .skipButton {
     background: none;
     border: none;
     color: #6c757d;
     cursor: pointer;
-    margin-left: 40px;
+    margin-left: 50px;
   }
 
   .getStartedButton {
@@ -367,7 +316,7 @@ text-align: left;
     padding: 10px 15px;
     border-radius: 8px;
     cursor: pointer;
-    margin-right: 40px; 
+    margin-right: 45px;
    
     transition: all 0.2s ease;
 
@@ -380,4 +329,49 @@ text-align: left;
 
 .reduce-bottom-padding {
   padding-bottom: -2px !important;
+}
+
+
+
+.inputGroup {
+  position: relative;
+
+  .calendarIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%; 
+    transform: translateY(-50%);
+    cursor: pointer; 
+    width: 20px; 
+    height: 20px; 
+    z-index: 1; 
+  }
+
+  input {
+    padding-right: 40px; 
+  }
+}
+
+.datePickerContainer {
+  position: absolute; 
+  left: 100%; 
+
+  margin-left: 10px; 
+  
+  z-index: 10; 
+}
+
+.selectContainer {
+  position: relative; }
+
+.iconImage {
+  position: absolute;
+  right: 10px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  pointer-events: none; 
+}
+
+.selectInput {
+  padding-right: 40px;
 }
