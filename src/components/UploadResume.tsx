@@ -4,11 +4,10 @@ import styles from '../app/page.module.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 interface UploadResumeModalProps {
-  show: boolean;
-  onClose: () => void;
+  onSubmit:(screen:number)=>void
 }
 
-const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ show, onClose }) => {
+const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ onSubmit }) => {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const videoInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -21,12 +20,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ show, onClose }) 
   };
 
   return (
-    <Modal show={show} onHide={onClose} centered className={styles.uploadResumeModal}>
-      <Modal.Header closeButton className={styles.modalHeader1}>
-      <Modal.Title className={styles.modalTitle4}>Upload Your Resume</Modal.Title>
-        </Modal.Header>
-      
-        <Modal.Body className={styles.modalBodyResume}>
+      <>
         <p className={styles.modalDescription}>
           You can upload your CV to find relevant jobs<br />
           <span style={{ paddingLeft: '0.3rem' }}> 
@@ -53,15 +47,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ show, onClose }) 
             <input type="file" ref={videoInputRef} accept="video/*" style={{ display: 'none' }} />
           </div>
         </div>
-      </Modal.Body>
-
-      <Modal.Footer className={`${styles.footerActions} ${styles.modalFooter}`}>
-        <div className={styles.footerActions}>
-          <button className={styles.skipButton}>Skip</button>
-          <button className={styles.getStartedButton}>Get Started</button>
-        </div>
-      </Modal.Footer>
-    </Modal>
+        </>
   );
 };
 

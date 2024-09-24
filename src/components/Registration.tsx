@@ -1,61 +1,62 @@
-import React, { useState, useRef } from 'react';
-import { Modal, Form, Col, Row, Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from '../app/page.module.scss';  
-import '../app/globals.scss'; 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; 
-import { FaCalendarAlt } from 'react-icons/fa'; 
-import RegistrationModal from './CreateJob'; 
+import React, { useState, useRef } from "react";
+import { Modal, Form, Col, Row, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import styles from "../app/page.module.scss";
+import "../app/globals.scss";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import ProfessionalDetails from "./ProfessionalDetails";
+import UploadResumeModal from "./UploadResume";
 
-interface RegistrationPopupProps {
-  show: boolean;
-  onClose: () => void;
-}
-
-const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) => {
+const RegistrationPopup = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dob: '', 
-    phoneNumber: '',
-    email: ''
+    firstName: "",
+    lastName: "",
+    dob: "",
+    phoneNumber: "",
+    email: "",
   });
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
   const [otpVisible, setOtpVisible] = useState<boolean>(false);
-  const [otp, setOtp] = useState<string[]>(Array(6).fill(''));
+  const [currentScreen, setCurrentScreen] = useState(0);
+  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [otpError, setOtpError] = useState<string | null>(null);
-  const [registrationModalVisible, setRegistrationModalVisible] = useState<boolean>(false);
+  const [registrationModalVisible, setRegistrationModalVisible] =
+    useState<boolean>(false);
   const [formErrors, setFormErrors] = useState({
-    firstName: '',
-    lastName: '',
-    dob: '',
-    phoneNumber: '',
-    email: ''
+    firstName: "",
+    lastName: "",
+    dob: "",
+    phoneNumber: "",
+    email: "",
   });
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  
+
     setFormErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: ''
+      [name]: "",
     }));
   };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/^\+?91\s*/, ''); 
+    const value = e.target.value.replace(/^\+?91\s*/, "");
     setFormData({ ...formData, phoneNumber: value });
   };
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     if (date) {
-      const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+      const formattedDate = `${date.getDate().toString().padStart(2, "0")}/${(
+        date.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}/${date.getFullYear()}`;
       setFormData((prevData) => ({ ...prevData, dob: formattedDate }));
     }
     setDatePickerVisible(false);
@@ -64,11 +65,11 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
   const handleRegisterClick = () => {
     const { firstName, lastName, dob, phoneNumber, email } = formData;
     const errors = {
-      firstName: firstName ? '' : 'Please enter your first name.',
-      lastName: lastName ? '' : 'Please enter your last name.',
-      dob: dob ? '' : 'Date of birth is required.',
-      phoneNumber: phoneNumber ? '' : 'Please enter your phone number.',
-      email: email ? '' : 'Please enter a valid email address.'
+      firstName: firstName ? "" : "Please enter your first name.",
+      lastName: lastName ? "" : "Please enter your last name.",
+      dob: dob ? "" : "Date of birth is required.",
+      phoneNumber: phoneNumber ? "" : "Please enter your phone number.",
+      email: email ? "" : "Please enter a valid email address.",
     };
 
     setFormErrors(errors);
@@ -78,10 +79,17 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
     }
 
     console.log("Register button clicked", formData);
-    setOtpVisible(true);  
+    handleScreenChange(1);
   };
 
-  const handleOtpChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleScreenChange = (screen: number) => {
+    setCurrentScreen(screen);
+  };
+
+  const handleOtpChange = (
+    index: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
       setOtp((prevOtp) => {
@@ -90,70 +98,86 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
         return newOtp;
       });
       if (value && index < 5 && otpInputRefs.current[index + 1]) {
-        otpInputRefs.current[index + 1]?.focus(); 
+        otpInputRefs.current[index + 1]?.focus();
       }
     }
   };
 
   const handleVerifyOtp = () => {
-    console.log("OTP submitted:", otp.join(''));
-    setRegistrationModalVisible(true);
+    console.log("OTP submitted:", otp.join(""));
+    handleScreenChange(2);
   };
 
   const handleResendOtp = () => {
     console.log("Resend OTP");
   };
 
-  if (!show) return null;
-
   return (
     <>
-      <Modal show={show} onHide={() => {
-        if (otpVisible) {
-          setOtpVisible(false); 
-        } else {
-          onClose(); 
-        }
-      }} centered>
-        <Modal.Header className={styles.modalHeader} closeButton>
-        </Modal.Header>
-        <Modal.Body className={styles.modalBodyRegister}>
-         
-          {!otpVisible ? (
+      {
+        {
+          0: (
             <>
-              <div className={styles.logoContainer}>
-                <img src="/logo-popup.png" alt="Wonderly Logo" className={styles.logoImage} />
-              </div>
               <Form>
-              <Form.Group className="mb-2" controlId="formFirstName">
+                <Form.Group className="mb-2" controlId="formFirstName">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control type="text"   name="firstName"
-                    placeholder="Enter first name" value={formData.firstName} onChange={handleInputChange} isInvalid={!!formErrors.firstName}/>
-                  <Form.Control.Feedback type="invalid">  {formErrors.firstName}
-                  </Form.Control.Feedback>  </Form.Group>
+                  <Form.Control
+                    type="text"
+                    name="firstName"
+                    placeholder="Enter first name"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    isInvalid={!!formErrors.firstName}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    {formErrors.firstName}
+                  </Form.Control.Feedback>{" "}
+                </Form.Group>
 
                 <Form.Group className="mb-2" controlId="formLastName">
                   <Form.Label>Last Name</Form.Label>
-                  <Form.Control  type="text"name="lastName"
-                    placeholder="Enter last name" value={formData.lastName} onChange={handleInputChange} isInvalid={!!formErrors.lastName} />
+                  <Form.Control
+                    type="text"
+                    name="lastName"
+                    placeholder="Enter last name"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    isInvalid={!!formErrors.lastName}
+                  />
                   <Form.Control.Feedback type="invalid">
                     {formErrors.lastName}
-                  </Form.Control.Feedback> </Form.Group>
+                  </Form.Control.Feedback>{" "}
+                </Form.Group>
 
                 <Form.Group className="mb-2" controlId="formDOB">
                   <Form.Label>Date of Birth</Form.Label>
                   <div className={styles.inputGroup}>
-                    <Form.Control  type="text" placeholder="DD/MM/YYYY" value={formData.dob} onChange={handleInputChange}  readOnly isInvalid={!!formErrors.dob}
+                    <Form.Control
+                      type="text"
+                      placeholder="DD/MM/YYYY"
+                      value={formData.dob}
+                      onChange={handleInputChange}
+                      readOnly
+                      isInvalid={!!formErrors.dob}
                     />
-                    <img src="/mingcute_calendar-line.png" alt="Calendar" className={styles.calendarIcon}  onClick={() => setDatePickerVisible(!datePickerVisible)}  />
+                    <img
+                      src="/mingcute_calendar-line.png"
+                      alt="Calendar"
+                      className={styles.calendarIcon}
+                      onClick={() => setDatePickerVisible(!datePickerVisible)}
+                    />
                     <Form.Control.Feedback type="invalid">
-                      {formErrors.dob}  </Form.Control.Feedback>
+                      {formErrors.dob}{" "}
+                    </Form.Control.Feedback>
                   </div>
                   {datePickerVisible && (
                     <div className={styles.datePickerContainer}>
-                      <DatePicker selected={selectedDate}   onChange={handleDateChange}
+                      <DatePicker
+                        selected={selectedDate}
+                        onChange={handleDateChange}
                         dateFormat="dd/MM/yyyy"
-                        inline 
+                        inline
                         className={styles.datePicker}
                         popperPlacement="bottom"
                         onClickOutside={() => setDatePickerVisible(false)}
@@ -161,32 +185,33 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
                     </div>
                   )}
                 </Form.Group>
-              
 
                 <Form.Group className="mb-2" controlId="formPhoneNumber">
                   <Form.Label>Phone Number</Form.Label>
                   <Row>
                     <Col>
-                      <div style={{ position: 'relative' }}>
+                      <div style={{ position: "relative" }}>
                         <Form.Control
                           type="text"
                           placeholder="Enter mobile number"
                           name="phoneNumber"
                           value={formData.phoneNumber}
-                          onChange={handlePhoneNumberChange} 
+                          onChange={handlePhoneNumberChange}
                           isInvalid={!!formErrors.phoneNumber}
-                          style={{ paddingLeft: '60px' }} 
+                          style={{ paddingLeft: "60px" }}
                         />
-                        <span style={{
-                          position: 'absolute',
-                          left: '10px', 
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          color: '#495057',
-                          pointerEvents: 'none', 
-                          display: 'flex',
-                          alignItems: 'center'
-                        }}>
+                        <span
+                          style={{
+                            position: "absolute",
+                            left: "10px",
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            color: "#495057",
+                            pointerEvents: "none",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
                           +91
                         </span>
                         <Form.Control.Feedback type="invalid">
@@ -196,7 +221,7 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
                     </Col>
                   </Row>
                 </Form.Group>
-                
+
                 <Form.Group className="mb-2" controlId="formEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
@@ -211,21 +236,34 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
                     {formErrors.email}
                   </Form.Control.Feedback>
                 </Form.Group>
-
-               </Form>
-               <Button
-  variant="primary"  onClick={handleRegisterClick}  style={{fontSize: '8px', padding: '1px 2px',lineHeight: '1',marginBottom: '-22px',
-  }} > Register </Button>
-                </>
-          ) : (
-           
+              </Form>
+              <Button
+                variant="primary"
+                onClick={handleRegisterClick}
+                style={{
+                  fontSize: "8px",
+                  padding: "1px 2px",
+                  lineHeight: "1",
+                  marginBottom: "-22px",
+                }}
+              >
+                {" "}
+                Register{" "}
+              </Button>
+            </>
+          ),
+          1: (
             <>
-                <Modal.Title className={styles.modalTitle3}>OTP Verification</Modal.Title>
+              <Modal.Title className={styles.modalTitle3}>
+                OTP Verification
+              </Modal.Title>
               <Form>
                 <Form.Group className="mb-3" controlId="otp">
-                  <Form.Label style={{ marginLeft: '90px' }}>    
+                  <Form.Label style={{ marginLeft: "90px" }}>
                     Please enter the OTP sent to <br />
-                    <span className={styles.phoneNumberLabel}>+91 {formData.phoneNumber}</span>
+                    <span className={styles.phoneNumberLabel}>
+                      +91 {formData.phoneNumber}
+                    </span>
                   </Form.Label>
                   <div className={styles.otpInputs}>
                     {Array.from({ length: 6 }).map((_, index) => (
@@ -235,44 +273,59 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
                         maxLength={1}
                         className={styles.otpInput}
                         placeholder="0"
-                        ref={(el: HTMLInputElement | null) => { otpInputRefs.current[index] = el; }}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleOtpChange(index, e)}
+                        ref={(el: HTMLInputElement | null) => {
+                          otpInputRefs.current[index] = el;
+                        }}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          handleOtpChange(index, e)
+                        }
                         isInvalid={!!otpError}
                       />
                     ))}
                   </div>
-                  <Form.Control.Feedback type="invalid">{otpError}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {otpError}
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <div className="text-center">
                   <p className={`${styles.textMuted} text-muted`}>
                     Didn&apos;t get OTP? &nbsp;
-                    <a href="#" onClick={handleResendOtp} className="text-primary">
+                    <a
+                      href="#"
+                      onClick={handleResendOtp}
+                      className="text-primary"
+                    >
                       Resend OTP
                     </a>
                   </p>
-                  <Button variant="primary" onClick={handleVerifyOtp} style={{ fontSize: '8px', padding: '1px 2px', lineHeight: '1', marginBottom: '-22px' }}>
+                  <Button
+                    variant="primary"
+                    onClick={handleVerifyOtp}
+                    style={{
+                      fontSize: "8px",
+                      padding: "1px 2px",
+                      lineHeight: "1",
+                      marginBottom: "-22px",
+                    }}
+                  >
                     Verify OTP
                   </Button>
                 </div>
               </Form>
-
             </>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <div className={styles.loginFooter}>
-            <small className="w-100">
-              Copyright © 2024 Adobe. All rights reserved. 
-              <br />
-              <span className="text-black">Terms of Use</span> 
-              <span className="text-black">Privacy</span> 
-              <span className="text-black">Do not sell or share my personal information</span>
-            </small>
-          </div>
-        </Modal.Footer>
-
-      </Modal>
-      <RegistrationModal show={registrationModalVisible} onClose={() => setRegistrationModalVisible(false)} />
+          ),
+          2: (
+            <ProfessionalDetails
+              onSubmit={(screen) => handleScreenChange(screen)}
+            />
+          ),
+          3: (
+            <UploadResumeModal
+              onSubmit={(screen) => handleScreenChange(screen)}
+            />
+          ),
+        }[currentScreen]
+      }
     </>
   );
 };

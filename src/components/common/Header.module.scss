@@ -11,6 +11,19 @@
     width: 100%;
 } 
 
+.languageSelection{
+  background-color: transparent;
+  margin: 0px;
+  padding: 0px 0px 0px 40px !important;
+  border: none;
+
+  &:hover,&:focus,&:checked,&:active{
+    background-color: transparent !important;
+  }
+  &.show{
+    background-color: transparent !important;
+  }
+}
 
 .header {
   background-color: #fff;

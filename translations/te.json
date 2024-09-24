@@ -1,0 +1,13 @@
+{
+    "Header": {
+      "jobs": "ఉద్యోగాలు",
+      "walkins": "వాకిన్స్",
+      "agenices":"నమోదిత ఏజెన్సీలు",
+      "travel":"ప్రయాణం",
+      "services":"సేవలు",
+      "documentAttestation":"డాక్యుమెంట్ అటెస్టేషన్",
+      "medicalTests":"వైద్య పరీక్షలు",
+      "employer":"నేను ఒక యజమానిని",
+      "signIn":"సైన్ ఇన్ చేయండి"
+    }
+}

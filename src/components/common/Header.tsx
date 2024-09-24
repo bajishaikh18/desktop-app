@@ -36,16 +36,17 @@ const Header: React.FC = () => {
             <Nav.Link className={styles.navListItem} href="#agencies">{t('agenices')}</Nav.Link>
             <Nav.Link className={styles.navListItem} href="#candidates">{t('travel')}</Nav.Link>
             <NavDropdown title={t('services')} className={styles.navListItem}>
-              <NavDropdown.Item href="#action/3.1" className={styles.navListItem}>Document Attestation</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.1" className={styles.navListItem}>{t('documentAttestation')}</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2" className={styles.navListItem}>
-                Medical Tests
+               {t('medicalTests')}
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Nav className={styles.rightNavItems}>
-            <Nav.Link className={styles.navListItem} href="#employers">I am an Employer</Nav.Link>
+            <Nav.Link className={styles.navListItem} href="#employers">{t('employer')}
+            </Nav.Link>
             <div className={styles.divider}> |</div>
-            <Nav.Link className={styles.navListItem} href="#employers" onClick={openPopup}>Sign In</Nav.Link>
+            <Nav.Link className={styles.navListItem} href="#employers" onClick={openPopup}> {t('signIn')}</Nav.Link>
             <LocaleSwitcherSelect />
           </Nav>
         </Navbar.Collapse>

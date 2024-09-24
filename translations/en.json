@@ -1,0 +1,17 @@
+{
+    "Header": {
+      "jobs": "Jobs",
+      "walkins": "Walkins",
+      "agenices":"Registered Agencies",
+      "travel":"Travel",
+      "services":"Services",
+      "documentAttestation":"Document Attestation",
+      "medicalTests":"Medical Tests",
+      "employer":"I am an Employer",
+      "signIn":"Sign In"
+    },
+    "Authentication":{
+      "login":"Login",
+      "mobileNo":"Mobile Number"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "Header": {
+      "jobs": "नौकरियाँ",
+      "walkins": "वॉकिन्स",
+      "agenices":"पंजीकृत एजेंसियाँ",
+      "travel":"यात्रा",
+      "services":"सेवाएं",
+      "documentAttestation":"Document Attestation",
+      "medicalTests":"Medical Tests",
+      "employer":"I am an Employer",
+      "signIn":"Sign In"
+    }
+}
