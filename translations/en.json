@@ -19,7 +19,8 @@
       " otp verification":" Otp Verification",
       "please enter the OTP sent to":"please enter the OTP sent to",
      "didn&apos;t get otp? ":"Didn&apos;t get OTP?",
-     "resend otp":"Resend OTP"
+     "resend otp":"Resend OTP",
+     "verify otp":"Verify OTP"
 
     },
   

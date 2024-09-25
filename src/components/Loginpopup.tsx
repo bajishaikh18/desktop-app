@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 import styles from "../app/page.module.scss";
+
 import RegistrationPopup from "./Registration";
 import "../app/globals.scss";
 import { useTranslations } from "next-intl";
@@ -29,7 +30,12 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
     setCurrentScreen(1);
   };
 
-  const handleOtpChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOtpChange = (
+    index: number,
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const value = event.target.value;
     if (/^\d$/.test(value)) {
       otpInputRefs.current[index]!.value = value;
@@ -57,26 +63,14 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
     setCurrentScreen(2);
   };
 
-  const handleClose = () => {
-    if (currentScreen === 1) {
-     
-      setCurrentScreen(0);
-    } else if (currentScreen === 2) {
-     
-      setCurrentScreen(1);
-    } else {
-     
-      onClose();
-    }
-  };
-
   if (!show && !showRegistration) return null;
 
   return (
     <>
       {show && !showRegistration && (
-        <Modal show={true} onHide={handleClose} centered>
-          <Modal.Header className={styles.modalHeader} closeButton onHide={handleClose}></Modal.Header>
+        <Modal show={true} onHide={onClose} centered>
+          <Modal.Header className={styles.modalHeader} closeButton
+          ></Modal.Header>
           <Modal.Body className={`${otpVisible ? styles.visibleClass : ''} ${styles.modalContainer}`}>
             <div className={styles.logoContainer}>
               <img
@@ -121,7 +115,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                       </Button>
                       <div className={styles.loginLinks}>
                         <a href="#" className={styles.helperLinks}>
-                       
+                         
                         </a>
                         <a
                           href="#"
@@ -155,16 +149,17 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                         <div className={styles.otpInputs}>
                           {Array.from({ length: 6 }).map((_, index) => (
                             <Form.Control
-                            key={index}
-                        type="text"
-                        maxLength={1}
-                        className={styles.otpInput}
-                        placeholder="0"
-                        ref={(el: HTMLInputElement | null) => {
-                      otpInputRefs.current[index] = el;       }}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleOtpChange(index, e)} isInvalid={!!otpError}
-/>
-
+                              key={index}
+                              type="text"
+                              maxLength={1}
+                              className={styles.otpInput}
+                              placeholder="0"
+                              ref={(el: HTMLInputElement | null) => {
+                                otpInputRefs.current[index] = el;
+                              }}
+                              onChange={(e) => handleOtpChange(index, e)}
+                              isInvalid={!!otpError}
+                            />
                           ))}
                         </div>
                         <Form.Control.Feedback type="invalid">
@@ -182,6 +177,18 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                          {t('resend otp')}
                           </a>
                         </p>
+                        <Button
+                    variant="primary"
+                    onClick={handleVerifyOtp}
+                    style={{
+                      fontSize: "8px",
+                      padding: "1px 2px",
+                      lineHeight: "1",
+                      marginBottom: "-22px",
+                    }}
+                  >
+                    Verify OTP
+                  </Button>
                       </div>
                     </Form>
                   </>

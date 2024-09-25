@@ -197,17 +197,17 @@ text-align: left;
 .modalTitle4 {
   margin-top: 5px;
  
- margin-right: 70px;
-  text-align: center; 
+  margin-left: -10px;
+  text-align: left; 
   margin-bottom: 15px;
-  padding: 10px 10px;
+  padding: 10px 
 }
 
 .modalDescription {
   font-size: 0.9rem;
   color: black;
   line-height: 1.5;
-  margin: -20px 0 30px 20px; 
+  margin: -20px 0 30px 0px; 
   text-align: left;
   width: fit-content;
 }
@@ -217,7 +217,7 @@ text-align: left;
   border: 2px dashed #007bff;
   border-radius: 8px;
   padding:20px;
-  max-width: 90%;
+  max-width: 100%;
   margin-bottom: 15px;
   margin-left: auto; 
   margin-right: auto;
@@ -289,7 +289,7 @@ text-align: left;
     border: none;
     color: #6c757d;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 0px;
   }
 
   .getStartedButton {
@@ -299,7 +299,7 @@ text-align: left;
     padding: 10px 15px;
     border-radius: 8px;
     cursor: pointer;
-    margin-right: 20px;
+    margin-right: 0px;
    
     transition: all 0.2s ease;
 
