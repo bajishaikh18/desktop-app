@@ -2,13 +2,14 @@ import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import styles from "../app/page.module.scss";
 import "../app/globals.scss";
+import { useTranslations } from "next-intl";
 
 interface ProfessionalDetailsProps {
-  onSubmit:(screen:number)=>void
+  onSubmit: (screen: number) => void;
 }
 
 const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
-  onSubmit
+  onSubmit,
 }) => {
   const [formData, setFormData] = React.useState({
     currentJobTitle: "",
@@ -17,7 +18,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     gulfExperience: "",
     currentState: "",
   });
-
+  const t = useTranslations("Professional");
   const [errors, setErrors] = React.useState({
     currentJobTitle: "",
     industry: "",
@@ -33,48 +34,30 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     setFormData((prevData) => ({ ...prevData, [name]: value }));
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
-
   const handleSubmit = () => {
     const newErrors = {
-      currentJobTitle: formData.currentJobTitle ? "" : "Job title is required.",
-      industry: formData.industry ? "" : "Industry is required.",
-      experienceYears: formData.experienceYears
-        ? ""
-        : "Experience years are required.",
-      gulfExperience: formData.gulfExperience
-        ? ""
-        : "Gulf experience is required.",
-      currentState: formData.currentState ? "" : "Current state is required.",
+      currentJobTitle: formData.currentJobTitle ? "" :  ("Job title is required."),
+      industry: formData.industry ? "" :          ("Industry is required."),
+      experienceYears: formData.experienceYears  ? ""  : ("Experience years are required."),   
+      gulfExperience: formData.gulfExperience ? "" : ("Gulf experience is required."), 
+     currentState: formData.currentState ? "" : ("Current state is required."),
     };
 
     setErrors(newErrors);
 
-    if (
-      formData.currentJobTitle &&
-      formData.industry &&
-      formData.experienceYears &&
-      formData.gulfExperience &&
-      formData.currentState
-    ) {
-      setShowUploadModal(true);
-    }
-    onSubmit(3);
-  };
+    const hasErrors = Object.values(newErrors).some((error) => error !== "");
 
+    if (!hasErrors) {
+      setShowUploadModal(true);
+      onSubmit(3); 
+    }
+  };
 
   return (
     <>
-      {/* <Modal show={show} onHide={onClose} centered> */}
-      {/* <Modal.Header className={styles.modalHeader} closeButton>
-        </Modal.Header> */}
-      {/* <Modal.Body className={styles.modalBodyCreate}>
-          <div className={styles.logoContainer}>
-            <img src="/logo-popup.png" alt="Wonderly Logo" className={styles.logoImage} />
-          </div> */}
-
       <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>Current Job Title</Form.Label>
+        <Form.Group className="mb-2">
+          <Form.Label>{t("current job title")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
               as="select"
@@ -84,10 +67,10 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               isInvalid={!!errors.currentJobTitle}
               className={styles.selectInput}
             >
-              <option value="">Select your job title</option>
-              <option value="Software Engineer">Software Engineer</option>
-              <option value="Project Manager">Project Manager</option>
-              <option value="Designer">Designer</option>
+              <option value="">{t("select your job title")}</option>
+              <option value="Software Engineer">{t("software engineer")}</option>
+              <option value="Project Manager">{t("project manager")}</option>
+              <option value="Designer">{t("designer")}</option>
             </Form.Control>
             <img src="/Icon.png" alt="Job Icon" className={styles.iconImage} />
             <Form.Control.Feedback type="invalid">
@@ -96,8 +79,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           </div>
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Industry</Form.Label>
+        <Form.Group className="mb-2">
+          <Form.Label>{t("industry")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
               as="select"
@@ -107,10 +90,10 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               isInvalid={!!errors.industry}
               className={styles.selectInput}
             >
-              <option value="">Select Industry</option>
-              <option value="IT">IT</option>
-              <option value="Construction">Construction</option>
-              <option value="Healthcare">Healthcare</option>
+              <option value="">{t("select industry")}</option>
+              <option value="IT">{t("iT")}</option>
+              <option value="Construction">{t("construction")}</option>
+              <option value="Healthcare">{t("healthcare")}</option>
             </Form.Control>
             <img
               src="/Icon.png"
@@ -123,8 +106,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           </div>
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Total Number of Years</Form.Label>
+        <Form.Group className="mb-2">
+          <Form.Label>{t("total number of years")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
               as="select"
@@ -134,7 +117,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               isInvalid={!!errors.experienceYears}
               className={styles.selectInput}
             >
-              <option value="">Select Years of Experience</option>
+              <option value="">{t("select years of experience")}</option>
               <option value="0-2">0-2</option>
               <option value="3-5">3-5</option>
               <option value="6-10">6-10</option>
@@ -150,8 +133,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           </div>
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Do you have Gulf Experience?</Form.Label>
+        <Form.Group className="mb-2">
+          <Form.Label>{t("do you have gulf experience?")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
               as="select"
@@ -161,9 +144,9 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               isInvalid={!!errors.gulfExperience}
               className={styles.selectInput}
             >
-              <option value="">Select an option</option>
-              <option value="No">No</option>
-              <option value="Yes">Yes</option>
+              <option value="">{t("select an option")}</option>
+              <option value="No">{t("no")}</option>
+              <option value="Yes">{t("yes")}</option>
             </Form.Control>
             <img
               src="/Icon.png"
@@ -176,8 +159,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           </div>
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Current State</Form.Label>
+        <Form.Group className="mb-2">
+          <Form.Label>{t("current state")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
               as="select"
@@ -187,10 +170,10 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               isInvalid={!!errors.currentState}
               className={styles.selectInput}
             >
-              <option value="">Select State</option>
-              <option value="Maharashtra">Maharashtra</option>
-              <option value="Delhi">Delhi</option>
-              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="">{t("select state")}</option>
+              <option value="Maharashtra">{t("maharashtra")}</option>
+              <option value="Delhi">{t("delhi")}</option>
+              <option value="Uttar Pradesh">{t("uttar pradesh")}</option>
             </Form.Control>
             <img
               src="/Icon.png"
@@ -210,27 +193,12 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           fontSize: "8px",
           padding: "1px 2px",
           lineHeight: "1",
-          marginBottom: "-40px",
+          marginBottom: "-50px",
           marginTop: "-20px",
         }}
       >
-        {" "}
-        Submit
+        {t("submit")}
       </Button>
-      {/* </Modal.Body>
-        
-        <Modal.Footer>
-          <div className={styles.loginFooter}>
-            <small className="w-100 text-center">
-              Copyright © 2024 Adobe. All rights reserved.
-              <br />
-              <span className="text-black">Terms of Use</span>
-              <span className="text-black">Privacy</span>
-              <span className="text-black">Do not sell or share my personal information</span>
-            </small>
-          </div>
-        </Modal.Footer>
-      </Modal> */}
     </>
   );
 };

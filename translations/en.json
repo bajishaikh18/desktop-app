@@ -12,6 +12,72 @@
     },
     "Authentication":{
       "login":"Login",
-      "mobileNo":"Mobile Number"
-    }
+      "mobileNo":"Mobile Number",
+      "SendOtp":"SENDOTP",
+      "register":"REGISTER",
+      "continue with out login":"Continue without Login",
+      " otp verification":" Otp Verification",
+      "please enter the OTP sent to":"please enter the OTP sent to",
+     "didn&apos;t get otp? ":"Didn&apos;t get OTP?",
+     "resend otp":"Resend OTP"
+
+    },
+  
+  "Register":{
+    "firstname" :"First Name",
+    "lastname":"Last Name",
+    "dateofbirth" : "Date of Birth",
+    "Phonenumber":"Phone Number",
+    "email": "Email",
+    "register":"Register",
+    "already have an account":"Already have an account",
+    "signin":"Sign in",
+    " otp verification":" Otp Verification",
+      "please enter the OTP sent to":"please enter the OTP sent to",
+      "verify otp":"Verify OTP",
+      "didn&apos;t get otp?&nbsp; ":"Didn&apos;t get OTP?&nbsp;",
+     "resend otp":"Resend OTP"
+     
+  },
+"Professional":{
+  "current job title": "Current Job Title",
+  "select your job title":"Select Your Job Title",
+  "software engineer":"Software Engineer",
+  "project manager":"Project Manager",
+  "designer" :"Designer",
+  "industry":"Industry",
+  "select industry":"Select Industry",
+  "iT":"IT",
+"construction":"Construction" ,
+"healthcare":"Health Care",
+"total number of years":"Total Number of Years",
+"select years of experience":"Select Years of Experience",
+"do you have gulf experience?":"Do You have Gulf Experience",
+"select an option":"Select an Option",
+"no":"No",
+"yes":"Yes",
+"current state":"Current State",
+"select state":"Select State",
+"maharashtra":"Maharashtra",
+"delhi":"Delhi",
+"uttar pradesh":"uttar pradesh",
+"submit":"Submit",
+"job title is required":"Job title is required"
+},
+
+"Upload":{
+  "upload your resume":"Upload Your Resume",
+  "upload your cv":"Upload Your CV",
+  "pdf, jpeg, excel":"PDF, JPEG, Excel",
+  "choose file":"Choose File",
+  "upload your work video":"Upload Your Work Video",
+ " upload a video of your work (30 seconds to 2 minutes)":"Upload a Video of Your Work (30 seconds to 2 minutes)",
+"skip":"Skip",
+"get started":"Get Started",
+" you can upload your cv to find relevant jobs":" You Can Upload Your CV to Find Relevant Jobs",
+"And Recommended jobs from Wonderly":"and recommended jobs from Wonderly",
+"Upload a video of your work":"upload a video of your work"
+
+}
+ 
 }

@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ProfessionalDetails from "./ProfessionalDetails";
 import UploadResumeModal from "./UploadResume";
-
+import { useTranslations } from "next-intl";
 const RegistrationPopup = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -16,7 +16,7 @@ const RegistrationPopup = () => {
     phoneNumber: "",
     email: "",
   });
-
+  const t = useTranslations("Register");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
   const [otpVisible, setOtpVisible] = useState<boolean>(false);
@@ -47,8 +47,16 @@ const RegistrationPopup = () => {
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/^\+?91\s*/, "");
     setFormData({ ...formData, phoneNumber: value });
+  
+   
+    if (value) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        phoneNumber: "",
+      }));
+    }
   };
-
+  
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     if (date) {
@@ -58,18 +66,24 @@ const RegistrationPopup = () => {
         .toString()
         .padStart(2, "0")}/${date.getFullYear()}`;
       setFormData((prevData) => ({ ...prevData, dob: formattedDate }));
+  
+      
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        dob: "",
+      }));
     }
     setDatePickerVisible(false);
   };
-
+  
   const handleRegisterClick = () => {
     const { firstName, lastName, dob, phoneNumber, email } = formData;
     const errors = {
-      firstName: firstName ? "" : "Please enter your first name.",
-      lastName: lastName ? "" : "Please enter your last name.",
+      firstName: firstName ? "" : " Enter your first name.",
+      lastName: lastName ? "" : "Enter your last name.",
       dob: dob ? "" : "Date of birth is required.",
-      phoneNumber: phoneNumber ? "" : "Please enter your phone number.",
-      email: email ? "" : "Please enter a valid email address.",
+      phoneNumber: phoneNumber ? "" : "Enter your phone number.",
+      email: email ? "" : "Enter a valid email address.",
     };
 
     setFormErrors(errors);
@@ -120,11 +134,11 @@ const RegistrationPopup = () => {
             <>
               <Form>
                 <Form.Group className="mb-2" controlId="formFirstName">
-                  <Form.Label>First Name</Form.Label>
+                  <Form.Label>{t('firstname')}</Form.Label>
                   <Form.Control
-                    type="text"
-                    name="firstName"
-                    placeholder="Enter first name"
+                    type= "text"
+                    name= "firstName"
+                   placeholder = "Enter first name"
                     value={formData.firstName}
                     onChange={handleInputChange}
                     isInvalid={!!formErrors.firstName}
@@ -136,11 +150,11 @@ const RegistrationPopup = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-2" controlId="formLastName">
-                  <Form.Label>Last Name</Form.Label>
+                  <Form.Label>{t('lastname')}</Form.Label>
                   <Form.Control
                     type="text"
                     name="lastName"
-                    placeholder="Enter last name"
+                    placeholder="Enter last name" 
                     value={formData.lastName}
                     onChange={handleInputChange}
                     isInvalid={!!formErrors.lastName}
@@ -151,7 +165,7 @@ const RegistrationPopup = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-2" controlId="formDOB">
-                  <Form.Label>Date of Birth</Form.Label>
+                  <Form.Label>  {t('dateofbirth')}</Form.Label>
                   <div className={styles.inputGroup}>
                     <Form.Control
                       type="text"
@@ -187,7 +201,7 @@ const RegistrationPopup = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-2" controlId="formPhoneNumber">
-                  <Form.Label>Phone Number</Form.Label>
+                  <Form.Label>{t('Phonenumber')}</Form.Label>
                   <Row>
                     <Col>
                       <div style={{ position: "relative" }}>
@@ -223,7 +237,7 @@ const RegistrationPopup = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-2" controlId="formEmail">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>{t('email')}</Form.Label>
                   <Form.Control
                     type="email"
                     name="email"
@@ -244,23 +258,27 @@ const RegistrationPopup = () => {
                   fontSize: "8px",
                   padding: "1px 2px",
                   lineHeight: "1",
+                  marginTop: "-5px",
                   marginBottom: "-22px",
                 }}
-              >
-                {" "}
-                Register{" "}
+              > {" "}
+                {t('register')}{" "}
               </Button>
+              <div
+  style={{  marginTop: "30px", marginBottom: "-25px", textAlign: "center", fontSize: "14px",   }}  > Already have an account? <a href="#" className="text-primary">{t('signin')}</a>
+</div>
+
             </>
           ),
           1: (
             <>
               <Modal.Title className={styles.modalTitle3}>
-                OTP Verification
+              {t(' otp verification')}
               </Modal.Title>
               <Form>
                 <Form.Group className="mb-3" controlId="otp">
                   <Form.Label style={{ marginLeft: "90px" }}>
-                    Please enter the OTP sent to <br />
+                  {t('please enter the OTP sent to')} <br />
                     <span className={styles.phoneNumberLabel}>
                       +91 {formData.phoneNumber}
                     </span>
@@ -289,13 +307,13 @@ const RegistrationPopup = () => {
                 </Form.Group>
                 <div className="text-center">
                   <p className={`${styles.textMuted} text-muted`}>
-                    Didn&apos;t get OTP? &nbsp;
+                   Didn&apos;t get OTP? '  &nbsp;
                     <a
                       href="#"
                       onClick={handleResendOtp}
                       className="text-primary"
                     >
-                      Resend OTP
+                       {t('resend otp')}
                     </a>
                   </p>
                   <Button
@@ -308,7 +326,7 @@ const RegistrationPopup = () => {
                       marginBottom: "-22px",
                     }}
                   >
-                    Verify OTP
+                    {t('verify otp')}
                   </Button>
                 </div>
               </Form>

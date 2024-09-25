@@ -71,6 +71,7 @@ text-align: left;
   display: flex;
   justify-content: center;
   align-items: center;
+ margin-top: -5px;
 }
 
 
@@ -94,11 +95,12 @@ text-align: left;
   margin-bottom: 24px;
 }
 
- .modalTitle {
+ .modalTitle2 {
 
   font-size: 1.5rem; 
   text-align: center;
-  margin-bottom: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 
@@ -162,15 +164,7 @@ text-align: left;
   border-bottom: none;
 }
 
-.modalBodyRegister {
-  padding: 0px 68px !important; 
-}
 
-
-
-.logoImage2{
-  margin-top: 30px;
-}
 
 
 .modalTitle3 {
@@ -180,9 +174,6 @@ text-align: left;
   margin-bottom: 30px;
 }
 
-.modalBodyCreate{
-  padding: 0px 68px !important; 
-}
 
 
 .modalBackdrop {
@@ -199,33 +190,24 @@ text-align: left;
 }
 
 
-.modalContainerResume {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  margin-top: 0;
- padding:20px;
-}
 
 
-.modalBodyResume {
-  text-align: center;
-  
-}
 
 
 .modalTitle4 {
-  font-size: 1.5rem;
-  padding-left: 40px;
+  margin-top: 5px;
+ 
+ margin-right: 70px;
   text-align: center; 
-  margin-top: 20px; 
+  margin-bottom: 15px;
+  padding: 10px 10px;
 }
 
 .modalDescription {
   font-size: 0.9rem;
   color: black;
   line-height: 1.5;
-  margin: -20px 0 30px 40px; 
+  margin: -20px 0 30px 20px; 
   text-align: left;
   width: fit-content;
 }
@@ -234,8 +216,8 @@ text-align: left;
 .uploadBox {
   border: 2px dashed #007bff;
   border-radius: 8px;
-  padding: 10px;
-  max-width: 80%;
+  padding:20px;
+  max-width: 90%;
   margin-bottom: 15px;
   margin-left: auto; 
   margin-right: auto;
@@ -249,14 +231,14 @@ text-align: left;
   h5 {
     font-size: 1.1rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     padding-right: 5px;
   }
 
   p {
     font-size: 0.9rem;
     color: #6c757d;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 }
 
@@ -264,16 +246,17 @@ text-align: left;
 .chooseFileButton,
 .takeVideoButton {
   background-color: transparent;
-  border: 2px solid #007bff;
+  border: 1px solid #0045E6;
   color: #007bff;
   padding: 10px 15px;
-  font-weight: 600;
+  
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-
+  margin-top: -3px;
+  margin-bottom: 5px;
   &:hover {
-    background-color: #007bff;
+    background-color: #0045E6;
     color: #ffffff;
   }
 
@@ -293,12 +276,12 @@ text-align: left;
   }
 }
 
-.footerActions {
+.UploadActions {
   display: flex; 
   justify-content: space-between; 
   align-items: center;
   width: 100%; 
-  margin-bottom: 18px;
+ margin-bottom: -35px;
  
 
   .skipButton {
@@ -306,7 +289,7 @@ text-align: left;
     border: none;
     color: #6c757d;
     cursor: pointer;
-    margin-left: 50px;
+    margin-left: 10px;
   }
 
   .getStartedButton {
@@ -316,7 +299,7 @@ text-align: left;
     padding: 10px 15px;
     border-radius: 8px;
     cursor: pointer;
-    margin-right: 45px;
+    margin-right: 20px;
    
     transition: all 0.2s ease;
 

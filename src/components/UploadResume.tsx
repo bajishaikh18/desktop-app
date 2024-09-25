@@ -1,53 +1,89 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import styles from '../app/page.module.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { useTranslations } from "next-intl";
+import { useDropzone } from 'react-dropzone';
 
 interface UploadResumeModalProps {
-  onSubmit:(screen:number)=>void
+  onSubmit: (screen: number) => void;
 }
 
 const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ onSubmit }) => {
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const videoInputRef = React.useRef<HTMLInputElement>(null);
+  const t = useTranslations("Upload");
 
-  const handleFileUploadClick = () => {
-    fileInputRef.current?.click();
+  
+  const [cvFiles, setCvFiles] = useState<File[]>([]);
+  const [videoFiles, setVideoFiles] = useState<File[]>([]);
+
+
+  const onCvDrop = (acceptedFiles: File[]) => {
+    setCvFiles(acceptedFiles);  
   };
 
-  const handleVideoUploadClick = () => {
-    videoInputRef.current?.click();
+ 
+  const onVideoDrop = (acceptedFiles: File[]) => {
+    setVideoFiles(acceptedFiles);  
   };
+
+ 
+  const { getRootProps: getCvRootProps, getInputProps: getCvInputProps } = useDropzone({
+    onDrop: onCvDrop,
+    accept: {
+      'application/pdf': ['.pdf'],
+      'image/jpeg': ['.jpeg', '.jpg'],
+      'application/vnd.ms-excel': ['.xls', '.xlsx'],
+    },
+  });
+
+ 
+  const { getRootProps: getVideoRootProps, getInputProps: getVideoInputProps } = useDropzone({
+    onDrop: onVideoDrop,
+    accept: {
+      'video/*': [], 
+    },
+  });
 
   return (
-      <>
-        <p className={styles.modalDescription}>
-          You can upload your CV to find relevant jobs<br />
-          <span style={{ paddingLeft: '0.3rem' }}> 
-            and recommended jobs from Wonderly.
-          </span>
-        </p>
-        
-        <div className={styles.uploadBox}>
-          <h5 className={styles.uploadTitle}>Upload your CV</h5>
-          <p className={styles.uploadDescription}>PDF, JPEG, Excel</p>
-          <Button variant="outline-primary" className={styles.chooseFileButton} onClick={handleFileUploadClick}>
-            <i className="fas fa-upload"></i> Choose File
-          </Button>
-          <input type="file" ref={fileInputRef} style={{ display: 'none' }} />
-        </div>
+    <>
+      <Modal.Title className={styles.modalTitle4}>{t('upload your resume')}</Modal.Title>
+      <p className={styles.modalDescription}>
+        {t(' you can upload your cv to find relevant jobs')}
+        <br />
+        <span style={{ paddingLeft: '0.3rem' }}>and recommended jobs from Wonderly.</span>
+      </p>
 
-        <div className={styles.uploadBox}>
-          <h5 className={styles.uploadTitle}>Upload your Work Video</h5>
-          <p className={styles.uploadDescription}>Upload a video of your work (30 seconds to 2 minutes)</p>
-          <div className={styles.uploadActions}>
-            <Button variant="outline-primary" className={styles.chooseFileButton} onClick={handleVideoUploadClick}>
-              <i className="fas fa-upload"></i> Choose File
-            </Button>
-            <input type="file" ref={videoInputRef} accept="video/*" style={{ display: 'none' }} />
-          </div>
+      <div className={styles.uploadBox}>
+        <h5 className={styles.uploadTitle}>{t('upload your cv')}</h5>
+        <p className={styles.uploadDescription}>{t('pdf, jpeg, excel')}</p>
+        <div {...getCvRootProps()}>
+          <input {...getCvInputProps()} />
+          <Button variant="outline-primary" className={styles.chooseFileButton}>
+            <i className="fas fa-upload"></i> {t('choose file')}
+          </Button>
         </div>
-        </>
+        {cvFiles.length > 0 && <p>{cvFiles[0].name}</p>}
+      </div>
+
+      <div className={styles.uploadBox}>
+        <h5 className={styles.uploadTitle}>{t('upload your work video')}</h5>
+        <p className={styles.uploadDescription}>upload a video of your work (30 seconds to 2 minutes)</p>
+        <div {...getVideoRootProps()}>
+          <input {...getVideoInputProps()} />
+          <Button variant="outline-primary" className={styles.chooseFileButton}>
+            <i className="fas fa-upload"></i> {t('choose file')}
+          </Button>
+        </div>
+        {videoFiles.length > 0 && <p>{videoFiles[0].name}</p>}
+      </div>
+
+      <Modal.Footer className={`${styles.UploadActions} ${styles.modalFooter}`}>
+        <div className={styles.UploadActions}>
+          <button className={styles.skipButton}>{t('skip')}</button>
+          <button className={styles.getStartedButton}>{t('get started')}</button>
+        </div>
+      </Modal.Footer>
+    </>
   );
 };
 
