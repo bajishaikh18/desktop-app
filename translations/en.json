@@ -13,14 +13,15 @@
     "Authentication":{
       "login":"Login",
       "mobileNo":"Mobile Number",
-      "SendOtp":"SENDOTP",
+      "Sendotp":"SENDOTP",
       "register":"REGISTER",
       "continue with out login":"Continue without Login",
       " otp verification":" Otp Verification",
       "please enter the OTP sent to":"please enter the OTP sent to",
      "didn&apos;t get otp? ":"Didn&apos;t get OTP?",
      "resend otp":"Resend OTP",
-     "verify otp":"Verify OTP"
+     "verify otp":"Verify OTP",
+     "didn&apos;t get otp?&nbsp; ":"Didn&apos;t get OTP?&nbsp;"
 
     },
   

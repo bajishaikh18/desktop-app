@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Modal, Form, Col, Row, Button } from "react-bootstrap";
+import { Modal, Form, Col, Row, Button, Spinner } from "react-bootstrap"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../app/page.module.scss";
 import "../app/globals.scss";
@@ -31,6 +31,8 @@ const RegistrationPopup = () => {
     phone: "",
     email: "",
   });
+  const [loadingRegister, setLoadingRegister] = useState<boolean>(false); 
+  const [loadingVerifyOtp, setLoadingVerifyOtp] = useState<boolean>(false); 
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,20 +60,17 @@ const RegistrationPopup = () => {
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     if (date) {
-      const formattedDate = `${date.getDate().toString().padStart(2, "0")}/${(
-        date.getMonth() + 1
-      )
-        .toString()
-        .padStart(2, "0")}/${date.getFullYear()}`;
-      setFormData((prevData) => ({ ...prevData, dob: formattedDate }));
+        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+        setFormData((prevData) => ({ ...prevData, dob: formattedDate }));
 
-      setFormErrors((prevErrors) => ({
-        ...prevErrors,
-        dob: "",
-      }));
+        setFormErrors((prevErrors) => ({
+            ...prevErrors,
+            dob: "",
+        }));
     }
     setDatePickerVisible(false);
-  };
+};
+
 
   const handleRegisterClick = async () => {
     const { firstName, lastName, dob, phone, email } = formData;
@@ -89,6 +88,7 @@ const RegistrationPopup = () => {
       return;
     }
 
+    setLoadingRegister(true); 
     try {
       const response = await signup({
         firstName,
@@ -100,11 +100,15 @@ const RegistrationPopup = () => {
 
       console.log("API response:", response);
 
-      if (response.success) {
+      if (response.message) {
+        alert:"hi"
         handleScreenChange(1);
       }
+      
     } catch (error) {
       console.error("Error during registration:", error);
+    } finally {
+      setLoadingRegister(false); 
     }
   };
 
@@ -129,15 +133,17 @@ const RegistrationPopup = () => {
     }
   };
 
-  const handleVerifyOtp = () => {
+  const handleVerifyOtp = async () => {
+    setLoadingVerifyOtp(true); 
     console.log("OTP submitted:", otp.join(""));
-    handleScreenChange(2);
+    await new Promise((resolve) => setTimeout(resolve, 1000)); 
+    handleScreenChange(2); 
+    setLoadingVerifyOtp(false); 
   };
 
   const handleResendOtp = () => {
     console.log("Resend OTP");
   };
-
   return (
     <>
       {
@@ -177,40 +183,40 @@ const RegistrationPopup = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-2" controlId="formDOB">
-                  <Form.Label>  {t('dateofbirth')}</Form.Label>
-                  <div className={styles.inputGroup}>
-                    <Form.Control
-                      type="text"
-                      placeholder="DD/MM/YYYY"
-                      value={formData.dob}
-                      onChange={handleInputChange}
-                      readOnly
-                      isInvalid={!!formErrors.dob}
-                    />
-                    <img
-                      src="/mingcute_calendar-line.png"
-                      alt="Calendar"
-                      className={styles.calendarIcon}
-                      onClick={() => setDatePickerVisible(!datePickerVisible)}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {formErrors.dob}{" "}
-                    </Form.Control.Feedback>
-                  </div>
-                  {datePickerVisible && (
-                    <div className={styles.datePickerContainer}>
-                      <DatePicker
-                        selected={selectedDate}
-                        onChange={handleDateChange}
-                        dateFormat="dd/MM/yyyy"
-                        inline
-                        className={styles.datePicker}
-                        popperPlacement="bottom"
-                        onClickOutside={() => setDatePickerVisible(false)}
-                      />
-                    </div>
-                  )}
-                </Form.Group>
+        <Form.Label>{t('dateofbirth')}</Form.Label>
+        <div className={styles.inputGroup}>
+          <Form.Control
+            type="text"
+            placeholder="YYYY-MM-DD"
+            value={formData.dob}
+            onChange={handleInputChange}
+            readOnly
+            isInvalid={!!formErrors.dob}
+          />
+          <img
+            src="/mingcute_calendar-line.png"
+            alt="Calendar"
+            className={styles.calendarIcon}
+            onClick={() => setDatePickerVisible(!datePickerVisible)}
+          />
+          <Form.Control.Feedback type="invalid">
+            {formErrors.dob}{" "}
+          </Form.Control.Feedback>
+        </div>
+        {datePickerVisible && (
+          <div className={styles.datePickerContainer}>
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              dateFormat="yyyy-MM-dd" 
+              inline
+              className={styles.datePicker}
+              popperPlacement="bottom"
+              onClickOutside={() => setDatePickerVisible(false)}
+            />
+          </div>
+        )}
+      </Form.Group>
 
                 <Form.Group className="mb-2" controlId="formPhone">
                   <Form.Label>{t('Phone')}</Form.Label>
@@ -264,20 +270,26 @@ const RegistrationPopup = () => {
                 </Form.Group>
               </Form>
               <Button
-                variant="primary"
-                onClick={handleRegisterClick}
-                style={{
-                  fontSize: "8px",
-                  padding: "1px 2px",
-                  lineHeight: "1",
-                  marginTop: "-5px",
-                  marginBottom: "-22px",
-                }}
-              > {" "}
-                {t('register')}{" "}
-              </Button>
+                  variant="primary"
+                  onClick={handleRegisterClick}
+                  disabled={loadingRegister} 
+                >
+                  {loadingRegister ? (
+                    <>
+                      <Spinner
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                      {' '}Registering...
+                    </>
+                  ) : (
+                    'Register'
+                  )} </Button>
+             
               <div
-  style={{  marginTop: "30px", marginBottom: "-25px", textAlign: "center", fontSize: "14px",   }}  > Already have an account? <a href="#" className="text-primary">{t('signin')}</a>
+  style={{  marginTop: "30px", marginBottom: "-25px", textAlign: "center", fontSize: "14px",   }}  > already have an account? <a href="#" className="text-primary">{t('signin')}</a>
 </div>
 
             </>
@@ -319,7 +331,7 @@ const RegistrationPopup = () => {
                 </Form.Group>
                 <div className="text-center">
                   <p className={`${styles.textMuted} text-muted`}>
-                   Didn&apos;t get OTP? '  &nbsp;
+                  Didn&apos;t get OTP? &nbsp;
                     <a
                       href="#"
                       onClick={handleResendOtp}
@@ -329,17 +341,24 @@ const RegistrationPopup = () => {
                     </a>
                   </p>
                   <Button
-                    variant="primary"
-                    onClick={handleVerifyOtp}
-                    style={{
-                      fontSize: "8px",
-                      padding: "1px 2px",
-                      lineHeight: "1",
-                      marginBottom: "-22px",
-                    }}
-                  >
-                    {t('verify otp')}
-                  </Button>
+                  variant="primary"
+                  onClick={handleVerifyOtp}
+                  disabled={loadingVerifyOtp} 
+                >
+                  {loadingVerifyOtp ? (
+                    <>
+                      <Spinner
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                      {' '}Verifying...
+                    </>
+                  ) : (
+                    'Verify OTP'
+                  )}
+                </Button>
                 </div>
               </Form>
             </>

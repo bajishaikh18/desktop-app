@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Modal, Button, Form, InputGroup } from "react-bootstrap";
+import { Modal, Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import styles from "../app/page.module.scss";
 import { loginWithPhone } from "@/apis/Auth";  
 import RegistrationPopup from "./Registration";
@@ -20,28 +20,33 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
   const [currentScreen, setCurrentScreen] = useState(0);
   const [showRegistration, setShowRegistration] = useState<boolean>(false);
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const [otpLoading, setOtpLoading] = useState<boolean>(false);
   const handleSendOtp = async () => {
-    if (phone.length < 10) {
-      setPhoneError("Invalid mobile number");
-      return;
-    }
-
+    setLoading(true); 
     setPhoneError(null);
-    setCurrentScreen(1);
-
+    setOtpError(null); 
+  
     try {
-      const response = await loginWithPhone(phone);  
-      if (response.success) {
+      if (phone.length < 10) {
+        setPhoneError("Invalid mobile number");
+        return;
+      }
+  
+       const response = await loginWithPhone(phone);
+      if (response) {
         setCurrentScreen(1);
-      } else {
+         } else {
         setPhoneError("Failed to send OTP. Please try again.");
       }
     } catch (error) {
+      console.error("Error sending OTP:", error);
       setPhoneError("An error occurred while sending OTP.");
+    } finally {
+      setLoading(false); 
     }
-  }; 
-
+  };
+  
   const handleOtpChange = (
     index: number,
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -122,8 +127,13 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                         variant="primary"
                         className={`w-100 ${styles.sendOtpButton}`}
                         onClick={handleSendOtp}
+                        disabled={loading} 
                       >
-                        {t('SendOtp')}
+                        {loading ? (
+                          <Spinner animation="border" size="sm" />
+                        ) : (
+                          t('SendOtp')
+                        )}
                       </Button>
                       <div className={styles.loginLinks}>
                         <a href="#" className={styles.helperLinks}></a>
@@ -178,17 +188,16 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                           </a>
                         </p>
                         <Button
-                          variant="primary"
-                          onClick={handleVerifyOtp}
-                          style={{
-                            fontSize: "8px",
-                            padding: "1px 2px",
-                            lineHeight: "1",
-                            marginBottom: "-22px",
-                          }}
-                        >
-                          Verify OTP
-                        </Button>
+    variant="primary"
+    onClick={handleVerifyOtp} style={{  fontSize: "8px",  padding: "1px 2px",  lineHeight: "1",  marginBottom: "-22px",}}
+    disabled={otpLoading} 
+  >  {otpLoading ? (
+      <>
+        <Spinner animation="border" size="sm" />
+        <span style={{ marginLeft: '5px' }}>Verifying...</span>
+      </> ) : (   "Verify OTP"
+    )}
+  </Button>
                       </div>
                     </Form>
                   </>

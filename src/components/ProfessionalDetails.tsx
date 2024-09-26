@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Spinner } from "react-bootstrap";
 import styles from "../app/page.module.scss";
 import "../app/globals.scss";
 import { useTranslations } from "next-intl";
@@ -30,6 +30,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     currentState: "",
   });
 
+  const [loading, setLoading] = React.useState(false); 
   const [showUploadModal, setShowUploadModal] = React.useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<any>) => {
@@ -50,15 +51,16 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     setErrors(newErrors);
 
     const hasErrors = Object.values(newErrors).some((error) => error !== "");
-     if (!hasErrors) {
-    
+    if (!hasErrors) {
+      setLoading(true);
       try {
-      await updateUser(formData);
+        await updateUser(formData);
         setShowUploadModal(true);
         onSubmit(3); 
       } catch (error) {
         console.error("Error updating user details:", error);
-       
+      } finally {
+        setLoading(false); 
       }
     }
   };
@@ -198,15 +200,15 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
       <Button
         variant="primary"
         onClick={handleSubmit}
-        style={{
-          fontSize: "8px",
-          padding: "1px 2px",
-          lineHeight: "1",
-          marginBottom: "-50px",
-          marginTop: "-20px",
-        }}
-      >
-        {t("submit")}
+        disabled={loading} 
+        style={{  fontSize: "8px",padding: "1px 2px", lineHeight: "1", marginBottom: "-50px",marginTop: "-20px", }}
+      > {loading ? (
+          <>  <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
+            {' '}Submitting...
+          </>
+        ) : (
+          t("submit")
+        )}
       </Button>
     </>
   );
