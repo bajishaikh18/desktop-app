@@ -1,21 +1,18 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { Locale } from "@/i18n/config";
 import { setUserLocale } from "@/services/locale";
-import { Dropdown, Form, FormSelect } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
+import { BsCheck2 } from 'react-icons/bs';
+
 import Image from "next/image";
 import styles from "../Header.module.scss";
-
-type Props = {
-  defaultValue: string;
-  items: Array<{ value: string; label: string }>;
-  label: string;
-};
-
 export default function LocaleSwitcherSelect() {
-  const [isPending, startTransition] = useTransition();
 
+  const [isPending, startTransition] = useTransition();
+  
+  
   function onChange(value: string) {
     const locale = value as Locale;
     if (locale) {
@@ -40,16 +37,17 @@ export default function LocaleSwitcherSelect() {
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => onChange("en")}>English</Dropdown.Item>
           <Dropdown.Item onClick={() => onChange("hi")}>
-            Hindi
+            {}
+            Hindi <BsCheck2 className={styles.languageSelected}/>
           </Dropdown.Item>
           <Dropdown.Item onClick={() => onChange("ml")}>
-            Malayalam
+            Malayalam  <BsCheck2 className={styles.languageSelected}/>
           </Dropdown.Item>
           <Dropdown.Item onClick={() => onChange("ta")}>
-            Tamil
+            Tamil <BsCheck2 className={styles.languageSelected}/>
           </Dropdown.Item>
           <Dropdown.Item onClick={() => onChange("te")}>
-            Telugu
+            Telugu <BsCheck2 className={styles.languageSelected}/>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
