@@ -3,7 +3,7 @@ import { Modal, Button, Form, Spinner } from "react-bootstrap";
 import styles from "../app/page.module.scss";
 import "../app/globals.scss";
 import { useTranslations } from "next-intl";
-import { updateUser } from "@/apis/Auth";
+import { updateUser } from "@/apis/auth";
 
 interface ProfessionalDetailsProps {
   onSubmit: (screen: number) => void;

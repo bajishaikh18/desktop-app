@@ -18,6 +18,9 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+  &:hover {
+    color: $color-brand-1;
+  }
 }
 
 .btn {
@@ -119,3 +122,35 @@ a {
 .btn.show{
   background-color: transparent !important;
 }
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 1);
+  border-left: 4px solid #0045E6;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+  display: block;
+  &.xl{
+    width: 24px;
+    height: 24px;
+  }
+  &.lg{
+    width: 20px;
+    height: 20px;
+  }
+  &.md{
+    width: 16px;
+    height: 16px;
+  }
+  &.sm{
+    width: 14px;
+    height: 14px;
+  }
+}
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

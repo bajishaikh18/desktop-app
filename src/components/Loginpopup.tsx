@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Modal, Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import styles from "../app/page.module.scss";
-import { loginWithPhone } from "@/apis/Auth";  
+import { loginWithPhone } from "@/apis/auth";  
 import RegistrationPopup from "./Registration";
 import "../app/globals.scss";
 import { useTranslations } from "next-intl";
@@ -91,6 +91,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
         <Modal show={true} onHide={onClose} centered>
           <Modal.Header className={styles.modalHeader} closeButton></Modal.Header>
           <Modal.Body className={`${otpVisible ? styles.visibleClass : ''} ${styles.modalContainer}`}>
+
             <div className={styles.logoContainer}>
               <img
                 src="/logo-popup.png"
@@ -202,7 +203,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                     </Form>
                   </>
                 ),
-                2: <RegistrationPopup />,
+                2: <RegistrationPopup  handleClose={onClose}/>,
               }[currentScreen]
             }
           </Modal.Body>

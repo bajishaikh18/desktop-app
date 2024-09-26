@@ -195,50 +195,58 @@ text-align: left;
 
 
 .modalTitle4 {
-  margin-top: 5px;
- 
-  margin-left: -10px;
+  margin-top: 20px;
+  font-weight: 800;
+  font-size: 20px;
   text-align: left; 
-  margin-bottom: 15px;
-  padding: 10px 
+  margin-bottom: 8px;
 }
 
 .modalDescription {
-  font-size: 0.9rem;
-  color: black;
-  line-height: 1.5;
-  margin: -20px 0 30px 0px; 
+  font-size: 14px;
+  color: #000;
+  line-height: 24px;
+  margin: 0px 0 30px 0px; 
   text-align: left;
   width: fit-content;
 }
 
 
 .uploadBox {
-  border: 2px dashed #007bff;
+  border: 1px dashed $color-brand-1;
   border-radius: 8px;
-  padding:20px;
+  padding:16px 16px 0px 16px;
   max-width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 24px;
+  position: relative;
   margin-left: auto; 
   margin-right: auto;
   text-align: left; 
   transition: background-color 0.3s; 
-  
+  background: $color-brand-2;
   &:hover {
     background-color: rgba(173, 216, 230, 0.5); 
   }
 
+  .successBar{
+    height: 4px;
+    border-radius: 8px;
+    width: 100%;
+    background-color: rgba(49, 134, 62, 1);
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+  }
   h5 {
-    font-size: 1.1rem;
+    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 5px;
-    padding-right: 5px;
+    margin-bottom: 4px;
   }
 
   p {
-    font-size: 0.9rem;
-    color: #6c757d;
-    margin-bottom: 10px;
+    font-size: 12px;
+    color: $color-grey-1;
+    margin-bottom: 20px;
   }
 }
 
@@ -246,66 +254,53 @@ text-align: left;
 .chooseFileButton,
 .takeVideoButton {
   background-color: transparent;
-  border: 1px solid #0045E6;
-  color: #007bff;
+  border: 1px solid $color-brand-1;
+  color: $color-brand-1;
   padding: 10px 15px;
-  
+  margin-top: 0px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-top: -3px;
-  margin-bottom: 5px;
+  margin-bottom: 24px;
+  background-color: #fff;
   &:hover {
-    background-color: #0045E6;
-    color: #ffffff;
+    background-color: transparent;
+    color: $color-brand-1;
   }
 
-  i {
-    margin-right: 8px;
+  img {
+    margin-right: 10px;
   }
+}
+
+.error{
+  color: $color-danger !important;
 }
 
 .uploadActions {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-
-  .chooseFileButton,
-  .takeVideoButton {
-    flex: 1;
-  }
-}
-
-.UploadActions {
   display: flex; 
   justify-content: space-between; 
   align-items: center;
   width: 100%; 
- margin-bottom: -35px;
- 
-
+  padding-bottom: 0px !important;
   .skipButton {
-    background: none;
-    border: none;
-    color: #6c757d;
+    font-size: 14px;
+    text-decoration: none;
+    color: #000;
     cursor: pointer;
-    margin-left: 0px;
+    &:hover {
+      color: $color-brand-1;
+    }
   }
 
   .getStartedButton {
-    background-color: #007bff;
-    border: none;
-    color: white;
-    padding: 10px 15px;
+    margin: 0px;
     border-radius: 8px;
     cursor: pointer;
     margin-right: 0px;
-   
+    width: auto;
+    padding: 14px 30px !important;
     transition: all 0.2s ease;
-
-    &:hover {
-      background-color: #0056b3;
-    }
   }
 }
 

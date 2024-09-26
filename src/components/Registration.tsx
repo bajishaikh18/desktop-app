@@ -8,9 +8,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import ProfessionalDetails from "./ProfessionalDetails";
 import UploadResumeModal from "./UploadResume";
 import { useTranslations } from "next-intl";
-import { signup } from "@/apis/Auth";
+import { signup } from "@/apis/auth";
 
-const RegistrationPopup = () => {
+const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,7 +21,7 @@ const RegistrationPopup = () => {
   const t = useTranslations("Register");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
-  const [currentScreen, setCurrentScreen] = useState(0);
+  const [currentScreen, setCurrentScreen] = useState(3);
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [otpError, setOtpError] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState({
@@ -370,7 +370,7 @@ const RegistrationPopup = () => {
           ),
           3: (
             <UploadResumeModal
-              onSubmit={(screen) => handleScreenChange(screen)}
+              handleClose={handleClose}
             />
           ),
         }[currentScreen]
