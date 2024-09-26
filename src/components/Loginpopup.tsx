@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Modal, Button, Form, InputGroup } from "react-bootstrap";
 import styles from "../app/page.module.scss";
-
+import { loginWithPhone } from "@/apis/Auth";  
 import RegistrationPopup from "./Registration";
 import "../app/globals.scss";
 import { useTranslations } from "next-intl";
@@ -13,7 +13,7 @@ interface LoginPopupProps {
 
 const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
   const t = useTranslations("Authentication");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
   const [otpVisible, setOtpVisible] = useState<boolean>(false);
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [otpError, setOtpError] = useState<string | null>(null);
@@ -21,30 +21,45 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
   const [showRegistration, setShowRegistration] = useState<boolean>(false);
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const handleSendOtp = () => {
-    if (phoneNumber.length < 10) {
+  const handleSendOtp = async () => {
+    if (phone.length < 10) {
       setPhoneError("Invalid mobile number");
       return;
     }
+
     setPhoneError(null);
     setCurrentScreen(1);
-  };
+
+    try {
+      const response = await loginWithPhone(phone);  
+      if (response.success) {
+        setCurrentScreen(1);
+      } else {
+        setPhoneError("Failed to send OTP. Please try again.");
+      }
+    } catch (error) {
+      setPhoneError("An error occurred while sending OTP.");
+    }
+  }; 
 
   const handleOtpChange = (
     index: number,
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const value = event.target.value;
-    if (/^\d$/.test(value)) {
-      otpInputRefs.current[index]!.value = value;
-      if (index < otpInputRefs.current.length - 1) {
-        otpInputRefs.current[index + 1]?.focus();
+    const target = event.target;
+    
+    if (target instanceof HTMLInputElement) {
+      const value = target.value;
+  
+      if (/^\d$/.test(value)) {
+        otpInputRefs.current[index]!.value = value;
+        if (index < otpInputRefs.current.length - 1) {
+          otpInputRefs.current[index + 1]?.focus();
+        }
       }
     }
   };
-
+  
   const handleResendOtp = () => {
     alert("OTP resent");
   };
@@ -69,8 +84,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
     <>
       {show && !showRegistration && (
         <Modal show={true} onHide={onClose} centered>
-          <Modal.Header className={styles.modalHeader} closeButton
-          ></Modal.Header>
+          <Modal.Header className={styles.modalHeader} closeButton></Modal.Header>
           <Modal.Body className={`${otpVisible ? styles.visibleClass : ''} ${styles.modalContainer}`}>
             <div className={styles.logoContainer}>
               <img
@@ -88,16 +102,14 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                     </Modal.Title>
                     <Form>
                       <InputGroup>
-                        <InputGroup.Text id="basic-addon1">
-                          {" "}+91
-                        </InputGroup.Text>
+                        <InputGroup.Text id="basic-addon1">+91</InputGroup.Text>
                         <Form.Control
                           type="text"
                           placeholder={t('mobileNo')}
                           className={styles.contactInput}
-                          value={phoneNumber}
+                          value={phone}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setPhoneNumber(e.target.value)
+                            setPhone(e.target.value)
                           }
                           isInvalid={!!phoneError}
                         />
@@ -111,23 +123,17 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                         className={`w-100 ${styles.sendOtpButton}`}
                         onClick={handleSendOtp}
                       >
-                       {t('SendOtp')}
+                        {t('SendOtp')}
                       </Button>
                       <div className={styles.loginLinks}>
-                        <a href="#" className={styles.helperLinks}>
-                         
-                        </a>
-                        <a
-                          href="#"
-                          className={styles.helperLinks}
-                          onClick={handleRegisterClick}
-                        >
+                        <a href="#" className={styles.helperLinks}></a>
+                        <a href="#" className={styles.helperLinks} onClick={handleRegisterClick}>
                           {t('register')}
                         </a>
                       </div>
                       <div className={styles.continueWithoutLogin}>
                         <a href="#" className={styles.helperLinks}>
-                         {t('continue with out login')}
+                          {t('continue with out login')}
                         </a>
                       </div>
                     </Form>
@@ -136,15 +142,13 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                 1: (
                   <>
                     <Modal.Title className={styles.modalTitle2}>
-                     {t(' otp verification')}
+                      OTP Verification
                     </Modal.Title>
                     <Form>
                       <Form.Group className="mb-3" controlId="otp">
                         <Form.Label style={{ marginLeft: "90px" }}>
                           {t('please enter the OTP sent to')} <br />
-                          <span className={styles.phoneNumberLabel}>
-                            +91 {phoneNumber}
-                          </span>
+                          <span className={styles.phoneNumberLabel}>+91 {phone}</span>
                         </Form.Label>
                         <div className={styles.otpInputs}>
                           {Array.from({ length: 6 }).map((_, index) => (
@@ -168,44 +172,38 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                       </Form.Group>
                       <div className="text-center">
                         <p className={`${styles.textMuted} text-muted`}>
-                        Didn&apos;t get OTP? &nbsp;
-                          <a
-                            href="#"
-                            onClick={handleResendOtp}
-                            className="text-primary"
-                          >
-                         {t('resend otp')}
+                          Didn&apos;t get OTP? &nbsp;
+                          <a href="#" onClick={handleResendOtp} className="text-primary">
+                            {t('resend otp')}
                           </a>
                         </p>
                         <Button
-                    variant="primary"
-                    onClick={handleVerifyOtp}
-                    style={{
-                      fontSize: "8px",
-                      padding: "1px 2px",
-                      lineHeight: "1",
-                      marginBottom: "-22px",
-                    }}
-                  >
-                    Verify OTP
-                  </Button>
+                          variant="primary"
+                          onClick={handleVerifyOtp}
+                          style={{
+                            fontSize: "8px",
+                            padding: "1px 2px",
+                            lineHeight: "1",
+                            marginBottom: "-22px",
+                          }}
+                        >
+                          Verify OTP
+                        </Button>
                       </div>
                     </Form>
                   </>
                 ),
-                2: (
-                  <RegistrationPopup />
-                ),
+                2: <RegistrationPopup />,
               }[currentScreen]
             }
           </Modal.Body>
           <Modal.Footer>
             <div className={styles.loginFooter}>
               <small className="w-100">
-                Copyright © 2024 Adobe. All rights reserved. 
+                Copyright © 2024 Adobe. All rights reserved.
                 <br />
-                <span className="text-black">Terms of Use</span> 
-                <span className="text-black">Privacy</span> 
+                <span className="text-black">Terms of Use</span>
+                <span className="text-black">Privacy</span>
                 <span className="text-black">Do not sell or share my personal information</span>
               </small>
             </div>

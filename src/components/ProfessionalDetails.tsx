@@ -3,6 +3,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import styles from "../app/page.module.scss";
 import "../app/globals.scss";
 import { useTranslations } from "next-intl";
+import { updateUser } from "@/apis/Auth";
 
 interface ProfessionalDetailsProps {
   onSubmit: (screen: number) => void;
@@ -18,7 +19,9 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     gulfExperience: "",
     currentState: "",
   });
+  
   const t = useTranslations("Professional");
+
   const [errors, setErrors] = React.useState({
     currentJobTitle: "",
     industry: "",
@@ -34,25 +37,31 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     setFormData((prevData) => ({ ...prevData, [name]: value }));
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
-  const handleSubmit = () => {
+
+  const handleSubmit = async () => {
     const newErrors = {
-      currentJobTitle: formData.currentJobTitle ? "" :  ("Job title is required."),
-      industry: formData.industry ? "" :          ("Industry is required."),
-      experienceYears: formData.experienceYears  ? ""  : ("Experience years are required."),   
-      gulfExperience: formData.gulfExperience ? "" : ("Gulf experience is required."), 
-     currentState: formData.currentState ? "" : ("Current state is required."),
+      currentJobTitle: formData.currentJobTitle ? "" : "Job title is required.",
+      industry: formData.industry ? "" : "Industry is required.",
+      experienceYears: formData.experienceYears ? "" : "Experience years are required.",
+      gulfExperience: formData.gulfExperience ? "" : "Gulf experience is required.",
+      currentState: formData.currentState ? "" : "Current state is required.",
     };
 
     setErrors(newErrors);
 
     const hasErrors = Object.values(newErrors).some((error) => error !== "");
-
-    if (!hasErrors) {
-      setShowUploadModal(true);
-      onSubmit(3); 
+     if (!hasErrors) {
+    
+      try {
+      await updateUser(formData);
+        setShowUploadModal(true);
+        onSubmit(3); 
+      } catch (error) {
+        console.error("Error updating user details:", error);
+       
+      }
     }
   };
-
   return (
     <>
       <Form>

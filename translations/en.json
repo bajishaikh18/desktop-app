@@ -28,7 +28,7 @@
     "firstname" :"First Name",
     "lastname":"Last Name",
     "dateofbirth" : "Date of Birth",
-    "Phonenumber":"Phone Number",
+    "Phone":"phone ",
     "email": "Email",
     "register":"Register",
     "already have an account":"Already have an account",

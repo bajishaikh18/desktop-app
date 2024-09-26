@@ -8,28 +8,27 @@ import "react-datepicker/dist/react-datepicker.css";
 import ProfessionalDetails from "./ProfessionalDetails";
 import UploadResumeModal from "./UploadResume";
 import { useTranslations } from "next-intl";
+import { signup } from "@/apis/Auth";
+
 const RegistrationPopup = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     dob: "",
-    phoneNumber: "",
+    phone: "",
     email: "",
   });
   const t = useTranslations("Register");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
-  const [otpVisible, setOtpVisible] = useState<boolean>(false);
   const [currentScreen, setCurrentScreen] = useState(0);
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [otpError, setOtpError] = useState<string | null>(null);
-  const [registrationModalVisible, setRegistrationModalVisible] =
-    useState<boolean>(false);
   const [formErrors, setFormErrors] = useState({
     firstName: "",
     lastName: "",
     dob: "",
-    phoneNumber: "",
+    phone: "",
     email: "",
   });
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -44,19 +43,18 @@ const RegistrationPopup = () => {
     }));
   };
 
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/^\+?91\s*/, "");
-    setFormData({ ...formData, phoneNumber: value });
-  
-   
+    setFormData({ ...formData, phone: value });
+
     if (value) {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
-        phoneNumber: "",
+        phone: "",
       }));
     }
   };
-  
+
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     if (date) {
@@ -66,8 +64,7 @@ const RegistrationPopup = () => {
         .toString()
         .padStart(2, "0")}/${date.getFullYear()}`;
       setFormData((prevData) => ({ ...prevData, dob: formattedDate }));
-  
-      
+
       setFormErrors((prevErrors) => ({
         ...prevErrors,
         dob: "",
@@ -75,14 +72,14 @@ const RegistrationPopup = () => {
     }
     setDatePickerVisible(false);
   };
-  
-  const handleRegisterClick = () => {
-    const { firstName, lastName, dob, phoneNumber, email } = formData;
+
+  const handleRegisterClick = async () => {
+    const { firstName, lastName, dob, phone, email } = formData;
     const errors = {
-      firstName: firstName ? "" : " Enter your first name.",
+      firstName: firstName ? "" : "Enter your first name.",
       lastName: lastName ? "" : "Enter your last name.",
       dob: dob ? "" : "Date of birth is required.",
-      phoneNumber: phoneNumber ? "" : "Enter your phone number.",
+      phone: phone ? "" : "Enter your phone number.",
       email: email ? "" : "Enter a valid email address.",
     };
 
@@ -92,8 +89,23 @@ const RegistrationPopup = () => {
       return;
     }
 
-    console.log("Register button clicked", formData);
-    handleScreenChange(1);
+    try {
+      const response = await signup({
+        firstName,
+        lastName,
+        dob,
+        phone,
+        email,
+      });
+
+      console.log("API response:", response);
+
+      if (response.success) {
+        handleScreenChange(1);
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
   };
 
   const handleScreenChange = (screen: number) => {
@@ -200,18 +212,18 @@ const RegistrationPopup = () => {
                   )}
                 </Form.Group>
 
-                <Form.Group className="mb-2" controlId="formPhoneNumber">
-                  <Form.Label>{t('Phonenumber')}</Form.Label>
+                <Form.Group className="mb-2" controlId="formPhone">
+                  <Form.Label>{t('Phone')}</Form.Label>
                   <Row>
                     <Col>
                       <div style={{ position: "relative" }}>
                         <Form.Control
                           type="text"
                           placeholder="Enter mobile number"
-                          name="phoneNumber"
-                          value={formData.phoneNumber}
-                          onChange={handlePhoneNumberChange}
-                          isInvalid={!!formErrors.phoneNumber}
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handlePhoneChange}
+                          isInvalid={!!formErrors.phone}
                           style={{ paddingLeft: "60px" }}
                         />
                         <span
@@ -229,7 +241,7 @@ const RegistrationPopup = () => {
                           +91
                         </span>
                         <Form.Control.Feedback type="invalid">
-                          {formErrors.phoneNumber}
+                          {formErrors.phone}
                         </Form.Control.Feedback>
                       </div>
                     </Col>
@@ -280,7 +292,7 @@ const RegistrationPopup = () => {
                   <Form.Label style={{ marginLeft: "90px" }}>
                   {t('please enter the OTP sent to')} <br />
                     <span className={styles.phoneNumberLabel}>
-                      +91 {formData.phoneNumber}
+                      +91 {formData.phone}
                     </span>
                   </Form.Label>
                   <div className={styles.otpInputs}>
