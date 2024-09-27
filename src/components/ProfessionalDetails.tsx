@@ -4,6 +4,7 @@ import styles from "../app/page.module.scss";
 import "../app/globals.scss";
 import { useTranslations } from "next-intl";
 import { updateUser } from "@/apis/auth";
+import toast from "react-hot-toast";
 
 interface ProfessionalDetailsProps {
   onSubmit: (screen: number) => void;
@@ -19,7 +20,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     gulfExperience: "",
     currentState: "",
   });
-  
+
   const t = useTranslations("Professional");
 
   const [errors, setErrors] = React.useState({
@@ -30,7 +31,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     currentState: "",
   });
 
-  const [loading, setLoading] = React.useState(false); 
+  const [loading, setLoading] = React.useState(false);
   const [showUploadModal, setShowUploadModal] = React.useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<any>) => {
@@ -43,8 +44,12 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     const newErrors = {
       currentJobTitle: formData.currentJobTitle ? "" : "Job title is required.",
       industry: formData.industry ? "" : "Industry is required.",
-      experienceYears: formData.experienceYears ? "" : "Experience years are required.",
-      gulfExperience: formData.gulfExperience ? "" : "Gulf experience is required.",
+      experienceYears: formData.experienceYears
+        ? ""
+        : "Experience years are required.",
+      gulfExperience: formData.gulfExperience
+        ? ""
+        : "Gulf experience is required.",
       currentState: formData.currentState ? "" : "Current state is required.",
     };
 
@@ -55,15 +60,22 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
       setLoading(true);
       try {
         await updateUser(formData);
+        
+        
+        toast.success("Professional details updated successfully!");
+
         setShowUploadModal(true);
-        onSubmit(3); 
+        onSubmit(3);
       } catch (error) {
+       
+        toast.error("Failed to update professional details. Please try again.");
         console.error("Error updating user details:", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     }
   };
+
   return (
     <>
       <Form>
@@ -200,11 +212,20 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
       <Button
         variant="primary"
         onClick={handleSubmit}
-        disabled={loading} 
-        style={{  fontSize: "8px",padding: "1px 2px", lineHeight: "1", marginBottom: "-50px",marginTop: "-20px", }}
-      > {loading ? (
-          <>  <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
-            {' '}Submitting...
+        disabled={loading}
+        style={{
+          fontSize: "8px",
+          padding: "1px 2px",
+          lineHeight: "1",
+          marginBottom: "-50px",
+          marginTop: "-20px",
+        }}
+      >
+        {loading ? (
+          <>
+            <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
+            {" "}
+            Submitting...
           </>
         ) : (
           t("submit")
