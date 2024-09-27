@@ -46,3 +46,17 @@ export const updateUser = async (userDetails: ProfessionalDetails) => {
   }
 };
 
+
+export const verifyOtp = async (otp: string,phone:string) => {
+  try {
+    const response = await apiClient.post("user/login/phone", {
+      phone,
+      otp
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to update user details:", error);
+    throw error;
+  }
+};
+

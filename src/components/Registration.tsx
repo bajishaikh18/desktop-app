@@ -8,8 +8,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import ProfessionalDetails from "./ProfessionalDetails";
 import UploadResumeModal from "./UploadResume";
 import { useTranslations } from "next-intl";
-import { signup } from "@/apis/auth";
 import toast from "react-hot-toast";
+import { signup, verifyOtp } from "@/apis/auth";
+import { VerifyOtp } from "./VerifyOtp";
 
 const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
   const t = useTranslations("Register");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
-  const [currentScreen, setCurrentScreen] = useState(1);
+  const [currentScreen, setCurrentScreen] = useState(0);
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [otpError, setOtpError] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState({
@@ -134,33 +135,23 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
   };
 
   const handleVerifyOtp = async () => {
-    setLoadingVerifyOtp(true); 
-
-    try {
-       
-        await new Promise((resolve, reject) => {
-            const otpString = otp.join("");
-         
-            if (otpString === "123456") {
-                resolve("OTP verified");
-            } else {
-                reject(new Error("Invalid OTP"));
-            }
-        });
-
-        toast.success("OTP verified successfully!"); 
-        handleScreenChange(2); 
-    } catch (error) {
-        console.error("OTP verification failed:", error);
-        toast.error("Failed to verify OTP. Please try again."); 
-    } finally {
-        setLoadingVerifyOtp(false);
+    try{
+      setLoadingVerifyOtp(true); 
+      // await verifyOtp(otp.join(''),formData.phone);
+      toast.success("OTP verified successfully!"); 
+      setCurrentScreen(2); 
+    }catch(e:any){
+      if(e.status === 401){
+        toast.error("OTP entered is invalid"); 
+      }else{
+        toast.error("Something went wrong. Please try again later"); 
+      }
+    }finally{
+      setLoadingVerifyOtp(false); 
     }
-};
-
-  const handleResendOtp = () => {
-    toast.success("OTP resent!"); 
   };
+
+ 
 
   return (
     <>
@@ -321,73 +312,7 @@ style={{  marginTop: "30px", marginBottom: "-25px", textAlign: "center", fontSiz
           </>
         ),
         1: (
-          <>
-            <Modal.Title className={styles.modalTitle3}>
-            {t(' otp verification')}
-            </Modal.Title>
-            <Form>
-              <Form.Group className="mb-3" controlId="otp">
-                <Form.Label style={{ marginLeft: "90px" }}>
-                {t('please enter the OTP sent to')} <br />
-                  <span className={styles.phoneNumberLabel}>
-                    +91 {formData.phone}
-                  </span>
-                </Form.Label>
-                <div className={styles.otpInputs}>
-                  {Array.from({ length: 6 }).map((_, index) => (
-                    <Form.Control
-                      key={index}
-                      type="text"
-                      maxLength={1}
-                      className={styles.otpInput}
-                      placeholder="0"
-                      ref={(el: HTMLInputElement | null) => {
-                        otpInputRefs.current[index] = el;
-                      }}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleOtpChange(index, e)
-                      }
-                      isInvalid={!!otpError}
-                    />
-                  ))}
-                </div>
-                <Form.Control.Feedback type="invalid">
-                  {otpError}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <div className="text-center">
-                <p className={`${styles.textMuted} text-muted`}>
-                Didn&apos;t get OTP? &nbsp;
-                  <a
-                    href="#"
-                    onClick={handleResendOtp}
-                    className="text-primary"
-                  >
-                     {t('resend otp')}
-                  </a>
-                </p>
-                <Button
-                variant="primary"
-                onClick={handleVerifyOtp}
-                disabled={loadingVerifyOtp} 
-              >
-                {loadingVerifyOtp ? (
-                  <>
-                    <Spinner
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    {' '}Verifying...
-                  </>
-                ) : (
-                  'Verify OTP'
-                )}
-              </Button>
-              </div>
-            </Form>
-          </>
+          <VerifyOtp phone={formData.phone} successAction={()=>handleScreenChange(2)}/>
         ),
         2: (
           <ProfessionalDetails

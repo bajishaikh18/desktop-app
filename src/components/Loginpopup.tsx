@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Modal, Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import styles from "../app/page.module.scss";
 import { loginWithPhone } from "@/apis/auth";  
@@ -6,6 +6,7 @@ import RegistrationPopup from "./Registration";
 import "../app/globals.scss";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
+import { VerifyOtp } from "./VerifyOtp";
 
 interface LoginPopupProps {
   show: boolean;
@@ -17,17 +18,13 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
   const [phone, setPhone] = useState<string>("");
   const [otpVisible, setOtpVisible] = useState<boolean>(false);
   const [phoneError, setPhoneError] = useState<string | null>(null);
-  const [otpError, setOtpError] = useState<string | null>(null);
   const [currentScreen, setCurrentScreen] = useState(0);
   const [showRegistration, setShowRegistration] = useState<boolean>(false);
-  const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [otpLoading, setOtpLoading] = useState<boolean>(false);
 
   const handleSendOtp = async () => {
     setLoading(true); 
     setPhoneError(null);
-    setOtpError(null); 
   
     try {
       if (phone.length < 10) {
@@ -53,39 +50,6 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
     }
   };
   
-  const handleOtpChange = (
-    index: number,
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const target = event.target;
-    
-    if (target instanceof HTMLInputElement) {
-      const value = target.value;
-  
-      if (/^\d$/.test(value)) {
-        otpInputRefs.current[index]!.value = value;
-        if (index < otpInputRefs.current.length - 1) {
-          otpInputRefs.current[index + 1]?.focus();
-        }
-      }
-    }
-  };
-  
-  const handleResendOtp = () => {
-    toast.success("OTP resent!"); 
-  };
-
-  const handleVerifyOtp = () => {
-    const otp = otpInputRefs.current.map((input) => input?.value).join("");
-    if (otp.length !== 6) {
-      setOtpError("Invalid OTP. Please try again.");
-      toast.error("Invalid OTP. Please try again."); 
-      return;
-    }
-    setOtpError(null);
-    toast.success("OTP Verified successfully!"); 
-  };
-
   const handleRegisterClick = () => {
     setCurrentScreen(2);
   };
@@ -158,62 +122,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                     </Form>
                   </>
                 ),
-                1: (
-                  <>
-                    <Modal.Title className={styles.modalTitle2}>
-                      OTP Verification
-                    </Modal.Title>
-                    <Form>
-                      <Form.Group className="mb-3" controlId="otp">
-                        <Form.Label style={{ marginLeft: "90px" }}>
-                          {t('please enter the OTP sent to')} <br />
-                          <span className={styles.phoneNumberLabel}>+91 {phone}</span>
-                        </Form.Label>
-                        <div className={styles.otpInputs}>
-                          {Array.from({ length: 6 }).map((_, index) => (
-                            <Form.Control
-                              key={index}
-                              type="text"
-                              maxLength={1}
-                              className={styles.otpInput}
-                              placeholder="0"
-                              ref={(el: HTMLInputElement | null) => {
-                                otpInputRefs.current[index] = el;
-                              }}
-                              onChange={(e) => handleOtpChange(index, e)}
-                              isInvalid={!!otpError}
-                            />
-                          ))}
-                        </div>
-                        <Form.Control.Feedback type="invalid">
-                          {otpError}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <div className="text-center">
-                        <p className={`${styles.textMuted} text-muted`}>
-                          Didn&apos;t get OTP? &nbsp;
-                          <a href="#" onClick={handleResendOtp} className="text-primary">
-                            {t('resend otp')}
-                          </a>
-                        </p>
-                        <Button
-                          variant="primary"
-                          onClick={handleVerifyOtp} style={{  fontSize: "8px",  padding: "1px 2px",  lineHeight: "1",  marginBottom: "-22px",}}
-                          disabled={otpLoading} 
-                        >  
-                          {otpLoading ? (
-                            <>
-                              <Spinner animation="border" size="sm" />
-                              <span style={{ marginLeft: '5px' }}>Verifying...</span>
-                            </>
-                          ) : (   
-                            "Verify OTP"
-                          )}
-                        </Button>
-                      </div>
-                    </Form>
-                  </>
-                ),
+                1:<VerifyOtp phone={phone} successAction={onClose}/>,
                 2: <RegistrationPopup  handleClose={onClose}/>,
               }[currentScreen]
             }
