@@ -60,15 +60,11 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
       setLoading(true);
       try {
         await updateUser(formData);
-        
-        
-        toast.success("Professional details updated successfully!");
-
+      toast.success("Professional details updated successfully!", { position: "top-center" });
         setShowUploadModal(true);
         onSubmit(3);
       } catch (error) {
-       
-        toast.error("Failed to update professional details. Please try again.");
+         toast.error("Failed to update professional details. Please try again.", { position: "top-center" });
         console.error("Error updating user details:", error);
       } finally {
         setLoading(false);

@@ -42,9 +42,9 @@ export const VerifyOtp = ({
       toast.success("OTP verified successfully!");
     } catch (e: any) {
       if (e.status === 401) {
-        toast.error("OTP entered is invalid");
+        toast.error("OTP entered is invalid", { position: "top-center" });
       } else {
-        toast.error("Something went wrong. Please try again later");
+        toast.error("Something went wrong. Please try again later", { position: "top-center" });
       }
     } finally {
       setOtpLoading(false);

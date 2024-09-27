@@ -29,22 +29,22 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
     try {
       if (phone.length < 10) {
         setPhoneError("Invalid mobile number");
-        toast.error("Invalid mobile number"); 
+        toast.error("Invalid mobile number", { position: "top-center" });
         return;
       }
   
       const response = await loginWithPhone(phone);
       if (response) {
         setCurrentScreen(1);
-        toast.success("OTP sent successfully!"); 
+        toast.success("OTP sent successfully!", { position: "top-center" }); 
       } else {
         setPhoneError("Failed to send OTP. Please try again.");
-        toast.error("Failed to send OTP. Please try again."); 
+        toast.error("Failed to send OTP. Please try again.",  { position: "top-center" }); 
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
       setPhoneError("An error occurred while sending OTP.");
-      toast.error("An error occurred while sending OTP."); 
+      toast.error("An error occurred while sending OTP.",  { position: "top-center" }); 
     } finally {
       setLoading(false); 
     }

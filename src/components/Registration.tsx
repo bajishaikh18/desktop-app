@@ -102,12 +102,16 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
       console.log("API response:", response);
 
       if (response.message) {
-        toast.success("Registered successfully!"); 
+        toast.success("Registered successfully!", {
+          position: "top-center",
+        });
         handleScreenChange(1);
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      toast.error("Failed to register. Please try again."); 
+      toast.error("Failed to register. Please try again.", {
+        position: "top-center",
+      }); 
     } finally {
       setLoadingRegister(false);
     }
@@ -138,13 +142,13 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
     try{
       setLoadingVerifyOtp(true); 
       // await verifyOtp(otp.join(''),formData.phone);
-      toast.success("OTP verified successfully!"); 
+      toast.success("OTP verified successfully!", {position: "top-center", }); 
       setCurrentScreen(2); 
     }catch(e:any){
       if(e.status === 401){
-        toast.error("OTP entered is invalid"); 
+        toast.error("OTP entered is invalid", {position: "top-center" }); 
       }else{
-        toast.error("Something went wrong. Please try again later"); 
+        toast.error("Something went wrong. Please try again later", {position: "top-center", }); 
       }
     }finally{
       setLoadingVerifyOtp(false); 
