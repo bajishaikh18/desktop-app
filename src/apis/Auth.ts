@@ -45,6 +45,7 @@ export const signup = async (data: SignupData) => {
 };
 
 
+
 export const updateUser = async (userDetails: ProfessionalDetails) => {
     try {
       const response = await axios.patch('/user/update user', userDetails);
