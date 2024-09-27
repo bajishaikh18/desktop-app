@@ -45,6 +45,19 @@ a {
   font-size: 14px;
   margin-bottom: 8px;
 }
+
+.register-form{
+  margin-top: 30px;
+  .form-label{
+    font-size: 16px;
+    color: rgba(26, 26, 26, 1);
+    margin-bottom: 6px;
+  }
+  .form-group{
+    position: relative;
+    margin-bottom: 16px;
+  }
+}
 .form-control{
   font-size: 16px;
   border-radius: 8px !important;
@@ -96,6 +109,7 @@ a {
 
 .modal-dialog{
   width: 490px !important;
+  max-width:  100% !important;
 }
 
 .input-group-text{
@@ -153,4 +167,21 @@ a {
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  .react-datepicker-wrapper{
+    width: 100%;
+  }
+
+  .custom-date-picker{
+    .react-datepicker{
+      font-family: "Inter", sans-serif;
+
+      border: 1px solid rgba(189, 189, 189, 1);
+
+    }
+    .react-datepicker__header {
+      background-color: $color-brand-2;
+      border-bottom: 1px dashed $color-brand-1;
+    }
   }

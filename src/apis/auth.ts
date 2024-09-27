@@ -1,4 +1,4 @@
-import { apiClient } from "./common";
+import { apiClient, authorizedApiClient } from "./common";
 
 interface SignupData {
   firstName: string;
@@ -12,7 +12,7 @@ interface ProfessionalDetails {
   currentJobTitle: string;
   industry: string;
   experienceYears: string;
-  gulfExperience: string;
+  gulfExperience: boolean;
   currentState: string;
 }
 
@@ -38,7 +38,7 @@ export const signup = async (data: SignupData) => {
 
 export const updateUser = async (userDetails: ProfessionalDetails) => {
   try {
-    const response = await apiClient.patch("/user", userDetails);
+    const response = await authorizedApiClient.patch("/user", userDetails);
     return response.data;
   } catch (error) {
     console.error("Failed to update user details:", error);

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { getSignedUrl, uploadFile } from "@/apis/common";
-import toast, { Toaster } from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 interface UploadResumeModalProps {
   handleClose: () => void;
@@ -60,14 +60,11 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
           await uploadFile(resp.uploadurl, media?.file!);
         })
       );
-      
-     
-      toast.success('Files uploaded successfully!', { position: 'top-center' });
-
+      toast.success("Files have been uploaded securly");
+      handleClose();
     } catch (e) {
-    
-      toast.error('Failed to upload files. Please try again.', { position: 'top-center' });
-    } finally {
+      toast.error("Failed to upload files. Please try again.");
+    } finally{
       setLoading(false);
     }
   }, [cvFiles, videoFiles]);
@@ -100,7 +97,6 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
 
   return (
     <>
-      <Toaster /> 
       <Modal.Title className={styles.modalTitle4}>
         {t("upload_your_resume")}
       </Modal.Title>
@@ -146,7 +142,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
             videoRejections.length > 0 ? styles.error : ""
           }`}
         >
-          {t('Upload_a_video_of_your_work_(30 seconds to 2 minutes)')}
+          {t('upload_a_video_of_your_work')}
         </p>
         <div className={styles.dropzone}>
           {videoFiles && videoRejections.length == 0 ? (

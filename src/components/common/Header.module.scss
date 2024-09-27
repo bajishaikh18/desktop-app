@@ -71,11 +71,12 @@
 .rightNavItems {
   list-style: none;
   display: flex;
-  align-items: center;
+  align-items: center; 
+}
+.navListItemBlue{
   .navListItem { 
     color: $color-brand-1;
   }
- 
 }
 
 .divider{

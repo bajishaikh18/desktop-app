@@ -1,18 +1,23 @@
 import React, { useState, useRef } from "react";
-import { Modal, Form, Col, Row, Button, Spinner } from "react-bootstrap"; 
+import {
+  Form,
+  Button,
+  Spinner,
+  InputGroup,
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../app/page.module.scss";
 import "../app/globals.scss";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import ProfessionalDetails from "./ProfessionalDetails";
 import UploadResumeModal from "./UploadResume";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { signup, verifyOtp } from "@/apis/auth";
+import { signup } from "@/apis/auth";
 import { VerifyOtp } from "./VerifyOtp";
+import Image from "next/image";
 
-const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
+const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => void,backToSignIn:()=>void }) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -33,8 +38,8 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
     phone: "",
     email: "",
   });
-  const [loadingRegister, setLoadingRegister] = useState<boolean>(false); 
-  const [loadingVerifyOtp, setLoadingVerifyOtp] = useState<boolean>(false); 
+  const [loadingRegister, setLoadingRegister] = useState<boolean>(false);
+  const [loadingVerifyOtp, setLoadingVerifyOtp] = useState<boolean>(false);
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +67,9 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     if (date) {
-      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
       setFormData((prevData) => ({ ...prevData, dob: formattedDate }));
 
       setFormErrors((prevErrors) => ({
@@ -88,7 +95,6 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
     if (Object.values(errors).some((error) => error)) {
       return;
     }
-
     setLoadingRegister(true);
     try {
       const response = await signup({
@@ -111,7 +117,7 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
       console.error("Error during registration:", error);
       toast.error("Failed to register. Please try again.", {
         position: "top-center",
-      }); 
+      });
     } finally {
       setLoadingRegister(false);
     }
@@ -139,161 +145,138 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
   };
 
   const handleVerifyOtp = async () => {
-    try{
-      setLoadingVerifyOtp(true); 
+    try {
+      setLoadingVerifyOtp(true);
       // await verifyOtp(otp.join(''),formData.phone);
-      toast.success("OTP verified successfully!", {position: "top-center", }); 
-      setCurrentScreen(2); 
-    }catch(e:any){
-      if(e.status === 401){
-        toast.error("OTP entered is invalid", {position: "top-center" }); 
-      }else{
-        toast.error("Something went wrong. Please try again later", {position: "top-center", }); 
+      toast.success("OTP verified successfully!", { position: "top-center" });
+      setCurrentScreen(2);
+    } catch (e: any) {
+      if (e.status === 401) {
+        toast.error("OTP entered is invalid", { position: "top-center" });
+      } else {
+        toast.error("Something went wrong. Please try again later", {
+          position: "top-center",
+        });
       }
-    }finally{
-      setLoadingVerifyOtp(false); 
+    } finally {
+      setLoadingVerifyOtp(false);
     }
   };
-
- 
 
   return (
     <>
       {
         {
           0: (
-            <> 
-              <Form>
+            <>
+              <Form className="register-form">
+                <Form.Group className="form-group" controlId="formFirstName">
+                  <Form.Label>{t("firstname")}</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="firstName"
+                    placeholder="Enter first name"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    isInvalid={!!formErrors.firstName}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    {formErrors.firstName}
+                  </Form.Control.Feedback>{" "}
+                </Form.Group>
 
-              <Form.Group className="mb-2" controlId="formFirstName">
-                <Form.Label>{t('firstname')}</Form.Label>
-                <Form.Control
-                  type= "text"
-                  name= "firstName"
-                 placeholder = "Enter first name"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  isInvalid={!!formErrors.firstName}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {" "}
-                  {formErrors.firstName}
-                </Form.Control.Feedback>{" "}
-              </Form.Group>
+                <Form.Group className="form-group" controlId="formLastName">
+                  <Form.Label>{t("lastname")}</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="lastName"
+                    placeholder="Enter last name"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    isInvalid={!!formErrors.lastName}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formErrors.lastName}
+                  </Form.Control.Feedback>{" "}
+                </Form.Group>
 
-              <Form.Group className="mb-2" controlId="formLastName">
-                <Form.Label>{t('lastname')}</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="lastName"
-                  placeholder="Enter last name" 
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  isInvalid={!!formErrors.lastName}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {formErrors.lastName}
-                </Form.Control.Feedback>{" "}
-              </Form.Group>
-
-              <Form.Group className="mb-2" controlId="formDOB">
-      <Form.Label>{t('dateofbirth')}</Form.Label>
-      <div className={styles.inputGroup}>
-        <Form.Control
-          type="text"
-          placeholder="YYYY-MM-DD"
-          value={formData.dob}
-          onChange={handleInputChange}
-          readOnly
-          isInvalid={!!formErrors.dob}
-        />
-        <img
-          src="/mingcute_calendar-line.png"
-          alt="Calendar"
-          className={styles.calendarIcon}
-          onClick={() => setDatePickerVisible(!datePickerVisible)}
-        />
-        <Form.Control.Feedback type="invalid">
-          {formErrors.dob}{" "}
-        </Form.Control.Feedback>
-      </div>
-      {datePickerVisible && (
-        <div className={styles.datePickerContainer}>
-          <DatePicker
-            selected={selectedDate}
-            onChange={handleDateChange}
-            dateFormat="yyyy-MM-dd" 
-            inline
-            className={styles.datePicker}
-            popperPlacement="bottom"
-            onClickOutside={() => setDatePickerVisible(false)}
-          />
-        </div>
-      )}
-    </Form.Group>
-
-              <Form.Group className="mb-2" controlId="formPhone">
-                <Form.Label>{t('Phone')}</Form.Label>
-                <Row>
-                  <Col>
-                    <div style={{ position: "relative" }}>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter mobile number"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handlePhoneChange}
-                        isInvalid={!!formErrors.phone}
-                        style={{ paddingLeft: "60px" }}
+                <Form.Group className="form-group" controlId="formDOB">
+                  <Form.Label>{t("dateofbirth")}</Form.Label>
+                  
+                  {/* {datePickerVisible && ( */}
+                    {/* <div className={styles.datePickerContainer}> */}
+                      <DatePicker
+                        selected={selectedDate}
+                        onChange={handleDateChange}
+                        dateFormat="dd-MM-yyyy"
+                        placeholderText="DD-MM-YYYY"
+                        popperClassName="custom-date-picker"
+                        customInput={ <Form.Control
+                          type="text"
+                          placeholder="YYYY-MM-DD"
+                          value={formData.dob}
+                          onChange={handleInputChange}
+                          readOnly
+                          isInvalid={!!formErrors.dob}
+                        />}
+                        className={styles.datePicker}
+                        popperPlacement="bottom"
+                        onClickOutside={() => setDatePickerVisible(false)}
                       />
-                      <span
-                        style={{
-                          position: "absolute",
-                          left: "10px",
-                          top: "50%",
-                          transform: "translateY(-50%)",
-                          color: "#495057",
-                          pointerEvents: "none",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        +91
-                      </span>
-                      <Form.Control.Feedback type="invalid">
-                        {formErrors.phone}
-                      </Form.Control.Feedback>
-                    </div>
-                  </Col>
-                </Row>
-              </Form.Group>
+                       <Image
+                      src="/mingcute_calendar-line.png"
+                      alt="Calendar"
+                      width={18}
+                      height={20}
+                      className={styles.calendarIcon}
+                      onClick={() => setDatePickerVisible(!datePickerVisible)}
+                    />
+                    {/* </div> */}
+                  {/* )} */}
+                </Form.Group>
 
-              <Form.Group className="mb-2" controlId="formEmail">
-                <Form.Label>{t('email')}</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  isInvalid={!!formErrors.email}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {formErrors.email}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Form>
-            <Button
+                <Form.Group className="form-group" controlId="formPhone">
+                  <Form.Label>{t("Phone")}</Form.Label>
+                  <InputGroup>
+                    <InputGroup.Text id="basic-addon1">+91</InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter mobile number"
+                      name="phone"
+                      value={formData.phone}
+                      className={styles.contactInput}
+                      onChange={handlePhoneChange}
+                      isInvalid={!!formErrors.phone}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {formErrors.phone}
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                </Form.Group>
+
+                <Form.Group className="form-group" controlId="formEmail">
+                  <Form.Label>{t("email")}</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    placeholder="Enter email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    isInvalid={!!formErrors.email}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formErrors.email}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Form>
+              <Button
                 variant="primary"
                 onClick={handleRegisterClick}
-              style={{
-                fontSize: "8px",
-                padding: "1px 2px",
-                lineHeight: "1",
-                marginTop: "-5px",
-                marginBottom: "-22px",}}
-
-                disabled={loadingRegister} 
+                style={{
+                  margin:"10px 0px"
+                }}
+                disabled={loadingRegister}
               >
                 {loadingRegister ? (
                   <>
@@ -302,36 +285,39 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
                       size="sm"
                       role="status"
                       aria-hidden="true"
-                    />
-                    {' '}Registering...
+                    />{" "}
+                    Registering...
                   </>
                 ) : (
-                 <> {t('register')}</>
-                )} </Button>
-           
-            <div
-style={{  marginTop: "30px", marginBottom: "-25px", textAlign: "center", fontSize: "14px",   }}  > {t('already have an account?')} <a href="#" className="text-primary">{t('sign_in')}</a>
-</div>
+                  <> {t("register")}</>
+                )}{" "}
+              </Button>
 
-          </>
-        ),
-        1: (
-          <VerifyOtp phone={formData.phone} successAction={()=>handleScreenChange(2)}/>
-        ),
-        2: (
-          <ProfessionalDetails
-            onSubmit={(screen) => handleScreenChange(screen)}
-          />
-        ),
-        3: (
-          <UploadResumeModal
-          handleClose={handleClose}
-          />
-        ),
-      }[currentScreen]
-    }
-  </>
-);
+              <div className={`${styles.resendText}`}>
+                {" "}
+                {t("already have an account?")}
+                <a onClick={backToSignIn} className="text-primary">
+                  {t("sign_in")}
+                </a>
+              </div>
+            </>
+          ),
+          1: (
+            <VerifyOtp
+              phone={formData.phone}
+              successAction={() => handleScreenChange(2)}
+            />
+          ),
+          2: (
+            <ProfessionalDetails
+              onSubmit={(screen) => handleScreenChange(screen)}
+            />
+          ),
+          3: <UploadResumeModal handleClose={handleClose} />,
+        }[currentScreen]
+      }
+    </>
+  );
 };
 
 export default RegistrationPopup;

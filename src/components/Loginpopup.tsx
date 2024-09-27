@@ -50,6 +50,11 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
     }
   };
   
+  const handleClose = ()=>{
+    setCurrentScreen(0)
+    onClose();
+  }
+
   const handleRegisterClick = () => {
     setCurrentScreen(2);
   };
@@ -60,7 +65,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
     <>
 
       {show && !showRegistration && (
-        <Modal show={true} onHide={onClose} centered>
+        <Modal show={true} onHide={handleClose} centered>
           <Modal.Header className={styles.modalHeader} closeButton></Modal.Header>
           <Modal.Body className={`${otpVisible ? styles.visibleClass : ''} ${styles.modalContainer}`}>
 
@@ -123,19 +128,14 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                   </>
                 ),
                 1:<VerifyOtp phone={phone} successAction={onClose}/>,
-                2: <RegistrationPopup  handleClose={onClose}/>,
+                2: <RegistrationPopup  handleClose={onClose} backToSignIn={()=>setCurrentScreen(0)}/>,
               }[currentScreen]
             }
           </Modal.Body>
           <Modal.Footer>
             <div className={styles.loginFooter}>
-              <small className="w-100">
                 Copyright © 2024 Adobe. All rights reserved.
-                <br />
-                <span className="text-black">Terms of Use</span>
-                <span className="text-black">Privacy</span>
-                <span className="text-black">Do not sell or share my personal information</span>
-              </small>
+               
             </div>
           </Modal.Footer>
         </Modal>

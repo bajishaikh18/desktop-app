@@ -1,20 +1,30 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import styles from "./Header.module.scss";
 import { useTranslations } from 'next-intl';
 import LocaleSwitcherSelect from './locale/LocaleSwitcherSelect';
 import LoginPopup from '../Loginpopup';
+import { AuthUser, useAuthUserStore } from '@/stores/useAuthUserStore';
+import { getTokenClaims, isTokenValid } from '@/helpers/jwt';
 
 const Header: React.FC = () => {
   const t = useTranslations("Header");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
-
+  const { authUser,setAuthUser } = useAuthUserStore();
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+
+  useEffect(()=>{
+    if(isTokenValid() && !authUser){
+      const token = localStorage.getItem('token');
+      const user = getTokenClaims(token!);
+      setAuthUser(user as AuthUser)
+    }
+  },[])
 
   const openPopup = () => {
     setPopupVisible(true);
@@ -23,6 +33,13 @@ const Header: React.FC = () => {
   const closePopup = () => {
     setPopupVisible(false);
   };
+
+
+  const logout = ()=>{
+    localStorage.clear();
+    setAuthUser(null);
+  }
+
 
   return (
     <>
@@ -43,10 +60,20 @@ const Header: React.FC = () => {
             </NavDropdown>
           </Nav>
           <Nav className={styles.rightNavItems}>
-            <Nav.Link className={styles.navListItem} href="#employers">{t('employer')}
-            </Nav.Link>
-            <div className={styles.divider}> |</div>
-            <Nav.Link className={styles.navListItem} href="#employers" onClick={openPopup}> {t('signIn')}</Nav.Link>
+            {
+              authUser ? 
+              <>
+              <div className={styles.divider}> |</div>
+              <NavDropdown title={authUser.email} className={styles.navListItem}>
+              <NavDropdown.Item href="#action/3.2" className={styles.navListItem} onClick={logout}>
+               Logout
+              </NavDropdown.Item>
+            </NavDropdown></>
+              : <><Nav.Link className={styles.navListItem} href="#employers">{t('employer')}
+              </Nav.Link>
+              <div className={styles.divider}> |</div>
+              <Nav.Link className={styles.navListItem} href="#employers" onClick={openPopup}> {t('signIn')}</Nav.Link></>
+            }
             <LocaleSwitcherSelect />
           </Nav>
         </Navbar.Collapse>

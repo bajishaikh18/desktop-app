@@ -1,5 +1,5 @@
-
 @import './_variables';
+
 .closeButton {
   position: absolute;
   top: 10px;
@@ -9,6 +9,7 @@
   font-size: 24px;
   cursor: pointer;
 }
+
 .sendOtpButton:hover {
   background-color: #0056b3;
 
@@ -16,8 +17,8 @@
 
 .loginLinks {
   display: flex;
-  justify-content: space-between; 
-  
+  justify-content: space-between;
+
 }
 
 
@@ -25,53 +26,54 @@
   font-size: 14px;
   font-weight: 500;
   text-align: left;
-  text-decoration: none;  
+  text-decoration: none;
   color: #000;
-  &:hover{
+
+  &:hover {
     color: $color-brand-1;
   }
 }
 
 .continueWithoutLogin {
-  margin-top: 48px;
+  margin-top: 72px;
   text-align: center;
 }
 
 .continueLink {
-    color: black;
+  color: black;
   text-decoration: none;
-font-size: 14px;
-font-weight: 500;
-line-height: 16.94px;
-text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+  text-align: left;
 
 
 }
 
-.modalContainer { 
-  padding: 0px 68px !important; 
+.modalContainer {
+  padding: 0px 68px !important;
 }
 
 .modalHeader {
   padding: 24px;
   padding-bottom: 0px;
-  border-bottom: none; 
+  border-bottom: none;
 }
 
 .modalTitle1 {
   margin-top: 32px;
-  font-size: 20px; 
+  font-size: 20px;
   text-align: center;
   margin-bottom: 24px;
   font-weight: 900;
- 
+
 }
 
 .logoContainer {
   display: flex;
   justify-content: center;
   align-items: center;
- margin-top: -5px;
+  margin-top: -5px;
 }
 
 
@@ -80,24 +82,25 @@ text-align: left;
   color: #999;
   border-top: 2px solid #eee;
   text-align: center;
- font-weight: small;
- padding-top: 24px;
- margin-top: 48px;
+  font-weight: small;
+  padding-top: 24px;
+  margin: 48px 68px 3px 68px;
+  width: 100%;
 
 }
- 
-.contactInput{
+
+.contactInput {
   border-radius: 0px 8px 8px 0px !important;
 }
 
-.sendOtpButton{
-  margin-top: 13px;
+.sendOtpButton {
+  margin-top: 16px;
   margin-bottom: 24px;
 }
 
- .modalTitle2 {
+.modalTitle2 {
 
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   text-align: center;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -108,18 +111,35 @@ text-align: left;
 .otpInputs {
   display: flex;
   justify-content: center;
-  margin-top: 20px; 
+  margin-top: 20px;
+
   margin-bottom: 70px;
 }
 
+.resendText {
+  font-size: 14px;
+
+  a {
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 8px;
+    cursor: pointer;
+
+    &.disableResent {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+}
+
 .otpInput {
-  width: 40px;
-  height: 40px;
+  height: 64px;
+  width: 48px;
   text-align: center;
   margin: 0 5px;
-  border: 1px solid #ddd;
+  border: 1px solid #c8c8c8;
   border-radius: 4px;
-  background-color: #fff; 
+  background-color: #fff;
 }
 
 
@@ -132,35 +152,32 @@ text-align: left;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px; 
- 
- 
+  margin-top: 20px;
+
+
 }
+
 .phoneNumberLabel {
   display: block;
-  margin-top: 10px; 
+  font-weight: 600;
   margin-bottom: 30px;
   text-align: center;
- 
+
 }
 
 .text-muted {
   color: #6c757d;
-  
-  }
-  .otpVerificationContainer {
-  padding: 20px; 
-  
+
+}
+
+.otpVerificationContainer {
+  padding: 20px;
+
 }
 
 
-
-
-
-
-
 .modalHeader1 {
-  border-top: none; 
+  border-top: none;
   border-bottom: none;
 }
 
@@ -168,12 +185,19 @@ text-align: left;
 
 
 .modalTitle3 {
-  margin-top: 20px; 
-  font-size: 1.5rem; 
+  margin-top: 20px;
   text-align: center;
-  margin-bottom: 30px;
+  font-weight: 900;
+  line-height: 24px;
+  margin-bottom: 40px;
 }
 
+.formLabelOtp {
+  text-align: center;
+  color: $color-grey-3;
+  font-weight: 400;
+  line-height: 24px;
+}
 
 
 .modalBackdrop {
@@ -182,11 +206,11 @@ text-align: left;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
- 
+
 }
 
 
@@ -198,7 +222,7 @@ text-align: left;
   margin-top: 20px;
   font-weight: 800;
   font-size: 20px;
-  text-align: left; 
+  text-align: left;
   margin-bottom: 8px;
 }
 
@@ -206,7 +230,7 @@ text-align: left;
   font-size: 14px;
   color: #000;
   line-height: 24px;
-  margin: 0px 0 30px 0px; 
+  margin: 0px 0 30px 0px;
   text-align: left;
   width: fit-content;
 }
@@ -215,20 +239,21 @@ text-align: left;
 .uploadBox {
   border: 1px dashed $color-brand-1;
   border-radius: 8px;
-  padding:16px 16px 0px 16px;
+  padding: 16px 16px 0px 16px;
   max-width: 100%;
   margin-bottom: 24px;
   position: relative;
-  margin-left: auto; 
+  margin-left: auto;
   margin-right: auto;
-  text-align: left; 
-  transition: background-color 0.3s; 
+  text-align: left;
+  transition: background-color 0.3s;
   background: $color-brand-2;
+
   &:hover {
-    background-color: rgba(173, 216, 230, 0.5); 
+    background-color: rgba(173, 216, 230, 0.5);
   }
 
-  .successBar{
+  .successBar {
     height: 4px;
     border-radius: 8px;
     width: 100%;
@@ -237,6 +262,7 @@ text-align: left;
     left: 0px;
     bottom: 0px;
   }
+
   h5 {
     font-size: 14px;
     font-weight: bold;
@@ -263,6 +289,7 @@ text-align: left;
   transition: all 0.2s ease;
   margin-bottom: 24px;
   background-color: #fff;
+
   &:hover {
     background-color: transparent;
     color: $color-brand-1;
@@ -273,21 +300,23 @@ text-align: left;
   }
 }
 
-.error{
+.error {
   color: $color-danger !important;
 }
 
 .uploadActions {
-  display: flex; 
-  justify-content: space-between; 
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  width: 100%; 
+  width: 100%;
   padding-bottom: 0px !important;
+
   .skipButton {
     font-size: 14px;
     text-decoration: none;
     color: #000;
     cursor: pointer;
+
     &:hover {
       color: $color-brand-1;
     }
@@ -311,43 +340,35 @@ text-align: left;
 
 
 
-.inputGroup {
-  position: relative;
 
-  .calendarIcon {
-    position: absolute;
-    right: 10px;
-    top: 50%; 
-    transform: translateY(-50%);
-    cursor: pointer; 
-    width: 20px; 
-    height: 20px; 
-    z-index: 1; 
-  }
-
-  input {
-    padding-right: 40px; 
-  }
+.calendarIcon {
+  position: absolute;
+  right: 10px;
+  bottom: 12px;
+  cursor: pointer;
+  top: auto;
+  z-index: 1;
 }
 
 .datePickerContainer {
-  position: absolute; 
-  right: 40%; 
+  position: absolute;
+  right: 40%;
 
-  margin-right: 10px; 
-  
-  z-index: 10; 
+  margin-right: 10px;
+
+  z-index: 10;
 }
 
 .selectContainer {
-  position: relative; }
+  position: relative;
+}
 
 .iconImage {
   position: absolute;
-  right: 10px; 
-  top: 50%; 
-  transform: translateY(-50%); 
-  pointer-events: none; 
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .selectInput {

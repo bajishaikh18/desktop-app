@@ -6,7 +6,7 @@ import "../app/globals.scss";
 import "react-datepicker/dist/react-datepicker.css";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { verifyOtp } from "@/apis/auth";
+import { loginWithPhone, verifyOtp } from "@/apis/auth";
 import { AuthUser, useAuthUserStore } from "@/stores/useAuthUserStore";
 import { getTokenClaims } from "@/helpers/jwt";
 
@@ -20,13 +20,23 @@ export const VerifyOtp = ({
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [otpError, setOtpError] = useState<string | null>(null);
   const [otpLoading, setOtpLoading] = useState<boolean>(false);
+  const [disableResent, setDisableResent] = useState<boolean>(false);
 
   const t = useTranslations("Register");
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const { setAuthUser } = useAuthUserStore();
 
-  const handleResendOtp = () => {
-    toast.success("OTP resent!");
+  const handleResendOtp = async () => {
+    try{
+      const response = await loginWithPhone(phone);
+      if (response) {
+        toast.success("OTP Resent successfully!"); 
+      } else {
+        toast.error("Failed to send OTP. Please try again."); 
+      }
+    }catch(e){
+       toast.error("Failed to send OTP. Please try again."); 
+    }
   };
 
   const handleVerifyOtp = async () => {
@@ -42,9 +52,9 @@ export const VerifyOtp = ({
       toast.success("OTP verified successfully!");
     } catch (e: any) {
       if (e.status === 401) {
-        toast.error("OTP entered is invalid", { position: "top-center" });
+        toast.error("OTP entered is invalid");
       } else {
-        toast.error("Something went wrong. Please try again later", { position: "top-center" });
+        toast.error("Something went wrong. Please try again later");
       }
     } finally {
       setOtpLoading(false);
@@ -75,8 +85,8 @@ export const VerifyOtp = ({
       </Modal.Title>
       <Form>
         <Form.Group className="mb-3" controlId="otp">
-          <Form.Label style={{ marginLeft: "90px" }}>
-            {t("please_enter_the_OTP_sent_to")} <br />
+          <Form.Label className={styles.formLabelOtp} style={{width:'100%'}}>
+            {t("please_enter_the_OTP_sent_to")}
             <span className={styles.phoneNumberLabel}>+91 {phone}</span>
           </Form.Label>
           <div className={styles.otpInputs}>
@@ -102,9 +112,9 @@ export const VerifyOtp = ({
           </Form.Control.Feedback>
         </Form.Group>
         <div className="text-center">
-          <p className={`${styles.textMuted} text-muted`}>
-            {t('didn&apos;t_get_OTP?')} &nbsp;
-            <a href="#" onClick={handleResendOtp} className="text-primary">
+          <p className={`${styles.resendText}`}>
+            {t('didnt_get_otp')}
+            <a href="#" onClick={handleResendOtp} className={`${disableResent? styles.disableResent : ''} text-primary`}>
               {t("resendotp")}
             </a>
           </p>
@@ -124,7 +134,7 @@ export const VerifyOtp = ({
                 Verifying...
               </>
             ) : (
-              <>{t('Verifyotp')}</>
+              <>{t('verifyotp')}</>
             )}
           </Button>
         </div>

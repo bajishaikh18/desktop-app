@@ -52,19 +52,22 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
         : "Gulf experience is required.",
       currentState: formData.currentState ? "" : "Current state is required.",
     };
-
     setErrors(newErrors);
 
     const hasErrors = Object.values(newErrors).some((error) => error !== "");
     if (!hasErrors) {
       setLoading(true);
       try {
-        await updateUser(formData);
-      toast.success("Professional details updated successfully!", { position: "top-center" });
+        const payload = {
+          ...formData,
+          gulfExperience: formData.gulfExperience === "Yes"? true : false
+        }
+        await updateUser(payload);
+        toast.success("Professional details updated successfully!");
         setShowUploadModal(true);
         onSubmit(3);
       } catch (error) {
-         toast.error("Failed to update professional details. Please try again.", { position: "top-center" });
+        toast.error("Failed to update professional details. Please try again.");
         console.error("Error updating user details:", error);
       } finally {
         setLoading(false);
@@ -74,8 +77,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
 
   return (
     <>
-      <Form>
-        <Form.Group className="mb-2">
+      <Form className="register-form">
+        <Form.Group className="form-group">
           <Form.Label>{t("current_job_title")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
@@ -98,7 +101,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           </div>
         </Form.Group>
 
-        <Form.Group className="mb-2">
+        <Form.Group className="form-group">
           <Form.Label>{t("industry")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
@@ -125,7 +128,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           </div>
         </Form.Group>
 
-        <Form.Group className="mb-2">
+        <Form.Group className="form-group">
           <Form.Label>{t("total_number_of_years")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
@@ -152,7 +155,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           </div>
         </Form.Group>
 
-        <Form.Group className="mb-2">
+        <Form.Group className="form-group">
           <Form.Label>{t("do_you_have_gulf_experience?")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
@@ -178,7 +181,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           </div>
         </Form.Group>
 
-        <Form.Group className="mb-2">
+        <Form.Group className="form-group">
           <Form.Label>{t("current_state")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
@@ -210,11 +213,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
         onClick={handleSubmit}
         disabled={loading}
         style={{
-          fontSize: "8px",
-          padding: "1px 2px",
-          lineHeight: "1",
-          marginBottom: "-50px",
-          marginTop: "-20px",
+          marginTop:"10px",
+          marginBottom:"0px"
         }}
       >
         {loading ? (
