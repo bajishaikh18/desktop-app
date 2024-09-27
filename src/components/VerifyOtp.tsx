@@ -71,12 +71,12 @@ export const VerifyOtp = ({
   return (
     <>
       <Modal.Title className={styles.modalTitle3}>
-        {t(" otp verification")}
+        {t("otpverification")}
       </Modal.Title>
       <Form>
         <Form.Group className="mb-3" controlId="otp">
           <Form.Label style={{ marginLeft: "90px" }}>
-            {t("please enter the OTP sent to")} <br />
+            {t("please_enter_the_OTP_sent_to")} <br />
             <span className={styles.phoneNumberLabel}>+91 {phone}</span>
           </Form.Label>
           <div className={styles.otpInputs}>
@@ -103,9 +103,9 @@ export const VerifyOtp = ({
         </Form.Group>
         <div className="text-center">
           <p className={`${styles.textMuted} text-muted`}>
-            Didn&apos;t get OTP? &nbsp;
+            {t('didn&apos;tgetOTP?')} &nbsp;
             <a href="#" onClick={handleResendOtp} className="text-primary">
-              {t("resend otp")}
+              {t("resendotp")}
             </a>
           </p>
           <Button
@@ -124,7 +124,7 @@ export const VerifyOtp = ({
                 Verifying...
               </>
             ) : (
-              "Verify OTP"
+              <>{t('Verifyotp')}</>
             )}
           </Button>
         </div>

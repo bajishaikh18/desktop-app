@@ -13,15 +13,15 @@
     "Authentication":{
       "login":"Login",
       "mobileNo":"Mobile Number",
-      "Sendotp":"SENDOTP",
+      "sendotp":"SEND OTP",
       "register":"REGISTER",
-      "continue with out login":"Continue without Login",
-      " otp verification":" Otp Verification",
-      "please enter the OTP sent to":"please enter the OTP sent to",
-     "didn&apos;t get otp? ":"Didn&apos;t get OTP?",
-     "resend otp":"Resend OTP",
-     "verify otp":"Verify OTP",
-     "didn&apos;t get otp?&nbsp; ":"Didn&apos;t get OTP?&nbsp;"
+      "continue_with_out_login":"Continue with out Login",
+      "otpverification":" Otp Verification",
+      "please_enter_the_OTP_sent_to":"please enter the OTP sent to",
+     "didn&apos;t_get_otp? ":"Didn&apos;t get OTP?",
+     "resendotp":"Resend OTP",
+     "Verifyotp":"Verify OTP",
+     "didn&apos;t_get_otp?":"Didn&apos;t get OTP?"
 
     },
   
@@ -32,53 +32,52 @@
     "Phone":"phone ",
     "email": "Email",
     "register":"Register",
-    "already have an account":"Already have an account",
-    "signin":"Sign in",
-    " otp verification":" Otp Verification",
-      "please enter the OTP sent to":"please enter the OTP sent to",
-      "verify otp":"Verify OTP",
-      "didn&apos;t get otp?&nbsp; ":"Didn&apos;t get OTP?&nbsp;",
-     "resend otp":"Resend OTP"
+    "already have an account?":"Already have an account?",
+    "sign_in":"Sign in",
+    "otpverification":" Otp Verification",
+    "please_enter_the_OTP_sent_to":"please enter the OTP sent to",
+     "Verifyotp":"Verify OTP",
+    "didn&apos;t_get_otp?":"Didn&apos;t get OTP?",
+    "resendotp":"Resend OTP"
      
   },
 "Professional":{
-  "current job title": "Current Job Title",
-  "select your job title":"Select Your Job Title",
-  "software engineer":"Software Engineer",
-  "project manager":"Project Manager",
+  "current_job_title": "Current Job Title",
+  "select_your_job_title":"Select Your Job Title",
+  "software_engineer":"Software Engineer",
+  "project_manager":"Project Manager",
   "designer" :"Designer",
   "industry":"Industry",
-  "select industry":"Select Industry",
+  "select_industry":"Select Industry",
   "iT":"IT",
 "construction":"Construction" ,
 "healthcare":"Health Care",
-"total number of years":"Total Number of Years",
-"select years of experience":"Select Years of Experience",
-"do you have gulf experience?":"Do You have Gulf Experience",
-"select an option":"Select an Option",
+"total_number_of_years":"Total Number of Years",
+"select_years_of_experience":"Select Years of Experience",
+"do_you_have_gulf_experience?":"Do You have Gulf Experience",
+"select_an_option":"Select an Option",
 "no":"No",
 "yes":"Yes",
-"current state":"Current State",
-"select state":"Select State",
+"current_state":"Current State",
+"select_state":"Select State",
 "maharashtra":"Maharashtra",
 "delhi":"Delhi",
-"uttar pradesh":"uttar pradesh",
-"submit":"Submit",
-"job title is required":"Job title is required"
+"uttar_pradesh":"uttar pradesh",
+"submit":"Submit"
+
 },
 
 "Upload":{
-  "upload your resume":"Upload Your Resume",
-  "upload your cv":"Upload Your CV",
+  "upload_your_resume":"Upload Your Resume",
+  "upload_your_cv":"Upload Your CV",
   "pdf, jpeg, excel":"PDF, JPEG, Excel",
-  "choose file":"Choose File",
-  "upload your work video":"Upload Your Work Video",
- " upload a video of your work (30 seconds to 2 minutes)":"Upload a Video of Your Work (30 seconds to 2 minutes)",
+  "choose_file":"Choose File",
+  "upload_your_work_video":"Upload Your Work Video",
+ "upload_a_video_of_your_work_(30 seconds to 2 minutes)":"Upload a Video of Your Work (30 seconds to 2 minutes)",
 "skip":"Skip",
-"get started":"Get Started",
-" you can upload your cv to find relevant jobs":" You Can Upload Your CV to Find Relevant Jobs",
-"And Recommended jobs from Wonderly":"and recommended jobs from Wonderly",
-"Upload a video of your work":"upload a video of your work"
+"get_started":"Get Started",
+"you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from":"You can upload your cv to find relevant jobs and recommended jobs from",
+"Upload_a_video_of_your_work":"upload a video of your work"
 
 }
  

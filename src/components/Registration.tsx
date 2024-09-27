@@ -302,11 +302,11 @@ const RegistrationPopup = ({handleClose}:{handleClose:()=>void}) => {
                     {' '}Registering...
                   </>
                 ) : (
-                  'Register'
+                 <> {t('register')}</>
                 )} </Button>
            
             <div
-style={{  marginTop: "30px", marginBottom: "-25px", textAlign: "center", fontSize: "14px",   }}  > Already have an account? <a href="#" className="text-primary">{t('signin')}</a>
+style={{  marginTop: "30px", marginBottom: "-25px", textAlign: "center", fontSize: "14px",   }}  > {t('already have an account?')} <a href="#" className="text-primary">{t('sign_in')}</a>
 </div>
 
           </>

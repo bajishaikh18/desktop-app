@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { getSignedUrl, uploadFile } from "@/apis/common";
+import toast, { Toaster } from 'react-hot-toast';
 
 interface UploadResumeModalProps {
   handleClose: () => void;
@@ -59,7 +60,14 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
           await uploadFile(resp.uploadurl, media?.file!);
         })
       );
-    } catch (e) {} finally{
+      
+     
+      toast.success('Files uploaded successfully!', { position: 'top-center' });
+
+    } catch (e) {
+    
+      toast.error('Failed to upload files. Please try again.', { position: 'top-center' });
+    } finally {
       setLoading(false);
     }
   }, [cvFiles, videoFiles]);
@@ -77,11 +85,11 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
         [".docx"],
     },
   });
+
   const {
     getRootProps: getVideoRootProps,
     getInputProps: getVideoInputProps,
     isDragActive,
-    open,
     fileRejections: videoRejections,
   } = useDropzone({
     onDrop: onVideoDrop,
@@ -92,18 +100,19 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
 
   return (
     <>
+      <Toaster /> 
       <Modal.Title className={styles.modalTitle4}>
-        {t("upload your resume")}
+        {t("upload_your_resume")}
       </Modal.Title>
       <p className={styles.modalDescription}>
-        You can upload your cv to find relevant jobs and recommended jobs from
-        Wonderly.
+        {t('you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from')}
+        {t('Wonderly.')}
       </p>
       <div className={styles.uploadBox} {...getCvRootProps()}>
         <input {...getCvInputProps()} />
         <h5 className={styles.uploadTitle}>
           {" "}
-          {isCVDragActive ? "Drop the files here ..." : t("upload your cv")}
+          {isCVDragActive ? "Drop the files here ..." : t("upload_your_cv")}
         </h5>
         <p
           className={`${styles.uploadDescription} ${
@@ -120,7 +129,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
         ) : (
           <Button variant="outline-primary" className={styles.chooseFileButton}>
             <Image src="/upload.png" width={16} height={16} alt="" />
-            {t("choose file")}
+            {t("choose_file")}
           </Button>
         )}
       </div>
@@ -130,14 +139,14 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
         <h5 className={styles.uploadTitle}>
           {isDragActive
             ? "Drop the files here ..."
-            : t("upload your work video")}
+            : t("upload_your_work_video")}
         </h5>
         <p
           className={`${styles.uploadDescription} ${
             videoRejections.length > 0 ? styles.error : ""
           }`}
         >
-          Upload a video of your work (30 seconds to 2 minutes)
+          {t('Upload_a_video_of_your_work_(30 seconds to 2 minutes)')}
         </p>
         <div className={styles.dropzone}>
           {videoFiles && videoRejections.length == 0 ? (
@@ -169,7 +178,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
             {loading ? (
               <div className="spinner"></div>
             ) : (
-              t("get started")
+              t("get_started")
             )}
           </Button>
         </div>

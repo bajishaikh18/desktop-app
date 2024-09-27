@@ -80,7 +80,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     <>
       <Form>
         <Form.Group className="mb-2">
-          <Form.Label>{t("current job title")}</Form.Label>
+          <Form.Label>{t("current_job_title")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
               as="select"
@@ -90,9 +90,9 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               isInvalid={!!errors.currentJobTitle}
               className={styles.selectInput}
             >
-              <option value="">{t("select your job title")}</option>
-              <option value="Software Engineer">{t("software engineer")}</option>
-              <option value="Project Manager">{t("project manager")}</option>
+              <option value="">{t("select_your_job_title")}</option>
+              <option value="Software Engineer">{t("software_engineer")}</option>
+              <option value="Project Manager">{t("project_manager")}</option>
               <option value="Designer">{t("designer")}</option>
             </Form.Control>
             <img src="/Icon.png" alt="Job Icon" className={styles.iconImage} />
@@ -113,7 +113,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               isInvalid={!!errors.industry}
               className={styles.selectInput}
             >
-              <option value="">{t("select industry")}</option>
+              <option value="">{t("select_industry")}</option>
               <option value="IT">{t("iT")}</option>
               <option value="Construction">{t("construction")}</option>
               <option value="Healthcare">{t("healthcare")}</option>
@@ -130,7 +130,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
         </Form.Group>
 
         <Form.Group className="mb-2">
-          <Form.Label>{t("total number of years")}</Form.Label>
+          <Form.Label>{t("total_number_of_years")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
               as="select"
@@ -140,7 +140,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               isInvalid={!!errors.experienceYears}
               className={styles.selectInput}
             >
-              <option value="">{t("select years of experience")}</option>
+              <option value="">{t("select_years_of_experience")}</option>
               <option value="0-2">0-2</option>
               <option value="3-5">3-5</option>
               <option value="6-10">6-10</option>
@@ -157,7 +157,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
         </Form.Group>
 
         <Form.Group className="mb-2">
-          <Form.Label>{t("do you have gulf experience?")}</Form.Label>
+          <Form.Label>{t("do_you_have_gulf_experience?")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
               as="select"
@@ -167,7 +167,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               isInvalid={!!errors.gulfExperience}
               className={styles.selectInput}
             >
-              <option value="">{t("select an option")}</option>
+              <option value="">{t("select_an_option")}</option>
               <option value="No">{t("no")}</option>
               <option value="Yes">{t("yes")}</option>
             </Form.Control>
@@ -183,7 +183,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
         </Form.Group>
 
         <Form.Group className="mb-2">
-          <Form.Label>{t("current state")}</Form.Label>
+          <Form.Label>{t("current_state")}</Form.Label>
           <div className={styles.selectContainer}>
             <Form.Control
               as="select"
@@ -193,10 +193,10 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               isInvalid={!!errors.currentState}
               className={styles.selectInput}
             >
-              <option value="">{t("select state")}</option>
+              <option value="">{t("select_state")}</option>
               <option value="Maharashtra">{t("maharashtra")}</option>
               <option value="Delhi">{t("delhi")}</option>
-              <option value="Uttar Pradesh">{t("uttar pradesh")}</option>
+              <option value="Uttar Pradesh">{t("uttar_pradesh")}</option>
             </Form.Control>
             <img
               src="/Icon.png"
@@ -228,7 +228,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
             Submitting...
           </>
         ) : (
-          t("submit")
+          <>{t('submit')}</>
+         
         )}
       </Button>
     </>

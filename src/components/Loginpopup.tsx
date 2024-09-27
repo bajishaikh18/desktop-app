@@ -5,7 +5,7 @@ import { loginWithPhone } from "@/apis/auth";
 import RegistrationPopup from "./Registration";
 import "../app/globals.scss";
 import { useTranslations } from "next-intl";
-import toast from "react-hot-toast";
+import toast  from "react-hot-toast";
 import { VerifyOtp } from "./VerifyOtp";
 
 interface LoginPopupProps {
@@ -105,7 +105,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                         {loading ? (
                           <Spinner animation="border" size="sm" />
                         ) : (
-                          'Send OTP'
+                          <>{t('sendotp')}</>
                         )}
                       </Button>
                       <div className={styles.loginLinks}>
@@ -116,7 +116,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                       </div>
                       <div className={styles.continueWithoutLogin}>
                         <a href="#" className={styles.helperLinks}>
-                          {t('continue with out login')}
+                          {t('continue_with_out_login')}
                         </a>
                       </div>
                     </Form>
