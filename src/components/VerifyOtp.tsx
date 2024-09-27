@@ -103,7 +103,7 @@ export const VerifyOtp = ({
         </Form.Group>
         <div className="text-center">
           <p className={`${styles.textMuted} text-muted`}>
-            {t('didn&apos;tgetOTP?')} &nbsp;
+            {t('didn&apos;t_get_OTP?')} &nbsp;
             <a href="#" onClick={handleResendOtp} className="text-primary">
               {t("resendotp")}
             </a>
