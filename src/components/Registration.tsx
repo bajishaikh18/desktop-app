@@ -220,6 +220,7 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
                   {/* )} */}
                   </div>
                 </Form.Group>
+              
 
                 <Form.Group className="form-group" controlId="formPhone">
                   <Form.Label>{t("Phone")}</Form.Label>
