@@ -8,6 +8,7 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: 'export',
     sassOptions: {
         includePaths: [path.join(__dirname, 'styles')],
       },
