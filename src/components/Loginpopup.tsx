@@ -1,11 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
-import { FaCaretDown } from 'react-icons/fa'; 
-import styles from '../app/page.module.scss';
-
-
-import RegistrationPopup from './Registration';
-import '../app/globals.scss';
+import React, { useState } from "react";
+import { Modal, Button, Form, InputGroup, Spinner } from "react-bootstrap";
+import styles from "../app/page.module.scss";
+import { loginWithPhone } from "@/apis/auth";  
+import RegistrationPopup from "./Registration";
+import "../app/globals.scss";
+import { useTranslations } from "next-intl";
+import toast  from "react-hot-toast";
+import { VerifyOtp } from "./VerifyOtp";
 
 interface LoginPopupProps {
   show: boolean;
@@ -13,162 +14,131 @@ interface LoginPopupProps {
 }
 
 const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const t = useTranslations("Authentication");
+  const [phone, setPhone] = useState<string>("");
   const [otpVisible, setOtpVisible] = useState<boolean>(false);
   const [phoneError, setPhoneError] = useState<string | null>(null);
-  const [otpError, setOtpError] = useState<string | null>(null);
+  const [currentScreen, setCurrentScreen] = useState(0);
   const [showRegistration, setShowRegistration] = useState<boolean>(false);
-  const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSendOtp = () => {
-    if (phoneNumber.length < 10) {
-      setPhoneError('Invalid mobile number');
-      return;
-    }
+  const handleSendOtp = async () => {
+    setLoading(true); 
     setPhoneError(null);
-    setOtpVisible(true);
-  };
-
-  const handleOtpChange = (
-    index: number,
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const value = event.target.value;
-    if (/^\d$/.test(value)) {
-      otpInputRefs.current[index]!.value = value;
-      if (index < otpInputRefs.current.length - 1) {
-        otpInputRefs.current[index + 1]?.focus();
+  
+    try {
+      if (phone.length < 10) {
+        setPhoneError("Invalid mobile number");
+        toast.error("Invalid mobile number", { position: "top-center" });
+        return;
       }
+  
+      const response = await loginWithPhone(phone);
+      if (response) {
+        setCurrentScreen(1);
+        toast.success("OTP sent successfully!", { position: "top-center" }); 
+      } else {
+        setPhoneError("Failed to send OTP. Please try again.");
+        toast.error("Failed to send OTP. Please try again.",  { position: "top-center" }); 
+      }
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      setPhoneError("An error occurred while sending OTP.");
+      toast.error("An error occurred while sending OTP.",  { position: "top-center" }); 
+    } finally {
+      setLoading(false); 
     }
   };
-
-  const handleResendOtp = () => {
-    alert('OTP resent');
-  };
-
-  const handleVerifyOtp = () => {
-    const otp = otpInputRefs.current.map(input => input?.value).join('');
-    if (otp.length !== 6) {
-      setOtpError('Invalid OTP. Please try again.');
-      return;
-    }
-    setOtpError(null);
-    alert('OTP Verified');
-  };
+  
+  const handleClose = ()=>{
+    setCurrentScreen(0)
+    onClose();
+  }
 
   const handleRegisterClick = () => {
-    setShowRegistration(true);
+    setCurrentScreen(2);
   };
 
   if (!show && !showRegistration) return null;
 
   return (
     <>
-      {show && !showRegistration && (
-        <Modal show={true} onHide={onClose} centered>
-          <Modal.Header className={styles.modalHeader} closeButton>
-          </Modal.Header>
-          <Modal.Body className={`${otpVisible ? styles.otpBody : styles.loginBody} ${styles.modalContainer}`}>
-            {!otpVisible && (
-               <div className={styles.logoContainer}>
-                <img src="/logo-popup.png" alt="Wonderly Logo" className={styles.logoImage} />
-              </div>
-            )}
-            {!otpVisible ? (
-              <>
-                <Modal.Title className={styles.modalTitle1}>Login</Modal.Title>
-                <Form>
-  <InputGroup>
-    <InputGroup.Text
-      id="basic-addon1"
-     > +91  
-    </InputGroup.Text>
-    <Form.Control
-      type="text"
-      placeholder="Mobile Number"
-      className={styles.contactInput}
-      value={phoneNumber}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value)}
-      isInvalid={!!phoneError}
-    />
-    <Form.Control.Feedback type="invalid">{phoneError}</Form.Control.Feedback>
-  </InputGroup>
 
-  <Button
-    variant="primary"
-              
-    className={`w-100 ${styles.sendOtpButton}`}
-    onClick={handleSendOtp}
-  >
-    SEND OTP
-  </Button>
- <div className={styles.loginLinks}>
-                    <a href="#" className={styles.helperLinks}>
-                      Login with Email
-                    </a>
-                    <a href="#" className={styles.helperLinks} onClick={handleRegisterClick}>
-                      REGISTER
-                    </a>
-                  </div>
-                  <div className={styles.continueWithoutLogin}>
-                    <a href="#" className={styles.helperLinks}>
-                      Continue without Login
-                    </a>
-                   
-                  </div>
-                </Form>
-              </>
-            ) : (
-              <>
-                <Modal.Title className={styles.modalTitle}>OTP Verification</Modal.Title>
-                <Form>
-                  <Form.Group className="mb-3" controlId="otp">
-                    <Form.Label style={{ marginLeft: '90px' }}>
-                      Please enter the OTP sent to <br />
-                      <span className={styles.phoneNumberLabel}>+91 {phoneNumber}</span>
-                    </Form.Label>
-                    <div className={styles.otpInputs}>
-                      {Array.from({ length: 6 }).map((_, index) => (
+      {show && !showRegistration && (
+        <Modal show={true} onHide={handleClose} centered>
+          <Modal.Header className={styles.modalHeader} closeButton></Modal.Header>
+          <Modal.Body className={`${otpVisible ? styles.visibleClass : ''} ${styles.modalContainer}`}>
+
+            <div className={styles.logoContainer}>
+              <img
+                src="/logo-popup.png"
+                alt="Wonderly Logo"
+                className={styles.logoImage}
+              />
+            </div>
+            {
+              {
+                0: (
+                  <>
+                    <Modal.Title className={styles.modalTitle1}>
+                      {t('login')}
+                    </Modal.Title>
+                    <Form>
+                      <InputGroup>
+                        <InputGroup.Text id="basic-addon1">+91</InputGroup.Text>
                         <Form.Control
-                          key={index}
                           type="text"
-                          maxLength={1}
-                          className={styles.otpInput}
-                          placeholder="0"
-                          ref={(el: HTMLInputElement | null) => { otpInputRefs.current[index] = el; }}
-                          onChange={(e) => handleOtpChange(index, e)}
-                          isInvalid={!!otpError}
+                          placeholder={t('mobileNo')}
+                          className={styles.contactInput}
+                          value={phone}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setPhone(e.target.value)
+                          }
+                          isInvalid={!!phoneError}
                         />
-                      ))}
-                    </div>
-                    <Form.Control.Feedback type="invalid">{otpError}</Form.Control.Feedback>
-                  </Form.Group>
-                  <div className="text-center">
-                    <p className={`${styles.textMuted} text-muted`}>
-                      Didn&apos;t get OTP? &nbsp;
-                      <a href="#" onClick={handleResendOtp} className="text-primary">
-                        Resend OTP
-                      </a>
-                    </p>
-                    
-        
-                   
-                  </div>
-                </Form>
-              </>
-            )}
+                        <Form.Control.Feedback type="invalid">
+                          {phoneError}
+                        </Form.Control.Feedback>
+                      </InputGroup>
+
+                      <Button
+                        variant="primary"
+                        className={`w-100 ${styles.sendOtpButton}`}
+                        onClick={handleSendOtp}
+                        disabled={loading} 
+                      >
+                        {loading ? (
+                          <Spinner animation="border" size="sm" />
+                        ) : (
+                          <>{t('sendotp')}</>
+                        )}
+                      </Button>
+                      <div className={styles.loginLinks}>
+                        <a href="#" className={styles.helperLinks}></a>
+                        <a href="#" className={styles.helperLinks} onClick={handleRegisterClick}>
+                          {t('register')}
+                        </a>
+                      </div>
+                      <div className={styles.continueWithoutLogin}>
+                        <a href="#" className={styles.helperLinks}>
+                          {t('continue_with_out_login')}
+                        </a>
+                      </div>
+                    </Form>
+                  </>
+                ),
+                1:<VerifyOtp phone={phone} successAction={onClose}/>,
+                2: <RegistrationPopup  handleClose={onClose} backToSignIn={()=>setCurrentScreen(0)}/>,
+              }[currentScreen]
+            }
           </Modal.Body>
           <Modal.Footer>
-          <div className={styles.loginFooter}>
-
-    Copyright © 2024 Adobe. All rights reserved.
-<br />
-</div>
+            <div className={styles.loginFooter}>
+                Copyright © 2024 Adobe. All rights reserved.
+               
+            </div>
           </Modal.Footer>
         </Modal>
-      )}
-      {showRegistration && (
-        <RegistrationPopup show={showRegistration} onClose={() => setShowRegistration(false)} />
       )}
     </>
   );

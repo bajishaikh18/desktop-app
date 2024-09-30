@@ -18,6 +18,9 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+  &:hover {
+    color: $color-brand-1;
+  }
 }
 
 .btn {
@@ -42,6 +45,19 @@ a {
   font-size: 14px;
   margin-bottom: 8px;
 }
+
+.register-form{
+  margin-top: 30px;
+  .form-label{
+    font-size: 16px;
+    color: rgba(26, 26, 26, 1);
+    margin-bottom: 6px;
+  }
+  .form-group{
+    position: relative;
+    margin-bottom: 16px;
+  }
+}
 .form-control{
   font-size: 16px;
   border-radius: 8px !important;
@@ -55,12 +71,13 @@ a {
   }
 }
 
+
 .btn-loading {
   position: relative;
 }
 
 .error{
-  color: $color-danger;
+  color: $color-danger !important;
 }
 
 .card{
@@ -93,6 +110,7 @@ a {
 
 .modal-dialog{
   width: 490px !important;
+  max-width:  100% !important;
 }
 
 .input-group-text{
@@ -113,3 +131,98 @@ a {
   padding: 0px !important;
   padding-bottom: 24px !important;
 }
+.dropdown-item{
+  font-size: 14px;
+}
+.btn.show{
+  background-color: transparent !important;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 1);
+  border-left: 4px solid #0045E6;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+  display: block;
+  &.xl{
+    width: 24px;
+    height: 24px;
+  }
+  &.lg{
+    width: 20px;
+    height: 20px;
+  }
+  &.md{
+    width: 16px;
+    height: 16px;
+  }
+  &.sm{
+    width: 14px;
+    height: 14px;
+  }
+}
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .react-datepicker-wrapper{
+    width: 100%;
+  }
+
+  .custom-date-picker{
+    .react-datepicker{
+      font-family: "Inter", sans-serif;
+
+      border: 1px solid rgba(189, 189, 189, 1);
+
+    }
+    .react-datepicker__header {
+      background-color: $color-brand-2;
+      border-bottom: 1px dashed $color-brand-1;
+    }
+  }
+
+  .stdropdown-container{
+    font-size: 16px;
+    border-radius: 8px !important;
+    border: 1px solid rgba(189, 189, 189, 1) !important;
+    min-height: 44px;
+    padding-right: 7px;
+    padding-left: 5px;
+   .stdropdown-menu{
+    font-family: "Inter", sans-serif !important;
+   }
+    .stdropdown-input{
+      font-family: "Inter", sans-serif !important;
+      padding: 0px !important;
+      border:none !important;
+      input{
+        border:none !important;
+        border-radius: 8px !important;
+        min-height: 44px;
+        &:focus{
+          outline: none !important;
+          box-shadow: none !important;
+          border-color: $color-brand-1;
+         
+        }
+      }
+     
+    }
+
+  }
+  .error-group{
+    .stdropdown-container{
+      border: 1px solid $color-danger !important;
+
+    }
+  }
+
+  .form-control.is-invalid, .was-validated .form-control:invalid{
+    background-image: none !important;
+  }

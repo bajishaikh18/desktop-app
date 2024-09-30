@@ -11,6 +11,26 @@
     width: 100%;
 } 
 
+.languageSelection{
+  background-color: transparent;
+  margin: 0px;
+  padding: 0px 0px 0px 40px !important;
+  border: none;
+
+  &:hover,&:focus,&:checked,&:active{
+    background-color: transparent !important;
+  }
+  &.show{
+    background-color: transparent !important;
+  }
+}
+
+.languageSelected{
+  color: $color-brand-1;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: right;
+}
 
 .header {
   background-color: #fff;
@@ -51,11 +71,12 @@
 .rightNavItems {
   list-style: none;
   display: flex;
-  align-items: center;
+  align-items: center; 
+}
+.navListItemBlue{
   .navListItem { 
     color: $color-brand-1;
   }
- 
 }
 
 .divider{
