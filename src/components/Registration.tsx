@@ -7,7 +7,6 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../app/page.module.scss";
-import "../app/globals.scss";
 import DatePicker from "react-datepicker";
 import ProfessionalDetails from "./ProfessionalDetails";
 import UploadResumeModal from "./UploadResume";
@@ -16,6 +15,9 @@ import toast from "react-hot-toast";
 import { signup } from "@/apis/auth";
 import { VerifyOtp } from "./VerifyOtp";
 import Image from "next/image";
+
+const phoneRegex = /^[0-9]{10}$/
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
 const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => void,backToSignIn:()=>void }) => {
   const [formData, setFormData] = useState({
@@ -29,8 +31,6 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
   const [currentScreen, setCurrentScreen] = useState(0);
-  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
-  const [otpError, setOtpError] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState({
     firstName: "",
     lastName: "",
@@ -39,8 +39,6 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
     email: "",
   });
   const [loadingRegister, setLoadingRegister] = useState<boolean>(false);
-  const [loadingVerifyOtp, setLoadingVerifyOtp] = useState<boolean>(false);
-  const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,14 +50,34 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
     }));
   };
 
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setFormData({ ...formData, email: value });
+    if (value && emailRegex.test(value)) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "",
+      }));
+    }else{
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Enter a valid email",
+      }));
+    }
+  };
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/^\+?91\s*/, "");
     setFormData({ ...formData, phone: value });
-
-    if (value) {
+    if (value && phoneRegex.test(value)) {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
         phone: "",
+      }));
+    }else{
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        phone: "Enter a valid 10 digit phone number",
       }));
     }
   };
@@ -83,11 +101,11 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
   const handleRegisterClick = async () => {
     const { firstName, lastName, dob, phone, email } = formData;
     const errors = {
-      firstName: firstName ? "" : "Enter your first name.",
-      lastName: lastName ? "" : "Enter your last name.",
-      dob: dob ? "" : "Date of birth is required.",
-      phone: phone ? "" : "Enter your phone number.",
-      email: email ? "" : "Enter a valid email address.",
+      firstName: firstName ? "" : t('firstname_error'),
+      lastName: lastName ? "" : t('lastname_error'),
+      dob: dob ? "" : t('dob_error'),
+      phone: phone ? !phoneRegex.test(phone) ? t('phone_valid_error') :'' : t('phone_error'),
+      email: email && emailRegex.test(email) ?  "" : t('email_valid_error'),
     };
 
     setFormErrors(errors);
@@ -108,16 +126,12 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
       console.log("API response:", response);
 
       if (response.message) {
-        toast.success("Registered successfully!", {
-          position: "top-center",
-        });
+        toast.success(t('success'));
         handleScreenChange(1);
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      toast.error("Failed to register. Please try again.", {
-        position: "top-center",
-      });
+      toast.error(t('submit_error'));
     } finally {
       setLoadingRegister(false);
     }
@@ -125,42 +139,6 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
 
   const handleScreenChange = (screen: number) => {
     setCurrentScreen(screen);
-  };
-
-  const handleOtpChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = e.target.value;
-    if (/^\d*$/.test(value)) {
-      setOtp((prevOtp) => {
-        const newOtp = [...prevOtp];
-        newOtp[index] = value;
-        return newOtp;
-      });
-      if (value && index < 5 && otpInputRefs.current[index + 1]) {
-        otpInputRefs.current[index + 1]?.focus();
-      }
-    }
-  };
-
-  const handleVerifyOtp = async () => {
-    try {
-      setLoadingVerifyOtp(true);
-      // await verifyOtp(otp.join(''),formData.phone);
-      toast.success("OTP verified successfully!", { position: "top-center" });
-      setCurrentScreen(2);
-    } catch (e: any) {
-      if (e.status === 401) {
-        toast.error("OTP entered is invalid", { position: "top-center" });
-      } else {
-        toast.error("Something went wrong. Please try again later", {
-          position: "top-center",
-        });
-      }
-    } finally {
-      setLoadingVerifyOtp(false);
-    }
   };
 
   return (
@@ -175,7 +153,7 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
                   <Form.Control
                     type="text"
                     name="firstName"
-                    placeholder="Enter first name"
+                    placeholder={t('enter_firstname')}
                     value={formData.firstName}
                     onChange={handleInputChange}
                     isInvalid={!!formErrors.firstName}
@@ -191,7 +169,8 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
                   <Form.Control
                     type="text"
                     name="lastName"
-                    placeholder="Enter last name"
+                    placeholder={t('enter_lastname')}
+
                     value={formData.lastName}
                     onChange={handleInputChange}
                     isInvalid={!!formErrors.lastName}
@@ -206,9 +185,11 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
                   
                   {/* {datePickerVisible && ( */}
                     {/* <div className={styles.datePickerContainer}> */}
+                    <div style={{position:'relative'}}>
                       <DatePicker
                         selected={selectedDate}
                         onChange={handleDateChange}
+                        
                         dateFormat="dd-MM-yyyy"
                         placeholderText="DD-MM-YYYY"
                         popperClassName="custom-date-picker"
@@ -232,8 +213,12 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
                       className={styles.calendarIcon}
                       onClick={() => setDatePickerVisible(!datePickerVisible)}
                     />
+                      {formErrors.dob && (
+                        <Form.Text className="error">{formErrors.dob}</Form.Text>
+                      )}
                     {/* </div> */}
                   {/* )} */}
+                  </div>
                 </Form.Group>
 
                 <Form.Group className="form-group" controlId="formPhone">
@@ -242,7 +227,8 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
                     <InputGroup.Text id="basic-addon1">+91</InputGroup.Text>
                     <Form.Control
                       type="text"
-                      placeholder="Enter mobile number"
+                      placeholder={t('enter_mobileNo')}
+
                       name="phone"
                       value={formData.phone}
                       className={styles.contactInput}
@@ -260,9 +246,9 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
                   <Form.Control
                     type="email"
                     name="email"
-                    placeholder="Enter email"
+                    placeholder={t('enter_email')}
                     value={formData.email}
-                    onChange={handleInputChange}
+                    onChange={handleEmailChange}
                     isInvalid={!!formErrors.email}
                   />
                   <Form.Control.Feedback type="invalid">

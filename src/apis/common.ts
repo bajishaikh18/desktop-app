@@ -28,7 +28,7 @@ authorizedApiClient.interceptors.request.use(
 
 export const getSignedUrl = async (fileType: string,contentType:string) => {
   try {
-    const response = await authorizedApiClient.get("/getUploadUrl", {
+    const response = await authorizedApiClient.get("/file/getUploadUrl", {
       params: {
         fileType: fileType,
         contentType: contentType

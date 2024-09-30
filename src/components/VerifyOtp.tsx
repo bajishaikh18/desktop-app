@@ -77,7 +77,6 @@ export const VerifyOtp = ({
       }
     }
   };
-
   return (
     <>
       <Modal.Title className={styles.modalTitle3}>
@@ -118,10 +117,11 @@ export const VerifyOtp = ({
               {t("resendotp")}
             </a>
           </p>
+           
           <Button
             variant="primary"
             onClick={handleVerifyOtp}
-            disabled={otpLoading}
+            disabled={otpLoading || otp.some(x=>x==="")}
           >
             {otpLoading ? (
               <>

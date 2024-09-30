@@ -71,12 +71,13 @@ a {
   }
 }
 
+
 .btn-loading {
   position: relative;
 }
 
 .error{
-  color: $color-danger;
+  color: $color-danger !important;
 }
 
 .card{
@@ -184,4 +185,44 @@ a {
       background-color: $color-brand-2;
       border-bottom: 1px dashed $color-brand-1;
     }
+  }
+
+  .stdropdown-container{
+    font-size: 16px;
+    border-radius: 8px !important;
+    border: 1px solid rgba(189, 189, 189, 1) !important;
+    min-height: 44px;
+    padding-right: 7px;
+    padding-left: 5px;
+   .stdropdown-menu{
+    font-family: "Inter", sans-serif !important;
+   }
+    .stdropdown-input{
+      font-family: "Inter", sans-serif !important;
+      padding: 0px !important;
+      border:none !important;
+      input{
+        border:none !important;
+        border-radius: 8px !important;
+        min-height: 44px;
+        &:focus{
+          outline: none !important;
+          box-shadow: none !important;
+          border-color: $color-brand-1;
+         
+        }
+      }
+     
+    }
+
+  }
+  .error-group{
+    .stdropdown-container{
+      border: 1px solid $color-danger !important;
+
+    }
+  }
+
+  .form-control.is-invalid, .was-validated .form-control:invalid{
+    background-image: none !important;
   }

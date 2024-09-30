@@ -5,15 +5,31 @@ import "../app/globals.scss";
 import { useTranslations } from "next-intl";
 import { updateUser } from "@/apis/auth";
 import toast from "react-hot-toast";
+import Select, { ActionMeta, SingleValue } from "react-select";
+import { StateSelect } from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
 
 interface ProfessionalDetailsProps {
   onSubmit: (screen: number) => void;
 }
 
+type SelectOption = {
+  value: string;
+  label: string;
+};
+
+type FormData = {
+  currentJobTitle: string | SelectOption;
+  industry: string | SelectOption;
+  experienceYears: string | SelectOption;
+  gulfExperience: string | SelectOption;
+  currentState: string;
+};
+
 const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
   onSubmit,
 }) => {
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = React.useState<FormData>({
     currentJobTitle: "",
     industry: "",
     experienceYears: "",
@@ -31,6 +47,56 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     currentState: "",
   });
 
+  const industries: any = [
+    {
+      value: "IT",
+      label: t("iT"),
+    },
+    {
+      value: "construction",
+      label: t("construction"),
+    },
+    {
+      value: "healthcare",
+      label: t("healthcare"),
+    },
+  ];
+
+  const jobTitles: any = [
+    {
+      value: "Engineer",
+      label: "Engineer",
+    },
+    {
+      value: "Plumber",
+      label: "Plumber",
+    },
+    {
+      value: "Electrician",
+      label: "Electrician",
+    },
+  ];
+
+  const yearsOfExpericence: any = [
+    {
+      value: "1",
+      label: "0-1 Years",
+    },
+    {
+      value: "2",
+      label: "1-2 Years",
+    },
+    {
+      value: "3",
+      label: "2-3 Years",
+    },
+  ];
+
+  const gulfExp: any = [
+    { label: "Yes", value: "yes" },
+    { label: "No", value: "no" },
+  ];
+
   const [loading, setLoading] = React.useState(false);
   const [showUploadModal, setShowUploadModal] = React.useState(false);
 
@@ -40,17 +106,40 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
+  const onChange = (
+    newValue: SingleValue<any>,
+    actionMeta: ActionMeta<any>
+  ) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [actionMeta.name as string]: newValue,
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [actionMeta.name as string]: "",
+    }));
+  };
+
+  const onStateChange = (value: string) => {
+    setFormData((prevData) => ({ ...prevData, currentState: value }));
+    setErrors((prevErrors) => ({ ...prevErrors, currentState: "" }));
+  };
+
   const handleSubmit = async () => {
     const newErrors = {
-      currentJobTitle: formData.currentJobTitle ? "" : "Job title is required.",
-      industry: formData.industry ? "" : "Industry is required.",
-      experienceYears: formData.experienceYears
+      currentJobTitle: (formData.currentJobTitle as SelectOption)?.value
         ? ""
-        : "Experience years are required.",
-      gulfExperience: formData.gulfExperience
+        : t('job_title_error'),
+      industry: (formData.industry as SelectOption).value
         ? ""
-        : "Gulf experience is required.",
-      currentState: formData.currentState ? "" : "Current state is required.",
+        :  t('industry_error'),
+      experienceYears: (formData.industry as SelectOption).value
+        ? ""
+        :  t('exp_error'),
+      gulfExperience: (formData.gulfExperience as SelectOption).value
+        ? ""
+        :  t('gulf_exp_error'),
+      currentState: formData.currentState ? "" :  t('state_error'),
     };
     setErrors(newErrors);
 
@@ -60,14 +149,21 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
       try {
         const payload = {
           ...formData,
-          gulfExperience: formData.gulfExperience === "Yes"? true : false
-        }
+          currentJobTitle: (formData.currentJobTitle as SelectOption).value,
+          experienceYears: (formData.experienceYears as SelectOption).value,
+          industry: (formData.industry as SelectOption).value,
+          gulfExperience:
+            (formData.gulfExperience as SelectOption).value === "Yes"
+              ? true
+              : false,
+        };
+        console.log(payload);
         await updateUser(payload);
-        toast.success("Professional details updated successfully!");
+        toast.success(t("success"));
         setShowUploadModal(true);
         onSubmit(3);
       } catch (error) {
-        toast.error("Failed to update professional details. Please try again.");
+        toast.error(t("submit_error"));
         console.error("Error updating user details:", error);
       } finally {
         setLoading(false);
@@ -81,131 +177,161 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
         <Form.Group className="form-group">
           <Form.Label>{t("current_job_title")}</Form.Label>
           <div className={styles.selectContainer}>
-            <Form.Control
-              as="select"
+            <Select
+              placeholder={t("select_your_job_title")}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  fontSize: "16px",
+                  borderRadius: "8px",
+                  boxShadow: "none",
+                  borderWidth: "1px",
+                  borderStyle: "solid",
+                  borderColor: errors.currentJobTitle
+                    ? "rgb(228, 77, 77)"
+                    : "rgba(189, 189, 189, 1)",
+                  minHeight: "44px",
+                  svg: {
+                    path: {
+                      fill: "#000",
+                    },
+                  },
+                }),
+                indicatorSeparator: () => ({ display: "none" }),
+              }}
               name="currentJobTitle"
+              options={jobTitles}
               value={formData.currentJobTitle}
-              onChange={handleInputChange}
-              isInvalid={!!errors.currentJobTitle}
-              className={styles.selectInput}
-            >
-              <option value="">{t("select_your_job_title")}</option>
-              <option value="Software Engineer">{t("software_engineer")}</option>
-              <option value="Project Manager">{t("project_manager")}</option>
-              <option value="Designer">{t("designer")}</option>
-            </Form.Control>
-            <img src="/Icon.png" alt="Job Icon" className={styles.iconImage} />
-            <Form.Control.Feedback type="invalid">
-              {errors.currentJobTitle}
-            </Form.Control.Feedback>
+              onChange={onChange}
+            />
+            {errors.currentJobTitle && (
+              <Form.Text className="error">{errors.currentJobTitle}</Form.Text>
+            )}
           </div>
         </Form.Group>
 
         <Form.Group className="form-group">
           <Form.Label>{t("industry")}</Form.Label>
           <div className={styles.selectContainer}>
-            <Form.Control
-              as="select"
+            <Select
+              placeholder={t("select_industry")}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  fontSize: "16px",
+                  borderRadius: "8px",
+                  boxShadow: "none",
+                  borderWidth: "1px",
+                  borderStyle: "solid",
+                  borderColor: errors.industry
+                    ? "rgb(228, 77, 77)"
+                    : "rgba(189, 189, 189, 1)",
+                  minHeight: "44px",
+                  svg: {
+                    path: {
+                      fill: "#000",
+                    },
+                  },
+                }),
+                indicatorSeparator: () => ({ display: "none" }),
+              }}
               name="industry"
+              options={industries}
               value={formData.industry}
-              onChange={handleInputChange}
-              isInvalid={!!errors.industry}
-              className={styles.selectInput}
-            >
-              <option value="">{t("select_industry")}</option>
-              <option value="IT">{t("iT")}</option>
-              <option value="Construction">{t("construction")}</option>
-              <option value="Healthcare">{t("healthcare")}</option>
-            </Form.Control>
-            <img
-              src="/Icon.png"
-              alt="Industry Icon"
-              className={styles.iconImage}
+              onChange={onChange}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.industry}
-            </Form.Control.Feedback>
+            {errors.industry && (
+              <Form.Text className="error">{errors.industry}</Form.Text>
+            )}
           </div>
         </Form.Group>
 
         <Form.Group className="form-group">
           <Form.Label>{t("total_number_of_years")}</Form.Label>
           <div className={styles.selectContainer}>
-            <Form.Control
-              as="select"
+            <Select
+              placeholder={t("select_years_of_experience")}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  fontSize: "16px",
+                  borderRadius: "8px",
+                  boxShadow: "none",
+                  borderWidth: "1px",
+                  borderStyle: "solid",
+                  borderColor: errors.experienceYears
+                    ? "rgb(228, 77, 77)"
+                    : "rgba(189, 189, 189, 1)",
+                  minHeight: "44px",
+                  svg: {
+                    path: {
+                      fill: "#000",
+                    },
+                  },
+                }),
+                indicatorSeparator: () => ({ display: "none" }),
+              }}
               name="experienceYears"
+              options={yearsOfExpericence}
               value={formData.experienceYears}
-              onChange={handleInputChange}
-              isInvalid={!!errors.experienceYears}
-              className={styles.selectInput}
-            >
-              <option value="">{t("select_years_of_experience")}</option>
-              <option value="0-2">0-2</option>
-              <option value="3-5">3-5</option>
-              <option value="6-10">6-10</option>
-            </Form.Control>
-            <img
-              src="/Icon.png"
-              alt="Experience Icon"
-              className={styles.iconImage}
+              onChange={onChange}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.experienceYears}
-            </Form.Control.Feedback>
+
+            {errors.experienceYears && (
+              <Form.Text className="error">{errors.experienceYears}</Form.Text>
+            )}
           </div>
         </Form.Group>
 
         <Form.Group className="form-group">
           <Form.Label>{t("do_you_have_gulf_experience?")}</Form.Label>
           <div className={styles.selectContainer}>
-            <Form.Control
-              as="select"
+            <Select
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  fontSize: "16px",
+                  borderRadius: "8px",
+                  boxShadow: "none",
+                  borderWidth: "1px",
+                  borderStyle: "solid",
+                  borderColor: errors.gulfExperience
+                    ? "rgb(228, 77, 77)"
+                    : "rgba(189, 189, 189, 1)",
+                  minHeight: "44px",
+                  svg: {
+                    path: {
+                      fill: "#000",
+                    },
+                  },
+                }),
+                indicatorSeparator: () => ({ display: "none" }),
+              }}
               name="gulfExperience"
+              options={gulfExp}
               value={formData.gulfExperience}
-              onChange={handleInputChange}
-              isInvalid={!!errors.gulfExperience}
-              className={styles.selectInput}
-            >
-              <option value="">{t("select_an_option")}</option>
-              <option value="No">{t("no")}</option>
-              <option value="Yes">{t("yes")}</option>
-            </Form.Control>
-            <img
-              src="/Icon.png"
-              alt="Gulf Experience Icon"
-              className={styles.iconImage}
+              onChange={onChange}
             />
-            <Form.Control.Feedback type="invalid">
-              {errors.gulfExperience}
-            </Form.Control.Feedback>
+            {errors.gulfExperience && (
+              <Form.Text className="error">{errors.gulfExperience}</Form.Text>
+            )}
           </div>
         </Form.Group>
 
-        <Form.Group className="form-group">
+        <Form.Group
+          className={`form-group ${errors.currentState ? "error-group" : ""}`}
+        >
           <Form.Label>{t("current_state")}</Form.Label>
-          <div className={styles.selectContainer}>
-            <Form.Control
-              as="select"
-              name="currentState"
-              value={formData.currentState}
-              onChange={handleInputChange}
-              isInvalid={!!errors.currentState}
-              className={styles.selectInput}
-            >
-              <option value="">{t("select_state")}</option>
-              <option value="Maharashtra">{t("maharashtra")}</option>
-              <option value="Delhi">{t("delhi")}</option>
-              <option value="Uttar Pradesh">{t("uttar_pradesh")}</option>
-            </Form.Control>
-            <img
-              src="/Icon.png"
-              alt="State Icon"
-              className={styles.iconImage}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.currentState}
-            </Form.Control.Feedback>
-          </div>
+          <StateSelect
+            countryid={101}
+            onChange={(e: any) => {
+              onStateChange(e.state_code);
+            }}
+            placeHolder="Select State"
+          />
+          {errors.currentState && (
+            <Form.Text className="error">{errors.currentState}</Form.Text>
+          )}
         </Form.Group>
       </Form>
       <Button
@@ -213,19 +339,22 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
         onClick={handleSubmit}
         disabled={loading}
         style={{
-          marginTop:"10px",
-          marginBottom:"0px"
+          marginTop: "10px",
+          marginBottom: "0px",
         }}
       >
         {loading ? (
           <>
-            <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
-            {" "}
-            Submitting...
+            <Spinner
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />{" "}
+           {t('submitting')}
           </>
         ) : (
-          <>{t('submit')}</>
-         
+          <>{t("submit")}</>
         )}
       </Button>
     </>

@@ -13,29 +13,37 @@
   "Authentication": {
     "login": "உள்நுழைக",
     "mobileNo": "மொபைல் எண்",
-    "sendotp": "SENDOTP",
+    "sendotp": "OTP ஐ அனுப்பவும்",
     "register": "பதிவு செய்",
-    "continue_with_out_login": "உள்நுழையாமல் தொடரவும்",
-    "otpverification": " Otp சரிபார்ப்பு",
-    "please_enter_the_OTP_sent_to": "அனுப்பப்பட்ட OTP ஐ உள்ளிடவும்",
-    "didn&apos;t_get_otp? ": "OTP பெறவில்லையா?",
-    "resendotp": "OTP ஐ மீண்டும் அனுப்பவும்",
-    "Verifyotp": "OTP ஐ சரிபார்க்கவும்"
+    "continue_with_out_login": "உள்நுழையாமல் தொடரவும்"
   },
   "Register": {
     "firstname": "முதல் பெயர்",
+    "enter_firstname": "முதல் பெயரை உள்ளிடவும்",
+    "enter_lastname": "கடைசி பெயரை உள்ளிடவும்",
+    "enter_mobileNo": "மொபைல் எண்ணை உள்ளிடவும்",
+    "enter_email": "மின்னஞ்சலை உள்ளிடவும்",
     "lastname": "கடைசி பெயர்",
     "dateofbirth": "பிறந்த தேதி",
-    "Phone": "தொலைபேசி ",
+    "Phone": "தொலைபேசி",
     "email": "மின்னஞ்சல்",
     "register": "பதிவு செய்யுங்கள்",
-    "already have an account?": "ஏற்கனவே கணக்கு உள்ளது?",
+    "already have an account?": "ஏற்கனவே கணக்கு உள்ளதா?",
     "sign_in": "உள்நுழைக",
-    "otpverification": " Otp சரிபார்ப்பு",
+    "otpverification": "OTP சரிபார்ப்பு",
     "please_enter_the_OTP_sent_to": "அனுப்பப்பட்ட OTP ஐ உள்ளிடவும்",
-    "Verifyotp": "OTP ஐ சரிபார்க்கவும்",
-    "didn&apos;t_get_otp?": "OTP பெறவில்லையா? ",
-    "resendotp": "OTP ஐ மீண்டும் அனுப்பவும்"
+    "verifyotp": "OTP ஐ சரிபார்க்கவும்",
+    "didnt_get_otp": "OTP கிடைக்கவில்லையா?",
+    "resendotp": "OTP ஐ மீண்டும் அனுப்பவும்",
+    "firstname_error": "முதல் பெயர் தேவை",
+    "lastname_error": "கடைசி பெயர் தேவை",
+    "dob_error": "பிறந்த தேதி தேவை",
+    "phone_error": "தொலைபேசி எண் தேவை",
+    "phone_valid_error": "சரியான தொலைபேசி எண்ணை உள்ளிடவும்",
+    "email_error": "மின்னஞ்சல் தேவை",
+    "email_valid_error": "சரியான மின்னஞ்சலை உள்ளிடவும்",
+    "success": "வெற்றிகரமாக பதிவு செய்யப்பட்டது!",
+    "submit_error": "பதிவு செய்ய முடியவில்லை. "
   },
   "Professional": {
     "current_job_title": "தற்போதைய வேலை தலைப்பு",
@@ -59,20 +67,27 @@
     "maharashtra": "மகாராஷ்டிரா",
     "delhi": "டெல்லி",
     "uttar_pradesh": "உத்தர பிரதேசம்",
-    "submit": "சமர்ப்பிக்கவும்"
-   
+    "submit": "சமர்ப்பிக்கவும்",
+    "job_title_error": "வேலை தலைப்பு தேவை",
+    "industry_error": "தொழில் தேவை",
+    "exp_error": "அனுபவம் ஆண்டுகள் தேவை",
+    "gulf_exp_error": "வளைகுடா அனுபவம் தேவை",
+    "state_error": "மாநிலம் தேவை",
+    "success": "தொழில்முறை விவரங்கள் வெற்றிகரமாக புதுப்பிக்கப்பட்டன!",
+    "submit_error": "தொழில்முறை விவரங்களைப் புதுப்பிக்க முடியவில்லை. ",
+    "submitting": "சமர்ப்பிக்கிறது..."
   },
   "Upload": {
     "upload_your_resume": "உங்கள் விண்ணப்பத்தை பதிவேற்றவும்",
     "upload_your_cv": "உங்கள் CV ஐ பதிவேற்றவும்",
+    "drop_file": "கோப்புகளை இங்கே விடுங்கள்...",
+    "pdf_docx": "PDF & Docx கோப்புகள் மட்டுமே",
     "pdf, jpeg, excel": "PDF, JPEG, Excel",
     "choose_file": "கோப்பைத் தேர்ந்தெடுக்கவும்",
     "upload_your_work_video": "உங்கள் வேலை வீடியோவைப் பதிவேற்றவும்",
-    " upload_a_video_of_your_work_(30 seconds to 2 minutes)": "உங்கள் பணியின் வீடியோவைப் பதிவேற்றவும் (30 வினாடிகள் முதல் 2 நிமிடங்கள் வரை)",
+    "upload_a_video_of_your_work": "உங்கள் பணியின் வீடியோவைப் பதிவேற்றவும் (30 வினாடிகள் முதல் 2 நிமிடங்கள் வரை)",
     "skip": "தவிர்க்கவும்",
     "get_started": "தொடங்குங்கள்",
-    "you_can_upload_your_cv_to_find_relevant_jobs": " தொடர்புடைய வேலைகளைக் கண்டறிய உங்கள் CV ஐப் பதிவேற்றலாம்",
-    "And_Recommended_jobs_from_Wonderly": "மற்றும் வொண்டர்லியில் இருந்து பரிந்துரைக்கப்பட்ட வேலைகள்",
-    "Upload_a_video_of_your_work": "உங்கள் வேலையின் வீடியோவைப் பதிவேற்றவும்"
+    "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "Wonderly இலிருந்து தொடர்புடைய வேலைகள் மற்றும் பரிந்துரைக்கப்பட்ட வேலைகளைக் கண்டறிய உங்கள் cv ஐப் பதிவேற்றலாம்"
   }
 }

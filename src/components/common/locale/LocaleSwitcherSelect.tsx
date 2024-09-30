@@ -37,17 +37,16 @@ export default function LocaleSwitcherSelect() {
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => onChange("en")}>English</Dropdown.Item>
           <Dropdown.Item onClick={() => onChange("hi")}>
-            {}
-            Hindi <BsCheck2 className={styles.languageSelected}/>
+            Hindi
           </Dropdown.Item>
           <Dropdown.Item onClick={() => onChange("ml")}>
-            Malayalam  <BsCheck2 className={styles.languageSelected}/>
+            Malayalam
           </Dropdown.Item>
           <Dropdown.Item onClick={() => onChange("ta")}>
-            Tamil <BsCheck2 className={styles.languageSelected}/>
+            Tamil
           </Dropdown.Item>
           <Dropdown.Item onClick={() => onChange("te")}>
-            Telugu <BsCheck2 className={styles.languageSelected}/>
+            Telugu
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

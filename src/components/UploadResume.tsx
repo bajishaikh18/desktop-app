@@ -102,20 +102,19 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
       </Modal.Title>
       <p className={styles.modalDescription}>
         {t('you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from')}
-        {t('Wonderly.')}
       </p>
       <div className={styles.uploadBox} {...getCvRootProps()}>
         <input {...getCvInputProps()} />
         <h5 className={styles.uploadTitle}>
           {" "}
-          {isCVDragActive ? "Drop the files here ..." : t("upload_your_cv")}
+          {isCVDragActive ? t("drop_file") : t("upload_your_cv")}
         </h5>
         <p
           className={`${styles.uploadDescription} ${
             cvRejections.length > 0 ? styles.error : ""
           }`}
         >
-          PDF & Docx files only
+           {t("pdf_docx")}
         </p>
 
         {cvFiles && cvRejections.length == 0 ? (
@@ -155,7 +154,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
               className={styles.chooseFileButton}
             >
               <Image src="/upload.png" width={16} height={16} alt="" />
-              {t("choose file")}
+              {t("choose_file")}
             </Button>
           )}
         </div>

@@ -13,29 +13,37 @@
   "Authentication": {
     "login": "ലോഗിൻ",
     "mobileNo": "മൊബൈൽ നമ്പർ",
-    "SendOtp": "SENDOTP",
+    "sendotp": "OTP അയയ്ക്കുക",
     "register": "രജിസ്റ്റർ ചെയ്യുക",
-    "continue_with_out_login": "ലോഗിൻ ചെയ്യാതെ തന്നെ തുടരുക",
-    "otpverification": " Otp പരിശോധന",
-    "please_enter_the_OTP_sent_to": "അയച്ച OTP ദയവായി നൽകുക",
-    "didn&apos;t_get_otp? ": "OTP ലഭിച്ചില്ലേ?",
-    "resendotp": "OTP വീണ്ടും അയയ്‌ക്കുക",
-    "Verifyotp": "OTP പരിശോധിക്കുക"
+    "continue_with_out_login": "ലോഗിൻ ചെയ്യാതെ തന്നെ തുടരുക"
   },
   "Register": {
     "firstname": "പേരിന്റെ ആദ്യഭാഗം",
+    "enter_firstname": "ആദ്യ നാമം നൽകുക",
+    "enter_lastname": "അവസാന നാമം നൽകുക",
+    "enter_mobileNo": "മൊബൈൽ നമ്പർ നൽകുക",
+    "enter_email": "ഇമെയിൽ നൽകുക",
     "lastname": "പേരിന്റെ അവസാന ഭാഗം",
     "dateofbirth": "ജനനത്തീയതി",
-    "Phone": "ഫോൺ ",
+    "Phone": "ഫോൺ",
     "email": "ഇമെയിൽ",
     "register": "രജിസ്റ്റർ ചെയ്യുക",
-    "already have an account?": "ഇതിനകം ഒരു അക്കൗണ്ട് ഉണ്ട്?",
+    "already have an account?": "ഇതിനകം ഒരു അക്കൗണ്ട് ഉണ്ടോ?",
     "sign_in": "സൈൻ ഇൻ",
-    "otpverification": " Otp പരിശോധന",
+    "otpverification": "OTP പരിശോധന",
     "please_enter_the_OTP_sent_to": "അയച്ച OTP ദയവായി നൽകുക",
-    "Verifyotp": "OTP പരിശോധിക്കുക",
-    "didn&apos;t_get_otp?": "OTP ലഭിച്ചില്ലേ?",
-    "resendotp": "OTP വീണ്ടും അയയ്‌ക്കുക"
+    "verifyotp": "OTP പരിശോധിക്കുക",
+    "didnt_get_otp": "OTP ലഭിച്ചില്ലേ?",
+    "resendotp": "OTP വീണ്ടും അയയ്‌ക്കുക",
+    "firstname_error": "ആദ്യ നാമം ആവശ്യമാണ്",
+    "lastname_error": "അവസാന നാമം ആവശ്യമാണ്",
+    "dob_error": "ജനനത്തീയതി ആവശ്യമാണ്",
+    "phone_error": "ഫോൺ നമ്പർ ആവശ്യമാണ്",
+    "phone_valid_error": "സാധുവായ ഒരു ഫോൺ നമ്പർ നൽകുക",
+    "email_error": "ഇമെയിൽ ആവശ്യമാണ്",
+    "email_valid_error": "സാധുവായ ഒരു ഇമെയിൽ നൽകുക",
+    "success": "രജിസ്റ്റർ ചെയ്തു!",
+    "submit_error": "രജിസ്റ്റർ ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു. "
   },
   "Professional": {
     "current_job_title": "നിലവിലെ ജോലിയുടെ പേര്",
@@ -59,20 +67,27 @@
     "maharashtra": "മഹാരാഷ്ട്ര",
     "delhi": "ഡൽഹി",
     "uttar_pradesh": "ഉത്തര് പ്രദേശ്",
-    "submit": "സമർപ്പിക്കുക"
-   
+    "submit": "സമർപ്പിക്കുക",
+    "job_title_error": "ജോലിയുടെ പേര് ആവശ്യമാണ്",
+    "industry_error": "വ്യവസായം ആവശ്യമാണ്",
+    "exp_error": "വർഷങ്ങളുടെ അനുഭവപരിചയം ആവശ്യമാണ്",
+    "gulf_exp_error": "ഗൾഫ് അനുഭവം ആവശ്യമാണ്",
+    "state_error": "സംസ്ഥാനം ആവശ്യമാണ്",
+    "success": "പ്രൊഫഷണൽ വിശദാംശങ്ങൾ വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു!",
+    "submit_error": "പ്രൊഫഷണൽ വിശദാംശങ്ങൾ അപ്ഡേറ്റ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു. ",
+    "submitting": "സമർപ്പിക്കുന്നു..."
   },
   "Upload": {
     "upload_your_resume": "നിങ്ങളുടെ റെസ്യൂം അപ്‌ലോഡ് ചെയ്യുക",
     "upload_your_cv": "നിങ്ങളുടെ CV അപ്‌ലോഡ് ചെയ്യുക",
+    "drop_file": "ഫയലുകൾ ഇവിടെ ഇടൂ...",
+    "pdf_docx": "PDF & Docx ഫയലുകൾ മാത്രം",
     "pdf, jpeg, excel": "PDF, JPEG, Excel",
     "choose_file": "ഫയൽ തിരഞ്ഞെടുക്കുക",
     "upload_your_work_video": "നിങ്ങളുടെ ജോലി വീഡിയോ അപ്‌ലോഡ് ചെയ്യുക",
-    " upload_a_video_of_your_work_(30 seconds to 2 minutes)": "നിങ്ങളുടെ ജോലിയുടെ ഒരു വീഡിയോ അപ്‌ലോഡ് ചെയ്യുക (30 സെക്കൻഡ് മുതൽ 2 മിനിറ്റ് വരെ)",
+    "upload_a_video_of_your_work": "നിങ്ങളുടെ ജോലിയുടെ ഒരു വീഡിയോ അപ്‌ലോഡ് ചെയ്യുക (30 സെക്കൻഡ് മുതൽ 2 മിനിറ്റ് വരെ)",
     "skip": "ഒഴിവാക്കുക",
     "get_started": "ആരംഭിക്കുക",
-    "you_can_upload_your_cv_to_find_relevant_job": " പ്രസക്തമായ ജോലികൾ കണ്ടെത്താൻ നിങ്ങളുടെ സിവി അപ്‌ലോഡ് ചെയ്യാം",
-    "And_Recommended_jobs_from_Wonderly": "ഒപ്പം Wonderly-ൽ നിന്നുള്ള ശുപാർശ ചെയ്യുന്ന ജോലികളും",
-    "Upload_a_video_of_your_work": "നിങ്ങളുടെ ജോലിയുടെ ഒരു വീഡിയോ അപ്‌ലോഡ് ചെയ്യുക"
+    "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "വണ്ടർലിയിൽ നിന്ന് പ്രസക്തമായ ജോലികളും ശുപാർശ ചെയ്യുന്ന ജോലികളും കണ്ടെത്താൻ നിങ്ങൾക്ക് നിങ്ങളുടെ സിവി അപ്‌ലോഡ് ചെയ്യാം"
   }
 }
