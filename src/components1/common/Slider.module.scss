@@ -1,0 +1,247 @@
+.sliderContainer {
+  width: 100%;        
+  height: auto;      
+  position: relative; 
+}
+
+.overlay {
+  position: absolute;
+  top: 70%;              
+  left: 10%;  
+  transform: translateY(-50%); 
+  text-align: left;       
+}
+.textCommon {
+  color: white;              
+  font-family: 'Arial', sans-serif;  
+  font-weight: 300;         
+  font-size: 20px;          
+  text-align: left;         
+}
+
+.buttonRightContainer {
+  position: absolute;
+  right: 10%;           
+  top: 70%;             
+  transform: translateY(-50%);
+}
+
+.viewJobsButton {
+  padding: 10px 40px;
+  border: 1px solid white;   
+  background-color: transparent;  
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.viewJobsButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);  // Light background on hover
+}
+
+
+.unionImageContainer {
+  position: absolute;
+  left: 5%;            
+  top: 70%;             
+  transform: translateY(-50%);
+}
+
+.unionImageRightContainer {
+  position: absolute;
+  right: 5%;           
+  top: 70%;             
+  transform: translateY(-50%);
+}
+
+
+.sliderLogoContainer {
+  position: absolute;
+  bottom:15px;
+  left: 10%;              
+  transform: translateY(50%); 
+}
+
+
+
+.jobListingContainer {
+  margin-top: 80px; 
+  text-align: center; 
+  
+}
+
+.jobList {
+  display: flex; 
+  justify-content: center; 
+  flex-wrap: wrap; 
+  gap: 50px;
+  
+  span {
+    font-size: 14px; 
+    margin: 0; 
+  }
+}
+
+.latestJobsTitle {
+  color: #0045E6;
+
+}
+
+
+.searchImageContainer {
+  position: absolute;
+  bottom: -30px; 
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  width: 50%;
+}
+
+.searchImageContainer input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 50px;
+ 
+}
+
+.searchImageContainer .searchIcon {
+  margin-right: 10px;
+}
+.findJobsButton {
+  background-color: #1e90ff; 
+  border-radius: 50px;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  margin-left: auto; 
+}
+.locationText {
+  font-size: 14px;     
+  color: #333;          
+  margin-left: 10px;
+}
+
+.vectorIcon{
+  margin-left: 20px;
+}
+
+
+.lineDivider{
+  margin-left: -20px;
+}
+.locationContainer {
+  display: flex;
+  margin-left: 350px;
+  align-items: center;
+  justify-content: right;
+ 
+}
+
+.cardsContainer {
+  display: flex; 
+  margin-top: 50px;
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  margin-left: 20px;
+  width: 1396px;
+  height: 608px;
+  margin-top: 30px;
+
+  .card {
+  width: 333px; 
+  height: 520px;
+  border: 1px solid #ddd;
+  border-radius: 8px; 
+  overflow: hidden;
+  padding: 10px ;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+
+.cardImage {
+  width: 100%; 
+  height: auto; 
+  
+  .cardContent {
+  padding: 20px; 
+  }
+ }
+ }}
+
+.cardTitle {
+  font-size: 16px; 
+   margin-top: 10px;
+}
+
+.iconsContainer {
+  display: flex;
+  flex-direction: column; 
+  margin: 10px 0; 
+  font-size: 14px;
+  line-height: 16.94px;
+}
+
+.topIcons,
+.bottomIcons {
+  display: flex; 
+  justify-content: flex-start;
+  margin-bottom: 5px;
+  gap: 20px; 
+}
+
+.icon {
+  margin-right: 10px; 
+}
+
+.topIcons .icon:last-child, 
+.bottomIcons .icon:last-child { 
+  margin-right: 0;
+}
+
+
+.iconWithText {
+  display: flex;
+  align-items: center;
+  margin-right: 8px; 
+}
+.stayIcon {
+  margin-left: 30px; 
+}
+
+.jobDetails {
+  display: flex;           
+  align-items: center;     
+  gap: 12px;     
+  line-height: 16.94px;         
+  flex-wrap: nowrap;      
+
+
+.iconWithText {
+  display: flex;          
+  align-items: center;     
+  white-space: nowrap;    
+
+  span {
+    margin-left: 2px;     
+    color: #555;           
+    font-size: 14px;       
+  }
+}}
+
+
+
+
+
+
+
+
+
+
