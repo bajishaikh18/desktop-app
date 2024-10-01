@@ -69,10 +69,10 @@ const Header: React.FC = () => {
                Logout
               </NavDropdown.Item>
             </NavDropdown></>
-              : <><Nav.Link className={styles.navListItem} href="#employers">{t('employer')}
+              : <><Nav.Link className={`${styles.navListItem} ${styles.navListItemBlue}`} href="#employers">{t('employer')}
               </Nav.Link>
               <div className={styles.divider}> |</div>
-              <Nav.Link className={styles.navListItem} href="#employers" onClick={openPopup}> {t('signIn')}</Nav.Link></>
+              <Nav.Link className={`${styles.navListItem} ${styles.navListItemBlue}`} href="#employers" onClick={openPopup}> {t('signIn')}</Nav.Link></>
             }
             <LocaleSwitcherSelect />
           </Nav>

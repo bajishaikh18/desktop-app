@@ -18,6 +18,13 @@ import Image from "next/image";
 
 const phoneRegex = /^[0-9]{10}$/
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+const today = new Date();
+
+const eighteenYearsAgo = new Date(
+  today.getFullYear() - 18,
+  today.getMonth(),
+  today.getDate()
+);
 
 const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => void,backToSignIn:()=>void }) => {
   const [formData, setFormData] = useState({
@@ -103,7 +110,7 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
     const errors = {
       firstName: firstName ? "" : t('firstname_error'),
       lastName: lastName ? "" : t('lastname_error'),
-      dob: dob ? "" : t('dob_error'),
+      dob: dob ? new Date(dob).getTime() > eighteenYearsAgo.getTime() ? t('dob_error_18'): "" : t('dob_error'),
       phone: phone ? !phoneRegex.test(phone) ? t('phone_valid_error') :'' : t('phone_error'),
       email: email && emailRegex.test(email) ?  "" : t('email_valid_error'),
     };
@@ -201,6 +208,7 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
                           readOnly
                           isInvalid={!!formErrors.dob}
                         />}
+                        maxDate={eighteenYearsAgo}
                         className={styles.datePicker}
                         popperPlacement="bottom"
                         onClickOutside={() => setDatePickerVisible(false)}
