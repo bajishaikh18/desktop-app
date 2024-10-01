@@ -36,7 +36,7 @@ export const signup = async (data: SignupData) => {
   }
 };
 
-export const updateUser = async (userDetails: ProfessionalDetails) => {
+export const updateUser = async (userDetails: any) => {
   try {
     const response = await authorizedApiClient.patch("/user", userDetails);
     return response.data;

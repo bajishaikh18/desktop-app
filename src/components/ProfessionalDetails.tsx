@@ -149,8 +149,9 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
       try {
         const payload = {
           ...formData,
+          state:formData.currentState,
           currentJobTitle: (formData.currentJobTitle as SelectOption).value,
-          experienceYears: (formData.experienceYears as SelectOption).value,
+          totalExperience: (formData.experienceYears as SelectOption).value,
           industry: (formData.industry as SelectOption).value,
           gulfExperience:
             (formData.gulfExperience as SelectOption).value === "Yes"

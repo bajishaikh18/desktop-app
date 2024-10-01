@@ -39,6 +39,7 @@
     "firstname_error":"First name is required",
     "lastname_error":"Last name is required",
     "dob_error":"Date of birth is required",
+    "dob_error_18":"Should be more than 18 years",
     "phone_error":"Phone number is required",
     "phone_valid_error":"Enter a valid phone number",
     "email_error":"Email is required",
