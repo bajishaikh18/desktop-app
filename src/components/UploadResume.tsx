@@ -62,11 +62,18 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
           await uploadFile(resp.uploadurl, media?.file!);
         })
       );
-      const [,extn] = cvFiles?.name.split('.') || [];
-      const userPayload = {
-        resume:`${authUser?._id}.${extn}`,
-        workVideo: `${authUser?._id}.mp4`
+      const userPayload:{
+        resume?:string,
+        workVideo?:string
+      } = {} 
+      if(cvFiles){
+        const [,extn] = cvFiles?.name.split('.') || [];
+        userPayload.resume = `${authUser?._id}/resume.${extn}`;
       }
+      if(videoFiles){
+        userPayload.workVideo = `${authUser?._id}/workvideo.mp4`
+      }
+    
       await updateUser(userPayload)
       toast.success("Files have been uploaded securly");
       handleClose();
