@@ -20,11 +20,11 @@ const phoneRegex = /^[0-9]{10}$/
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 const today = new Date();
 
-const eighteenYearsAgo = new Date(
+const eighteenYearsAgo = new Date(new Date(
   today.getFullYear() - 18,
   today.getMonth(),
   today.getDate()
-);
+).setHours(0,0,0,0));
 
 const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => void,backToSignIn:()=>void }) => {
   const [formData, setFormData] = useState({
