@@ -13,7 +13,7 @@
   "Authentication": {
     "login": "உள்நுழைக",
     "mobileNo": "மொபைல் எண்",
-    "sendotp": "OTP ஐ அனுப்பவும்",
+    "sendotp": "OTP அனுப்பவும்",
     "register": "பதிவு செய்",
     "continue_with_out_login": "உள்நுழையாமல் தொடரவும்"
   },
@@ -38,6 +38,7 @@
     "firstname_error": "முதல் பெயர் தேவை",
     "lastname_error": "கடைசி பெயர் தேவை",
     "dob_error": "பிறந்த தேதி தேவை",
+    "dob_error_18": "18 வயதுக்கு மேல் இருக்க வேண்டும்",
     "phone_error": "தொலைபேசி எண் தேவை",
     "phone_valid_error": "சரியான தொலைபேசி எண்ணை உள்ளிடவும்",
     "email_error": "மின்னஞ்சல் தேவை",
@@ -81,7 +82,7 @@
     "upload_your_resume": "உங்கள் விண்ணப்பத்தை பதிவேற்றவும்",
     "upload_your_cv": "உங்கள் CV ஐ பதிவேற்றவும்",
     "drop_file": "கோப்புகளை இங்கே விடுங்கள்...",
-    "pdf_docx": "PDF & Docx கோப்புகள் மட்டுமே",
+    "pdf_docx": "PDF & Docx கோப்புகள் மட்டும் (5MB அதிகபட்ச கோப்பு அளவு)",
     "pdf, jpeg, excel": "PDF, JPEG, Excel",
     "choose_file": "கோப்பைத் தேர்ந்தெடுக்கவும்",
     "upload_your_work_video": "உங்கள் வேலை வீடியோவைப் பதிவேற்றவும்",

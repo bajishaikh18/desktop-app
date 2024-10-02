@@ -7,6 +7,8 @@ import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { getSignedUrl, uploadFile } from "@/apis/common";
 import toast from "react-hot-toast";
+import { updateUser } from "@/apis/auth";
+import { useAuthUserStore } from "@/stores/useAuthUserStore";
 
 interface UploadResumeModalProps {
   handleClose: () => void;
@@ -18,7 +20,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
   const [cvFiles, setCvFiles] = useState<File | null>(null);
   const [videoFiles, setVideoFiles] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-
+  const {authUser} = useAuthUserStore();
   const onVideoDrop = useCallback((acceptedFiles: any) => {
     const file = acceptedFiles[0];
     if (!file) {
@@ -60,6 +62,12 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
           await uploadFile(resp.uploadurl, media?.file!);
         })
       );
+      const [,extn] = cvFiles?.name.split('.') || [];
+      const userPayload = {
+        resume:`${authUser?._id}.${extn}`,
+        workVideo: `${authUser?._id}.mp4`
+      }
+      await updateUser(userPayload)
       toast.success("Files have been uploaded securly");
       handleClose();
     } catch (e) {
@@ -76,6 +84,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
     fileRejections: cvRejections,
   } = useDropzone({
     onDrop: onCvDrop,
+    maxSize: 5 * 1024 * 1024, //50 MB
     accept: {
       "application/pdf": [".pdf"],
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
@@ -90,6 +99,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
     fileRejections: videoRejections,
   } = useDropzone({
     onDrop: onVideoDrop,
+    maxSize: 50 * 1024 * 1024, //50 MB
     accept: {
       "video/*": [],
     },
