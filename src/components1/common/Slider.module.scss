@@ -80,10 +80,15 @@
   
   span {
     font-size: 14px; 
-    margin: 0; 
+    margin: 0;
+    cursor: pointer; /* Make the text clickable */
+    
+    &:hover {
+      color: #0045E6; 
+    }
   }
 }
-
+ 
 .latestJobsTitle {
   color: #0045E6;
 
@@ -125,20 +130,35 @@
   border: none;
   margin-left: auto; 
 }
-.locationText {
-  font-size: 14px;     
-  color: #333;          
-  margin-left: 10px;
+.selectWrapper {
+  position: relative;
+  display: inline-block;
 }
 
+.locationSelect {
+  font-size: 14px;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color: #000; 
+  background: none;
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer; // Indicate it's clickable
+}
 .vectorIcon{
   margin-left: 20px;
+  cursor: pointer;
+}
+.vectorIconWrapper {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
-
-.lineDivider{
-  margin-left: -20px;
-}
 .locationContainer {
   display: flex;
   margin-left: 350px;
@@ -164,6 +184,7 @@
   border-radius: 8px; 
   overflow: hidden;
   padding: 10px ;
+  cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 
 .cardImage {
