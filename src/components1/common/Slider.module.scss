@@ -1,12 +1,12 @@
 .slider-arrow {
   background-color: transparent;
   border: none;
-  font-size: 24px;
-  color: #333;
+  font-size: 24px; // Size of the arrows
+  color: #333; // Default arrow color
   cursor: pointer;
 
   &:hover {
-    color: #007bff;
+    color: #007bff; // Arrow color on hover
   }
 }
 
@@ -21,7 +21,7 @@
     margin: 0 5px;
 
     button {
-      background-color: #ddd;
+      background-color: #ddd; // Inactive dot color
       border: none;
       border-radius: 50%;
       width: 12px;
@@ -30,7 +30,7 @@
     }
 
     &.slick-active button {
-      background-color: #007bff;
+      background-color: #007bff; // Active dot color
     }
   }
 }
