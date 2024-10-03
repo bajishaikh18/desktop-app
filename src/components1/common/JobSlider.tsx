@@ -1,13 +1,10 @@
-
 import React, { useState } from 'react';
 import Image from 'next/image'; 
 import Slider from 'react-slick';
 import styles from './Slider.module.scss';
 
-
 const JobSlider: React.FC = () => {
-
-  // State for managing search input and location dropdown
+  // State for managing search input and selected location
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<string>('Dubai');
 
@@ -33,7 +30,7 @@ const JobSlider: React.FC = () => {
     setSelectedLocation(e.target.value);
   };
 
-  // Submit search query  connected to an API or search logic
+  // Submit search query connected to an API or search logic
   const handleFindJobs = () => {
     console.log(`Searching for: ${searchTerm} in ${selectedLocation}`);
   };
@@ -43,7 +40,7 @@ const JobSlider: React.FC = () => {
       <Slider {...settings}>
         <div>
           <Image 
-            src="/slider.png" alt="Slider Image" layout="responsive"  width={1440}  height={190}  />
+            src="/slider.png" alt="Slider Image" layout="responsive" width={1440} height={190} />
           <div className={styles.unionImageContainer}>
             <Image src="/Union.png" alt="Union Icon" width={6.25} height={10} />
           </div>
@@ -54,8 +51,8 @@ const JobSlider: React.FC = () => {
           </div>
 
           <div className={styles.buttonRightContainer}>
-          <button  className={styles.viewJobsButton}  onClick={() => window.location.href = '/jobs'} > View Job </button>
-           </div>
+            <button className={styles.viewJobsButton} onClick={() => window.location.href = '/jobs'}> View Job </button>
+          </div>
 
           <div className={styles.unionImageRightContainer}>
             <Image src="/Union (1).png" alt="Union Right Icon" width={6.25} height={10} />
@@ -68,56 +65,38 @@ const JobSlider: React.FC = () => {
           {/* Search bar and location dropdown */}
           <div className={styles.searchImageContainer}>
             <Image 
-              src="/search.png" alt="Search Icon" width={24} height={24} className={styles.additionalSearchIcon}   />
-            <input type="text" placeholder="Search job title" className={styles.searchInput} value={searchTerm} onChange={handleSearchChange}    />
-            
+              src="/search.png" alt="Search Icon" width={24} height={24} className={styles.additionalSearchIcon} />
+            <input type="text" placeholder="Search job title" className={styles.searchInput} value={searchTerm} onChange={handleSearchChange} />
+
             <div className={styles.locationContainer}>
-              <Image  src="/flag.png" alt="Flag Icon" width={24} height={24} className={styles.flagIcon}   />
-
-             
-              <div className={styles.selectWrapper}>
-                <select 
-                  className={`${styles.locationSelect} ${styles.noBorder}`} 
-                  value={selectedLocation} 
-                  onChange={handleLocationChange}
-                >
-                  <option value="Dubai">Dubai</option>
-                  <option value="Oman">Oman</option>
-                  <option value="Qatar">Qatar</option>
-                  <option value="Kuwait">Kuwait</option>
-                  <option value="Bahrain">Bahrain</option>
-                  <option value="Saudi Arabia">Saudi Arabia</option>
-                </select>
-
-                {/* Vector 2.png used as dropdown arrow */}
-                <label htmlFor="locationSelect" className={styles.vectorIconWrapper}>
-                  <Image src="/Vector 2.png" alt="Vector Icon" width={10} height={5.4} className={styles.vectorIcon}  />
-                </label>
-              </div>
-            </div>
+              <Image src="/flag.png" alt="Flag Icon" width={24} height={24} className={styles.flagIcon} />
+                 <select value={selectedLocation} onChange={handleLocationChange} className={styles.locationDropdown}>
+                <option value="Dubai">Dubai</option>
+                <option value="Oman">Oman</option>
+                <option value="Qatar">Qatar</option>
+                <option value="Kuwait">Kuwait</option>
+                <option value="Bahrain">Bahrain</option>
+                <option value="Saudi Arabia">Saudi Arabia</option>
+              </select> 
+           </div>
 
             {/* Find Jobs button */}
-            <button 
-              className={styles.findJobsButton} 
-              onClick={handleFindJobs}
-            > Find Jobs
-            </button>
+            <button className={styles.findJobsButton} onClick={handleFindJobs}> Find Jobs </button>
           </div>
         </div>
       </Slider>
 
       {/* Job Listings */}
       <div className={styles.jobListingContainer}>
-  <div className={styles.jobList}>
-    <span className={styles.latestJobsTitle}>Latest Jobs</span>
-    <span onClick={() => window.location.href = '/jobs-in-oman'}>Occupation</span>
-    <span onClick={() => window.location.href = '/jobs-in-oman'}>Jobs in Oman</span>
-    <span onClick={() => window.location.href = '/jobs-in-qatar'}>Jobs in Qatar</span>
-    <span onClick={() => window.location.href = '/jobs-in-kuwait'}>Jobs in Kuwait</span>
-    <span onClick={() => window.location.href = '/jobs-in-dubai'}>Jobs in Dubai</span>
-    <span onClick={() => window.location.href = '/jobs-in-bahrain'}>Jobs in Bahrain</span>
-  </div>
-</div>
+        <div className={styles.jobList}>
+          <span className={styles.latestJobsTitle}>Latest Jobs</span>
+          <span onClick={() => window.location.href = '/jobs-in-oman'}>Jobs in Oman</span>
+          <span onClick={() => window.location.href = '/jobs-in-qatar'}>Jobs in Qatar</span>
+          <span onClick={() => window.location.href = '/jobs-in-kuwait'}>Jobs in Kuwait</span>
+          <span onClick={() => window.location.href = '/jobs-in-dubai'}>Jobs in Dubai</span>
+          <span onClick={() => window.location.href = '/jobs-in-bahrain'}>Jobs in Bahrain</span>
+        </div>
+      </div>
     </div>
   );
 };

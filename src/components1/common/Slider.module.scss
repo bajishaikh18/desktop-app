@@ -130,34 +130,18 @@
   border: none;
   margin-left: auto; 
 }
-.selectWrapper {
-  position: relative;
-  display: inline-block;
+
+.locationDropdown {
+  padding: 8px; 
+  border: none;/* Border */
+ // border-radius: 4px; /* Rounded corners */
+ // margin-left: 4px; /* Space between flag and dropdown */
+  cursor: pointer; /* Pointer on hover */
+}
+.locationDropdown:focus {
+  outline: none; /* Remove outline on focus */
 }
 
-.locationSelect {
-  font-size: 14px;
-  margin-left: 10px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  color: #000; 
-  background: none;
-  border: none;
-  outline: none;
-  appearance: none;
-  cursor: pointer; // Indicate it's clickable
-}
-.vectorIcon{
-  margin-left: 20px;
-  cursor: pointer;
-}
-.vectorIconWrapper {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
 
 .locationContainer {
   display: flex;
