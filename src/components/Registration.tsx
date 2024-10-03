@@ -1,74 +1,118 @@
-import React, { useState, useRef } from 'react';
-import { Modal, Form, Col, Row, Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from '../app/page.module.scss';  
-import '../app/globals.scss'; 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; 
-import { FaCalendarAlt } from 'react-icons/fa'; 
-import RegistrationModal from './CreateJob'; 
+import React, { useState, useRef } from "react";
+import {
+  Form,
+  Button,
+  Spinner,
+  InputGroup,
+} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import styles from "../app/page.module.scss";
+import DatePicker from "react-datepicker";
+import ProfessionalDetails from "./ProfessionalDetails";
+import UploadResumeModal from "./UploadResume";
+import { useTranslations } from "next-intl";
+import toast from "react-hot-toast";
+import { signup } from "@/apis/auth";
+import { VerifyOtp } from "./VerifyOtp";
+import Image from "next/image";
 
-interface RegistrationPopupProps {
-  show: boolean;
-  onClose: () => void;
-}
+const phoneRegex = /^[0-9]{10}$/
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+const today = new Date();
 
-const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) => {
+const eighteenYearsAgo = new Date(new Date(
+  today.getFullYear() - 18,
+  today.getMonth(),
+  today.getDate()
+).setHours(0,0,0,0));
+
+const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => void,backToSignIn:()=>void }) => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dob: '', 
-    phoneNumber: '',
-    email: ''
+    firstName: "",
+    lastName: "",
+    dob: "",
+    phone: "",
+    email: "",
   });
-
+  const t = useTranslations("Register");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
-  const [otpVisible, setOtpVisible] = useState<boolean>(false);
-  const [otp, setOtp] = useState<string[]>(Array(6).fill(''));
-  const [otpError, setOtpError] = useState<string | null>(null);
-  const [registrationModalVisible, setRegistrationModalVisible] = useState<boolean>(false);
+  const [currentScreen, setCurrentScreen] = useState(0);
   const [formErrors, setFormErrors] = useState({
-    firstName: '',
-    lastName: '',
-    dob: '',
-    phoneNumber: '',
-    email: ''
+    firstName: "",
+    lastName: "",
+    dob: "",
+    phone: "",
+    email: "",
   });
-  const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [loadingRegister, setLoadingRegister] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  
+
     setFormErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: ''
+      [name]: "",
     }));
   };
 
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/^\+?91\s*/, ''); 
-    setFormData({ ...formData, phoneNumber: value });
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setFormData({ ...formData, email: value });
+    if (value && emailRegex.test(value)) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "",
+      }));
+    }else{
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Enter a valid email",
+      }));
+    }
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/^\+?91\s*/, "");
+    setFormData({ ...formData, phone: value });
+    if (value && phoneRegex.test(value)) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        phone: "",
+      }));
+    }else{
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        phone: "Enter a valid 10 digit phone number",
+      }));
+    }
   };
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     if (date) {
-      const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
       setFormData((prevData) => ({ ...prevData, dob: formattedDate }));
+
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        dob: "",
+      }));
     }
     setDatePickerVisible(false);
   };
 
-  const handleRegisterClick = () => {
-    const { firstName, lastName, dob, phoneNumber, email } = formData;
+  const handleRegisterClick = async () => {
+    const { firstName, lastName, dob, phone, email } = formData;
     const errors = {
-      firstName: firstName ? '' : 'Please enter your first name.',
-      lastName: lastName ? '' : 'Please enter your last name.',
-      dob: dob ? '' : 'Date of birth is required.',
-      phoneNumber: phoneNumber ? '' : 'Please enter your phone number.',
-      email: email ? '' : 'Please enter a valid email address.'
+      firstName: firstName ? "" : t('firstname_error'),
+      lastName: lastName ? "" : t('lastname_error'),
+      dob: dob ? new Date(dob).getTime() > eighteenYearsAgo.getTime() ? t('dob_error_18'): "" : t('dob_error'),
+      phone: phone ? !phoneRegex.test(phone) ? t('phone_valid_error') :'' : t('phone_error'),
+      email: email && emailRegex.test(email) ?  "" : t('email_valid_error'),
     };
 
     setFormErrors(errors);
@@ -76,237 +120,197 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ show, onClose }) 
     if (Object.values(errors).some((error) => error)) {
       return;
     }
-
-    console.log("Register button clicked", formData);
-    setOtpVisible(true);  
-  };
-
-  const handleOtpChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (/^\d*$/.test(value)) {
-      setOtp((prevOtp) => {
-        const newOtp = [...prevOtp];
-        newOtp[index] = value;
-        return newOtp;
+    setLoadingRegister(true);
+    try {
+      const response = await signup({
+        firstName,
+        lastName,
+        dob,
+        phone,
+        email,
       });
-      if (value && index < 5 && otpInputRefs.current[index + 1]) {
-        otpInputRefs.current[index + 1]?.focus(); 
+
+      console.log("API response:", response);
+
+      if (response.message) {
+        toast.success(t('success'));
+        handleScreenChange(1);
       }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      toast.error(t('submit_error'));
+    } finally {
+      setLoadingRegister(false);
     }
   };
 
-  const handleVerifyOtp = () => {
-    console.log("OTP submitted:", otp.join(''));
-    setRegistrationModalVisible(true);
+  const handleScreenChange = (screen: number) => {
+    setCurrentScreen(screen);
   };
-
-  const handleResendOtp = () => {
-    console.log("Resend OTP");
-  };
-
-  if (!show) return null;
 
   return (
     <>
-      <Modal show={show} onHide={() => {
-        if (otpVisible) {
-          setOtpVisible(false); 
-        } else {
-          onClose(); 
-        }
-      }} centered>
-        <Modal.Header className={styles.modalHeader} closeButton>
-        </Modal.Header>
-        <Modal.Body className={styles.modalBodyRegister}>
-         
-          {!otpVisible ? (
+      {
+        {
+          0: (
             <>
-              <div className={styles.logoContainer}>
-                <img src="/logo-popup.png" alt="Wonderly Logo" className={styles.logoImage} />
-              </div>
-              <Form>
-              <Form.Group className="mb-2" controlId="formFirstName">
-                  <Form.Label>First Name</Form.Label>
+              <Form className="register-form">
+                <Form.Group className="form-group" controlId="formFirstName">
+                  <Form.Label>{t("firstname")}</Form.Label>
                   <Form.Control
                     type="text"
                     name="firstName"
-                    placeholder="Enter first name"
+                    placeholder={t('enter_firstname')}
                     value={formData.firstName}
                     onChange={handleInputChange}
                     isInvalid={!!formErrors.firstName}
                   />
                   <Form.Control.Feedback type="invalid">
+                    {" "}
                     {formErrors.firstName}
-                  </Form.Control.Feedback>
+                  </Form.Control.Feedback>{" "}
                 </Form.Group>
-                <Form.Group className="mb-2" controlId="formLastName">
-                  <Form.Label>Last Name</Form.Label>
+
+                <Form.Group className="form-group" controlId="formLastName">
+                  <Form.Label>{t("lastname")}</Form.Label>
                   <Form.Control
                     type="text"
                     name="lastName"
-                    placeholder="Enter last name"
+                    placeholder={t('enter_lastname')}
+
                     value={formData.lastName}
                     onChange={handleInputChange}
                     isInvalid={!!formErrors.lastName}
                   />
                   <Form.Control.Feedback type="invalid">
                     {formErrors.lastName}
-                  </Form.Control.Feedback>
+                  </Form.Control.Feedback>{" "}
                 </Form.Group>
-                <Form.Group className="mb-2" controlId="formDOB">
-                  <Form.Label>Date of Birth</Form.Label>
-                  <div className={styles.inputGroup}>
-                    <Form.Control
-                      type="text"
-                      placeholder="DD/MM/YYYY"
-                      value={formData.dob}
-                      onChange={handleInputChange}
-                      readOnly
-                      isInvalid={!!formErrors.dob}
-                    />
-                    <img 
-                      src="/mingcute_calendar-line.png" 
-                      alt="Calendar" 
-                      className={styles.calendarIcon} 
-                      onClick={() => setDatePickerVisible(!datePickerVisible)} 
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {formErrors.dob}
-                    </Form.Control.Feedback>
-                  </div>
-                  {datePickerVisible && (
-                    <div className={styles.datePickerContainer}>
+
+                <Form.Group className="form-group" controlId="formDOB">
+                  <Form.Label>{t("dateofbirth")}</Form.Label>
+                  
+                  {/* {datePickerVisible && ( */}
+                    {/* <div className={styles.datePickerContainer}> */}
+                    <div style={{position:'relative'}}>
                       <DatePicker
                         selected={selectedDate}
                         onChange={handleDateChange}
-                        dateFormat="dd/MM/yyyy"
-                        inline 
+                        
+                        dateFormat="dd-MM-yyyy"
+                        placeholderText="DD-MM-YYYY"
+                        popperClassName="custom-date-picker"
+                        customInput={ <Form.Control
+                          type="text"
+                          placeholder="YYYY-MM-DD"
+                          value={formData.dob}
+                          onChange={handleInputChange}
+                          readOnly
+                          isInvalid={!!formErrors.dob}
+                        />}
+                        maxDate={eighteenYearsAgo}
                         className={styles.datePicker}
                         popperPlacement="bottom"
                         onClickOutside={() => setDatePickerVisible(false)}
                       />
-                    </div>
-                  )}
+                       <Image
+                      src="/mingcute_calendar-line.png"
+                      alt="Calendar"
+                      width={18}
+                      height={20}
+                      className={styles.calendarIcon}
+                      onClick={() => setDatePickerVisible(!datePickerVisible)}
+                    />
+                      {formErrors.dob && (
+                        <Form.Text className="error">{formErrors.dob}</Form.Text>
+                      )}
+                    {/* </div> */}
+                  {/* )} */}
+                  </div>
                 </Form.Group>
               
 
-                <Form.Group className="mb-2" controlId="formPhoneNumber">
-                  <Form.Label>Phone Number</Form.Label>
-                  <Row>
-                    <Col>
-                      <div style={{ position: 'relative' }}>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter mobile number"
-                          name="phoneNumber"
-                          value={formData.phoneNumber}
-                          onChange={handlePhoneNumberChange} 
-                          isInvalid={!!formErrors.phoneNumber}
-                          style={{ paddingLeft: '60px' }} 
-                        />
-                        <span style={{
-                          position: 'absolute',
-                          left: '10px', 
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          color: '#495057',
-                          pointerEvents: 'none', 
-                          display: 'flex',
-                          alignItems: 'center'
-                        }}>
-                          +91
-                        </span>
-                        <Form.Control.Feedback type="invalid">
-                          {formErrors.phoneNumber}
-                        </Form.Control.Feedback>
-                      </div>
-                    </Col>
-                  </Row>
+                <Form.Group className="form-group" controlId="formPhone">
+                  <Form.Label>{t("Phone")}</Form.Label>
+                  <InputGroup>
+                    <InputGroup.Text id="basic-addon1">+91</InputGroup.Text>
+                    <Form.Control
+                      type="text"
+                      placeholder={t('enter_mobileNo')}
+
+                      name="phone"
+                      value={formData.phone}
+                      className={styles.contactInput}
+                      onChange={handlePhoneChange}
+                      isInvalid={!!formErrors.phone}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {formErrors.phone}
+                    </Form.Control.Feedback>
+                  </InputGroup>
                 </Form.Group>
-                
-                <Form.Group className="mb-2" controlId="formEmail">
-                  <Form.Label>Email</Form.Label>
+
+                <Form.Group className="form-group" controlId="formEmail">
+                  <Form.Label>{t("email")}</Form.Label>
                   <Form.Control
                     type="email"
                     name="email"
-                    placeholder="Enter email"
+                    placeholder={t('enter_email')}
                     value={formData.email}
-                    onChange={handleInputChange}
+                    onChange={handleEmailChange}
                     isInvalid={!!formErrors.email}
                   />
                   <Form.Control.Feedback type="invalid">
                     {formErrors.email}
                   </Form.Control.Feedback>
                 </Form.Group>
-
-               </Form>
-               <div className="text-center mt-2" style={{ marginBottom: '-25px' }}> 
-                <small
-                  className={`${styles.registerText} text-primary`}
-                  onClick={handleRegisterClick}
-                  style={{ cursor: 'pointer' }}
-                >
-                  Register
-                </small>
-              </div>
-
-            </>
-          ) : (
-           
-            <>
-                <Modal.Title className={styles.modalTitle3}>OTP Verification</Modal.Title>
-              <Form>
-                <Form.Group className="mb-3" controlId="otp">
-                  <Form.Label style={{ marginLeft: '90px' }}>    
-                    Please enter the OTP sent to <br />
-                    <span className={styles.phoneNumberLabel}>+91 {formData.phoneNumber}</span>
-                  </Form.Label>
-                  <div className={styles.otpInputs}>
-                    {Array.from({ length: 6 }).map((_, index) => (
-                      <Form.Control
-                        key={index}
-                        type="text"
-                        maxLength={1}
-                        className={styles.otpInput}
-                        placeholder="0"
-                        ref={(el: HTMLInputElement | null) => { otpInputRefs.current[index] = el; }}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleOtpChange(index, e)}
-                        isInvalid={!!otpError}
-                      />
-                    ))}
-                  </div>
-                  <Form.Control.Feedback type="invalid">{otpError}</Form.Control.Feedback>
-                </Form.Group>
-                <div className="text-center">
-                  <p className={`${styles.textMuted} text-muted`}>
-                    Didn&apos;t get OTP? &nbsp;
-                    <a href="#" onClick={handleResendOtp} className="text-primary">
-                      Resend OTP
-                    </a>
-                  </p>
-                  <Button variant="primary" onClick={handleVerifyOtp} style={{ fontSize: '8px', padding: '1px 2px', lineHeight: '1', marginBottom: '-22px' }}>
-                    Verify OTP
-                  </Button>
-                </div>
               </Form>
+              <Button
+                variant="primary"
+                onClick={handleRegisterClick}
+                style={{
+                  margin:"10px 0px"
+                }}
+                disabled={loadingRegister}
+              >
+                {loadingRegister ? (
+                  <>
+                    <Spinner
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />{" "}
+                    Registering...
+                  </>
+                ) : (
+                  <> {t("register")}</>
+                )}{" "}
+              </Button>
 
+              <div className={`${styles.resendText}`}>
+                {" "}
+                {t("already have an account?")}
+                <a onClick={backToSignIn} className="text-primary">
+                  {t("sign_in")}
+                </a>
+              </div>
             </>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <div className={styles.loginFooter}>
-            <small className="w-100">
-              Copyright © 2024 Adobe. All rights reserved. 
-              <br />
-              <span className="text-black">Terms of Use</span> 
-              <span className="text-black">Privacy</span> 
-              <span className="text-black">Do not sell or share my personal information</span>
-            </small>
-          </div>
-        </Modal.Footer>
-
-      </Modal>
-      <RegistrationModal show={registrationModalVisible} onClose={() => setRegistrationModalVisible(false)} />
+          ),
+          1: (
+            <VerifyOtp
+              phone={formData.phone}
+              successAction={() => handleScreenChange(2)}
+            />
+          ),
+          2: (
+            <ProfessionalDetails
+              onSubmit={(screen) => handleScreenChange(screen)}
+            />
+          ),
+          3: <UploadResumeModal handleClose={handleClose} />,
+        }[currentScreen]
+      }
     </>
   );
 };

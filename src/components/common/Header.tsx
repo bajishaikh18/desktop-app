@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import styles from "./Header.module.scss";
@@ -9,19 +9,25 @@ import LoginPopup from '../Loginpopup';
 import JobSlider from '../../components1/common/JobSlider';
 import JobPortal from '../../components1/JobPortal'; // Adjusted path
 
-
-
-
-
+import { AuthUser, useAuthUserStore } from '@/stores/useAuthUserStore';
+import { getTokenClaims, isTokenValid } from '@/helpers/jwt';
 
 const Header: React.FC = () => {
   const t = useTranslations("Header");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
-
+  const { authUser,setAuthUser } = useAuthUserStore();
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+
+  useEffect(()=>{
+    if(isTokenValid() && !authUser){
+      const token = localStorage.getItem('token');
+      const user = getTokenClaims(token!);
+      setAuthUser(user as AuthUser)
+    }
+  },[])
 
   const openPopup = () => {
     setPopupVisible(true);
@@ -30,6 +36,13 @@ const Header: React.FC = () => {
   const closePopup = () => {
     setPopupVisible(false);
   };
+
+
+  const logout = ()=>{
+    localStorage.clear();
+    setAuthUser(null);
+  }
+
 
   return (
     <>
@@ -43,16 +56,27 @@ const Header: React.FC = () => {
             <Nav.Link className={styles.navListItem} href="#agencies">{t('agenices')}</Nav.Link>
             <Nav.Link className={styles.navListItem} href="#candidates">{t('travel')}</Nav.Link>
             <NavDropdown title={t('services')} className={styles.navListItem}>
-              <NavDropdown.Item href="#action/3.1" className={styles.navListItem}>Document Attestation</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.1" className={styles.navListItem}>{t('documentAttestation')}</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2" className={styles.navListItem}>
-                Medical Tests
+               {t('medicalTests')}
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Nav className={styles.rightNavItems}>
-            <Nav.Link className={styles.navListItem} href="#employers">I am an Employer</Nav.Link>
-            <div className={styles.divider}> |</div>
-            <Nav.Link className={styles.navListItem} href="#employers" onClick={openPopup}>Sign In</Nav.Link>
+            {
+              authUser ? 
+              <>
+              <div className={styles.divider}> |</div>
+              <NavDropdown title={authUser.email} className={styles.navListItem}>
+              <NavDropdown.Item href="#action/3.2" className={styles.navListItem} onClick={logout}>
+               Logout
+              </NavDropdown.Item>
+            </NavDropdown></>
+              : <><Nav.Link className={`${styles.navListItem} ${styles.navListItemBlue}`} href="#employers">{t('employer')}
+              </Nav.Link>
+              <div className={styles.divider}> |</div>
+              <Nav.Link className={`${styles.navListItem} ${styles.navListItemBlue}`} href="#employers" onClick={openPopup}> {t('signIn')}</Nav.Link></>
+            }
             <LocaleSwitcherSelect />
           </Nav>
         </Navbar.Collapse>

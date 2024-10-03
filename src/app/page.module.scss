@@ -1,5 +1,5 @@
-
 @import './_variables';
+
 .closeButton {
   position: absolute;
   top: 10px;
@@ -9,6 +9,7 @@
   font-size: 24px;
   cursor: pointer;
 }
+
 .sendOtpButton:hover {
   background-color: #0056b3;
 
@@ -16,8 +17,8 @@
 
 .loginLinks {
   display: flex;
-  justify-content: space-between; 
-  
+  justify-content: space-between;
+
 }
 
 
@@ -25,52 +26,54 @@
   font-size: 14px;
   font-weight: 500;
   text-align: left;
-  text-decoration: none;  
+  text-decoration: none;
   color: #000;
-  &:hover{
+
+  &:hover {
     color: $color-brand-1;
   }
 }
 
 .continueWithoutLogin {
-  margin-top: 48px;
+  margin-top: 72px;
   text-align: center;
 }
 
 .continueLink {
-    color: black;
+  color: black;
   text-decoration: none;
-font-size: 14px;
-font-weight: 500;
-line-height: 16.94px;
-text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+  text-align: left;
 
 
 }
 
-.modalContainer { 
-  padding: 0px 68px !important; 
+.modalContainer {
+  padding: 0px 68px !important;
 }
 
 .modalHeader {
   padding: 24px;
   padding-bottom: 0px;
-  border-bottom: none; 
+  border-bottom: none;
 }
 
 .modalTitle1 {
   margin-top: 32px;
-  font-size: 20px; 
+  font-size: 20px;
   text-align: center;
   margin-bottom: 24px;
   font-weight: 900;
- 
+
 }
 
 .logoContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: -5px;
 }
 
 
@@ -79,26 +82,28 @@ text-align: left;
   color: #999;
   border-top: 2px solid #eee;
   text-align: center;
- font-weight: small;
- padding-top: 24px;
- margin-top: 48px;
+  font-weight: small;
+  padding-top: 24px;
+  margin: 48px 68px 3px 68px;
+  width: 100%;
 
 }
- 
-.contactInput{
+
+.contactInput {
   border-radius: 0px 8px 8px 0px !important;
 }
 
-.sendOtpButton{
-  margin-top: 13px;
+.sendOtpButton {
+  margin-top: 16px;
   margin-bottom: 24px;
 }
 
- .modalTitle {
+.modalTitle2 {
 
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   text-align: center;
-  margin-bottom: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 
@@ -106,18 +111,35 @@ text-align: left;
 .otpInputs {
   display: flex;
   justify-content: center;
-  margin-top: 20px; 
+  margin-top: 20px;
+
   margin-bottom: 70px;
 }
 
+.resendText {
+  font-size: 14px;
+
+  a {
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 8px;
+    cursor: pointer;
+
+    &.disableResent {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+}
+
 .otpInput {
-  width: 40px;
-  height: 40px;
+  height: 64px;
+  width: 48px;
   text-align: center;
   margin: 0 5px;
-  border: 1px solid #ddd;
+  border: 1px solid #c8c8c8;
   border-radius: 4px;
-  background-color: #fff; 
+  background-color: #fff;
 }
 
 
@@ -130,58 +152,51 @@ text-align: left;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px; 
- 
- 
+  margin-top: 20px;
+
+
 }
+
 .phoneNumberLabel {
   display: block;
-  margin-top: 10px; 
+  font-weight: 600;
   margin-bottom: 30px;
   text-align: center;
- 
+
 }
 
 .text-muted {
   color: #6c757d;
-  
-  }
-  .otpVerificationContainer {
-  padding: 20px; 
-  
+
 }
 
+.otpVerificationContainer {
+  padding: 20px;
 
-
-
-
+}
 
 
 .modalHeader1 {
-  border-top: none; 
+  border-top: none;
   border-bottom: none;
 }
 
-.modalBodyRegister {
-  padding: 0px 68px !important; 
-}
 
-
-
-.logoImage2{
-  margin-top: 30px;
-}
 
 
 .modalTitle3 {
-  margin-top: 20px; 
-  font-size: 1.5rem; 
+  margin-top: 20px;
   text-align: center;
-  margin-bottom: 30px;
+  font-weight: 900;
+  line-height: 24px;
+  margin-bottom: 40px;
 }
 
-.modalBodyCreate{
-  padding: 0px 68px !important; 
+.formLabelOtp {
+  text-align: center;
+  color: $color-grey-3;
+  font-weight: 400;
+  line-height: 24px;
 }
 
 
@@ -191,72 +206,73 @@ text-align: left;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
- 
+
 }
 
 
-.modalContainerResume {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  margin-top: 0;
- padding:20px;
-}
 
 
-.modalBodyResume {
-  text-align: center;
-  
-}
 
 
 .modalTitle4 {
-  font-size: 1.5rem;
-  padding-left: 40px;
-  text-align: center; 
-  margin-top: 20px; 
+  margin-top: 20px;
+  font-weight: 800;
+  font-size: 20px;
+  text-align: left;
+  margin-bottom: 8px;
 }
 
 .modalDescription {
-  font-size: 0.9rem;
-  color: black;
-  line-height: 1.5;
-  margin: -20px 0 30px 40px; 
+  font-size: 14px;
+  color: #000;
+  line-height: 24px;
+  margin: 0px 0 30px 0px;
   text-align: left;
   width: fit-content;
 }
 
 
 .uploadBox {
-  border: 2px dashed #007bff;
+  border: 1px dashed $color-brand-1;
   border-radius: 8px;
-  padding: 10px;
-  max-width: 80%;
-  margin-bottom: 15px;
-  margin-left: auto; 
+  padding: 16px 16px 0px 16px;
+  max-width: 100%;
+  margin-bottom: 24px;
+  position: relative;
+  margin-left: auto;
   margin-right: auto;
-  text-align: left; 
-  transition: background-color 0.3s; 
-  
+  text-align: left;
+  transition: background-color 0.3s;
+  background: $color-brand-2;
+
   &:hover {
-    background-color: rgba(173, 216, 230, 0.5); 
+    background-color: rgba(173, 216, 230, 0.5);
+  }
+
+  .successBar {
+    height: 4px;
+    border-radius: 8px;
+    width: 100%;
+    background-color: rgba(49, 134, 62, 1);
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
   }
 
   h5 {
-    font-size: 1.1rem;
+    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 10px;
-    padding-right: 5px;
+    margin-bottom: 4px;
   }
 
   p {
-    font-size: 0.9rem;
-    color: #6c757d;
-    margin-bottom: 15px;
+    font-size: 12px;
+    color: $color-grey-1;
+    margin-bottom: 20px;
   }
 }
 
@@ -264,65 +280,56 @@ text-align: left;
 .chooseFileButton,
 .takeVideoButton {
   background-color: transparent;
-  border: 2px solid #007bff;
-  color: #007bff;
+  border: 1px solid $color-brand-1;
+  color: $color-brand-1;
   padding: 10px 15px;
-  font-weight: 600;
+  margin-top: 0px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
+  margin-bottom: 24px;
+  background-color: #fff;
 
   &:hover {
-    background-color: #007bff;
-    color: #ffffff;
+    background-color: transparent;
+    color: $color-brand-1;
   }
 
-  i {
-    margin-right: 8px;
+  img {
+    margin-right: 10px;
   }
+}
+
+.error {
+  color: $color-danger !important;
 }
 
 .uploadActions {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
-
-  .chooseFileButton,
-  .takeVideoButton {
-    flex: 1;
-  }
-}
-
-.footerActions {
-  display: flex; 
-  justify-content: space-between; 
   align-items: center;
-  width: 100%; 
-  margin-bottom: 18px;
- 
+  width: 100%;
+  padding-bottom: 0px !important;
 
   .skipButton {
-    background: none;
-    border: none;
-    color: #6c757d;
+    font-size: 14px;
+    text-decoration: none;
+    color: #000;
     cursor: pointer;
-    margin-left: 50px;
+
+    &:hover {
+      color: $color-brand-1;
+    }
   }
 
   .getStartedButton {
-    background-color: #007bff;
-    border: none;
-    color: white;
-    padding: 10px 15px;
+    margin: 0px;
     border-radius: 8px;
     cursor: pointer;
-    margin-right: 45px;
-   
+    margin-right: 0px;
+    width: auto;
+    padding: 14px 30px !important;
     transition: all 0.2s ease;
-
-    &:hover {
-      background-color: #0056b3;
-    }
   }
 }
 
@@ -333,43 +340,35 @@ text-align: left;
 
 
 
-.inputGroup {
-  position: relative;
 
-  .calendarIcon {
-    position: absolute;
-    right: 10px;
-    top: 50%; 
-    transform: translateY(-50%);
-    cursor: pointer; 
-    width: 20px; 
-    height: 20px; 
-    z-index: 1; 
-  }
-
-  input {
-    padding-right: 40px; 
-  }
+.calendarIcon {
+  position: absolute;
+  right: 10px;
+  bottom: 12px;
+  cursor: pointer;
+  top: auto;
+  z-index: 1;
 }
 
 .datePickerContainer {
-  position: absolute; 
-  left: 100%; 
+  position: absolute;
+  right: 40%;
 
-  margin-left: 10px; 
-  
-  z-index: 10; 
+  margin-right: 10px;
+
+  z-index: 10;
 }
 
 .selectContainer {
-  position: relative; }
+  position: relative;
+}
 
 .iconImage {
   position: absolute;
-  right: 10px; 
-  top: 50%; 
-  transform: translateY(-50%); 
-  pointer-events: none; 
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .selectInput {
