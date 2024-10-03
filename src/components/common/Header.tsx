@@ -6,8 +6,7 @@ import styles from "./Header.module.scss";
 import { useTranslations } from 'next-intl';
 import LocaleSwitcherSelect from './locale/LocaleSwitcherSelect';
 import LoginPopup from '../Loginpopup';
-import JobSlider from '../../components1/common/JobSlider';
-import JobPortal from '../../components1/JobPortal'; // Adjusted path
+
 
 import { AuthUser, useAuthUserStore } from '@/stores/useAuthUserStore';
 import { getTokenClaims, isTokenValid } from '@/helpers/jwt';
@@ -84,10 +83,7 @@ const Header: React.FC = () => {
 
      
 
-        {/* Render the JobsSliding component */}
-        <JobSlider />  {/* This is where JobsSliding will be displayed */}
-
-        <JobPortal />
+      
       {/* Render the LoginPopup component */}
       <LoginPopup show={popupVisible} onClose={closePopup} />
     </>
