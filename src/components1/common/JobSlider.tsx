@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Slider from 'react-slick';
 import JobSearch from '@/components1/common/JobSearch';
 import styles from './Slider.module.scss';
-
+import '@/app/globals.scss'; 
 const JobSlider: React.FC = () => {
   // Slider settings
   const settings = {
@@ -17,8 +17,8 @@ const JobSlider: React.FC = () => {
     autoplay: true,
     autoplaySpeed: 3000,  // Automatically scroll every 3 seconds
     arrows: true,
-    prevArrow: <button className={`${styles.sliderArrow} slider-arrow`}>❮</button>,
-    nextArrow: <button className={`${styles.sliderArrow} slider-arrow`}>❯</button>,
+    prevArrow: <button className="slider-arrow slick-prev">❮</button>,
+    nextArrow: <button className="slider-arrow slick-next">❯</button>,
   };
 
   // Submit search query connected to an API or search logic
