@@ -1,8 +1,8 @@
 "use client";
 import React from 'react';
 import Image from 'next/image'; 
+import { Row, Col } from 'react-bootstrap'; 
 import styles from './common/Slider.module.scss';
-
 
 const jobData = [
   {
@@ -59,51 +59,53 @@ const iconMap: { [key: string]: string } = {
 
 const JobPortal: React.FC = () => {
   return (
-     <div className={styles.cardsContainer}>
-      {jobData.map((job, index) => (
-        <div key={index} className={styles.card}>
-          
-<Image src={job.imgSrc} alt={job.title} className={styles.cardImage} width={301} height={378} />
+    <div className={styles.cardsContainer}>
+      <Row className="g-4">
+        {jobData.map((job, index) => (
+          <Col key={index} className="col-3"> 
+            <div className={styles.card}>
+              <Image src={job.imgSrc} alt={job.title} className={styles.cardImage} width={301} height={378} />
 
-     <div className={styles.cardContent}>
-     <h3 className={styles.cardTitle}>{job.title}</h3>
-      <div className={styles.iconsContainer}>
-    <div className={styles.topIcons}>
-      {job.icons.slice(0, 2).map((icon, idx) => (
-        <div 
-          key={idx} 
-          className={`${styles.iconWithText} ${icon === 'Stay' ? styles.stayIcon : ''}`} 
-        >
-          <Image src={iconMap[icon]} alt={icon} className={styles.icon} width={16} height={16} />
-          <span>{icon}</span>
-        </div>
-          ))}
-          </div>
-          <div className={styles.bottomIcons}>
-                {job.icons.slice(2).map((icon, idx) => (
-                  <div key={idx} className={styles.iconWithText}>
-                    <Image  src={iconMap[icon]} alt={icon}  className={styles.icon} width={16} height={16}    />
-                    <span>{icon}</span>
+              <div className={styles.cardContent}>
+                <h3 className={styles.cardTitle}>{job.title}</h3>
+                <div className={styles.iconsContainer}>
+                  <div className={styles.topIcons}>
+                    {job.icons.slice(0, 2).map((icon, idx) => (
+                      <div 
+                        key={idx} 
+                        className={`${styles.iconWithText} ${icon === 'Stay' ? styles.stayIcon : ''}`} 
+                      >
+                        <Image src={iconMap[icon]} alt={icon} className={styles.icon} width={16} height={16} />
+                        <span>{icon}</span>
+                      </div>
+                    ))}
                   </div>
-             ))}
+                  <div className={styles.bottomIcons}>
+                    {job.icons.slice(2).map((icon, idx) => (
+                      <div key={idx} className={styles.iconWithText}>
+                        <Image src={iconMap[icon]} alt={icon} className={styles.icon} width={16} height={16} />
+                        <span>{icon}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className={styles.jobDetails}>
+                  <div className={styles.iconWithText}>
+                    <Image src={iconMap['Clock']} alt="Posted" className={styles.icon} width={16} height={16} />
+                    <span>{job.posted}</span>
+                  </div>
+                  <div className={styles.iconWithText}>
+                    <Image src={iconMap['Alarm']} alt="Valid Till" className={styles.icon} width={16} height={16} />
+                    <span>valid till: {job.validtill}</span>
+                  </div>
+                </div>  
               </div>
             </div>
-          
-            <div className={styles.jobDetails}>
-               <div className={styles.iconWithText}>
-               <Image src={iconMap['Clock']}  alt="Posted" className={styles.icon} width={16} height={16} />
-      <span>{job.posted}</span>
-     </div>
-      <div className={styles.iconWithText}>
-    <Image src={iconMap['Alarm']} alt="Valid Till" className={styles.icon} width={16} height={16} />
-    <span>valid till: {job.validtill}</span>
-      </div>
-       </div>  
-          </div>
-        </div>
-      ))}
-      </div>
-   
+          </Col>
+        ))}
+      </Row>
+    </div>
   );
 };
 
