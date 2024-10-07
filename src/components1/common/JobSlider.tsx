@@ -1,11 +1,14 @@
-"use client";
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import Slider from 'react-slick';
 import JobSearch from '@/components1/common/JobSearch';
 import styles from './Slider.module.scss';  
 import './styling.scss';  
+import { useTranslations } from 'next-intl';
+
 const JobSlider: React.FC = () => {
+  const t = useTranslations("Slider");
   // Slider settings
   const settings = {
     dots: true,
@@ -33,28 +36,23 @@ const JobSlider: React.FC = () => {
         {/* First Slide */}
         <div>
           <Image src="/slider.png" alt="Slider Image" fill={true} />
-          <div className={styles.unionImageContainer}>
-            <Image src="/Union.png" alt="Union Icon" width={6.25} height={10} />
-          </div>
+         
           <div className={styles.overlay}>
             <h1 className={`${styles.textCommon} ${styles.title}`}>
-              Apply International Job Openings across
+              {t('apply_International_Job_Openings_across')}
             </h1>
             <h2 className={`${styles.textCommon} ${styles.subtitle}`}>
-              Dubai, Qatar, Oman, Bahrain & Saudi Arabia
+              {t('dubai,_Qatar,_Oman,_Bahrain_&_Saudi_Arabia')}
             </h2>
+           
             <div className={styles.buttonRightContainer}>
               <button className={styles.viewJobsButton} onClick={() => window.location.href = '/jobs'}>
-                View Job
+                {t('view_Job')}
               </button>
             </div>
-            <div className={styles.unionImageRightContainer}>
-              <Image src="/Union (1).png" alt="Union Right Icon" width={6.25} height={10} />
-            </div>
-          </div>
-          <div className={styles.sliderLogoContainer}>
-            <Image src="/sliderlogo.png" alt="Slider Logo" width={58} height={5} />
-          </div>
+           </div>
+         
+         
         </div>
 
         {/* Second Slide */}
@@ -75,13 +73,12 @@ const JobSlider: React.FC = () => {
       {/* Job Listings */}
       <div className={styles.jobListingContainer}>
         <div className={styles.jobList}>
-          <span className={styles.latestJobsTitle}>Latest Jobs</span>
-          <span>Occupation</span>
-          <span>Jobs in Oman</span>
-          <span>Jobs in Qatar</span>
-          <span>Jobs in Kuwait</span>
-          <span>Jobs in Dubai</span>
-          <span>Jobs in Bahrain</span>
+          <span className={styles.latestJobsTitle}>{t('latest_Jobs')}</span>
+          <span>{t('jobs_in_Oman')}</span>
+          <span>{t('jobs_in_Qatar')}</span>
+          <span>{t('jobs_in_Kuwait')}</span>
+          <span>{t('jobs_in_Dubai')}</span>
+          <span>{t('jobs_in_Bahrain')}</span>
         </div>
       </div>
     </div>

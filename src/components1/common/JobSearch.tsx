@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from './Slider.module.scss';
-
+import { useTranslations } from 'next-intl';
 // Flag images mapping
 const flagImages: { [key: string]: string } = {
+ 
   Dubai: '/flag.png',                             // Dubai flag
   Oman: '/oman-flag.jpg',                        // Path to Oman flag image
   Qatar: '/qatar.jpg',                            // Path to Qatar flag image
@@ -35,7 +36,7 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
   const handleFindJobs = () => {
     onSearch(searchTerm, selectedLocation);
   };
-
+  const t = useTranslations("Search");
   return (
     <div className={styles.searchImageContainer}>
       <Image
@@ -47,7 +48,7 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
       />
       <input
         type="text"
-        placeholder="Search job title"
+        placeholder={t("search_job_title")}
         className={styles.searchInput}
         value={searchTerm}
         onChange={handleSearchChange}
@@ -66,16 +67,16 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
           onChange={handleLocationChange}
           className={styles.locationDropdown}
         >
-          <option value="Dubai">Dubai</option>
-          <option value="Oman">Oman</option>
-          <option value="Qatar">Qatar</option>
-          <option value="Kuwait">Kuwait</option>
-          <option value="Bahrain">Bahrain</option>
-          <option value="Saudi Arabia">Saudi Arabia</option>
+          <option value="Dubai">{t('dubai')}</option>
+          <option value="Oman">{t('oman')}</option>
+          <option value="Qatar">{t('qatar')}</option>
+          <option value="Kuwait">{t('kuwait')}</option>
+          <option value="Bahrain">{t('bahrain')}</option>
+          <option value="Saudi Arabia">{t('saudi_Arabia')}</option>
         </select>
       </div>
       <button className={styles.findJobsButton} onClick={handleFindJobs}>
-        Find Jobs
+        {t('find_Jobs')}
       </button>
     </div>
   );

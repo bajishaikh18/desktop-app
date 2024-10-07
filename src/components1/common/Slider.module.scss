@@ -18,13 +18,14 @@
   font-family: 'Arial', sans-serif;  
   font-weight: 300;         
   font-size: 20px;          
-  text-align: left;  
+  text-align: left; 
+  margin-left: -60px; 
         
 }
 
 .buttonRightContainer {
   position: absolute;
-  right: -200%;          
+  right: -270%;          
   top: 70%;       
   z-index: 10;       
   transform: translateY(-50%);
@@ -39,38 +40,23 @@
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  //margin-left: 90px;
 }
 
 .viewJobsButton:hover {
   background-color: rgba(255, 255, 255, 0.1);  // Light background on hover
 }
 
-.unionImageContainer {
-  position: absolute;
-  left: 5%;            
-  top: 70%;             
-  transform: translateY(-50%);
-}
-
-.unionImageRightContainer {
-  position: absolute;
-  right: -215%;           
-  top: 70%;             
-  transform: translateY(-50%);
-}
 
 
-.sliderLogoContainer {
- position: absolute;
-  bottom:15px;
-  left: 10%;              
-  transform: translateY(50%); 
-}
+
+
+
 
 
 
 .jobListingContainer {
-  margin-top: -30px; 
+  margin-top: 50px; 
   text-align: center; 
   
 }
@@ -99,7 +85,7 @@
 
 .searchImageContainer {
   position: absolute;
-  margin-top: -130px;
+  margin-top:-70px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #fff;
