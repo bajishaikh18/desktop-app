@@ -232,61 +232,105 @@ a {
 
 
 
- 
 
-  .slick-prev, 
-  .slick-next {
-     width: 6.25px;  
-    height: 10px; 
-    color: black;            
-    background: none;  
-    border: none;   
-    cursor: pointer;
- }
- .slick-prev {
-    left: -50px;  
+
+
+
+
+
+
+  
+  .jobCard {
+    background-color: #f8f9fa; 
+    border-radius: 10px; 
+    transition: transform 0.3s, box-shadow 0.3s; 
+  
+  
+    &:hover {
+      transform: translateY(-5px); 
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+    }}
+
+  .card-title {
+    font-size: 16px !important;  
+    margin-left: -30px; 
+
    
   }
-  
- .slick-next {
-    bottom: -20px;    
-    right: 50px;     
+  .card-body {
+    padding: 20px 30px 0 !important;
   }
 
 
 
-  .slider-dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px; 
-  
-    li {
-      margin: 0 5px;
-      list-style: none; 
-      button {
-        display: none; 
+$icon-size: 16px;
+$container-margin-left: -25px;
+$spacing-between-icons: 0.5rem; 
+$top-margin-bottom: 0.5rem;
+$bottom-margin-bottom: 1rem;
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+.icon-container {
+  margin-left: $container-margin-left;
+
+  &.top-icons {
+    margin-bottom: $top-margin-bottom; 
+    @include flex-center;
+    justify-content: space-between;
+
+    .icon-wrapper {
+      @include flex-center; 
+      margin-right: 0.5rem;
+
+      img {
+        width: $icon-size;
+        height: $icon-size; 
       }
-  
-      // Create custom dots
-      &::before {
-        content: ""; 
-        display: inline-block;
-        width: 8px;         
-        height: 8px;         
-        border-radius: 50%;   
-        background-color: white; 
-        border: 1px solid black; 
-        cursor: pointer;     
-        margin: 0 0px;     
-        transition: background-color 0.3s; 
+
+      span {
+        margin-left: 0.5rem; 
       }
-  
-      
-      &.slick-active::before {
-        background-color: white; 
-        border: 2px solid black; 
+    }
+
+    .stay-icon {
+      margin-left: -15px !important; 
+    }
+  }
+
+  &.bottom-icons {
+    margin-bottom: $bottom-margin-bottom;
+
+    @include flex-center;
+    justify-content: space-between;
+
+    .icon-wrapper {
+      @include flex-center; 
+      margin-right: 0.5rem;
+
+      img {
+        width: $icon-size; 
+        height: $icon-size;
+      }
+
+      span {
+        margin-left: 0.5rem; 
       }
     }
   }
-  
+}
 
+
+
+
+
+
+
+
+
+  
+  
+  

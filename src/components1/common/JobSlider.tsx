@@ -3,8 +3,8 @@ import React from 'react';
 import Image from 'next/image';
 import Slider from 'react-slick';
 import JobSearch from '@/components1/common/JobSearch';
-import styles from './Slider.module.scss';
-import '@/app/globals.scss'; 
+import styles from './Slider.module.scss';  
+import './styling.scss';  
 const JobSlider: React.FC = () => {
   // Slider settings
   const settings = {

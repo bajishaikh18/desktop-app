@@ -1,0 +1,60 @@
+.slick-prev, 
+  .slick-next {
+     width: 6.25px;  
+    height: 10px; 
+    color: black;            
+    background: none;  
+    border: none;   
+    cursor: pointer;
+ }
+ .slick-prev {
+  position: absolute;
+   margin-top: 250px !important;
+  right: 20px !important;
+ z-index: 10; 
+}
+
+
+  
+ .slick-next {
+    bottom: -20px;    
+    right: 50px;
+  }
+
+
+
+  .slider-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; 
+  
+    li {
+      margin: 0 5px;
+      list-style: none; 
+      button {
+        display: none; 
+      }
+  
+      // Create custom dots
+      &::before {
+        content: ""; 
+        display: inline-block;
+        width: 8px;         
+        height: 8px;         
+        border-radius: 50%;   
+        background-color: white; 
+        border: 1px solid black; 
+        cursor: pointer;     
+        margin: 0 0px;     
+        transition: background-color 0.3s; 
+      }
+  
+      
+      &.slick-active::before {
+        background-color: white; 
+        border: 2px solid black; 
+      }
+    }
+  }
+  
+
