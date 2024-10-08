@@ -11,6 +11,13 @@ const nextConfig = {
     sassOptions: {
         includePaths: [path.join(__dirname, 'styles')],
       },
+    images: {
+        remotePatterns: [
+         {
+           hostname: "wonderlybackendpublic.s3.ap-south-1.amazonaws.com"
+         },
+       ],
+     },
 };
 
 export default withNextIntl(nextConfig);

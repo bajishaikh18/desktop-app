@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./Header.module.scss";
 import { useTranslations } from 'next-intl';
 import LocaleSwitcherSelect from './locale/LocaleSwitcherSelect';
-import LoginPopup from '../Loginpopup';
+import LoginPopup from '../auth/Loginpopup';
 
 
 import { AuthUser, useAuthUserStore } from '@/stores/useAuthUserStore';

@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal, Button, Form, Spinner } from "react-bootstrap";
-import styles from "../app/page.module.scss";
-import "../app/globals.scss";
+import styles from "../../app/page.module.scss";
 import { useTranslations } from "next-intl";
 import { updateUser } from "@/apis/auth";
 import toast from "react-hot-toast";

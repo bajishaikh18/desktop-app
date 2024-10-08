@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Slider from 'react-slick';
-import JobSearch from '@/components1/common/JobSearch';
+import JobSearch from '@/components/jobs/JobSearch';
 import styles from './Slider.module.scss';  
 import './styling.scss';  
 import { useTranslations } from 'next-intl';

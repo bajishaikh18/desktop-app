@@ -3,10 +3,10 @@ import { Inter } from "next/font/google";
 import "./globals.scss";
 import Header from "@/components/common/Header";
 
-
-import {NextIntlClientProvider} from 'next-intl';
-import {getMessages} from 'next-intl/server';
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { Toaster } from "react-hot-toast";
+import { ReactQueryProvider } from "./react-query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,16 +25,12 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
-        <Header/>
-      
-        <Toaster
-          position="top-right"
-        />
-        {children}
-        </NextIntlClientProvider>
+          <Header />
 
-        </body>
+          <Toaster position="top-right" />
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }
-

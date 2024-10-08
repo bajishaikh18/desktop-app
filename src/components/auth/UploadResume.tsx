@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import styles from "../app/page.module.scss";
+import styles from "../../app/page.module.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useTranslations } from "next-intl";
 import { useDropzone } from "react-dropzone";
