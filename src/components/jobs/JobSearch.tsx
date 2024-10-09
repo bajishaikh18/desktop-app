@@ -52,23 +52,30 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
     control: (provided: any) => ({
       ...provided,
       border: 'none',
-      boxShadow: 'none', 
+      boxShadow: 'none',
       '&:hover': {
-        border: 'none' 
+        border: 'none',
       },
     }),
     dropdownIndicator: (provided: any) => ({
       ...provided,
-      color: '#000' 
+      color: '#000',
     }),
     indicatorSeparator: () => ({
       display: 'none',
     }),
     menu: (provided: any) => ({
       ...provided,
-      marginTop: 0 
+      marginTop: 0,
+      position: 'absolute', 
+      zIndex: 9999,         
+    }),
+    menuPortal: (provided: any) => ({
+      ...provided,
+      zIndex: 9999,          
     }),
   };
+  
 
   return (
     <div className={styles.searchImageContainer}>
@@ -99,12 +106,14 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
         />
         
         <Select
-          value={locationOptions.find(option => option.value === selectedLocation)}
-          onChange={handleLocationChange}
-          options={locationOptions}
-          className={styles.locationDropdown}
-          styles={customSelectStyles} 
-        />
+  value={locationOptions.find(option => option.value === selectedLocation)}
+  onChange={handleLocationChange}
+  options={locationOptions}
+  className={styles.locationDropdown}
+  styles={customSelectStyles}
+  menuPortalTarget={document.body}  
+/>
+
       </div>
 
       <button className={styles.findJobsButton} onClick={handleFindJobs}>
