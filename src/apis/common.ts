@@ -55,12 +55,17 @@ export const uploadFile = async (url: string, file:File) => {
   }
 };
 
-export const getJobTitles = async () => {
+export const getJobTitles = async (title?:string) => {
   try {
-    const response = await axios.get(`${BASE_URL}/jobTitle`);
+    const response = await axios.get(`${BASE_URL}/jobTitle`,{
+      params:{
+        title:title
+      }
+    });
     return response.data.jobTitles;
   } catch (error) {
     console.error("Failed to get upload url", error);
     throw error;
   }
 };
+

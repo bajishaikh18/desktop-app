@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Modal, Button, Form, Spinner } from "react-bootstrap";
 import styles from "../app/page.module.scss";
 import "../app/globals.scss";
@@ -10,6 +10,7 @@ import AsyncSelect from 'react-select/async';
 import { StateSelect } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { getFormattedJobTitles } from "@/helpers/jobTitles";
+import { debounce } from "lodash";
 
 interface ProfessionalDetailsProps {
   onSubmit: (screen: number) => void;
@@ -93,6 +94,13 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
+  const loadOptionsDebounced = useCallback(
+    debounce((inputValue: string, callback: (options: any) => void) => {
+        getFormattedJobTitles(inputValue).then(options => callback(options))
+    }, 500),
+    []
+);
+
   const onChange = (
     newValue: SingleValue<any>,
     actionMeta: ActionMeta<any>
@@ -167,7 +175,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           <div className={styles.selectContainer}>
           <AsyncSelect
             cacheOptions
-            loadOptions={getFormattedJobTitles}
+            loadOptions={loadOptionsDebounced}
             placeholder={t("select_your_job_title")}
             styles={{
               control: (baseStyles, state) => ({
