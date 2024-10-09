@@ -1,21 +1,32 @@
 "use client"; 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Select from 'react-select'; 
 import styles from './Slider.module.scss';
 import { useTranslations } from 'next-intl';
+
 // Flag images mapping
 const flagImages: { [key: string]: string } = {
  
-  Dubai: '/flag.png',                             // Dubai flag
-  Oman: '/oman-flag.jpg',                        // Path to Oman flag image
-  Qatar: '/qatar.jpg',                            // Path to Qatar flag image
-  Kuwait: '/kuwait.jpg',                          // Path to Kuwait flag image
-  Bahrain: '/bahrain-flag.jpg',                  // Path to Bahrain flag image
-  'Saudi Arabia': '/saudi-arabia.jpg',          // Path to Saudi Arabia flag image
+  Dubai: '/flag.png',                             
+  Oman: '/oman-flag.jpg',                       
+  Qatar: '/qatar.jpg',                           
+  Kuwait: '/kuwait.jpg',                          
+  Bahrain: '/bahrain-flag.jpg',                  
+  'Saudi Arabia': '/saudi-arabia.jpg',        
 };
 
+const locationOptions = [
+  { value: 'Dubai', label: 'Dubai' },
+  { value: 'Oman', label: 'Oman' },
+  { value: 'Qatar', label: 'Qatar' },
+  { value: 'Kuwait', label: 'Kuwait' },
+  { value: 'Bahrain', label: 'Bahrain' },
+  { value: 'Saudi Arabia', label: 'Saudi Arabia' }
+];
+
 interface JobSearchProps {
-  onSearch: (searchTerm: string, selectedLocation: string) => void; // Callback for search
+  onSearch: (searchTerm: string, selectedLocation: string) => void; 
 }
 
 const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
@@ -27,16 +38,17 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
     setSearchTerm(e.target.value);
   };
 
-  // Handle location dropdown change
-  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedLocation(e.target.value);
+  
+  const handleLocationChange = (option: any) => {
+    setSelectedLocation(option.value);
   };
 
-  // Submit search query
   const handleFindJobs = () => {
     onSearch(searchTerm, selectedLocation);
   };
+
   const t = useTranslations("Search");
+
   return (
     <div className={styles.searchImageContainer}>
       <Image
@@ -56,25 +68,21 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
 
       <div className={styles.locationContainer}>
         <Image
-          src={flagImages[selectedLocation]} // Dynamically change the flag based on selected location
+          src={flagImages[selectedLocation]} 
           alt={`${selectedLocation} Flag`}
           width={24}
           height={24}
           className={styles.flagIcon}
         />
-        <select
-          value={selectedLocation}
+        
+        <Select
+          value={locationOptions.find(option => option.value === selectedLocation)}
           onChange={handleLocationChange}
+          options={locationOptions}
           className={styles.locationDropdown}
-        >
-          <option value="Dubai">{t('dubai')}</option>
-          <option value="Oman">{t('oman')}</option>
-          <option value="Qatar">{t('qatar')}</option>
-          <option value="Kuwait">{t('kuwait')}</option>
-          <option value="Bahrain">{t('bahrain')}</option>
-          <option value="Saudi Arabia">{t('saudi_Arabia')}</option>
-        </select>
+        />
       </div>
+
       <button className={styles.findJobsButton} onClick={handleFindJobs}>
         {t('find_Jobs')}
       </button>
