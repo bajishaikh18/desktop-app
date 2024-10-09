@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl';
 
 // Flag images mapping
 const flagImages: { [key: string]: string } = {
- 
   Dubai: '/flag.png',                             
   Oman: '/oman-flag.jpg',                       
   Qatar: '/qatar.jpg',                           
@@ -38,7 +37,6 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
     setSearchTerm(e.target.value);
   };
 
-  
   const handleLocationChange = (option: any) => {
     setSelectedLocation(option.value);
   };
@@ -48,6 +46,29 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
   };
 
   const t = useTranslations("Search");
+
+ 
+  const customSelectStyles = {
+    control: (provided: any) => ({
+      ...provided,
+      border: 'none',
+      boxShadow: 'none', 
+      '&:hover': {
+        border: 'none' 
+      },
+    }),
+    dropdownIndicator: (provided: any) => ({
+      ...provided,
+      color: '#000' 
+    }),
+    indicatorSeparator: () => ({
+      display: 'none',
+    }),
+    menu: (provided: any) => ({
+      ...provided,
+      marginTop: 0 
+    }),
+  };
 
   return (
     <div className={styles.searchImageContainer}>
@@ -67,6 +88,8 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
       />
 
       <div className={styles.locationContainer}>
+        <span className={styles.separator}></span> 
+        
         <Image
           src={flagImages[selectedLocation]} 
           alt={`${selectedLocation} Flag`}
@@ -80,6 +103,7 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
           onChange={handleLocationChange}
           options={locationOptions}
           className={styles.locationDropdown}
+          styles={customSelectStyles} 
         />
       </div>
 
