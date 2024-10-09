@@ -5,9 +5,11 @@ import "../app/globals.scss";
 import { useTranslations } from "next-intl";
 import { updateUser } from "@/apis/auth";
 import toast from "react-hot-toast";
-import Select, { ActionMeta, SingleValue } from "react-select";
+import Select ,{ ActionMeta, SingleValue } from "react-select";
+import AsyncSelect from 'react-select/async';
 import { StateSelect } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
+import { getFormattedJobTitles } from "@/helpers/jobTitles";
 
 interface ProfessionalDetailsProps {
   onSubmit: (screen: number) => void;
@@ -59,21 +61,6 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     {
       value: "healthcare",
       label: t("healthcare"),
-    },
-  ];
-
-  const jobTitles: any = [
-    {
-      value: "Engineer",
-      label: "Engineer",
-    },
-    {
-      value: "Plumber",
-      label: "Plumber",
-    },
-    {
-      value: "Electrician",
-      label: "Electrician",
     },
   ];
 
@@ -178,32 +165,43 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
         <Form.Group className="form-group">
           <Form.Label>{t("current_job_title")}</Form.Label>
           <div className={styles.selectContainer}>
-            <Select
-              placeholder={t("select_your_job_title")}
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  fontSize: "16px",
-                  borderRadius: "8px",
-                  boxShadow: "none",
-                  borderWidth: "1px",
-                  borderStyle: "solid",
-                  borderColor: errors.currentJobTitle
-                    ? "rgb(228, 77, 77)"
-                    : "rgba(189, 189, 189, 1)",
-                  minHeight: "44px",
-                  svg: {
-                    path: {
-                      fill: "#000",
-                    },
+          <AsyncSelect
+            cacheOptions
+            loadOptions={getFormattedJobTitles}
+            placeholder={t("select_your_job_title")}
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                fontSize: "16px",
+                borderRadius: "8px",
+                boxShadow: "none",
+                borderWidth: "1px",
+                borderStyle: "solid",
+                borderColor: errors.currentJobTitle
+                  ? "rgb(228, 77, 77)"
+                  : "rgba(189, 189, 189, 1)",
+                minHeight: "44px",
+                svg: {
+                  path: {
+                    fill: "#000",
                   },
-                }),
-                indicatorSeparator: () => ({ display: "none" }),
-              }}
-              name="currentJobTitle"
-              options={jobTitles}
-              value={formData.currentJobTitle}
-              onChange={onChange}
+                },
+              }),
+              indicatorSeparator: () => ({ display: "none" }),
+            }}
+            defaultOptions
+            theme={(theme) => ({
+              ...theme,
+              borderRadius: 0,
+              colors: {
+                ...theme.colors,
+                primary25: 'rgba(246, 241, 255, 1)',
+                primary: '#0045E6',
+              },
+            })}
+            name="currentJobTitle"
+            value={formData.currentJobTitle}
+            onChange={onChange}
             />
             {errors.currentJobTitle && (
               <Form.Text className="error">{errors.currentJobTitle}</Form.Text>
@@ -216,6 +214,15 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           <div className={styles.selectContainer}>
             <Select
               placeholder={t("select_industry")}
+              theme={(theme) => ({
+                ...theme,
+                borderRadius: 0,
+                colors: {
+                  ...theme.colors,
+                  primary25: 'rgba(246, 241, 255, 1)',
+                  primary: '#0045E6',
+                },
+              })}
               styles={{
                 control: (baseStyles, state) => ({
                   ...baseStyles,
@@ -252,6 +259,15 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           <div className={styles.selectContainer}>
             <Select
               placeholder={t("select_years_of_experience")}
+              theme={(theme) => ({
+                ...theme,
+                borderRadius: 0,
+                colors: {
+                  ...theme.colors,
+                  primary25: 'rgba(246, 241, 255, 1)',
+                  primary: '#0045E6',
+                },
+              })}
               styles={{
                 control: (baseStyles, state) => ({
                   ...baseStyles,
@@ -288,6 +304,15 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           <Form.Label>{t("do_you_have_gulf_experience?")}</Form.Label>
           <div className={styles.selectContainer}>
             <Select
+             theme={(theme) => ({
+              ...theme,
+              borderRadius: 0,
+              colors: {
+                ...theme.colors,
+                primary25: 'rgba(246, 241, 255, 1)',
+                primary: '#0045E6',
+              },
+            })}
               styles={{
                 control: (baseStyles, state) => ({
                   ...baseStyles,
