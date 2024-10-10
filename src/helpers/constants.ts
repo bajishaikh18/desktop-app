@@ -3,6 +3,16 @@ export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const IMAGE_BASE_URL = "https://wonderlybackendpublic.s3.ap-south-1.amazonaws.com";
 
+export const COUNTRIES = {
+    sa: { label: "Saudi Arabia", isdCode: "+966" },
+    in: { label: "India", isdCode: "+91" },
+    qa: { label: "Qatar", isdCode: "+974" },
+    ae: { label: "United Arab Emrites", isdCode: "+971" },
+    om: { label: "Oman",isdCode: "+968" },
+    bh: { label: "Bahrain",isdCode: "+973" },
+    kw: { label: "Kuwait",isdCode: "+965" },
+  };
+  
 export const FACILITIES_IMAGES = {
     "Food":"/food.svg",
     "Transportation": "/transport.svg",
