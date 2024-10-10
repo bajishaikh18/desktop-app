@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Modal, Form, Button, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../../app/page.module.scss";
@@ -14,27 +14,50 @@ export const VerifyOtp = ({
   successAction,
 }: {
   phone: string;
-  successAction : () => void;
+  successAction: () => void;
 }) => {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [otpError, setOtpError] = useState<string | null>(null);
   const [otpLoading, setOtpLoading] = useState<boolean>(false);
   const [disableResent, setDisableResent] = useState<boolean>(false);
+  const [otpSent, setOtpSent] = useState<boolean>(false);
 
   const t = useTranslations("Register");
   const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const { setAuthUser } = useAuthUserStore();
 
+  const RESEND_OTP_TIMEOUT = 90;
+
+  const [resendOtpTimer, setResendOtpTimer] =
+    useState<number>(RESEND_OTP_TIMEOUT);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (otpSent && resendOtpTimer > 0) {
+      timer = setInterval(() => {
+        setResendOtpTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (resendOtpTimer === 0) {
+      setOtpSent(false);
+    }
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [otpSent, resendOtpTimer]);
+
   const handleResendOtp = async () => {
-    try{
+    try {
       const response = await loginWithPhone(phone);
       if (response) {
-        toast.success("OTP Resent successfully!"); 
+        setOtpSent(true);
+        setResendOtpTimer(RESEND_OTP_TIMEOUT);
+        toast.success("OTP Resent successfully!");
       } else {
-        toast.error("Failed to send OTP. Please try again."); 
+        toast.error("Failed to send OTP. Please try again.");
       }
-    }catch(e){
-       toast.error("Failed to send OTP. Please try again."); 
+    } catch (e) {
+      toast.error("Failed to send OTP. Please try again.");
     }
   };
 
@@ -83,7 +106,7 @@ export const VerifyOtp = ({
       </Modal.Title>
       <Form>
         <Form.Group className="mb-3" controlId="otp">
-          <Form.Label className={styles.formLabelOtp} style={{width:'100%'}}>
+          <Form.Label className={styles.formLabelOtp} style={{ width: "100%" }}>
             {t("please_enter_the_OTP_sent_to")}
             <span className={styles.phoneNumberLabel}>+91 {phone}</span>
           </Form.Label>
@@ -111,16 +134,24 @@ export const VerifyOtp = ({
         </Form.Group>
         <div className="text-center">
           <p className={`${styles.resendText}`}>
-            {t('didnt_get_otp')}
-            <a href="#" onClick={handleResendOtp} className={`${disableResent? styles.disableResent : ''} text-primary`}>
-              {t("resendotp")}
-            </a>
+            <span>{t("didnt_get_otp")}</span>
+            <span style={{ marginLeft: "10px" }}>
+              {otpSent && resendOtpTimer > 0 ? (
+                <span className={styles.disableResent}>
+                  {t("resendotp")} ({resendOtpTimer}s)
+                </span>
+              ) : (
+                <a href="#" onClick={handleResendOtp} className="text-primary">
+                  {t("resendotp")}
+                </a>
+              )}
+            </span>
           </p>
-           
+
           <Button
             variant="primary"
             onClick={handleVerifyOtp}
-            disabled={otpLoading || otp.some(x=>x==="")}
+            disabled={otpLoading || otp.some((x) => x === "")}
           >
             {otpLoading ? (
               <>
@@ -133,7 +164,7 @@ export const VerifyOtp = ({
                 Verifying...
               </>
             ) : (
-              <>{t('verifyotp')}</>
+              <>{t("verifyotp")}</>
             )}
           </Button>
         </div>
