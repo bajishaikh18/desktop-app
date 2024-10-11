@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 @import './variables';
+@import './common';
 
 html,
 body {
@@ -12,7 +13,8 @@ body {
 body {
   color: rgb(var(--foreground-rgb));
   font-family: "Inter", sans-serif;
-  background:rgba(250, 248, 255, 1);
+  background-color:rgba(250, 248, 255, 1) !important;
+  min-height: 100vh;
 }
 
 a {
@@ -82,7 +84,7 @@ a {
 
 .card{
   border-radius: 8px;
-  border: 0;
+  border: 0 !important;
   box-shadow: $box-shadow-1;
   .card-header{
     background: #fff;
@@ -310,6 +312,7 @@ $bottom-margin-bottom: 1rem;
 
   
 }
+
 
 
 

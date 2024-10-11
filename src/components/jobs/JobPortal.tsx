@@ -8,6 +8,7 @@ import { getJobs } from "@/apis/jobs";
 import { Loader } from "../common/Feedbacks";
 import { FACILITIES_IMAGES, IMAGE_BASE_URL } from "@/helpers/constants";
 import { DateTime } from "luxon";
+import { useRouter } from "next/navigation";
 // Icon mapping for amenities
 const iconMap: { [key: string]: string } = {
   Food: "/food.png",
@@ -22,6 +23,7 @@ const iconMap: { [key: string]: string } = {
 const fetchSize = 10;
 
 const JobPortal: React.FC = () => {
+  const router = useRouter();
   const {
     data,
     isLoading,
@@ -76,7 +78,7 @@ const JobPortal: React.FC = () => {
       <Row className="g-4">
         {jobs.map((job: any, index: any) => (
           <Col key={index} md={6} lg={4} xl={3}>
-            <Card className={`h-100 shadow-sm p-3 ${styles.jobCard}`}>
+            <Card className={`h-100 shadow-sm p-3 ${styles.jobCard}`} onClick={()=>{router.push(`/jobs/${job._id}`)}}>
               <Image
                 src={`${IMAGE_BASE_URL}/${job.imageUrl}`}
                 alt={job._id}

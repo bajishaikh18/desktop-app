@@ -4,19 +4,19 @@ export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const IMAGE_BASE_URL = "https://wonderlybackendpublic.s3.ap-south-1.amazonaws.com";
 
 export const COUNTRIES = {
-    sa: { label: "Saudi Arabia", isdCode: "+966" },
-    in: { label: "India", isdCode: "+91" },
-    qa: { label: "Qatar", isdCode: "+974" },
-    ae: { label: "United Arab Emrites", isdCode: "+971" },
-    om: { label: "Oman",isdCode: "+968" },
-    bh: { label: "Bahrain",isdCode: "+973" },
-    kw: { label: "Kuwait",isdCode: "+965" },
+    sa: { label: "Saudi Arabia", isdCode: "+966",currency:"SAR" },
+    in: { label: "India", isdCode: "+91",currency:"INR" },
+    qa: { label: "Qatar", isdCode: "+974",currency:"QAR" },
+    ae: { label: "United Arab Emrites", isdCode: "+971",currency:"AED" },
+    om: { label: "Oman",isdCode: "+968",currency:"OMR" },
+    bh: { label: "Bahrain",isdCode: "+973",currency:"BHD" },
+    kw: { label: "Kuwait",isdCode: "+965",currency:"KWD" },
   };
   
 export const FACILITIES_IMAGES = {
-    "Food":"/food.svg",
-    "Transportation": "/transport.svg",
-    "Stay": "/stay.svg",
-    "Recruitment":"/recruit.svg"
+    "Food":"/icons/food.svg",
+    "Transportation": "/icons/transport.svg",
+    "Stay": "/icons/stay.svg",
+    "Recruitment":"/icons/recruit.svg"
 }
   

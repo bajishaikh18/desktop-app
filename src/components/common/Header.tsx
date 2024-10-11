@@ -10,6 +10,7 @@ import LoginPopup from '../auth/Loginpopup';
 
 import { AuthUser, useAuthUserStore } from '@/stores/useAuthUserStore';
 import { getTokenClaims, isTokenValid } from '@/helpers/jwt';
+import Image from 'next/image';
 
 const Header: React.FC = () => {
   const t = useTranslations("Header");
@@ -46,7 +47,7 @@ const Header: React.FC = () => {
   return (
     <>
       <Navbar className={styles.header} expand="lg">
-        <img src="./logo.png" className={styles.logo} alt="Logo" />
+        <Image src="/logo.png" alt="Logo" width={136} height={28}/>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className={styles.navContainer}>
