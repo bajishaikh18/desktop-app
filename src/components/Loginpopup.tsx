@@ -38,13 +38,14 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
         setCurrentScreen(1);
         toast.success("OTP sent successfully!", { position: "top-center" }); 
       } else {
-        setPhoneError("Failed to send OTP. Please try again.");
         toast.error("Failed to send OTP. Please try again.",  { position: "top-center" }); 
       }
-    } catch (error) {
-      console.error("Error sending OTP:", error);
-      setPhoneError("An error occurred while sending OTP.");
-      toast.error("An error occurred while sending OTP.",  { position: "top-center" }); 
+    } catch (error:any) {
+      if([400,404].includes(error.status)){
+        toast.error('Looks like your the number is not registered with us')
+      }else{
+        toast.error("An error occurred while sending OTP.",  { position: "top-center" }); 
+      }
     } finally {
       setLoading(false); 
     }
