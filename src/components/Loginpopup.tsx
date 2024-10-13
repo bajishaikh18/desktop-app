@@ -121,7 +121,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                         </a>
                       </div>
                       <div className={styles.continueWithoutLogin}>
-                        <a href="#" className={styles.helperLinks}>
+                        <a className={styles.helperLinks} onClick={handleClose}>
                           {t('continue_with_out_login')}
                         </a>
                       </div>
