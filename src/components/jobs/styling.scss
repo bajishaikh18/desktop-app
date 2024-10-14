@@ -1,29 +1,37 @@
+
+.slick-slider{
+  position: relative;
+}
+.slick-arrow{
+  position: absolute;
+  top: 85px;
+}
 .slick-prev, 
   .slick-next {
-     width: 6.25px;  
-    height: 10px; 
-    color: black;            
-    background: none;  
-    border: none;   
-    cursor: pointer;
+    color: white;    
+    &::before{
+      display: none;
+    }
+    &:hover{
+      color: #fff;
+    }
+    &.slick-disabled{
+      opacity: 0.25;
+    }
  }
  .slick-prev {
   position: absolute;
-   margin-top: 150px !important;
-    left: 90px !important;
    z-index: 10; 
    color: white;
 }
-
-
-  
-.slick-next {
-  position: absolute; 
-  margin-top: -100px;    
-  right: 90px;
-  color: white;
+.slick-prev{
+  left: 30px;
 }
 
+.slick-next{
+  left: auto;
+  right: 30px;
+}
 
 
 .slider-dots {
@@ -37,7 +45,7 @@
 
 li {
   display: inline-flex;
-  margin: 0 5px;
+  margin: 0 2px;
   list-style: none;
 
   button {
@@ -48,8 +56,9 @@ li {
   &::before {
     content: "";
     display: inline-block;
-    width: 8px;
-    height: 8px;
+    width: 5px;
+    height: 5px;
+    opacity: 0.5;
     border-radius: 50%;
     background-color: white;
     border: 1px solid white;
@@ -59,8 +68,10 @@ li {
   }
 
   &.slick-active::before {
+    width: 22px;
+    opacity: 1;
+    border-radius: 2.5px;
     background-color: white;
-    border: 1px solid black;
   }
 }
 

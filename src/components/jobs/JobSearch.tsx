@@ -5,27 +5,11 @@ import Select from 'react-select';
 import styles from './Slider.module.scss';
 import { useTranslations } from 'next-intl';
 import { getJobs } from "@/apis/jobs";
-
-// Flag images mapping
-const flagImages: { [key: string]: string } = {
-  Dubai: '/flag.png',                             
-  Oman: '/oman-flag.jpg',                       
-  Qatar: '/qatar.jpg',                           
-  Kuwait: '/kuwait.jpg',                         
-  Bahrain: '/bahrain-flag.jpg',                  
-  'Saudi Arabia': '/saudi-arabia.jpg',        
-};
+import { COUNTRIES } from '@/helpers/constants';
 
 
-const locationOptions = [
-  { value: 'Dubai', label: 'Dubai' },
-  { value: 'Oman', label: 'Oman' },
-  { value: 'Qatar', label: 'Qatar' },
-  { value: 'Kuwait', label: 'Kuwait' },
-  { value: 'Bahrain', label: 'Bahrain' },
-  { value: 'Saudi Arabia', label: 'Saudi Arabia' }
-];
 
+const locationOptions = Object.entries(COUNTRIES).filter(([country])=>country!="in").map(([country,data])=>({value:country,label:country==="ae" ? "UAE" :data.label}))
 
 interface JobSearchProps {
   onSearch?: (jobs: any[]) => void; 
@@ -33,7 +17,7 @@ interface JobSearchProps {
 
 const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedLocation, setSelectedLocation] = useState<string>('Dubai'); 
+  const [selectedLocation, setSelectedLocation] = useState<string>('ae'); 
 
  
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,10 +48,12 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
     control: (provided: any) => ({
       ...provided,
       border: 'none',
+      fontSize:"14px",
       boxShadow: 'none',
       '&:hover': {
         border: 'none',
       },
+      width:"120px"
     }),
     dropdownIndicator: (provided: any) => ({
       ...provided,
@@ -90,9 +76,9 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
 
   return (
     <div className={styles.searchImageContainer}>
-      
+      <div className={styles.searchBox}>
       <Image
-        src="/search.png"
+        src="/icons/search.svg"
         alt="Search Icon"
         width={24}
         height={24}
@@ -107,12 +93,12 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch }) => {
         onChange={handleSearchChange}
       />
 
-      
+</div>
       <div className={styles.locationContainer}>
         <span className={styles.separator}></span> 
         
         <Image
-          src={flagImages[selectedLocation]} 
+          src={`flags/${selectedLocation}.svg`} 
           alt={`${selectedLocation} Flag`}
           width={24}
           height={24}

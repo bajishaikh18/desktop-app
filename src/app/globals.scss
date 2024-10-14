@@ -238,81 +238,8 @@ a {
   }
 
 
-
-
-
-
-
-
-
-
-  
-  .jobCard {
-    background-color: #f8f9fa; 
-    border-radius: 10px; 
-    transition: transform 0.3s, box-shadow 0.3s; 
-  
-    &:hover {
-      transform: translateY(-5px); 
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+  .container{
+    @media (min-width: 1400px){
+      max-width: 1400px !important;
     }
   }
-  
-  .card-title {
-    font-size: 16px !important;  
-    margin-left: -20px; 
-  }
-  
-  .card-body {
-    padding: 20px 20px 0 !important;
-  }
-  
-  $icon-size: 16px;
-  $container-margin-left: -25px;
-  $spacing-between-icons: 0.5rem; 
-  $top-margin-bottom: 0.5rem;
-  $bottom-margin-bottom: 1rem;
-  
-  @mixin flex-center {
-    display: flex;
-    align-items: center;
-  }
-  
-  .icon-container {
-    margin-left: $container-margin-left;
-    flex-wrap: wrap;
-  
-    &.top-icons {
-      margin-bottom: $top-margin-bottom; 
-      @include flex-center;
-      justify-content: space-between;
-  
-      .icon-wrapper {
-        @include flex-center; 
-        flex: 1;
-        width: 50%; 
-        margin-right: $spacing-between-icons;
-  
-        img {
-          width: $icon-size;
-          height: $icon-size; 
-        }
-  
-        span {
-          margin-left: 0.5rem; 
-        }
-      }
-  
-      .stay-icon {
-        margin-left: -15px !important; 
-      }
-    }
-  }
-  
- 
-  @media (max-width: 576px) {
-    .icon-container .icon-wrapper {
-      width: 100%;
-    }
-  }
-  

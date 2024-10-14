@@ -11,7 +11,6 @@ export default function Home() {
       <JobSlider />
 
       {/* Include the JobPortal component */}
-      <JobPortal />
     </main>
   );
 }

@@ -88,15 +88,16 @@ const JobPortal: React.FC<{ selectedCountry: string }> = ({ selectedCountry }) =
   if (isLoading) {
     return <Loader text="Fetching job details" />;
   }
+  
 
   return (
-    <Container className={`py-4 ${styles.CardContainer}`}>
+    <Container className={`${styles.cardContainer}`}>
       <Row className="g-4">
         {activeJobs.length > 0 ? (
           activeJobs.map((job: any, index: number) => (
-            <Col key={index} md={6} lg={4} xl={3}>
+            <Col key={index} md={6} lg={4} xl={3} className={styles.cardCol}>
               <Card
-                className={`h-100 shadow-sm p-3 ${styles.jobCard}`}
+                className={`h-100 ${styles.jobCard}`}
                 onClick={() => {
                   router.push(`/jobs/${job._id}`);
                 }}
@@ -104,20 +105,27 @@ const JobPortal: React.FC<{ selectedCountry: string }> = ({ selectedCountry }) =
                 <Image
                   src={`${IMAGE_BASE_URL}/${job.imageUrl}`}
                   alt={job._id}
-                  className="card-img-top"
-                  width={301}
+                  className={styles.jobImage}
+                  width={378}
                   height={378}
                   layout="responsive"
+                 
                 />
-                <Card.Body>
-                  <Card.Title className="mb-3">
-                    {typeof job.agencyId === "string" ? job.agencyId : job.agencyId?.name || "Unknown Agency"}
+                <Card.Body className={styles.cardBody}>
+                  <Card.Title className={styles.cardTitle}>
+                    {typeof job.agencyId === "string" ? job.agencyId : job.agencyId?.name || "Unknown Agency"} 
+                    <Image
+                          src="/icons/verified.svg"
+                          width={16}
+                          height={16}
+                          alt="verified-logo"
+                        />
                   </Card.Title>
-                  <div className="icon-container top-icons">
+                  <div className={styles.iconContainer}>
                     {job.amenities.map((amenity: any, idx: number) => (
                       <div
                         key={idx}
-                        className={`icon-wrapper ${idx % 2 !== 0 ? "justify-content-right" : ""}`}
+                        className={`${styles.iconWrapper} ${idx % 2 !== 0 ? "justify-content-right" : ""}`}
                       >
                         <Image
                           src={FACILITIES_IMAGES[amenity as keyof typeof FACILITIES_IMAGES]}
@@ -129,17 +137,17 @@ const JobPortal: React.FC<{ selectedCountry: string }> = ({ selectedCountry }) =
                       </div>
                     ))}
                   </div>
-                  <div className="d-flex align-items-center gap-3 w-100">
-                    <div className="d-flex align-items-center flex-nowrap" style={{ marginLeft: "-25px" }}>
+                  <div className={styles.jobMetaContainer}>
+                    <div className={styles.jobMeta}>
                       <Image src={iconMap["Clock"]} alt="Posted" className="me-1" width={16} height={16} />
-                      <span className="text-muted" style={{ fontSize: "14px", whiteSpace: "nowrap" }}>
+                      <span>
                         {job.createdAt ? DateTime.fromISO(job.createdAt).toFormat("dd-MMM-yyyy") : "N/A"}
                       </span>
                     </div>
-                    <div className="d-flex align-items-center flex-nowrap">
+                    <div className={styles.jobMeta}>
                       <Image src={iconMap["Alarm"]} alt="Valid Till" className="me-1" width={16} height={16} />
-                      <span className="text-muted" style={{ fontSize: "14px", whiteSpace: "nowrap" }}>
-                        valid till: {job.expiry ? DateTime.fromISO(job.expiry).toFormat("dd-MMM-yyyy") : "N/A"}
+                      <span>
+                        Valid till: {job.expiry ? DateTime.fromISO(job.expiry).toFormat("dd-MMM-yyyy") : "N/A"}
                       </span>
                     </div>
                   </div>
