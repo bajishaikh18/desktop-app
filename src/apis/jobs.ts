@@ -2,11 +2,9 @@ import { apiClient } from "./common";
 
 const baseRoutes = "/job";
 
-export const getJobs = async (
-  page: number,
-  fetchSize: number,
-  filter?: string,
-  field?: string
+export const getJobs = async ( page: number,fetchSize: number,filter?: string,field?: string,country?: string
+
+  
 ) => {
   try {
     const response = await apiClient.get(`${baseRoutes}/jobs`, {
@@ -17,6 +15,8 @@ export const getJobs = async (
         limit: fetchSize,
         field: field || "",
         filterTerm: filter,
+        country: country || '', 
+
       },
     });
     return response.data;
