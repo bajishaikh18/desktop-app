@@ -1,7 +1,6 @@
-"use client";
 import React, { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import styles from "./JobDetail.module.scss";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
@@ -13,8 +12,6 @@ import {
   Col,
   Container,
   Dropdown,
-  Modal,
-  NavDropdown,
   Row,
   Tab,
   Tabs,
@@ -34,7 +31,8 @@ import { getJobDetails } from "@/apis/jobs";
 import { truncateText } from "@/helpers/truncate";
 import { JobPositions } from "./JobPositions";
 import { CurrencyConverter } from "./CurrencyConverter";
-
+import JobApply from './Job Apply';
+import LoginPopup from "@/components/auth/Loginpopup";
 type PostedJobDetailsProps = {
   jobId: string;
 };
@@ -42,7 +40,10 @@ type PostedJobDetailsProps = {
 const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
+  const [showApplyModal, setShowApplyModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false); 
   const router = useRouter();
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["jobDetails", jobId],
     queryFn: () => {
@@ -71,6 +72,21 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
 
   const goBack = () => {
     router.back();
+  };
+
+  
+  const isTokenValid = () => {
+   
+    const token = localStorage.getItem("authToken"); 
+    return !!token; 
+  };
+
+  const handleEasyApplyClick = () => {
+    const tokenValid = isTokenValid();
+    if (!tokenValid) {
+      setShowLoginModal(true); 
+    }
+    setShowApplyModal(true); 
   };
 
   if (isLoading) {
@@ -210,7 +226,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                           Save Job
                         </Dropdown.Item>
                         <Dropdown.Item className="danger" onClick={() => {}}>
-                          Report JOb
+                          Report Job
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -268,21 +284,31 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   <CurrencyConverter
                     currency={COUNTRIES[location as "bh"].currency}
                     country={COUNTRIES[location as "bh"].label}
-
                   />
                 )}
+             <div className={styles.jobActions}>
+            <button className={styles.saveJobButton}>
+                Save Job
+              </button>
+           <button className={styles.easyApplyButton}  onClick={() => setShowApplyModal(true)}  >
+                 Easy Apply
+                </button> 
+                </div>
               </CardBody>
             </Card>
           </Col>
         </Row>
       </Container>
-      <FullScreenImage
-        isOpen={isFullScreen}
-        handleClose={() => {
-          setIsFullScreen(false);
-        }}
+      <FullScreenImage   isOpen={isFullScreen} handleClose={() => { setIsFullScreen(false);
+
+      }}
         imageUrl={imageUrl}
       />
+       <JobApply
+        show={showApplyModal}
+        onHide={() => setShowApplyModal(false)} 
+      />
+
     </main>
   );
 };

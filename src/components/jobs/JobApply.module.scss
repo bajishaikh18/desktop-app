@@ -1,0 +1,125 @@
+.modalBody {
+  padding: 40px 30px !important;
+}
+
+.modalTitleApply{
+  margin-left: 30px;
+  font-size: 20px;
+  margin-top: -15px;
+}
+
+  
+  .applyingFor {
+    font-size: 14px; 
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+  
+  .jobTitle {
+    margin-top: -5px;
+    margin-left: 10px;
+    font-size: 20px; 
+    margin-bottom: 35px; 
+  }
+  
+  .selectLabel {
+    font-size: 14px; 
+    margin-bottom: 10px;
+    margin-left: 5px;
+  }
+  .optionContainer {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px; 
+   margin-bottom: 40px;
+   
+  }
+  
+  .option {
+    border: 1px solid #ddd; 
+    padding: 10px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    position: relative; 
+    transition: border-color 0.3s; 
+  
+    
+    &:hover {
+      border-color: black;
+    }
+  
+    &.selected {
+      border-color: blue; 
+      background-color: transparent; 
+     
+      .checkIcon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: black;
+        font-size: 18px;
+      }
+    }
+  }
+  
+  
+  
+  .optionBody {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .optionHeader h5 {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .optionDate,
+  .optionClick {
+    font-size: 12px;
+    color: #6c757d;
+  }
+  
+  
+  .attachVideoCheckbox {
+    margin-top: 15px; 
+    font-size: 14px;
+  }
+  
+  .modalHeader {
+    border: none; 
+  }
+  
+
+  .ApplyActions {
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 0.5rem; 
+   margin-left: 200px;
+  }
+  
+
+  .cancelButton {
+    font-size: 14px; 
+    padding: 10px 25px;
+    border-radius: 30px;
+    border: 1px solid #007bff; 
+    background-color: white; 
+    color: #007bff; 
+  }
+  .easyApplyButton {
+    font-size: 14px;
+    padding: 10px 25px; 
+    border-radius: 30px; 
+    background-color: #007bff;
+    color: white; 
+    border: 1px solid #007bff;
+  
+    
+  }
+  
+  
+  

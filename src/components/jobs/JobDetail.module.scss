@@ -302,3 +302,35 @@
         }
     }
 }
+
+.jobActions {
+    display: flex; 
+    justify-content: flex-end;
+    gap: 0.5rem; 
+  
+    .saveJobButton {
+      font-size: 14px; 
+      padding: 10px 25px;
+      border-radius: 30px; 
+      border: 1px solid #007bff; 
+      background-color: white; 
+      color: #007bff; 
+  
+      
+      &:hover {
+        background-color: #f1f1f1;
+        border-color: #0056b3;
+      }
+    }
+  
+    .easyApplyButton {
+      font-size: 14px; 
+      padding: 10px 25px; 
+      border-radius: 30px; 
+      background-color: #007bff;
+      color: white; 
+      border: 1px solid #007bff;
+     
+    }
+  }
+  
