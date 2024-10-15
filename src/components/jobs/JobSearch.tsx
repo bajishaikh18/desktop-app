@@ -26,7 +26,6 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch, onCountryChange }) => {
 
   const handleLocationChange = (option: any) => {
     setSelectedLocation(option.value);
-    onCountryChange(option.value);
   };
 
   const locationOptions = useMemo(()=>Object.entries(COUNTRIES)
@@ -38,6 +37,7 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch, onCountryChange }) => {
 
   const handleFindJobs = async () => {
     onSearch(searchTerm);
+    onCountryChange(selectedLocation);
   };
 
   const t = useTranslations("Search");

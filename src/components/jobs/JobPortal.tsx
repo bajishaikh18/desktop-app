@@ -17,10 +17,6 @@ const JobPortal: React.FC<{
   filter: string;
 }> = ({ selectedCountry, field, filter }) => {
   const fetchSize = 8;
-  let type = "";
-  if (selectedCountry) {
-    type = "location";
-  }
   const router = useRouter();
   const {
     data,
@@ -32,15 +28,25 @@ const JobPortal: React.FC<{
     hasNextPage,
   } = useInfiniteQuery<any>({
     queryKey: ["joblist", selectedCountry,field,filter],
-    queryFn: ({ pageParam = 1 }) =>
-      getJobs({
+    queryFn: ({ pageParam = 1 }) =>{
+      const filtersPlaceholder = {
+        location: selectedCountry,
+        [field as "jobTitle"]: filter
+      };
+      const filters = Object.entries(filtersPlaceholder).reduce((obj,[key,val])=>{
+        if(key && val){
+          obj[key as "jobTitle"]= val;
+        }
+        return obj
+      },{} as { jobTitle?:string,location?:string})
+      
+      return getJobs({
         page: pageParam as number,
         fetchSize: fetchSize,
-        field: type,
-        filter: selectedCountry,
-        data: filter,
-        type: field,
-      }),
+        filters:filters
+      })
+    }
+     ,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       return lastPage?.jobs?.length === fetchSize

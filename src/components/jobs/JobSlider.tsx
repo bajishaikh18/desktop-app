@@ -118,6 +118,12 @@ const JobSlider: React.FC = () => {
             {t('jobs_in_Dubai')}
           </span>
           <span
+            className={selectedCountry === 'sa' ? styles.active : ''}
+            onClick={() => handleCountrySelect('sa')}
+          >
+            {t('jobs_in_Saudi')}
+          </span>
+          <span
             className={selectedCountry === 'bh' ? styles.active : ''}
             onClick={() => handleCountrySelect('bh')}
           >

@@ -6,29 +6,22 @@ const baseRoutes = "/job";
 export const getJobs = async ({
   page,
   fetchSize,
-  type,
-  data,
-  filter,
-  field,
+  filters,
 }: {
   page: number;
   fetchSize: number;
-  type?: string;
-  data?: string;
-  filter?: string;
-  field?: string;
-  country?: string;
+  filters:{
+    jobTitle?: string;
+    location?:string;
+  }
 }) => {
   try {
     const client = isTokenValid() ? authorizedApiClient : apiClient;
     const response = await client.get(`${baseRoutes}/jobs`, {
       params: {
-        type: type,
-        data: data,
         page: page,
         limit: fetchSize,
-        field: field || "",
-        filterTerm: filter,
+        filters: filters || {}
       },
     });
     return response.data;
