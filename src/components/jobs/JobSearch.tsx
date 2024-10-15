@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import Select from "react-select";
 import styles from "./Slider.module.scss";
@@ -9,12 +9,6 @@ import { COUNTRIES } from "@/helpers/constants";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { BsSearch } from "react-icons/bs";
 
-const locationOptions = Object.entries(COUNTRIES)
-  .filter(([country]) => country != "in")
-  .map(([country, data]) => ({
-    value: country,
-    label: country === "ae" ? "UAE" : data.label,
-  }));
 
 interface JobSearchProps {
   onSearch: (term: string) => void;
@@ -34,6 +28,13 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch, onCountryChange }) => {
     setSelectedLocation(option.value);
     onCountryChange(option.value);
   };
+
+  const locationOptions = useMemo(()=>Object.entries(COUNTRIES)
+  .filter(([country]) => country != "in")
+  .map(([country, data]) => ({
+    value: country,
+    label:isDesktop ? country === "ae" ? "UAE" : data.label : data.iso3Code ,
+  })),[isDesktop]);
 
   const handleFindJobs = async () => {
     onSearch(searchTerm);
