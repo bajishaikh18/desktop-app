@@ -40,7 +40,7 @@
   margin: 0;
   padding: 24px 48px;
   width: 100vw;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -157,3 +157,9 @@
   background-color: #f0f0f0;
 }
 
+
+@media screen and (max-width:991px) {
+    .header{
+      padding:24px 24px;
+    }
+}

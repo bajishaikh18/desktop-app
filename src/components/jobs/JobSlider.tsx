@@ -17,7 +17,8 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 const JobSlider: React.FC = () => {
   const t = useTranslations("Slider");
   const [selectedCountry, setSelectedCountry] = useState<string>(''); 
-
+  const [field, setField] = useState(""); 
+  const [filter, setFilter] = useState(""); 
   const settings = {
     dots: true,
     dotsClass: "slider-dots",
@@ -36,12 +37,14 @@ const JobSlider: React.FC = () => {
     setSelectedCountry(countryCode); 
   };
 
+  const handleSearch = (searchTerm:string)=>{
+    setField("jobTitle");
+    setFilter(searchTerm);
+  }
   return (
     <div className={styles.sliderContainer}>
       <Slider {...settings}>
-        {/* First Slide */}
         <div className={styles.slide}>
-          {/* <Image src="/slider.png" alt="Slider Image" fill={true} /> */}
           <Container>
           <div className={styles.overlay}>
           <div>
@@ -62,7 +65,6 @@ const JobSlider: React.FC = () => {
           </Container>
         </div>
         <div className={styles.slide}>
-          {/* <Image src="/slider.png" alt="Slider Image" fill={true} /> */}
           <Container>
           <div className={styles.overlay}>
           <div>
@@ -82,24 +84,15 @@ const JobSlider: React.FC = () => {
           </div>
           </Container>
         </div>
-        {/* Second Slide */}
-        {/* <div>
-          <Image
-            src="/slider2.png"
-            alt="Slider Image 2"
-            layout="responsive"
-            width={1440}
-            height={190}
-          />
-        </div> */}
       </Slider>
       
-     
-      <JobSearch />
-    
+     <Container fluid>
+      <JobSearch onSearch={handleSearch} onCountryChange={setSelectedCountry} />
+      </Container>
       <div className={styles.jobListingContainer}>
         <div className={styles.jobList}>
-          <span className={styles.latestJobsTitle}>{t('latest_Jobs')}</span>
+          <span            onClick={() => handleCountrySelect('')}
+ className={selectedCountry === '' ? styles.active : ''}>{t('latest_Jobs')}</span>
           <span
             className={selectedCountry === 'om' ? styles.active : ''}
             onClick={() => handleCountrySelect('om')}
@@ -134,7 +127,7 @@ const JobSlider: React.FC = () => {
       </div>
 
       {/* Pass the selected country to the JobPortal */}
-      <JobPortal selectedCountry={selectedCountry} />
+      <JobPortal selectedCountry={selectedCountry} filter={filter} field={field} />
     </div>
   );
 };

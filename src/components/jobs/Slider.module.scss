@@ -9,14 +9,16 @@
 
 .overlay {
   display: flex;
+  align-items: center;
   justify-content: space-between; 
+  padding: 0px 50px;
 }
 
 .slide{
   width: 100%;
   display: flex !important;
-  align-items: center;
   height: 170px;
+  padding-top: 38px;
   background-position: center;
   background-size: cover;
   background-image: url('/slider.png');
@@ -74,13 +76,6 @@
   margin-top: 40px; 
   text-align: center; 
   
-  @media (max-width: 768px) { 
-    margin-top: 30px;
-  }
-
-  @media (max-width: 480px) { 
-    margin-top: 20px; 
-  }
 }
 
 .jobList {
@@ -89,45 +84,19 @@
   flex-wrap: wrap; 
   gap: 64px;
   
-  @media (max-width: 768px) { 
-    gap: 30px; 
-  }
-
-  @media (max-width: 480px) { 
-    gap: 15px; 
-    flex-direction: column; 
-  }
-
   span {
     font-size: 14px; 
     font-weight: 400;
     line-height:16px;
     margin: 0;
     cursor: pointer; 
-
-    @media (max-width: 768px) {
-      font-size: 12px; 
-    }
-
-    @media (max-width: 480px) { 
-      font-size: 10px; 
+    &.active{
+      color: $color-brand-1;
     }
 
     &:hover {
-      color: #0045E6; 
+      color: $color-brand-1; 
     }
-  }
-}
-
-.latestJobsTitle {
-  color: #0045E6;
-
-  @media (max-width: 768px) { 
-    font-size: 16px; 
-  }
-
-  @media (max-width: 480px) { 
-    font-size: 14px; 
   }
 }
 
@@ -144,15 +113,6 @@
   padding: 10px 20px;
   max-width: 100%;
   width: 960px;
-
-  @media (max-width: 768px) { 
-    width: 70%; 
-    padding: 8px 15px; }
-
-  @media (max-width: 480px) { 
-    width: 90%; 
-    margin-top: -50px; 
-  }
 }
 
 .searchBox{
@@ -165,13 +125,6 @@
   padding: 8px;
   border-radius: 50px;
 
-  @media (max-width: 768px) {
-    font-size: 14px; 
-  }
-
-  @media (max-width: 480px) { 
-    font-size: 12px; 
-  }
 }
 
 .searchImageContainer .searchIcon {
@@ -190,16 +143,6 @@
   margin-bottom: -8px;
   margin-right: -18px;
   margin-top: -8px;
-
-  @media (max-width: 768px) {
-    padding: 10px 25px;
-    font-size: 14px;
-  }
-
-  @media (max-width: 480px) { 
-    padding: 8px 15px; 
-    font-size: 12px; 
-  }
 }
 
 .locationDropdown:focus {
@@ -211,14 +154,6 @@
   align-items: center;
   justify-content: right;
 
-  @media (max-width: 768px) {
-    margin-left: 20px; 
-  }
-
-  @media (max-width: 480px) {
-    margin-left: 10px; 
-    justify-content: center; 
-  }
 }
 
 .separator {
@@ -227,86 +162,50 @@
   background-color: #ccc; 
   margin-right: 20px; 
 
-  @media (max-width: 768px) {
-    height: 30px; 
+}
+@media (max-width: 1190px) {
+  .sliderContainer{
+    padding-top: 70px;
   }
-
-  @media (max-width: 480px) { 
-    height: 25px;
-    margin-right: 10px; 
+}
+@media (max-width: 767px) {
+  .jobListingContainer{
+    margin-top: 40px;
+  }
+  .jobList{
+    gap: 20px;
+  }
+  .searchImageContainer{
+    position: relative;
+    gap: 0px;
+    justify-content: flex-start;
+    .searchBox{
+      display: flex;
+      align-items: center;
+      width:48%;
+      font-size: 12px;
+      flex: none;
+      .searchInput{
+        width: 100%;
+      }
+    }
+    .separator{
+      margin-right: 10px;
+    }
+    .findJobsButton{
+      padding: 16px 25px;
+      position: absolute;
+      margin-left: 0px;
+      right: 20px;
+    }
   }
 }
 
-
-
-.cardContainer{
-  padding-top: 24px;
-  .jobCard{
-    padding: 16px;
-    box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.16);
-    .jobImage{
-      height: 378px !important;
-      object-fit: cover;
-    }
-    .cardBody{
-      padding: 0px !important;
-      padding-top: 16px !important;
-      .cardTitle{
-        font-size: 16px;
-        font-weight: 700;
-         display: flex;
-         gap: 6px;
-         margin-bottom: 12px;
-         align-items: center;
-      }
-      .iconContainer{
-        display: flex;
-        min-height: 70px;
-        margin-bottom: 5px;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        img{
-          margin-right: 4px;
-          vertical-align: middle;
-        }
-        span{
-          font-size: 14px;
-          font-weight: 400;
-          vertical-align: middle;
-          color: rgba(117, 117, 117, 1);
-        }
-        .iconWrapper{
-          display: flex;
-          flex: 50%;
-          align-items: center;
-          margin-bottom: 10px;
-        }
-      }
-      .jobMetaContainer{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        .jobMeta{
-          display: flex;
-          align-items: center;
-        }
-        span{
-          font-size: 14px;
-          color: rgba(117, 117, 117, 1);
-          font-weight: 400;
-        }
-      }
-    }
-   
-    &:hover{
-      cursor: pointer;
-      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.16);
-
-    }
-    
-  }
-  .cardCol{
-    padding: 0px 10px;
-  }
- 
-}
+// @media (max-width: 400px) {
+//   .searchImageContainer{
+//     .findJobsButton{
+//       padding: 20px;
+//       margin-left: 10px;
+//     }
+//   }
+// }
