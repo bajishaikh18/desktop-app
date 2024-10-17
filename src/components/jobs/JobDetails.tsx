@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import styles from "./JobDetail.module.scss";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
+import { useTranslations } from "next-intl";
 import {
   Button,
   Card,
@@ -32,18 +33,18 @@ import { truncateText } from "@/helpers/truncate";
 import { JobPositions } from "./JobPositions";
 import { CurrencyConverter } from "./CurrencyConverter";
 import JobApply from './Job Apply';
-import LoginPopup from "@/components/auth/Loginpopup";
+
 type PostedJobDetailsProps = {
   jobId: string;
 };
 
 const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
+  const t = useTranslations("Details");
+  const [selectedPosition, setSelectedPosition] = useState<string | undefined>(undefined);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false); 
   const router = useRouter();
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ["jobDetails", jobId],
     queryFn: () => {
@@ -74,21 +75,6 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     router.back();
   };
 
-  
-  const isTokenValid = () => {
-   
-    const token = localStorage.getItem("authToken"); 
-    return !!token; 
-  };
-
-  const handleEasyApplyClick = () => {
-    const tokenValid = isTokenValid();
-    if (!tokenValid) {
-      setShowLoginModal(true); 
-    }
-    setShowApplyModal(true); 
-  };
-
   if (isLoading) {
     return (
       <main className="main-section">
@@ -111,6 +97,26 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
       </main>
     );
   }
+
+ const handlePositionSelect = (positionTitle: string) => {
+  setSelectedPosition(positionTitle); 
+};
+
+const openModal = () => {
+  if (selectedPosition) {
+    setShowApplyModal(true); 
+  } else {
+    alert('Please select a position first.'); 
+  }
+};
+
+  
+  const renderJobPositions = () => (
+    <JobPositions
+      positions={positions}
+      onPositionSelect={handlePositionSelect} 
+    />
+  );
 
   return (
     <main className="main-section">
@@ -144,14 +150,14 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                       <>
                         {description}
                         <Link href={""} onClick={() => setShowFullText(false)}>
-                          Hide
+                         {t('hide')}
                         </Link>{" "}
                       </>
                     ) : (
                       <>
                         {truncateText(description, 100)}
                         <Link href={""} onClick={() => setShowFullText(true)}>
-                          Read More
+                          {t('Read_More')}
                         </Link>{" "}
                       </>
                     )}
@@ -160,7 +166,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
 
                 <div className={styles.summaryDetailsSection}>
                   <h3>
-                    <span>Hiring Organization</span>Continental Holdings
+                    <span>{t('Hiring_Organization')}</span>{agencyName}
                   </h3>
                   <ul className={styles.benefits}>
                     {amenities.map((amenity: string, index: number) => (
@@ -223,10 +229,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
 
                       <Dropdown.Menu>
                         <Dropdown.Item onClick={() => {}}>
-                          Save Job
+                          {t('Save_Job')}
                         </Dropdown.Item>
                         <Dropdown.Item className="danger" onClick={() => {}}>
-                          Report Job
+                          {t('Report_Job')}
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -243,7 +249,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     <div>
                       <div className={styles.agencyNameContainer}>
                         <h2 className={styles.agencyName}>
-                          Continental Holdings.inc
+                          {agencyName}
                         </h2>
                         <Image
                           src="/icons/verified.svg"
@@ -271,13 +277,13 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
               <CardBody className={styles.detailsCardBody}>
                 <Tabs variant="pills" defaultActiveKey="home" id="jobDetailTab">
                   <Tab eventKey="home" title="Positions">
-                    <JobPositions positions={positions} />
+                    {renderJobPositions()} 
                   </Tab>
                   <Tab eventKey="profile" title="About Recruiter">
-                    Tab content for Profile
+                    {t('Tab_content_for_Profile')}
                   </Tab>
                   <Tab eventKey="contact" title="More Info">
-                    Tab content for Contact
+                    {t('Tab_content_for_Contact')}
                   </Tab>
                 </Tabs>
                 {COUNTRIES[location as "bh"] && (
@@ -286,29 +292,43 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     country={COUNTRIES[location as "bh"].label}
                   />
                 )}
-             <div className={styles.jobActions}>
-            <button className={styles.saveJobButton}>
-                Save Job
-              </button>
-           <button className={styles.easyApplyButton}  onClick={() => setShowApplyModal(true)}  >
-                 Easy Apply
-                </button> 
+
+
+                <div className={styles.jobActions}>
+                  <button className={styles.saveJobButton}>
+                    {t('Save_Job')}
+                  </button>
+                  <button
+                    className={styles.easyApplyButton}
+                    onClick={() => setShowApplyModal(true)}
+                  >
+                    {t('Easy_Apply')}
+                  </button>
                 </div>
+
               </CardBody>
             </Card>
           </Col>
         </Row>
       </Container>
-      <FullScreenImage   isOpen={isFullScreen} handleClose={() => { setIsFullScreen(false);
 
-      }}
+      {showApplyModal && (
+  <JobApply 
+    show={showApplyModal} 
+    onHide={() => setShowApplyModal(false)} 
+    selectedPosition={selectedPosition} 
+  />
+)}
+
+
+      
+          <FullScreenImage
+        isOpen={isFullScreen}
+        handleClose={() => {
+          setIsFullScreen(false);
+        }}
         imageUrl={imageUrl}
       />
-       <JobApply
-        show={showApplyModal}
-        onHide={() => setShowApplyModal(false)} 
-      />
-
     </main>
   );
 };

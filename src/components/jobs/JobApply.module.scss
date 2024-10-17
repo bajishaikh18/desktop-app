@@ -3,9 +3,9 @@
 }
 
 .modalTitleApply{
-  margin-left: 30px;
+  margin-left: 28px;
   font-size: 20px;
-  margin-top: -15px;
+  margin-top: 15px;
 }
 
   
@@ -58,9 +58,10 @@
         right: 10px;
         top: 50%;
         transform: translateY(-50%);
-        color: black;
-        font-size: 18px;
+        width: 20px; 
+        height: 20px; 
       }
+      
     }
   }
   
@@ -120,6 +121,5 @@
   
     
   }
-  
   
   

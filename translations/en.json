@@ -116,6 +116,26 @@
     "saudi_Arabia":"Saudi Arabia",
     "find_Jobs":"Find Jobs",
     "search_job_title":"Search job title"
+     },
+     "Details":{
+      "hide":"Hide",
+      "Read_More":"Read More",
+      "Hiring_Organization":"Hiring Organization",
+      "Save_Job":"Save Job",
+      "Report_Job":"Report Job",
+      "Tab_content_for_Profile":"Tab content for Profile",
+      "Tab_content_for_Contact":"Tab content for Contact",
+      "Easy_Apply":"Easy Apply"
+     },
+     "JobApply":{
+      "Apply_to_this_Job":"Apply to this Job",
+      "Applying_for":"Applying for",
+      "Apply_Using_Existing_CV":"Apply Using Existing CV",
+     "Upload_New_CV":"Upload New CV",
+     "Click_Here":"Click Here",
+     "cancel":"Cancel",
+     "Easy_Apply":"Easy Apply"
+
      }
 
  
