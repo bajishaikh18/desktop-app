@@ -12,15 +12,23 @@ import { useAuthUserStore } from "@/stores/useAuthUserStore";
 
 interface UploadResumeModalProps {
   handleClose: () => void;
+  onSuccess?:()=>void;
+  onCancel?:()=>void;
+  type?: "resume" | "video";
 }
 
-const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) => {
+const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
+  handleClose,
+  onSuccess,
+  onCancel,
+  type,
+}) => {
   const t = useTranslations("Upload");
 
   const [cvFiles, setCvFiles] = useState<File | null>(null);
   const [videoFiles, setVideoFiles] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const {authUser} = useAuthUserStore();
+  const { authUser } = useAuthUserStore();
   const onVideoDrop = useCallback((acceptedFiles: any) => {
     const file = acceptedFiles[0];
     if (!file) {
@@ -62,21 +70,28 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
           await uploadFile(resp.uploadurl, media?.file!);
         })
       );
- 
-      const userPayload =  signedUrlsResp.reduce((obj,resp) => {
-          obj[resp.type] =  resp.keyName;
-          return obj
-      },{} as {
-        resume?:string,
-        workVideo?:string
-      })
-      
-      await updateUser(userPayload)
+
+      const userPayload = signedUrlsResp.reduce(
+        (obj, resp) => {
+          obj[resp.type] = resp.keyName;
+          return obj;
+        },
+        {} as {
+          resume?: string;
+          workVideo?: string;
+        }
+      );
+
+      await updateUser(userPayload);
       toast.success("Files have been uploaded securly");
-      handleClose();
+      if(onSuccess){
+        onSuccess();
+      }else{
+        handleClose();
+      }
     } catch (e) {
       toast.error("Failed to upload files. Please try again.");
-    } finally{
+    } finally {
       setLoading(false);
     }
   }, [cvFiles, videoFiles]);
@@ -111,56 +126,36 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
 
   return (
     <>
-      <Modal.Title className={styles.modalTitle4}>
-        {t("upload_your_resume")}
-      </Modal.Title>
-      <p className={styles.modalDescription}>
-        {t('you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from')}
-      </p>
-      <div className={styles.uploadBox} {...getCvRootProps()}>
-        <input {...getCvInputProps()} />
-        <h5 className={styles.uploadTitle}>
-          {" "}
-          {isCVDragActive ? t("drop_file") : t("upload_your_cv")}
-        </h5>
-        <p
-          className={`${styles.uploadDescription} ${
-            cvRejections.length > 0 ? styles.error : ""
-          }`}
-        >
-           {t("pdf_docx")}
-        </p>
+    {!type && <>
+     <Modal.Title className={styles.modalTitle4}>
+     {t("upload_your_resume")}
+    </Modal.Title>
+    <p className={styles.modalDescription}>
+      {t(
+        "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from"
+      )}
+    </p>
+    </>
+    }
+     
+      {(type === "resume" || !type) && (
+        <div className={styles.uploadBox} {...getCvRootProps()}>
+          <input {...getCvInputProps()} />
+          <h5 className={styles.uploadTitle}>
+            {" "}
+            {isCVDragActive ? t("drop_file") : t("upload_your_cv")}
+          </h5>
+          <p
+            className={`${styles.uploadDescription} ${
+              cvRejections.length > 0 ? styles.error : ""
+            }`}
+          >
+            {t("pdf_docx")}
+          </p>
 
-        {cvFiles && cvRejections.length == 0 ? (
-          <>
-            <p>{cvFiles.name}</p> <div className={styles.successBar}></div>
-          </>
-        ) : (
-          <Button variant="outline-primary" className={styles.chooseFileButton}>
-            <Image src="/upload.png" width={16} height={16} alt="" />
-            {t("choose_file")}
-          </Button>
-        )}
-      </div>
-
-      <div className={styles.uploadBox} {...getVideoRootProps()}>
-        <input {...getVideoInputProps()} />
-        <h5 className={styles.uploadTitle}>
-          {isDragActive
-            ? "Drop the files here ..."
-            : t("upload_your_work_video")}
-        </h5>
-        <p
-          className={`${styles.uploadDescription} ${
-            videoRejections.length > 0 ? styles.error : ""
-          }`}
-        >
-          {t('upload_a_video_of_your_work')}
-        </p>
-        <div className={styles.dropzone}>
-          {videoFiles && videoRejections.length == 0 ? (
+          {cvFiles && cvRejections.length == 0 ? (
             <>
-              <p>{videoFiles.name}</p> <div className={styles.successBar}></div>
+              <p>{cvFiles.name}</p> <div className={styles.successBar}></div>
             </>
           ) : (
             <Button
@@ -172,26 +167,80 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({ handleClose }) =>
             </Button>
           )}
         </div>
-      </div>
+      )}
 
-      <Modal.Footer className={`${styles.uploadActions} ${styles.modalFooter}`}>
-        <div className={styles.uploadActions}>
-          <a className={styles.skipButton} onClick={handleClose}>{t("skip")}</a>
-          <Button
-            className={`btn ${loading ? "btn-loading" : ""} ${
-              styles.getStartedButton
+      {(type === "video" || !type) && (
+        <div className={styles.uploadBox} {...getVideoRootProps()}>
+          <input {...getVideoInputProps()} />
+          <h5 className={styles.uploadTitle}>
+            {isDragActive
+              ? "Drop the files here ..."
+              : t("upload_your_work_video")}
+          </h5>
+          <p
+            className={`${styles.uploadDescription} ${
+              videoRejections.length > 0 ? styles.error : ""
             }`}
-            disabled={loading || (!cvFiles && !videoFiles)}
-            onClick={uploadMedia}
           >
-            {loading ? (
-              <div className="spinner"></div>
+            {t("upload_a_video_of_your_work")}
+          </p>
+          <div className={styles.dropzone}>
+            {videoFiles && videoRejections.length == 0 ? (
+              <>
+                <p>{videoFiles.name}</p>{" "}
+                <div className={styles.successBar}></div>
+              </>
             ) : (
-              t("get_started")
+              <Button
+                variant="outline-primary"
+                className={styles.chooseFileButton}
+              >
+                <Image src="/upload.png" width={16} height={16} alt="" />
+                {t("choose_file")}
+              </Button>
             )}
-          </Button>
+          </div>
         </div>
-      </Modal.Footer>
+      )}
+      {type ? (
+        <Modal.Footer
+          className={`${styles.uploadActions} ${styles.uploadModalFooter}`}
+        >
+          <div className={styles.uploadActions}>
+          <a className={styles.skipButton} onClick={onCancel}>
+              Cancel
+            </a>
+            <Button
+              className={`btn ${loading ? "btn-loading" : ""} ${
+                styles.getStartedButton
+              }`}
+              disabled={loading || (!cvFiles && !videoFiles)}
+              onClick={uploadMedia}
+            >
+              {loading ? <div className="spinner"></div> : "Upload"}
+            </Button>
+          </div>
+        </Modal.Footer>
+      ) : (
+        <Modal.Footer
+          className={`${styles.uploadActions} ${styles.modalFooter}`}
+        >
+          <div className={styles.uploadActions}>
+            <a className={styles.skipButton} onClick={handleClose}>
+              {t("skip")}
+            </a>
+            <Button
+              className={`btn ${loading ? "btn-loading" : ""} ${
+                styles.getStartedButton
+              }`}
+              disabled={loading || (!cvFiles && !videoFiles)}
+              onClick={uploadMedia}
+            >
+              {loading ? <div className="spinner"></div> : t("get_started")}
+            </Button>
+          </div>
+        </Modal.Footer>
+      )}
     </>
   );
 };

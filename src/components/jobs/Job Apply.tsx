@@ -1,100 +1,160 @@
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import styles from "./JobApply.module.scss";
 import UploadResume from "../../components/auth/UploadResume";
 import { useTranslations } from "next-intl";
+import { IoClose } from "react-icons/io5";
+import { isTokenValid } from "@/helpers/jwt";
+import { useAuthUserStore } from "@/stores/useAuthUserStore";
+import { DateTime } from "luxon";
+import Link from "next/link";
+import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 
 type EasyApplyModalProps = {
   show: boolean;
   onHide: () => void;
-  selectedPosition?: string;
+  selectedPosition?: string[];
+  allPositions: any;
 };
 
-const JobApply: React.FC<EasyApplyModalProps> = ({ show, onHide, selectedPosition }) => {
-  const t = useTranslations("JobApply");
+const JobApply: React.FC<EasyApplyModalProps> = ({
+  show,
+  onHide,
+  allPositions,
+  selectedPosition,
+}) => {
+  const t = useTranslations("JobApply");  
   const [selectedOption, setSelectedOption] = useState<string>("existing");
   const [showUploadResume, setShowUploadResume] = useState(false);
-
-  const handleOptionChange = (option: string) => {
+  const [type, setType] = useState<"resume" | "video">("resume");
+  const queryClient = useQueryClient()
+  const isLogginIn = isTokenValid();
+  const  {authUser} = useAuthUserStore()
+  const handleOptionChange = (option: string, type: "resume" | "video") => {
     setSelectedOption(option);
     setShowUploadResume(option === "new");
+    setType(type);
   };
 
-  return (
-    <Modal show={show} onHide={onHide} centered dialogClassName={styles.modalDialog}>
-      <Modal.Header className={styles.modalHeader} closeButton></Modal.Header>
+  const onSuccess=async ()=>{
+    await queryClient.invalidateQueries({
+      queryKey:["userDetail",true],
+      refetchType:'all'
+    })
+    setShowUploadResume(false)
+  }
 
-      {!showUploadResume && (
-        <Modal.Title className={styles.modalTitleApply}>{t('Apply_to_this_Job')}</Modal.Title>
-      )}
+  const onCancel = ()=>{
+    setShowUploadResume(false)
+  }
+
+  if (!isLogginIn || !authUser) {
+    return false;
+  }
+
+  return (
+    <Modal
+      show={show}
+      onHide={onHide}
+      centered
+      dialogClassName={styles.modalDialog}
+      size="lg"
+    >
+      <Modal.Header className={styles.modalHeader}>
+        {!showUploadResume ? (
+          <Modal.Title className={styles.modalTitleApply}>
+            {t("Apply_to_this_Job")}
+          </Modal.Title>
+        ) : (
+          <Modal.Title className={styles.modalTitleApply}>
+            Upload your {type}
+          </Modal.Title>
+        )}
+        <IoClose fontSize={22} onClick={onHide} />
+      </Modal.Header>
 
       <Modal.Body className={styles.modalBody}>
         {showUploadResume ? (
-          <UploadResume handleClose={onHide} />
+          <UploadResume handleClose={onHide} type={type} onSuccess={onSuccess} onCancel={onCancel} />
         ) : (
           <>
-            <h5 className={styles.applyingFor}>{t('Applying_for')}</h5>
-            <p className={styles.jobTitle}>{selectedPosition || "Job Position"}</p> 
+            <h5 className={styles.applyingFor}>{t("Applying_for")}</h5>
+
+            <div className={styles.jobTitleCont}>
+              {selectedPosition?.map((position) => (
+                <p className={styles.jobTitle}>
+                  {allPositions.find((pos: any) => pos._id === position)
+                    ?.title || "N/A"}
+                </p>
+              ))}
+            </div>
 
             <h6 className={styles.selectLabel}>Select</h6>
             <div className={styles.optionContainer}>
               <div
-                className={`${styles.option} ${selectedOption === "existing" ? styles.selected : ""}`}
-                onClick={() => handleOptionChange("existing")}
+                className={`${styles.option} ${styles.selected}`}
+                onClick={() => handleOptionChange("existing", "resume")}
               >
                 <div className={styles.optionBody}>
                   <div className={styles.optionHeader}>
-                  <h5>{t('Apply_Using_Existing_CV')}</h5>
+                    <h5>{t("Apply_Using_Existing_CV")}</h5>
 
-                    <span className={styles.optionDate}>Last Updated 12-Jun-2024</span>
+                    <span className={styles.optionDate}>
+                      Last Updated {DateTime.fromISO(authUser?.resume?.uploadDate).toFormat('dd MMM yyyy')}
+                    </span>
                   </div>
-                  {selectedOption === "existing" && (
-       <img src="/check-box.png" alt="Selected" className={styles.checkIcon} />
-        )}
-
+                    <img
+                      src="/check-box.png"
+                      alt="Selected"
+                      className={styles.checkIcon}
+                    />
                 </div>
               </div>
 
               <div
-                className={`${styles.option} ${selectedOption === "new" ? styles.selected : ""}`}
-                onClick={() => handleOptionChange("new")}
+                className={`${styles.option}`}
+                onClick={() => handleOptionChange("new", "resume")}
               >
                 <div className={styles.optionBody}>
                   <div className={styles.optionHeader}>
-                    <h5>{t('Upload_New_CV')}</h5>
-                    <span className={styles.optionClick}>{t('Click_Here')}</span>
+                    <h5>{t("Upload_New_CV")}</h5>
+                    <span className={styles.optionClick}>
+                      {t("Click_Here")}
+                    </span>
                   </div>
-                  {selectedOption === "new" && (
-      <img src="/check-box.png" alt="Selected" className={styles.checkIcon} />
-      )}
-
+                
                 </div>
               </div>
             </div>
-           
+            <div className={styles.workVideo}>
             <Form.Check
+              disabled={!authUser.workVideo}
               className={styles.attachVideoCheckbox}
               label="Attach Work Video"
               id="attachVideo"
             />
+            {
+              !authUser.workVideo && <Link  href={""} onClick={()=>handleOptionChange("new","video")}>Upload work video</Link>
+            }
+            </div>
           </>
         )}
       </Modal.Body>
 
       {!showUploadResume && (
         <Modal.Footer className={styles.modalApplyFooter}>
-          <div className={styles.ApplyActions}>
+          <div className={styles.applyActions}>
             <button
               className={`${styles.cancelButton} ${styles.smallButton}`}
               onClick={onHide}
             >
-              {t('cancel')}
+              {t("cancel")}
             </button>
             <button
               className={`${styles.easyApplyButton} ${styles.smallButton}`}
             >
-              {t('Easy_Apply')}
+              {t("Easy_Apply")}
             </button>
           </div>
         </Modal.Footer>

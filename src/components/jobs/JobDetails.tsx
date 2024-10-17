@@ -32,7 +32,9 @@ import { getJobDetails } from "@/apis/jobs";
 import { truncateText } from "@/helpers/truncate";
 import { JobPositions } from "./JobPositions";
 import { CurrencyConverter } from "./CurrencyConverter";
-import JobApply from './Job Apply';
+import JobApply from "./Job Apply";
+import { useAuthUserStore } from "@/stores/useAuthUserStore";
+import { isTokenValid } from "@/helpers/jwt";
 
 type PostedJobDetailsProps = {
   jobId: string;
@@ -40,10 +42,14 @@ type PostedJobDetailsProps = {
 
 const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const t = useTranslations("Details");
-  const [selectedPosition, setSelectedPosition] = useState<string | undefined>(undefined);
+  const [selectedPosition, setSelectedPosition] = useState<string[] | []>(
+    []
+  );
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
+  const {setOpenLogin} = useAuthUserStore()
+  const isLoggedIn = isTokenValid();
   const router = useRouter();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["jobDetails", jobId],
@@ -98,23 +104,28 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     );
   }
 
- const handlePositionSelect = (positionTitle: string) => {
-  setSelectedPosition(positionTitle); 
-};
+  const handlePositionSelect = (positionId: string, checked:boolean) => {
+    let selectedPos;
+    if(checked){
+      selectedPos=  [...selectedPosition,positionId];
+    }else{
+      selectedPos = selectedPosition.filter(x=>x!==positionId)
+    }
+    setSelectedPosition(selectedPos);
+  };
 
-const openModal = () => {
-  if (selectedPosition) {
-    setShowApplyModal(true); 
-  } else {
-    alert('Please select a position first.'); 
-  }
-};
+  const openModal = () => {
+    if (selectedPosition && isLoggedIn) {
+      setShowApplyModal(true);
+    } else {
+      setOpenLogin(true);
+    }
+  };
 
-  
   const renderJobPositions = () => (
     <JobPositions
       positions={positions}
-      onPositionSelect={handlePositionSelect} 
+      onPositionSelect={handlePositionSelect}
     />
   );
 
@@ -150,14 +161,14 @@ const openModal = () => {
                       <>
                         {description}
                         <Link href={""} onClick={() => setShowFullText(false)}>
-                         {t('hide')}
+                          {t("hide")}
                         </Link>{" "}
                       </>
                     ) : (
                       <>
                         {truncateText(description, 100)}
                         <Link href={""} onClick={() => setShowFullText(true)}>
-                          {t('Read_More')}
+                          {t("Read_More")}
                         </Link>{" "}
                       </>
                     )}
@@ -166,7 +177,8 @@ const openModal = () => {
 
                 <div className={styles.summaryDetailsSection}>
                   <h3>
-                    <span>{t('Hiring_Organization')}</span>{agencyName}
+                    <span>{t("Hiring_Organization")}</span>
+                    {agencyName}
                   </h3>
                   <ul className={styles.benefits}>
                     {amenities.map((amenity: string, index: number) => (
@@ -229,10 +241,10 @@ const openModal = () => {
 
                       <Dropdown.Menu>
                         <Dropdown.Item onClick={() => {}}>
-                          {t('Save_Job')}
+                          {t("Save_Job")}
                         </Dropdown.Item>
                         <Dropdown.Item className="danger" onClick={() => {}}>
-                          {t('Report_Job')}
+                          {t("Report_Job")}
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -248,9 +260,7 @@ const openModal = () => {
                     />
                     <div>
                       <div className={styles.agencyNameContainer}>
-                        <h2 className={styles.agencyName}>
-                          {agencyName}
-                        </h2>
+                        <h2 className={styles.agencyName}>{agencyName}</h2>
                         <Image
                           src="/icons/verified.svg"
                           width={13}
@@ -277,13 +287,13 @@ const openModal = () => {
               <CardBody className={styles.detailsCardBody}>
                 <Tabs variant="pills" defaultActiveKey="home" id="jobDetailTab">
                   <Tab eventKey="home" title="Positions">
-                    {renderJobPositions()} 
+                    {renderJobPositions()}
                   </Tab>
                   <Tab eventKey="profile" title="About Recruiter">
-                    {t('Tab_content_for_Profile')}
+                    {t("Tab_content_for_Profile")}
                   </Tab>
                   <Tab eventKey="contact" title="More Info">
-                    {t('Tab_content_for_Contact')}
+                    {t("Tab_content_for_Contact")}
                   </Tab>
                 </Tabs>
                 {COUNTRIES[location as "bh"] && (
@@ -293,19 +303,18 @@ const openModal = () => {
                   />
                 )}
 
-
                 <div className={styles.jobActions}>
-                  <button className={styles.saveJobButton}>
-                    {t('Save_Job')}
-                  </button>
-                  <button
+                  <Button className={styles.saveJobButton}>
+                    {t("Save_Job")}
+                  </Button>
+                  <Button
                     className={styles.easyApplyButton}
-                    onClick={() => setShowApplyModal(true)}
+                    onClick={openModal}
+                    disabled={selectedPosition.length === 0}
                   >
-                    {t('Easy_Apply')}
-                  </button>
+                    {t("Easy_Apply")}
+                  </Button>
                 </div>
-
               </CardBody>
             </Card>
           </Col>
@@ -313,16 +322,15 @@ const openModal = () => {
       </Container>
 
       {showApplyModal && (
-  <JobApply 
-    show={showApplyModal} 
-    onHide={() => setShowApplyModal(false)} 
-    selectedPosition={selectedPosition} 
-  />
-)}
+        <JobApply
+          show={showApplyModal}
+          onHide={() => setShowApplyModal(false)}
+          selectedPosition={selectedPosition}
+          allPositions={positions}
+        />
+      )}
 
-
-      
-          <FullScreenImage
+      <FullScreenImage
         isOpen={isFullScreen}
         handleClose={() => {
           setIsFullScreen(false);

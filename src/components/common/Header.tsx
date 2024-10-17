@@ -11,6 +11,8 @@ import { AuthUser, useAuthUserStore } from "@/stores/useAuthUserStore";
 import { getTokenClaims, isTokenValid } from "@/helpers/jwt";
 import Image from "next/image";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
+import { getUserDetails } from "@/apis/auth";
+import { useQuery } from "@tanstack/react-query";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -26,9 +28,20 @@ const Header: React.FC = () => {
     getWindowDimensions()
   );
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [popupVisible, setPopupVisible] = useState(false);
-  const { authUser, setAuthUser } = useAuthUserStore();
+  const [getDetails,setGetDetails]= useState(false);
+  const { authUser, setAuthUser,openLogin,setOpenLogin } = useAuthUserStore();
   const {setIsDesktop} = useReponsiveStore();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["userDetail",getDetails],
+    queryFn: () => {
+      if (getDetails) {
+        return getUserDetails();
+      }
+      throw new Error("jobId is null or undefined");
+    },
+    enabled: true,
+  });
+  
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -43,22 +56,31 @@ const Header: React.FC = () => {
       setIsDesktop(isDesktop)
     }
   },[windowDimensions])
+
+
+  const getUser =async ()=>{
+  }
+
+  useEffect(()=>{
+    if(data){
+      setAuthUser(data.userDetails as AuthUser)
+    }
+  },[data])
+
   useEffect(() => {
     if (isTokenValid() && !authUser) {
-      const token = localStorage.getItem("token");
-      const user = getTokenClaims(token!);
-      setAuthUser(user as AuthUser);
+      setGetDetails(true);
     }
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const openPopup = () => {
-    setPopupVisible(true);
+    setOpenLogin(true);
   };
 
   const closePopup = () => {
-    setPopupVisible(false);
+    setOpenLogin(false);
   };
 
   const logout = () => {
@@ -169,7 +191,7 @@ const Header: React.FC = () => {
       </Navbar> */}
 
       {/* Render the LoginPopup component */}
-      <LoginPopup show={popupVisible} onClose={closePopup} />
+      <LoginPopup show={openLogin} onClose={closePopup} />
     </>
   );
 };

@@ -4,16 +4,17 @@ import styles from "./JobDetail.module.scss";
 import Image from "next/image";
 
 export type Position = {
-  positionId: number;  
+  jobTitleId: number;  
+  _id:string;
   title: string;
   experience: string;
   salary: string;
 };
 
-export const JobPositions = ({ positions, onPositionSelect }: { positions: Position[], onPositionSelect: (title: string) => void }) => {
-
-  const handlePositionSelect = (positionTitle: string) => {
-    onPositionSelect(positionTitle); 
+export const JobPositions = ({ positions, onPositionSelect }: { positions: Position[], onPositionSelect: (positionId: string,checked:boolean) => void }) => {
+  console.log(positions)
+  const handlePositionSelect = (positionTitle: string,e:any) => {
+    onPositionSelect(positionTitle,e.target.checked); 
   };
   
   return (
@@ -22,20 +23,22 @@ export const JobPositions = ({ positions, onPositionSelect }: { positions: Posit
         <Table>
           <tbody>
             {positions.map((position) => (
-              <tr key={position.positionId}>
+              <tr key={position._id}>
                 <td className={styles.title}>
                   <Form.Check
                     type="checkbox"
-                    id={`position-${position.positionId}`}
+                    id={`position-${position._id}`}
                     className={styles.positionCheckbox}
-                    onChange={() => handlePositionSelect(position.title)} 
+                    onChange={(e) => handlePositionSelect(position._id,e)} 
                   />
                   <div className="d-inline-block">
                     {position.title}
                     <h6>({position.experience} Years)</h6>
                   </div>
                 </td>
-                <td>
+                <td className={styles.amount}>
+                  <div className={styles.amountContainer}>
+                    <div>
                   <div className={styles.divider}></div>
                   <Image
                     src="/icons/salary.svg"
@@ -43,7 +46,9 @@ export const JobPositions = ({ positions, onPositionSelect }: { positions: Posit
                     height={24}
                     alt="salary"
                   />
+                  </div>
                   {position.salary}
+                  </div>
                 </td>
               </tr>
             ))}

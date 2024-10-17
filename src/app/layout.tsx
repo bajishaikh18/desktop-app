@@ -9,7 +9,6 @@ import { Toaster } from "react-hot-toast";
 import { ReactQueryProvider } from "./react-query-provider";
 import NextTopLoader from 'nextjs-toploader';
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,13 +23,13 @@ export default async function RootLayout({
   const messages = await getMessages();
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
       <NextTopLoader />
         <NextIntlClientProvider messages={messages}>
+        <ReactQueryProvider>
           <Header />
-
           <Toaster position="top-right" />
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          {children}</ReactQueryProvider>
         </NextIntlClientProvider>
       </body>
     </html>

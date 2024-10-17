@@ -12,7 +12,7 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", sans-serif !important;
   background-color:rgba(250, 248, 255, 1) !important;
   min-height: 100vh;
 }
