@@ -382,6 +382,16 @@
         height: auto;
         border: 1px solid $color-brand-1;
     }
+    .successMessage{
+        padding: 24px;
+        color: $color-success;
+        font-size: 16px;
+        font-weight: 500;
+        width: 100%;
+        svg{
+            margin-right: 8px;
+        }
+    }
 
     .saveJobButton {
        background-color: white;

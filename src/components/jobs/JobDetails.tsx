@@ -19,7 +19,7 @@ import {
 } from "react-bootstrap";
 import { DateTime } from "luxon";
 import Link from "next/link";
-import { BsThreeDots } from "react-icons/bs";
+import { BsCheckCircleFill, BsThreeDots } from "react-icons/bs";
 import {
   COUNTRIES,
   FACILITIES_IMAGES,
@@ -42,13 +42,12 @@ type PostedJobDetailsProps = {
 
 const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const t = useTranslations("Details");
-  const [selectedPosition, setSelectedPosition] = useState<string[] | []>(
-    []
-  );
+  const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
-  const {setOpenLogin} = useAuthUserStore()
+  const [showSuccess, setShowSuccess] = useState(false);
+  const { setOpenLogin } = useAuthUserStore();
   const isLoggedIn = isTokenValid();
   const router = useRouter();
   const { data, isLoading, isError } = useQuery({
@@ -64,6 +63,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
 
   const {
     _id,
+    agencyId,
     createdAt,
     expiry,
     agencyName,
@@ -73,6 +73,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     contactNumbers,
     email,
     status,
+    applied,
     description,
     amenities,
   } = data?.job || {};
@@ -104,12 +105,12 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     );
   }
 
-  const handlePositionSelect = (positionId: string, checked:boolean) => {
+  const handlePositionSelect = (positionId: string, checked: boolean) => {
     let selectedPos;
-    if(checked){
-      selectedPos=  [...selectedPosition,positionId];
-    }else{
-      selectedPos = selectedPosition.filter(x=>x!==positionId)
+    if (checked) {
+      selectedPos = [...selectedPosition, positionId];
+    } else {
+      selectedPos = selectedPosition.filter((x) => x !== positionId);
     }
     setSelectedPosition(selectedPos);
   };
@@ -120,6 +121,11 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     } else {
       setOpenLogin(true);
     }
+  };
+
+  const onSuccess = () => {
+    setShowSuccess(true);
+    setShowApplyModal(false);
   };
 
   const renderJobPositions = () => (
@@ -157,20 +163,32 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                 <div className={styles.summaryDetailsSection}>
                   <h3>Job Details</h3>
                   <p>
-                    {showFullText ? (
+                    {description ? (
                       <>
-                        {description}
-                        <Link href={""} onClick={() => setShowFullText(false)}>
-                          {t("hide")}
-                        </Link>{" "}
+                        {showFullText ? (
+                          <>
+                            {description}
+                            <Link
+                              href={""}
+                              onClick={() => setShowFullText(false)}
+                            >
+                              {t("hide")}
+                            </Link>{" "}
+                          </>
+                        ) : (
+                          <>
+                            {truncateText(description, 100)}
+                            <Link
+                              href={""}
+                              onClick={() => setShowFullText(true)}
+                            >
+                              {t("Read_More")}
+                            </Link>{" "}
+                          </>
+                        )}
                       </>
                     ) : (
-                      <>
-                        {truncateText(description, 100)}
-                        <Link href={""} onClick={() => setShowFullText(true)}>
-                          {t("Read_More")}
-                        </Link>{" "}
-                      </>
+                      "N/A"
                     )}
                   </p>
                 </div>
@@ -260,7 +278,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     />
                     <div>
                       <div className={styles.agencyNameContainer}>
-                        <h2 className={styles.agencyName}>{agencyName}</h2>
+                        <h2 className={styles.agencyName}>{agencyId.name}</h2>
                         <Image
                           src="/icons/verified.svg"
                           width={13}
@@ -302,18 +320,25 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     country={COUNTRIES[location as "bh"].label}
                   />
                 )}
-
                 <div className={styles.jobActions}>
-                  <Button className={styles.saveJobButton}>
-                    {t("Save_Job")}
-                  </Button>
-                  <Button
-                    className={styles.easyApplyButton}
-                    onClick={openModal}
-                    disabled={selectedPosition.length === 0}
-                  >
-                    {t("Easy_Apply")}
-                  </Button>
+                  {(showSuccess || applied) ? (
+                    <div className={styles.successMessage}>
+                      <BsCheckCircleFill /> You’ve successfully applied for this job
+                    </div>
+                  ) : (
+                    <>
+                      <Button className={styles.saveJobButton}>
+                        {t("Save_Job")}
+                      </Button>
+                      <Button
+                        className={styles.easyApplyButton}
+                        onClick={openModal}
+                        disabled={selectedPosition.length === 0}
+                      >
+                        {t("Easy_Apply")}
+                      </Button>
+                    </>
+                  )}
                 </div>
               </CardBody>
             </Card>
@@ -324,7 +349,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
       {showApplyModal && (
         <JobApply
           show={showApplyModal}
-          onHide={() => setShowApplyModal(false)}
+          onHide={() => {setShowApplyModal(false)}}
+          onApplySuccess={onSuccess}
           selectedPosition={selectedPosition}
           allPositions={positions}
         />
