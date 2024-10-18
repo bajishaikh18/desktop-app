@@ -121,7 +121,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               ))}
             </div>
 
-            <h6 className={styles.selectLabel}>Select</h6>
+            <h6 className={styles.selectLabel}>{t('select')}</h6>
             <div className={styles.optionContainer}>
               <div
                 className={`${styles.option} ${styles.selected}`}
@@ -132,7 +132,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
                     <h5>{t("Apply_Using_Existing_CV")}</h5>
 
                     <span className={styles.optionDate}>
-                      Last Updated {DateTime.fromISO(authUser?.resume?.uploadDate).toFormat('dd MMM yyyy')}
+                      {t('Last_Updated')} {DateTime.fromISO(authUser?.resume?.uploadDate).toFormat('dd MMM yyyy')}
                     </span>
                   </div>
                     <img
@@ -167,7 +167,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               id="attachVideo"
             />
             {
-              !authUser.workVideo && <Link  href={""} onClick={()=>handleOptionChange("new","video")}>Upload work video</Link>
+              !authUser.workVideo && <Link  href={""} onClick={()=>handleOptionChange("new","video")}>{t('Upload_work_video')}</Link>
             }
             </div>
           </>

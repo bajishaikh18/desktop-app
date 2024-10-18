@@ -128,11 +128,14 @@
       "Easy_Apply":"Easy Apply"
      },
      "JobApply":{
+      "select":"Select",
       "Apply_to_this_Job":"Apply to this Job",
       "Applying_for":"Applying for",
       "Apply_Using_Existing_CV":"Apply Using Existing CV",
+      "Last_Updated":"Last Updated",
      "Upload_New_CV":"Upload New CV",
      "Click_Here":"Click Here",
+     "Upload_work_video":"Upload work video",
      "cancel":"Cancel",
      "Easy_Apply":"Easy Apply"
 

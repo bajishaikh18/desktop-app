@@ -16,7 +16,7 @@ export const getJobs = async ({
   }
 }) => {
   try {
-    const client = isTokenValid() ? authorizedApiClient : apiClient;
+   const client = isTokenValid() ? authorizedApiClient : apiClient;
     const response = await client.get(`${baseRoutes}/jobs`, {
       params: {
         page: page,
@@ -41,3 +41,43 @@ export const getJobDetails = async (id: string) => {
     throw error;
   }
 };
+
+export const convertCurrency = async (
+  jobId: string,
+  amount: number,
+  fromCurrency: string,
+  toCurrency: string
+) => {
+  try {
+    const client = isTokenValid() ? authorizedApiClient : apiClient;
+     const response = await client.post(`/convertCurrency`, {
+     
+      name: jobId,       
+      from: fromCurrency, 
+      to: toCurrency,    
+      amount,            
+    });
+
+  
+    return response.data.convertedAmount;
+  } catch (error) {
+    console.error("Failed to convert currency:", error);
+    throw error;
+  }
+};
+
+
+
+export const saveJob = async (jobId: string) => {
+  try {
+    const client = isTokenValid() ? authorizedApiClient : apiClient;
+    const response = await client.patch("/user/addSavedJob", { 
+      jobId 
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to save job:", error);
+    throw error;
+  }
+};
+

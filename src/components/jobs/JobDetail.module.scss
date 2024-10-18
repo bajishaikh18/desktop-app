@@ -412,3 +412,18 @@
         }
     }
 }
+
+.loader {
+    border: 2px solid transparent; /* Outer border */
+    border-top: 2px solid #007bff; /* Inner border color */
+    border-radius: 50%;
+    width: 16px; /* Size of loader */
+    height: 16px; /* Size of loader */
+    animation: spin 1s linear infinite; /* Spinning animation */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

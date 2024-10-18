@@ -27,8 +27,9 @@ import {
 } from "@/helpers/constants";
 import { FullScreenImage } from "../common/FullScreenImage";
 import { Loader, NotFound } from "../common/Feedbacks";
+import Spinner from 'react-bootstrap/Spinner';
 import { LuExpand } from "react-icons/lu";
-import { getJobDetails } from "@/apis/jobs";
+import { getJobDetails, saveJob } from "@/apis/jobs";
 import { truncateText } from "@/helpers/truncate";
 import { JobPositions } from "./JobPositions";
 import { CurrencyConverter } from "./CurrencyConverter";
@@ -47,6 +48,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const [showFullText, setShowFullText] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isSaving, setIsSaving] = useState(false); 
   const { setOpenLogin } = useAuthUserStore();
   const isLoggedIn = isTokenValid();
   const router = useRouter();
@@ -126,6 +128,19 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const onSuccess = () => {
     setShowSuccess(true);
     setShowApplyModal(false);
+  };
+ 
+  const handleSaveJob = async () => {
+    setIsSaving(true);
+    try {
+      await saveJob(jobId); 
+     alert("Job saved successfully!");
+    } catch (error) {
+      console.error("Failed to save job:", error);
+      alert("Failed to save job. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const renderJobPositions = () => (
@@ -318,6 +333,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   <CurrencyConverter
                     currency={COUNTRIES[location as "bh"].currency}
                     country={COUNTRIES[location as "bh"].label}
+                    jobId={jobId}  
                   />
                 )}
                 <div className={styles.jobActions}>
@@ -327,16 +343,27 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     </div>
                   ) : (
                     <>
-                      <Button className={styles.saveJobButton}>
-                        {t("Save_Job")}
+                    <Button className={styles.saveJobButton} variant="secondary"
+                        onClick={handleSaveJob}
+                            disabled={isSaving} >
+                           {isSaving ? (
+                          <>
+                     <Spinner animation="border" size="sm" />
+                     <span className="ms-2"></span>
+                        </>
+                      ) : (
+                        t("Save_Job")
+                         )}
                       </Button>
-                      <Button
+                  
+                  <Button
                         className={styles.easyApplyButton}
                         onClick={openModal}
                         disabled={selectedPosition.length === 0}
                       >
                         {t("Easy_Apply")}
                       </Button>
+
                     </>
                   )}
                 </div>
