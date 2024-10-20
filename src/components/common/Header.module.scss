@@ -156,10 +156,39 @@
 .dropdownItem:hover {
   background-color: #f0f0f0;
 }
-
+.mobileMenu{
+  display: none;
+}
 
 @media screen and (max-width:991px) {
     .header{
       padding:24px 24px;
     }
+}
+
+@media screen and (max-width:768px) {
+  .navContainer{
+    padding-left: 0px;
+    padding-top: 30px;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .mobileMenu{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 10px;
+    .languageSelection{
+      padding-left: 0px !important;
+    }
+  }
+  .rightNavItems{
+     align-items: flex-start;
+     a{
+      margin-top: 10px;
+     }
+    .divider{
+      display: none;
+    }
+  }
 }

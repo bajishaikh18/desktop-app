@@ -68,11 +68,21 @@
         box-shadow: none !important;
     }
 }
-
-@media (max-width: 500px) {
+@media (max-width: 768px) {
+    .navbar-toggler{
+        border: none !important;
+        padding: 0px !important;
+        &:focus{
+            border: none !important;
+            box-shadow: none !important;
+        }
+    }
+}
+@media (max-width: 600px) {
     .main-section{
         padding-top: 102px;
         padding-left: 16px;
         padding-right: 16px;
     }
+    
 }

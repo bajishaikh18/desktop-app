@@ -13,6 +13,7 @@ import Image from "next/image";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { getUserDetails } from "@/apis/auth";
 import { useQuery } from "@tanstack/react-query";
+import { HiMenuAlt1 } from "react-icons/hi";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -94,7 +95,27 @@ const Header: React.FC = () => {
     <>
       <Navbar className={styles.header} expand="lg" fixed="top">
         <Image src="/logo.svg" alt="Logo" width={136} height={28} />
-        {isDesktop ? (
+        <div className={styles.mobileMenu}>
+        {
+            !isDesktop && <Nav.Link
+            className={`${styles.navListItem} ${styles.navListItemBlue}`}
+            href="#employers"
+            onClick={openPopup}
+          >
+            {" "}
+            {t("signIn")}
+          </Nav.Link>
+          }
+         {
+            !isDesktop && <LocaleSwitcherSelect />
+          }
+           <Navbar.Toggle aria-controls="basic-navbar-nav" children={
+            <><HiMenuAlt1 fontSize={25}/> </>
+          }/>
+         
+               
+        </div>
+
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className={styles.navContainer}>
               <Nav.Link
@@ -104,24 +125,25 @@ const Header: React.FC = () => {
               >
                 {t("jobs")}
               </Nav.Link>
-              <Nav.Link className={styles.navListItem} href="#posted-jobs">
+              <Nav.Link className={styles.navListItem}                     href="javascript:;"
+              >
                 {t("walkins")}
               </Nav.Link>
-              <Nav.Link className={styles.navListItem} href="#agencies">
+              <Nav.Link className={styles.navListItem}                     href="javascript:;"
+              >
                 {t("agenices")}
               </Nav.Link>
-              <Nav.Link className={styles.navListItem} href="#candidates">
+              <Nav.Link className={styles.navListItem}                     href="javascript:;"
+              >
                 {t("travel")}
               </Nav.Link>
-              <NavDropdown title={t("services")} className={styles.navListItem}>
+              <NavDropdown title={t("services")} className={styles.navListItem} drop="down">
                 <NavDropdown.Item
-                  href="#action/3.1"
                   className={styles.navListItem}
                 >
                   {t("documentAttestation")}
                 </NavDropdown.Item>
                 <NavDropdown.Item
-                  href="#action/3.2"
                   className={styles.navListItem}
                 >
                   {t("medicalTests")}
@@ -137,8 +159,8 @@ const Header: React.FC = () => {
                     className={styles.navListItem}
                   >
                     <NavDropdown.Item
-                      href="#action/3.2"
-                      className={styles.navListItem}
+                    href="javascript:;"
+                    className={styles.navListItem}
                       onClick={logout}
                     >
                       Logout
@@ -149,27 +171,30 @@ const Header: React.FC = () => {
                 <>
                   <Nav.Link
                     className={`${styles.navListItem} ${styles.navListItemBlue}`}
-                    href="#employers"
+                    href="javascript:;"
                   >
                     {t("employer")}
                   </Nav.Link>
                   <div className={styles.divider}> |</div>
-                  <Nav.Link
+                  {
+                    isDesktop &&  <Nav.Link
                     className={`${styles.navListItem} ${styles.navListItemBlue}`}
-                    href="#employers"
+                    href="javascript:;"
                     onClick={openPopup}
                   >
                     {" "}
                     {t("signIn")}
                   </Nav.Link>
+                  }
+                 
                 </>
               )}
-              <LocaleSwitcherSelect />
+              {
+                isDesktop && <LocaleSwitcherSelect />
+              }
+              
             </Nav>
           </Navbar.Collapse>
-        ) : (
-          <LocaleSwitcherSelect />
-        )}
       </Navbar>
       {/* <Navbar fixed="bottom">
       <Nav className={styles.navContainer}>
