@@ -49,11 +49,13 @@ const Header: React.FC = () => {
   function handleResize() {
     setWindowDimensions(getWindowDimensions());
   }
-  const isDesktop = windowDimensions.width > 900;
+  const isDesktop = windowDimensions.width > 1024;
+  const isTab = windowDimensions.width >= 768 && windowDimensions.width < 1024;
+  const isMobile = windowDimensions.width < 768;
 
   useEffect(()=>{
     if(windowDimensions.width){
-      setIsDesktop(isDesktop)
+      setIsDesktop(isDesktop,isTab,isMobile)
     }
   },[windowDimensions])
 

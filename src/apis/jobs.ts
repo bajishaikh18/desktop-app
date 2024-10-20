@@ -71,9 +71,7 @@ export const convertCurrency = async (
 export const saveJob = async (jobId: string) => {
   try {
     const client = isTokenValid() ? authorizedApiClient : apiClient;
-    const response = await client.patch("/user/addSavedJob", { 
-      jobId 
-    });
+    const response = await client.patch(`/user/addSavedJob/${jobId}`);
     return response.data;
   } catch (error) {
     console.error("Failed to save job:", error);

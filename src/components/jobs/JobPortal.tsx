@@ -8,7 +8,8 @@ import { getJobs } from "@/apis/jobs";
 import { Loader, NotFound } from "../common/Feedbacks";
 import { FACILITIES_IMAGES, IMAGE_BASE_URL } from "@/helpers/constants";
 import { DateTime } from "luxon";
-import { useRouter } from "next/navigation";
+// @ts-ignore
+import { useRouter } from 'nextjs-toploader/app';
 
 
 const JobPortal: React.FC<{

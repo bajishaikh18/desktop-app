@@ -21,8 +21,10 @@
             line-height: 20px;
             font-weight: 600;
             margin-bottom: 8px;
-
-            span {
+            span{
+                vertical-align: middle;
+            }
+            .label {
                 font-size: 14px;
                 font-weight: 400;
                 line-height: 20px;
@@ -84,16 +86,13 @@
         display: flex;
         gap: 32px;
         margin-bottom: 0px;
-
         li {
-            display: block;
+            display: flex;
             font-size: 14px;
             font-weight: 400;
             color: rgba(117, 117, 117, 1);
-
-            img {
-                margin-right: 3px;
-            }
+            align-items: center;
+            gap: 3px;
         }
     }
 
@@ -103,7 +102,7 @@
         padding: 0px;
         align-items: center;
         margin-top: 24px;
-        margin-bottom: 24px;
+        margin-bottom: 8px;
 
         li {
             display: block;
@@ -111,7 +110,10 @@
             color: $color-grey-3;
             font-weight: 400;
             line-height: 17px;
-
+            span{
+                display: inline-block;
+                vertical-align: middle;
+            }
             img {
                 margin-right: 8px;
                 vertical-align: middle;
@@ -121,7 +123,85 @@
 }
 
 .detailsColumn {
-    padding: 0px 20px;
+    padding: 0px 0px 0px 24px;
+}
+
+.detailsCardHeader {
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 0px;
+
+    &.cardActionsHeader {
+        border-bottom: 0.5px solid $color-grey-2;
+        padding-bottom: 20px;
+        padding-top: 0px;
+
+        h3 {
+            margin: 0px;
+        }
+    }
+
+    .agencyDetails {
+        gap: 12px;
+        display: flex;
+        align-items: center;
+
+        .agencyNameContainer {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 8px;
+
+            img {
+                margin-top: 5px;
+            }
+        }
+
+        .agencyName {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 22px;
+            margin-bottom: 0px;
+        }
+
+    }
+
+    .location {
+        display: flex;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 17px;
+        align-items: center;
+        padding: 7px 10px;
+        border-radius: 4px;
+        background-color: rgba(0, 69, 230, 0.05);
+    }
+
+    .actionContainer {
+        align-items: center;
+        gap: 14px;
+        display: flex;
+
+        .dropdownButton {
+            background-color: transparent;
+            border: none !important;
+            padding: 0px !important;
+            margin: 0px;
+
+            svg {
+                path {
+                    fill: #000
+                }
+            }
+
+            &:after {
+                display: none;
+            }
+        }
+    }
 }
 
 .detailsCard {
@@ -137,83 +217,7 @@
         padding: 0px;
     }
 
-    .detailsCardHeader {
-        padding: 0px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 24px 0px;
-
-        &.cardActionsHeader {
-            border-bottom: 0.5px solid $color-grey-2;
-            padding-bottom: 20px;
-            padding-top: 0px;
-
-            h3 {
-                margin: 0px;
-            }
-        }
-
-        .agencyDetails {
-            gap: 12px;
-            display: flex;
-            align-items: center;
-
-            .agencyNameContainer {
-                display: flex;
-                align-items: flex-start;
-                gap: 6px;
-                margin-bottom: 8px;
-
-                img {
-                    margin-top: 5px;
-                }
-            }
-
-            .agencyName {
-                font-size: 18px;
-                font-weight: 700;
-                line-height: 22px;
-                margin-bottom: 0px;
-            }
-
-        }
-
-        .location {
-            display: flex;
-            gap: 8px;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 17px;
-            align-items: center;
-            padding: 7px 10px;
-            border-radius: 4px;
-            background-color: rgba(0, 69, 230, 0.05);
-        }
-
-        .actionContainer {
-            align-items: center;
-            gap: 14px;
-            display: flex;
-
-            .dropdownButton {
-                background-color: transparent;
-                border: none !important;
-                padding: 0px !important;
-                margin: 0px;
-
-                svg {
-                    path {
-                        fill: #000
-                    }
-                }
-
-                &:after {
-                    display: none;
-                }
-            }
-        }
-    }
+   
 
     .detailsCardBody {
         padding: 0px !important;
@@ -427,3 +431,102 @@
     100% { transform: rotate(360deg); }
   }
   
+@media (max-width: 1366px) {
+    .summaryCard {
+        .benefits{
+           flex-wrap: wrap;
+           gap: 15px 0px;
+           li{
+            flex: 50% 1;
+           }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .summaryCard{
+        .footerInfo{
+            li{
+                display: flex;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .summaryCard{
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        .cardHeader{
+            padding-top: 20px;
+        }
+        .summaryCardBody{
+            .imageContainer{
+                margin: -24px -24px 0px -24px;
+            }
+        }
+    }
+    .detailsCard{
+        padding-top: 20px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+    .detailsColumn{
+        padding-left: 0px;
+    }
+}
+
+@media (max-width: 500px) {
+    .summaryCard{
+        padding: 16px;
+        
+        .cardHeader{
+            padding: 0px;
+        }
+        .benefits{
+            margin-top: 0px;
+        }
+        .summaryCardBody{
+            padding: 0px;
+            .imageContainer{
+                margin: -16px -16px 0px -16px;
+            }
+        }
+    }
+    
+    .detailsCardHeader{
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 0px;
+        gap: 10px;
+        &.cardActionsHeader{
+            flex-direction: row;
+            align-items: center;
+            padding-top: 0px;
+        }
+    }
+    .detailsCard{
+        padding: 0px 16px;
+    }
+    .detailsCardBody{
+        .navPills{
+            flex-wrap: nowrap;
+            
+        }
+        .currencyContainer{
+            flex-direction: column;
+            gap: 20px;
+            align-items: flex-start !important;
+            justify-content: center !important;
+            h2{
+                text-align: center;
+            }
+            .currencyOutput{
+                width: 100%;
+            }
+        }
+    }
+    .amount{
+        display: none !important;
+    }
+}

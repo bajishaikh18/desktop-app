@@ -36,6 +36,7 @@ import { CurrencyConverter } from "./CurrencyConverter";
 import JobApply from "./Job Apply";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
+import { useReponsiveStore } from "@/stores/useResponsiveStore";
 
 type PostedJobDetailsProps = {
   jobId: string;
@@ -79,6 +80,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     description,
     amenities,
   } = data?.job || {};
+
+  const {isDesktop,isTab,isMobile} = useReponsiveStore();
 
   const goBack = () => {
     router.back();
@@ -156,6 +159,40 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
         <Row>
           <Col lg={4} className="p-0">
             <Card className={styles.summaryCard}>
+              {
+                !isDesktop && <CardHeader className={styles.cardHeader}>
+                <div
+                  className={`${styles.detailsCardHeader} ${styles.cardActionsHeader}`}
+                >
+                  <h3 onClick={goBack} className={styles.backlink}>
+                    <FaChevronLeft fontSize={16} color="#000" />
+                    Job Posting Details
+                  </h3>
+                  <div className={styles.actionContainer}>
+                    <Dropdown>
+                      <Dropdown.Toggle
+                        className={styles.dropdownButton}
+                        variant="success"
+                        id="dropdown-basic"
+                      >
+                        <BsThreeDots fontSize={24} />
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => {}}>
+                          {t("Save_Job")}
+                        </Dropdown.Item>
+                        <Dropdown.Item className="danger" onClick={() => {}}>
+                          {t("Report_Job")}
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                </div>
+                
+              </CardHeader>
+              }
+           
               <CardBody className={styles.summaryCardBody}>
                 <div className={styles.imageContainer}>
                   <Image
@@ -175,6 +212,41 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     <LuExpand size={25} onClick={() => setIsFullScreen(true)} />
                   </button>
                 </div>
+                {
+                  !isDesktop && <div className={styles.detailsCardHeader}>
+                  <div className={styles.agencyDetails}>
+                    <Image
+                      src="/icons/agency-logo.png"
+                      width={66}
+                      height={66}
+                      alt="agency-logo"
+                    />
+                    <div>
+                      <div className={styles.agencyNameContainer}>
+                        <h2 className={styles.agencyName}>{agencyId.name}</h2>
+                        <Image
+                          src="/icons/verified.svg"
+                          width={13}
+                          height={13}
+                          alt="verified-logo"
+                        />
+                      </div>
+                      <p className="d-none d-sm-block">
+                        Approved by Ministry of external affairs Govt of India
+                      </p>
+                    </div>
+                  </div>
+                  <div className={styles.location}>
+                    <Image
+                      src={"/icons/location.svg"}
+                      width={18}
+                      height={18}
+                      alt="location"
+                    />
+                    {COUNTRIES[location as "bh"]?.label || location || "N/A"}
+                  </div>
+                </div>
+                }
                 <div className={styles.summaryDetailsSection}>
                   <h3>Job Details</h3>
                   <p>
@@ -209,9 +281,9 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                 </div>
 
                 <div className={styles.summaryDetailsSection}>
-                  <h3>
-                    <span>{t("Hiring_Organization")}</span>
-                    {agencyName}
+                  <h3 className="d-none d-sm-block">
+                    <span className={styles.label}>{t("Hiring_Organization")}</span>
+                    <span>{agencyId.name}</span>
                   </h3>
                   <ul className={styles.benefits}>
                     {amenities.map((amenity: string, index: number) => (
@@ -222,7 +294,9 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                           width={16}
                           height={16}
                         />{" "}
-                        {amenity}
+                        <span>
+                          {amenity}
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -236,7 +310,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                       height={18}
                       alt="clock"
                     />
-                    {DateTime.fromISO(createdAt).toRelative()}
+                    <span>{DateTime.fromISO(createdAt).toRelative()}</span>
                   </li>
                   <li>
                     <Image
@@ -245,8 +319,9 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                       height={18}
                       alt="expiry"
                     />
+                     <span>
                     Valid till{" "}
-                    {DateTime.fromISO(expiry).toFormat("dd-MMM-yyyy")}
+                   {DateTime.fromISO(expiry).toFormat("dd-MMM-yyyy")}</span>
                   </li>
                 </ul>
               </CardBody>
@@ -254,7 +329,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
           </Col>
           <Col lg={8} className={styles.detailsColumn}>
             <Card className={styles.detailsCard}>
-              <CardHeader className={styles.cardHeader}>
+              {
+                isDesktop &&  <CardHeader className={styles.cardHeader}>
                 <div
                   className={`${styles.detailsCardHeader} ${styles.cardActionsHeader}`}
                 >
@@ -317,18 +393,28 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   </div>
                 </div>
               </CardHeader>
+              }
+             
               <CardBody className={styles.detailsCardBody}>
-                <Tabs variant="pills" defaultActiveKey="home" id="jobDetailTab">
-                  <Tab eventKey="home" title="Positions">
-                    {renderJobPositions()}
-                  </Tab>
-                  <Tab eventKey="profile" title="About Recruiter">
-                    {t("Tab_content_for_Profile")}
-                  </Tab>
-                  <Tab eventKey="contact" title="More Info">
-                    {t("Tab_content_for_Contact")}
-                  </Tab>
-                </Tabs>
+                <div className={styles.tabContainer}>
+                  <Tabs variant="pills" className={styles.navPills} defaultActiveKey="home" id="jobDetailTab">
+                    <Tab eventKey="home" title="Positions">
+                      {renderJobPositions()}
+                    </Tab>
+                    {
+                      !isMobile && <Tab eventKey="profile" title="About Recruiter">
+                      {t("Tab_content_for_Profile")}
+                    </Tab>
+                    }{
+                      !isMobile &&<Tab eventKey="contact" title="More Info">
+                      {t("Tab_content_for_Contact")}
+                    </Tab>
+                    
+                    
+                    }
+                   
+                  </Tabs>
+                </div>
                 {COUNTRIES[location as "bh"] && (
                   <CurrencyConverter
                     currency={COUNTRIES[location as "bh"].currency}
