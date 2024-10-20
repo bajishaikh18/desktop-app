@@ -3,32 +3,27 @@ import { FormControl } from "react-bootstrap";
 import { convertCurrency } from "@/apis/jobs"; 
 import styles from "./JobDetail.module.scss";
 
-export type Position = {
-  positionId: number;
-  title: string;
-  experience: string;
-  salary: string;
-};
-
 export const CurrencyConverter = ({ jobId, currency, country }: { jobId: string, currency: string, country: string }) => {
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number | string>("");
   const [convertedAmount, setConvertedAmount] = useState<string>("₹0.00");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  
   const handleAmountChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputAmount = parseFloat(e.target.value);
-    setAmount(inputAmount);
+    const inputAmount = e.target.value; 
+    setAmount(inputAmount); 
 
-    if (!isNaN(inputAmount) && inputAmount > 0) {
+    const parsedAmount = parseFloat(inputAmount); 
+
+    if (!isNaN(parsedAmount) && parsedAmount > 0) {
       try {
         setIsLoading(true);
 
-       
-        const result = await convertCurrency(jobId, inputAmount, currency, "INR");
+        const result = await convertCurrency(jobId, parsedAmount, currency.toLowerCase(), "inr"); 
 
         if (result) {
-          setConvertedAmount(`₹${result.toFixed(2)}`);
+         
+          const formattedAmount = (Math.round(result * 100) / 100).toFixed(2);
+          setConvertedAmount(`₹${formattedAmount}`);
         }
       } catch (error) {
         console.error("Failed to convert currency:", error);
@@ -36,7 +31,8 @@ export const CurrencyConverter = ({ jobId, currency, country }: { jobId: string,
         setIsLoading(false);
       }
     } else {
-      setConvertedAmount("₹0.00");
+     
+      setConvertedAmount(inputAmount ? `₹${inputAmount}` : "₹0.00");
     }
   };
 

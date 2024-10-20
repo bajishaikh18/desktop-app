@@ -5,6 +5,7 @@ import styles from "./JobDetail.module.scss";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
+import toast from "react-hot-toast";
 import {
   Button,
   Card,
@@ -29,7 +30,7 @@ import { FullScreenImage } from "../common/FullScreenImage";
 import { Loader, NotFound } from "../common/Feedbacks";
 import Spinner from 'react-bootstrap/Spinner';
 import { LuExpand } from "react-icons/lu";
-import { getJobDetails, saveJob } from "@/apis/jobs";
+import { getJobDetails, saveJob, removeSavedJob } from "@/apis/jobs";
 import { truncateText } from "@/helpers/truncate";
 import { JobPositions } from "./JobPositions";
 import { CurrencyConverter } from "./CurrencyConverter";
@@ -79,6 +80,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     applied,
     description,
     amenities,
+    isSaved
   } = data?.job || {};
 
   const {isDesktop,isTab,isMobile} = useReponsiveStore();
@@ -137,14 +139,28 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     setIsSaving(true);
     try {
       await saveJob(jobId); 
-     alert("Job saved successfully!");
+      toast.success("Job saved successfully!");
     } catch (error) {
       console.error("Failed to save job:", error);
-      alert("Failed to save job. Please try again.");
+      toast.error("Failed to save job. Please try again."); 
     } finally {
       setIsSaving(false);
     }
   };
+  const handleRemoveSavedJob = async () => {
+    setIsSaving(true); 
+    try {
+      await removeSavedJob(jobId); 
+      toast.success("Job removed from saved jobs successfully!");
+    
+    } catch (error) {
+      console.error("Failed to remove saved job:", error);
+      toast.error("Failed to remove saved job. Please try again."); 
+    } finally {
+      setIsSaving(false); 
+    }
+  };
+  
 
   const renderJobPositions = () => (
     <JobPositions
@@ -422,25 +438,28 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     jobId={jobId}  
                   />
                 )}
-                <div className={styles.jobActions}>
-                  {(showSuccess || applied) ? (
-                    <div className={styles.successMessage}>
-                      <BsCheckCircleFill /> You’ve successfully applied for this job
-                    </div>
-                  ) : (
-                    <>
-                    <Button className={styles.saveJobButton} variant="secondary"
-                        onClick={handleSaveJob}
-                            disabled={isSaving} >
-                           {isSaving ? (
-                          <>
-                     <Spinner animation="border" size="sm" />
-                     <span className="ms-2"></span>
-                        </>
-                      ) : (
-                        t("Save_Job")
-                         )}
-                      </Button>
+          <div className={styles.jobActions}>
+  {(showSuccess || applied) ? (
+    <div className={styles.successMessage}>
+      <BsCheckCircleFill /> You’ve successfully applied for this job
+    </div>
+  ) : (
+    <>
+      <Button 
+        className={styles.saveJobButton} 
+        variant="secondary" 
+        onClick={isSaved ? handleRemoveSavedJob : handleSaveJob} 
+        disabled={isSaving}
+      >
+        {isSaving ? (
+          <>
+            <Spinner animation="border" size="sm" />
+            <span className="ms-2"></span>
+          </>
+        ) : (
+          isSaved ? t("Unsave_Job") : t("Save_Job")
+        )}
+      </Button>
                   
                   <Button
                         className={styles.easyApplyButton}
