@@ -50,15 +50,14 @@ export const convertCurrency = async (
 ) => {
   try {
     const client = isTokenValid() ? authorizedApiClient : apiClient;
-     const response = await client.post(`/convertCurrency`, {
-     
-      name: jobId,       
-      from: fromCurrency, 
-      to: toCurrency,    
-      amount,            
+
+    const response = await client.post(`/convertCurrency`, {
+      name: jobId,
+      from: fromCurrency.toLowerCase(), 
+      to: toCurrency.toLowerCase(),      
+      amount,
     });
 
-  
     return response.data.convertedAmount;
   } catch (error) {
     console.error("Failed to convert currency:", error);
@@ -68,13 +67,26 @@ export const convertCurrency = async (
 
 
 
+
+
 export const saveJob = async (jobId: string) => {
   try {
     const client = isTokenValid() ? authorizedApiClient : apiClient;
-    const response = await client.patch(`/user/addSavedJob/${jobId}`);
+    const response = await client.patch(`/user/addSavedJob/${jobId}`); 
     return response.data;
   } catch (error) {
     console.error("Failed to save job:", error);
+    throw error;
+  }
+};
+
+export const removeSavedJob = async (jobId: string) => {
+  try {
+    const client = isTokenValid() ? authorizedApiClient : apiClient;
+    const response = await client.delete(`/user/removeSavedJob/${jobId}`);
+    return response.data; 
+  } catch (error) {
+    console.error("Failed to remove saved job:", error);
     throw error;
   }
 };
