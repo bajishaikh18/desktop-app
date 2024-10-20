@@ -423,7 +423,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     </Tab>
                     }{
                       !isMobile &&<Tab eventKey="contact" title="More Info">
-                      {t("Tab_content_for_Contact")}
+                      <p className={styles.moreDetails}>Interested candidates can send their updated CV, Passport Copy, Photo & Experience Certificates by email with the position applied in the subject line.</p>
                     </Tab>
                     
                     

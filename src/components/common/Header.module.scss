@@ -182,13 +182,25 @@
       padding-left: 0px !important;
     }
   }
+  .divider{
+    display: none;
+  }
+  .userName{
+    font-size: 14px;
+    padding: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(217, 217, 217);
+  }
+  .authNav{
+    .navListItem{
+      gap:2px;
+    }
+  }
   .rightNavItems{
      align-items: flex-start;
      a{
       margin-top: 10px;
      }
-    .divider{
-      display: none;
-    }
+   
   }
 }

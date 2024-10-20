@@ -3,11 +3,14 @@ export interface AuthUser {
   email: string;
   phone: string;
   _id: string;
+  firstName: string;
+  lastName: string;
   country: string;
   resume: {
     keyName: string;
     uploadDate: string;
   };
+  profilePic:string;
   workVideo: {
     keyName: string;
     uploadDate: string;

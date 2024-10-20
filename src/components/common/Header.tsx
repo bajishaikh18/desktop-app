@@ -8,12 +8,13 @@ import LocaleSwitcherSelect from "./locale/LocaleSwitcherSelect";
 import LoginPopup from "../auth/Loginpopup";
 
 import { AuthUser, useAuthUserStore } from "@/stores/useAuthUserStore";
-import { getTokenClaims, isTokenValid } from "@/helpers/jwt";
+import { isTokenValid } from "@/helpers/jwt";
 import Image from "next/image";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { getUserDetails } from "@/apis/auth";
 import { useQuery } from "@tanstack/react-query";
 import { HiMenuAlt1 } from "react-icons/hi";
+import { BiSolidUserCircle } from "react-icons/bi";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -97,14 +98,44 @@ const Header: React.FC = () => {
         <Image src="/logo.svg" alt="Logo" width={136} height={28} />
         <div className={styles.mobileMenu}>
         {
-            !isDesktop && <Nav.Link
+            !isDesktop && 
+            
+              authUser ?  <div className={styles.authNav}>
+              <div className={styles.divider}> |</div>
+             
+              <NavDropdown
+                title={<> {
+                  authUser.profilePic ? <Image src={authUser.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
+                }</>}
+                align={"end"}
+                drop="down-centered"
+                className={styles.navListItem}
+                style={{paddingRight:0}}
+              >
+                <NavDropdown.ItemText className={styles.userName}>{authUser.firstName || ""} {authUser.lastName || ""}</NavDropdown.ItemText>
+                <NavDropdown.Item
+                href="javascript:;"
+                className={styles.navListItem}
+                  onClick={logout}
+                >
+                  Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                href="javascript:;"
+                className={styles.navListItem}
+                  onClick={logout}
+                >
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+             
+              
+            </div>:<Nav.Link
             className={`${styles.navListItem} ${styles.navListItemBlue}`}
-            href="#employers"
             onClick={openPopup}
-          >
-            {" "}
-            {t("signIn")}
-          </Nav.Link>
+          >{t("signIn")}</Nav.Link>
+
+            
           }
          {
             !isDesktop && <LocaleSwitcherSelect />
@@ -152,11 +183,12 @@ const Header: React.FC = () => {
             </Nav>
             <Nav className={styles.rightNavItems}>
               {authUser ? (
-                <>
+                <div className="d-none d-md-flex align-items-center">
                   <div className={styles.divider}> |</div>
                   <NavDropdown
-                    title={authUser.email}
+                    title={`${authUser.firstName || ""} ${authUser.lastName || ""}`}
                     className={styles.navListItem}
+                    style={{paddingRight:0}}
                   >
                     <NavDropdown.Item
                     href="javascript:;"
@@ -166,7 +198,11 @@ const Header: React.FC = () => {
                       Logout
                     </NavDropdown.Item>
                   </NavDropdown>
-                </>
+                  {
+                    authUser.profilePic ? <Image src={authUser.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
+                  }
+                  
+                </div>
               ) : (
                 <>
                   <Nav.Link
@@ -196,28 +232,6 @@ const Header: React.FC = () => {
             </Nav>
           </Navbar.Collapse>
       </Navbar>
-      {/* <Navbar fixed="bottom">
-      <Nav className={styles.navContainer}>
-              <Nav.Link
-                className={styles.navListItem}
-                href="#dashboard"
-                style={{ color: "blue" }}
-              >
-                {t("jobs")}
-              </Nav.Link>
-              <Nav.Link className={styles.navListItem} href="#posted-jobs">
-                {t("walkins")}
-              </Nav.Link>
-              <Nav.Link className={styles.navListItem} href="#agencies">
-                {t("agenices")}
-              </Nav.Link>
-              <Nav.Link className={styles.navListItem} href="#candidates">
-                {t("travel")}
-              </Nav.Link>
-            </Nav>
-      </Navbar> */}
-
-      {/* Render the LoginPopup component */}
       <LoginPopup show={openLogin} onClose={closePopup} />
     </>
   );
