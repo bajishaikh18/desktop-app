@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState,useEffect} from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import styles from "./JobDetail.module.scss";
@@ -30,7 +30,7 @@ import { FullScreenImage } from "../common/FullScreenImage";
 import { Loader, NotFound } from "../common/Feedbacks";
 import Spinner from 'react-bootstrap/Spinner';
 import { LuExpand } from "react-icons/lu";
-import { getJobDetails, saveJob, removeSavedJob } from "@/apis/jobs";
+import { getJobDetails, saveJob, removeSavedJob,getAgencyDetails } from "@/apis/jobs";
 import { truncateText } from "@/helpers/truncate";
 import { JobPositions } from "./JobPositions";
 import { CurrencyConverter } from "./CurrencyConverter";
@@ -45,6 +45,7 @@ type PostedJobDetailsProps = {
 
 const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const t = useTranslations("Details");
+  const [agencyDetails, setAgencyDetails] = useState(null);
   const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
@@ -64,6 +65,30 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     },
     enabled: !!jobId,
   });
+
+  
+ 
+  
+ 
+  const fetchAgencyDetails = async (agencyId: string) => {
+    console.log("Fetching agency details for agencyId:", agencyId);
+    try {
+      const agencyData = await getAgencyDetails(agencyId);
+      setAgencyDetails(agencyData);
+      console.log("Fetched agency details:", agencyData);
+    } catch (error) {
+      console.error("Error fetching agency details:", error);
+      toast.error("Failed to fetch agency details.");
+    }
+  };
+  
+  useEffect(() => {
+    const agencyId = data?.job?.agencyId; 
+    if (agencyId) {
+      fetchAgencyDetails(agencyId.id || agencyId); 
+    }
+  }, [data]); 
+
 
   const {
     _id,
@@ -134,6 +159,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     setShowSuccess(true);
     setShowApplyModal(false);
   };
+
+
  
   const handleSaveJob = async () => {
     setIsSaving(true);
@@ -160,7 +187,9 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
       setIsSaving(false); 
     }
   };
-  
+
+ 
+ 
 
   const renderJobPositions = () => (
     <JobPositions
@@ -418,8 +447,9 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                       {renderJobPositions()}
                     </Tab>
                     {
-                      !isMobile && <Tab eventKey="profile" title="About Recruiter">
+                      !isMobile && <Tab eventKey="aboutRecruiters" title="About Recruiters">
                       {t("Tab_content_for_Profile")}
+
                     </Tab>
                     }{
                       !isMobile &&<Tab eventKey="contact" title="More Info">
@@ -445,21 +475,25 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     </div>
   ) : (
     <>
-      <Button 
-        className={styles.saveJobButton} 
-        variant="secondary" 
-        onClick={isSaved ? handleRemoveSavedJob : handleSaveJob} 
-        disabled={isSaving}
-      >
-        {isSaving ? (
-          <>
-            <Spinner animation="border" size="sm" />
-            <span className="ms-2"></span>
-          </>
-        ) : (
-          isSaved ? t("Unsave_Job") : t("Save_Job")
-        )}
-      </Button>
+     <Button 
+  className={styles.saveJobButton} 
+  variant="secondary" 
+  onClick={handleSaveJob} 
+  disabled={isSaving}
+>
+  {isSaving ? (
+    <>
+      <Spinner animation="border" size="sm" />
+      <span className="ms-2"></span>
+    </>
+  ) : (
+    t("Save_Job") 
+  )}
+</Button>
+
+
+                  
+
                   
                   <Button
                         className={styles.easyApplyButton}
@@ -470,7 +504,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                       </Button>
 
                     </>
-                  )}
+ )}
                 </div>
               </CardBody>
             </Card>

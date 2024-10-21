@@ -125,7 +125,8 @@
       "Report_Job":"Report Job",
       "Tab_content_for_Profile":"Tab content for Profile",
       "Tab_content_for_Contact":"Tab content for Contact",
-      "Easy_Apply":"Easy Apply"
+      "Easy_Apply":"Easy Apply",
+      "Unsave_Job":"Unsave Job"
      },
      "JobApply":{
       "select":"Select",

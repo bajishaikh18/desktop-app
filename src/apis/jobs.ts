@@ -91,3 +91,26 @@ export const removeSavedJob = async (jobId: string) => {
   }
 };
 
+
+
+
+
+
+export const getAgencyDetails = async (agencyId: string) => { 
+  try {
+    const client = isTokenValid() ? authorizedApiClient : apiClient;
+    const response = await client.get(`/agency`, {
+      params: { id: agencyId } 
+    });
+
+    console.log("Agency API Response:", response.data); 
+    return response.data;
+  } catch (error) {   
+    console.error("Failed to fetch agency details:", error);
+    throw error;
+  }
+};
+
+
+
+
