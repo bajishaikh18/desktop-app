@@ -96,12 +96,11 @@ export const removeSavedJob = async (jobId: string) => {
 
 
 
-export const getAgencyDetails = async (agencyId: string) => { 
+
+export const getAgencyDetails = async (agencyId: any) => { 
   try {
     const client = isTokenValid() ? authorizedApiClient : apiClient;
-    const response = await client.get(`/agency`, {
-      params: { id: agencyId } 
-    });
+    const response = await client.get(`/agency/${agencyId._id}`, {});
 
     console.log("Agency API Response:", response.data); 
     return response.data;
@@ -110,6 +109,7 @@ export const getAgencyDetails = async (agencyId: string) => {
     throw error;
   }
 };
+
 
 
 

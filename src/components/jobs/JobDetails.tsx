@@ -42,10 +42,17 @@ import { useReponsiveStore } from "@/stores/useResponsiveStore";
 type PostedJobDetailsProps = {
   jobId: string;
 };
-
+type AgencyDetailsType = {
+  address: string;
+  name: string;
+  email: string;
+  phone: string;
+  state: string;
+};
 const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const t = useTranslations("Details");
-  const [agencyDetails, setAgencyDetails] = useState(null);
+  const [agencyDetails, setAgencyDetails] = useState<any>(null);
+
   const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
@@ -68,12 +75,25 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
 
   
  
+  const getAgencyDetails = async (agencyId: string): Promise<AgencyDetailsType> => {
   
+    return new Promise((resolve) => {
+       setTimeout(() => {
+         resolve({
+           address: "",
+           name: "",
+           email: "",
+           phone: "",
+           state: "",
+         });
+       }, 1000);
+     });
+   };
  
-  const fetchAgencyDetails = async (agencyId: string) => {
+  const fetchAgencyDetails = async (agencyId: any) => {
     console.log("Fetching agency details for agencyId:", agencyId);
     try {
-      const agencyData = await getAgencyDetails(agencyId);
+      const agencyData = await getAgencyDetails(agencyId); 
       setAgencyDetails(agencyData);
       console.log("Fetched agency details:", agencyData);
     } catch (error) {
