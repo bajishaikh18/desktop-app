@@ -95,7 +95,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
       <Modal.Header className={styles.modalHeader}>
         {!showUploadResume ? (
           <Modal.Title className={styles.modalTitleApply}>
-            {t("Apply_to_this_Job")}
+            {t("apply_to_this_job")}
           </Modal.Title>
         ) : (
           <Modal.Title className={styles.modalTitleApply}>
@@ -110,7 +110,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
           <UploadResume handleClose={onHide} type={type} onSuccess={onSuccess} onCancel={onCancel} />
         ) : (
           <>
-            <h5 className={styles.applyingFor}>{t("Applying_for")}</h5>
+            <h5 className={styles.applyingFor}>{t("applying_for")}</h5>
 
             <div className={styles.jobTitleCont}>
               {selectedPosition?.map((position) => (
@@ -129,10 +129,10 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               >
                 <div className={styles.optionBody}>
                   <div className={styles.optionHeader}>
-                    <h5>{t("Apply_Using_Existing_CV")}</h5>
+                    <h5>{t("apply_using_existing_cv")}</h5>
 
                     <span className={styles.optionDate}>
-                      {t('Last_Updated')} {DateTime.fromISO(authUser?.resume?.uploadDate).toFormat('dd MMM yyyy')}
+                      {t('last_updated')} {DateTime.fromISO(authUser?.resume?.uploadDate).toFormat('dd MMM yyyy')}
                     </span>
                   </div>
                     <img
@@ -149,9 +149,9 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               >
                 <div className={styles.optionBody}>
                   <div className={styles.optionHeader}>
-                    <h5>{t("Upload_New_CV")}</h5>
+                    <h5>{t("upload_new_cv")}</h5>
                     <span className={styles.optionClick}>
-                      {t("Click_Here")}
+                      {t("click_here")}
                     </span>
                   </div>
                 
@@ -167,7 +167,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               id="attachVideo"
             />
             {
-              !authUser.workVideo && <Link  href={""} onClick={()=>handleOptionChange("new","video")}>{t('Upload_work_video')}</Link>
+              !authUser.workVideo && <Link  href={""} onClick={()=>handleOptionChange("new","video")}>{t('upload_work_video')}</Link>
             }
             </div>
           </>
@@ -191,7 +191,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               {loading ? (
                           <Spinner animation="border" size="sm" />
                         ) : (
-                          <>{t("Easy_Apply")}</>
+                          <>{t("easy_apply")}</>
                         )}
             </button>
           </div>

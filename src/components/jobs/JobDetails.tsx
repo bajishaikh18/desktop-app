@@ -84,7 +84,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t("Hiring_Organization")}</span>
+              <span className={styles.label}>{t("hiring_organization")}</span>
             </h3>
           </td>
           <td>
@@ -96,7 +96,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>Name</span>
+              <span className={styles.label}>{t('name')}</span>
             </h3>
           </td>
           <td>
@@ -108,7 +108,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>Email</span>
+              <span className={styles.label}>{t('email')}</span>
             </h3>
           </td>
           <td>
@@ -120,7 +120,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>Address</span>
+              <span className={styles.label}>{t('address')}</span>
             </h3>
           </td>
           <td>
@@ -132,7 +132,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>State</span>
+              <span className={styles.label}>{t('state')}</span>
             </h3>
           </td>
           <td>
@@ -148,7 +148,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>City</span>
+              <span className={styles.label}>{t('city')}</span>
             </h3>
           </td>
           <td>
@@ -326,7 +326,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   >
                     <h3 onClick={goBack} className={styles.backlink}>
                       <FaChevronLeft fontSize={16} color="#000" />
-                      Job Posting Details
+                      {t('job_posting_details')}
                     </h3>
                     <div className={styles.actionContainer}>
                       <Dropdown>
@@ -340,10 +340,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
 
                         <Dropdown.Menu>
                           <Dropdown.Item onClick={() => {}}>
-                            {t("Save_Job")}
+                            {t("save_job")}
                           </Dropdown.Item>
                           <Dropdown.Item className="danger" onClick={() => {}}>
-                            {t("Report_Job")}
+                            {t("report_job")}
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
@@ -391,7 +391,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                           />
                         </div>
                         <p className="d-none d-sm-block">
-                          Approved by Ministry of external affairs Govt of India
+                          {t('approved_by_ministry_of_external_affairs_govt_of_india')}
                         </p>
                       </div>
                     </div>
@@ -407,7 +407,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   </div>
                 )}
                 <div className={styles.summaryDetailsSection}>
-                  <h3 className={styles.infoData}>Job Details</h3>
+                  <h3 className={styles.infoData}>{t('job_details')}</h3>
                   <p>
                     {description ? (
                       <>
@@ -428,7 +428,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                               href={""}
                               onClick={() => setShowFullText(true)}
                             >
-                              {t("Read_More")}
+                              {t("read_more")}
                             </Link>{" "}
                           </>
                         )}
@@ -442,22 +442,23 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                 <div className={styles.summaryDetailsSection}>
                   <h3 className={`d-none d-sm-block ${styles.infoData}`}>
                     <span className={styles.label}>
-                      {t("Hiring_Organization")}
+                      {t("hiring_organization")}
                     </span>
                     <span>{agencyId.name}</span>
                   </h3>
                   <ul className={styles.benefits}>
-                    {amenities.map((amenity: string, index: number) => (
-                      <li key={index}>
-                        <Image
-                          src={FACILITIES_IMAGES[amenity as "Food"]}
-                          alt={amenity}
-                          width={16}
-                          height={16}
-                        />{" "}
-                        <span>{amenity}</span>
-                      </li>
-                    ))}
+                  {amenities.map((amenity: string, index: number) => (
+                  <li key={index}>
+                   <Image
+               src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
+                  alt={amenity === "Food" ? t('amenities.food') : amenity} 
+                width={16}
+               height={16}
+             />{" "}
+              <span>{amenity}</span>
+             </li>
+            ))}
+
                   </ul>
                 </div>
 
@@ -479,7 +480,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                       alt="expiry"
                     />
                     <span>
-                      Valid till{" "}
+                      {t('valid_till')}{" "}
                       {DateTime.fromISO(expiry).toFormat("dd-MMM-yyyy")}
                     </span>
                   </li>
@@ -496,7 +497,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   >
                     <h3 onClick={goBack} className={styles.backlink}>
                       <FaChevronLeft fontSize={16} color="#000" />
-                      Job Posting Details
+                      {t('job_posting_details')}
                     </h3>
                     <div className={styles.actionContainer}>
                       <Dropdown>
@@ -510,7 +511,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
 
                         <Dropdown.Menu>
                           <Dropdown.Item className="danger" onClick={handleReportJob}>
-                            {t("Report_Job")}
+                            {t("report_job")}
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
@@ -535,7 +536,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                           />
                         </div>
                         <p>
-                          Approved by Ministry of external affairs Govt of India
+                          {t('approved_by_ministry_of_external_affairs_govt_of_india')}
                         </p>
                       </div>
                     </div>
@@ -560,23 +561,21 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     defaultActiveKey="home"
                     id="jobDetailTab"
                   >
-                    <Tab eventKey="home" title="Positions">
+                    <Tab eventKey="home" title={t("positions")}>
                       <JobPositions
                         positions={positions}
                         onPositionSelect={handlePositionSelect}
                       />
                     </Tab>
                     {!isMobile && (
-                      <Tab eventKey="aboutRecruiters" title="About Recruiters">
+                      <Tab eventKey="aboutRecruiters" title={t("about_recruiters")}>
                         <AgencyDetails agencyDetailsId={agencyId} />
                       </Tab>
                     )}
                     {!isMobile && (
-                      <Tab eventKey="contact" title="More Info">
+                      <Tab eventKey="contact" title={("more_info")}>
                         <p className={styles.moreDetails}>
-                          Interested candidates can send their updated CV,
-                          Passport Copy, Photo & Experience Certificates by
-                          email with the position applied in the subject line.
+                          {t('interested_candidates_can_send_their_updated_cv,_passport_copy,_photo_&_experience_certificates_by_email_with_the_position_applied_in_the_subject_line')}
                         </p>
                       </Tab>
                     )}
@@ -592,8 +591,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                 <div className={styles.jobActions}>
                   {showSuccess || applied ? (
                     <div className={styles.successMessage}>
-                      <BsCheckCircleFill /> You’ve successfully applied for this
-                      job
+                      <BsCheckCircleFill /> {t('you’ve_successfully_applied_for_this_job')}
                     </div>
                   ) : (
                     <>
@@ -610,7 +608,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                               <span className="ms-2"></span>
                             </>
                           ) : (
-                            t("Unsave_Job")
+                            t("unsave_job")
                           )}
                         </Button>
                       ) : (
@@ -626,7 +624,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                               <span className="ms-2"></span>
                             </>
                           ) : (
-                            t("Save_Job")
+                            t("save_job")
                           )}
                         </Button>
                       )}
@@ -636,7 +634,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                         onClick={openModal}
                         disabled={selectedPosition.length === 0}
                       >
-                        {t("Easy_Apply")}
+                        {t("easy_apply")}
                       </Button>
                     </>
                   )}

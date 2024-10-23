@@ -119,26 +119,41 @@
      },
      "Details":{
       "hide":"Hide",
-      "Read_More":"Read More",
-      "Hiring_Organization":"Hiring Organization",
-      "Save_Job":"Save Job",
-      "Report_Job":"Report Job",
-      "Tab_content_for_Profile":"Tab content for Profile",
-      "Tab_content_for_Contact":"Tab content for Contact",
-      "Easy_Apply":"Easy Apply",
-      "Unsave_Job":"Unsave Job"
-     },
+      "read_more":"Read More",
+      "hiring_organization":"Hiring Organization",
+      "save_job":"Save Job",
+      "report_job":"Report Job",
+      "easy_apply":"Easy Apply",
+      "unsave_job":"Unsave Job",
+      "name":"Name",
+      "email":"Email",
+      "address":"address",
+      "city":"City",
+      "state":"State",
+      "job_posting_details":"Job Posting Details",
+      "approved_by_ministry_of_external_affairs_govt_of_india":"Approved_by_Ministry_of_external_affairs_Govt_of_India",
+     "job_details":"Job Details",
+     "food":"Food",
+     "valid_till":"Valid Till",
+     "positions":"Positions",
+     "about_recruiters":"About Recruiters",
+     "more_info":"More Info",
+     "you’ve_successfully_applied_for_this_job":"You’ve successfully applied for this Job",
+     "interested_candidates_can_send_their_updated_cv,_passport_copy,_photo_&_experience_certificates_by_email_with_the_position_applied_in_the_subject_line":"Interested candidates can send their updated cv, Passport Copy, Photo & Experience Certificates by email with the position applied in the subject line"
+
+     
+ },
      "JobApply":{
       "select":"Select",
-      "Apply_to_this_Job":"Apply to this Job",
-      "Applying_for":"Applying for",
-      "Apply_Using_Existing_CV":"Apply Using Existing CV",
-      "Last_Updated":"Last Updated",
-     "Upload_New_CV":"Upload New CV",
-     "Click_Here":"Click Here",
-     "Upload_work_video":"Upload work video",
+      "apply_to_this_job":"Apply to this Job",
+      "applying_for":"Applying for",
+      "apply_using_existing_cv":"Apply Using Existing CV",
+      "last_updated":"Last Updated",
+     "upload_new_cv":"Upload New CV",
+     "click_here":"Click Here",
+     "upload_work_video":"Upload work video",
      "cancel":"Cancel",
-     "Easy_Apply":"Easy Apply"
+     "easy_apply":"Easy Apply"
 
      }
 
