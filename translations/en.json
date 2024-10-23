@@ -130,33 +130,51 @@
       "address":"address",
       "city":"City",
       "state":"State",
-      "job_posting_details":"Job Posting Details",
-      "approved_by_ministry_of_external_affairs_govt_of_india":"Approved_by_Ministry_of_external_affairs_Govt_of_India",
-     "job_details":"Job Details",
-     "food":"Food",
+     "approved_by_mofa_india": "Approved by Ministry of External Affairs, Govt of India",
+       "posting_details": "Job Posting Details",
+      "food": "Food",
+     "transportation": "Transportation",
+     "stay": "Stay",
+    "recruitment": "Recruitment",
      "valid_till":"Valid Till",
      "positions":"Positions",
      "about_recruiters":"About Recruiters",
      "more_info":"More Info",
-     "you’ve_successfully_applied_for_this_job":"You’ve successfully applied for this Job",
-     "interested_candidates_can_send_their_updated_cv,_passport_copy,_photo_&_experience_certificates_by_email_with_the_position_applied_in_the_subject_line":"Interested candidates can send their updated cv, Passport Copy, Photo & Experience Certificates by email with the position applied in the subject line"
+      "job_application_success": "You’ve successfully applied for this Job",
+      "more_info_description": "Interested candidates can send their updated CV, passport copy, photo & experience certificates by email with the position applied in the subject line.",
+      "job_saved":"Job saved successfully!",
+      "submit_error":"Failed to save job. Please try again.",
+      "job_removed":"Job removed from saved jobs successfully!",
+      "remove_failed":"Failed to remove saved job. Please try again.",
+      "job_reported":"Job posting reported successfully!",
+      "job_report_failed":"Failed to report job. Please try again."
+    
 
+      
+    
      
  },
      "JobApply":{
       "select":"Select",
-      "apply_to_this_job":"Apply to this Job",
+     "apply_job": "Apply to this Job",
       "applying_for":"Applying for",
-      "apply_using_existing_cv":"Apply Using Existing CV",
+     "apply_existing_cv": "Apply Using Existing CV",
       "last_updated":"Last Updated",
      "upload_new_cv":"Upload New CV",
      "click_here":"Click Here",
-     "upload_work_video":"Upload work video",
+     "upload_video": "Upload work video",  
      "cancel":"Cancel",
-     "easy_apply":"Easy Apply"
+     "easy_apply":"Easy Apply",
+      "attach_work_video": "Attach Work Video",
+      "submission_failed":"Something went wrong while submitting the application. Please try again.",
+       "application_submitted":"Congratulations! Your application has been submitted to the Professional Recruiters Group."
+
+     },
+     "Currency":{
+      "convert_salary_to_inr": "Convert Salary to INR",
+      "enter_amount":"Enter Amount"
+
 
      }
-
- 
   }
 

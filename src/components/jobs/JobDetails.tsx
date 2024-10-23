@@ -219,10 +219,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
         queryKey: ["jobDetails", jobId],
         refetchType: "all",
       });
-      toast.success("Job saved successfully!");
+      toast.success(t('job_saved'));
     } catch (error) {
       console.error("Failed to save job:", error);
-      toast.error("Failed to save job. Please try again.");
+      toast.error(t('submit_error'));
     } finally {
       setIsSaving(false);
     }
@@ -236,10 +236,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
         queryKey: ["jobDetails", jobId],
         refetchType: "all",
       });
-      toast.success("Job removed from saved jobs successfully!");
+      toast.success(t('job_removed'));
     } catch (error) {
       console.error("Failed to remove saved job:", error);
-      toast.error("Failed to remove saved job. Please try again.");
+      toast.error(t('remove_failed'));
     } finally {
       setIsSaving(false);
     }
@@ -268,10 +268,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     try {
       await reportJob(jobId);
       toast.dismiss(loading);
-      toast.success("Job posting reported successfully!");
+      toast.success(t('job_reported'));
     } catch (error) {
       toast.dismiss(loading);
-      toast.error("Failed to report job. Please try again.");
+      toast.error(t('job_report_failed'));
     }
   };
 
@@ -326,7 +326,9 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   >
                     <h3 onClick={goBack} className={styles.backlink}>
                       <FaChevronLeft fontSize={16} color="#000" />
-                      {t('job_posting_details')}
+                      {t('posting_details')}
+
+
                     </h3>
                     <div className={styles.actionContainer}>
                       <Dropdown>
@@ -391,8 +393,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                           />
                         </div>
                         <p className="d-none d-sm-block">
-                          {t('approved_by_ministry_of_external_affairs_govt_of_india')}
-                        </p>
+                        {t('approved_by_mofa_india')}
+                         </p>
                       </div>
                     </div>
                     <div className={styles.location}>
@@ -407,7 +409,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   </div>
                 )}
                 <div className={styles.summaryDetailsSection}>
-                  <h3 className={styles.infoData}>{t('job_details')}</h3>
+                  <h3 className={styles.infoData}>{t('posting_details')}</h3>
                   <p>
                     {description ? (
                       <>
@@ -447,19 +449,20 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     <span>{agencyId.name}</span>
                   </h3>
                   <ul className={styles.benefits}>
-                  {amenities.map((amenity: string, index: number) => (
-                  <li key={index}>
-                   <Image
-               src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
-                  alt={amenity === "Food" ? t('food') : amenity} 
-                width={16}
-               height={16}
-             />{" "}
-              <span>{amenity}</span>
-             </li>
-            ))}
+  {amenities.map((amenity: string, index: number) => (
+    <li key={index}>
+      <Image
+        src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
+        alt={amenity === "Food" ? t('food') : amenity} 
+        width={16}
+        height={16}
+      />{" "}
+      <span>{t(amenity.toLowerCase())}</span>
+    </li>
+  ))}
+</ul>
 
-                  </ul>
+                 
                 </div>
 
                 <ul className={styles.footerInfo}>
@@ -536,7 +539,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                           />
                         </div>
                         <p>
-                          {t('approved_by_ministry_of_external_affairs_govt_of_india')}
+                        {t('approved_by_mofa_india')}
+
                         </p>
                       </div>
                     </div>
@@ -575,7 +579,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     {!isMobile && (
                       <Tab eventKey="contact" title={("more_info")}>
                         <p className={styles.moreDetails}>
-                          {t('interested_candidates_can_send_their_updated_cv,_passport_copy,_photo_&_experience_certificates_by_email_with_the_position_applied_in_the_subject_line')}
+                        {t('more_info_description')}
+
                         </p>
                       </Tab>
                     )}
@@ -591,7 +596,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                 <div className={styles.jobActions}>
                   {showSuccess || applied ? (
                     <div className={styles.successMessage}>
-                      <BsCheckCircleFill /> {t('you’ve_successfully_applied_for_this_job')}
+                      <BsCheckCircleFill />{t('job_application_success')}
+
                     </div>
                   ) : (
                     <>

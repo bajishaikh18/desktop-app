@@ -68,12 +68,12 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
         "positions": selectedPosition!,
       }
       await createApplication(payload);
-      toast.success("Congratulations Your Application has been submitted to Professional Recruiters Group");
+      toast.success(t('application_submitted'));
       onApplySuccess();
       setLoading(false);
     }catch(e){
       setLoading(false);
-      toast.error("Something went wrong while submitting application. Please try again")
+      toast.error(t('submission_failed'));
     }
    
     
@@ -95,7 +95,8 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
       <Modal.Header className={styles.modalHeader}>
         {!showUploadResume ? (
           <Modal.Title className={styles.modalTitleApply}>
-            {t("apply_to_this_job")}
+          {t('apply_job')}
+
           </Modal.Title>
         ) : (
           <Modal.Title className={styles.modalTitleApply}>
@@ -129,7 +130,8 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               >
                 <div className={styles.optionBody}>
                   <div className={styles.optionHeader}>
-                    <h5>{t("apply_using_existing_cv")}</h5>
+                    <h5>{t('apply_existing_cv')}
+                    </h5>
 
                     <span className={styles.optionDate}>
                       {t('last_updated')} {DateTime.fromISO(authUser?.resume?.uploadDate).toFormat('dd MMM yyyy')}
@@ -163,11 +165,13 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               disabled={!authUser.workVideo}
               onChange={(e)=>{setAttachWorkVideo(e.target.checked)}}
               className={styles.attachVideoCheckbox}
-              label="Attach Work Video"
+              label={t('attach_work_video')}
+
               id="attachVideo"
             />
             {
-              !authUser.workVideo && <Link  href={""} onClick={()=>handleOptionChange("new","video")}>{t('upload_work_video')}</Link>
+              !authUser.workVideo && <Link  href={""} onClick={()=>handleOptionChange("new","video")}>{t('upload_video')}
+</Link>
             }
             </div>
           </>
