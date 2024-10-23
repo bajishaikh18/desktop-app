@@ -1,7 +1,7 @@
 import React, { useCallback, useState,useEffect} from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import styles from "./JobDetail.module.scss";
+import styles from "./WalkinsDetail.module.scss";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
@@ -32,14 +32,16 @@ import Spinner from 'react-bootstrap/Spinner';
 import { LuExpand } from "react-icons/lu";
 import { getJobDetails, saveJob, removeSavedJob,getAgencyDetails } from "@/apis/jobs";
 import { truncateText } from "@/helpers/truncate";
-import { JobPositions } from "./JobPositions";
-import { CurrencyConverter } from "./CurrencyConverter";
-import JobApply from "./Job Apply";
+import { JobPositions } from "./WalkinsPositions";
+import { CurrencyConverter } from "./Walkins CurrencyConverter";
+import JobApply from "./Walkins Apply";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 
-type PostedJobDetailsProps = {
+
+
+type PostedWalkinsDetailsProps = {
   jobId: string;
 };
 type AgencyDetailsType = {
@@ -49,7 +51,7 @@ type AgencyDetailsType = {
   phone: string;
   state: string;
 };
-const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
+const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
   const t = useTranslations("Details");
   const [agencyDetails, setAgencyDetails] = useState<any>(null);
 
@@ -74,7 +76,21 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   });
 
   
-
+ 
+  const getAgencyDetails = async (agencyId: string): Promise<AgencyDetailsType> => {
+  
+    return new Promise((resolve) => {
+       setTimeout(() => {
+         resolve({
+           address: "",
+           name: "",
+           email: "",
+           phone: "",
+           state: "",
+         });
+       }, 1000);
+     });
+   };
  
   const fetchAgencyDetails = async (agencyId: any) => {
     console.log("Fetching agency details for agencyId:", agencyId);
@@ -87,32 +103,13 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
       toast.error("Failed to fetch agency details.");
     }
   };
-
-
+  
   useEffect(() => {
     const agencyId = data?.job?.agencyId; 
     if (agencyId) {
-      fetchAgencyDetails(agencyId.id || agencyId);
+      fetchAgencyDetails(agencyId.id || agencyId); 
     }
-  }, [data]);
-
- 
-  const renderAgencyDetails = () => {
-    if (!agencyDetails) {
-      return <p>Loading agency details...</p>; 
-    }
-
-    return (
-      <div>
-        <h3>{agencyDetails.name || "Agency Name Not Provided"}</h3>
-        <p><strong>Email:</strong> {agencyDetails.email || "Email Not Provided"}</p>
-        <p><strong>Phone:</strong> {agencyDetails.phone || "Phone Not Provided"}</p>
-        <p><strong>Address:</strong> {agencyDetails.address || "Address Not Provided"}</p>
-        <p><strong>State:</strong> {agencyDetails.state || "State Not Provided"}</p>
-        <p><strong>City:</strong> {agencyDetails.city || "City Not Provided"}</p>
-      </div>
-    );
-  };
+  }, [data]); 
 
 
   const {
@@ -222,7 +219,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
       onPositionSelect={handlePositionSelect}
     />
   );
- 
+
   return (
     <main className="main-section">
       <Container fluid>
@@ -471,9 +468,6 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     <Tab eventKey="home" title="Positions">
                       {renderJobPositions()}
                     </Tab>
-                    <Tab eventKey="agency" title="Agency">
-                    {agencyDetails ? renderAgencyDetails() : <Spinner animation="border" />}
-                  </Tab>
                     {
                       !isMobile && <Tab eventKey="aboutRecruiters" title="About Recruiters">
                       {t("Tab_content_for_Profile")}
@@ -561,4 +555,4 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   );
 };
 
-export default JobDetails;
+export default WalkinsDetails;

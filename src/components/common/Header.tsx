@@ -15,7 +15,7 @@ import { getUserDetails } from "@/apis/auth";
 import { useQuery } from "@tanstack/react-query";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { BiSolidUserCircle } from "react-icons/bi";
-
+import Link from 'next/link';
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {
@@ -156,10 +156,10 @@ const Header: React.FC = () => {
               >
                 {t("jobs")}
               </Nav.Link>
-              <Nav.Link className={styles.navListItem}                     href="javascript:;"
-              >
-                {t("walkins")}
-              </Nav.Link>
+              
+            <Link href="/walkins-details" passHref legacyBehavior>
+              <Nav.Link className={styles.navListItem}>{t("walkins")}</Nav.Link>
+            </Link>
               <Nav.Link className={styles.navListItem}                     href="javascript:;"
               >
                 {t("agenices")}

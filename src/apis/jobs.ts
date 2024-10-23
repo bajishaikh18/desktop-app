@@ -97,6 +97,7 @@ export const removeSavedJob = async (jobId: string) => {
 
 
 
+
 export const getAgencyDetails = async (agencyId: any) => { 
   try {
     const client = isTokenValid() ? authorizedApiClient : apiClient;
@@ -109,6 +110,8 @@ export const getAgencyDetails = async (agencyId: any) => {
     throw error;
   }
 };
+
+
 
 
 

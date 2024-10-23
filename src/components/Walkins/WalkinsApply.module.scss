@@ -1,0 +1,173 @@
+@import "../../app/variables";
+
+.modalDialog {
+  width: 680px !important;
+
+  .modalHeader {
+    border: none;
+    padding: 32px;
+    display: flex;
+    justify-content: space-between;
+
+    .modalTitleApply {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 24px;
+      margin-top: 0px;
+    }
+
+  }
+
+  .modalBody {
+    padding: 0px 32px !important;
+
+    .applyingFor {
+      font-size: 14px;
+      margin-top: 8px;
+      font-weight: 400;
+      line-height: 16px;
+      margin-bottom: 10px;
+    }
+    .jobTitleCont{
+      margin-bottom: 36px;
+    }
+    .jobTitle {
+      margin-top: 0px;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .selectLabel {
+      font-size: 14px;
+      margin-bottom: 12px;
+      margin-top: 10px;
+    }
+    .workVideo{
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-top: 15px;
+      .attachVideoCheckbox{
+        margin-bottom: 0px;
+      }
+       a{
+        font-size: 14px;
+        text-decoration: none;
+        margin-top: -3px;
+        color: $color-brand-1;
+       }
+    }
+  }
+
+}
+
+.modalApplyFooter{
+  margin-top: 55px;
+  padding-bottom: 0px !important;
+}
+
+.optionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 40px;
+
+}
+
+.option {
+  border: 1px solid rgba(190, 190, 190, 1);
+  padding: 16px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s;
+
+
+  &:hover {
+    border-color: $color-brand-1;
+  }
+
+  &.selected {
+    border-color: $color-brand-1;
+    background-color: transparent;
+
+    .checkIcon {
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+    }
+
+  }
+}
+
+
+
+.optionBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.optionHeader h5 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 19px;
+}
+
+.optionDate,
+.optionClick {
+  font-size: 14px;
+  color: #000;
+  font-weight: 300;
+}
+
+
+.attachVideoCheckbox {
+  font-size: 14px;
+}
+
+
+
+
+.applyActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  border-top: 1px solid #e0e0e0;
+  padding: 12px 0px;
+  width: 100%;
+  padding-right: 32px;
+  margin: 0px;
+}
+
+
+.cancelButton {
+  font-size: 14px;
+  padding: 10px 25px;
+  border-radius: 30px;
+  border: 1px solid $color-brand-1;
+  background-color: white;
+  color: $color-brand-1;
+}
+
+.easyApplyButton {
+  font-size: 14px;
+  padding: 10px 25px;
+  border-radius: 30px;
+  background-color:$color-brand-1;
+  color: white;
+  border: 1px solid $color-brand-1;
+
+
+}
+
+@media (max-width:700px) {
+    .modalDialog{
+      width: 100% !important;
+      margin-left: 0px;
+    }
+}
