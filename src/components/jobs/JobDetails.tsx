@@ -451,7 +451,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   <li key={index}>
                    <Image
                src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
-                  alt={amenity === "Food" ? t('amenities.food') : amenity} 
+                  alt={amenity === "Food" ? t('food') : amenity} 
                 width={16}
                height={16}
              />{" "}
