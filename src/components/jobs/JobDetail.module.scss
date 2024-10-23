@@ -12,26 +12,29 @@
     line-height: 19px;
 }
 
+h3.infoData{
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    span{
+        vertical-align: middle;
+    }
+    .label {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        vertical-align: middle;
+        margin-right: 16px;
+    }
+}
+
+
 .summaryCard {
     .summaryCardBody {
         padding: 24px;
 
-        h3 {
-            font-size: 16px;
-            line-height: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            span{
-                vertical-align: middle;
-            }
-            .label {
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 20px;
-                vertical-align: middle;
-                margin-right: 16px;
-            }
-        }
+       
 
         p {
             font-size: 14px;
@@ -326,6 +329,11 @@
                 line-height: 19px;
                 color: #000;
             }
+        }
+
+        .recruiterDetails{
+        margin-top: 20px;
+            
         }
         .moreDetails{
             font-size: 14px;

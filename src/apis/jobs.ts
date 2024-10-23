@@ -71,7 +71,7 @@ export const convertCurrency = async (
 
 export const saveJob = async (jobId: string) => {
   try {
-    const client = isTokenValid() ? authorizedApiClient : apiClient;
+    const client = authorizedApiClient;
     const response = await client.patch(`/user/addSavedJob/${jobId}`); 
     return response.data;
   } catch (error) {
@@ -82,8 +82,8 @@ export const saveJob = async (jobId: string) => {
 
 export const removeSavedJob = async (jobId: string) => {
   try {
-    const client = isTokenValid() ? authorizedApiClient : apiClient;
-    const response = await client.delete(`/user/removeSavedJob/${jobId}`);
+    const client = authorizedApiClient;
+    const response = await client.patch(`/user/removeSavedJob/${jobId}`);
     return response.data; 
   } catch (error) {
     console.error("Failed to remove saved job:", error);
@@ -92,10 +92,16 @@ export const removeSavedJob = async (jobId: string) => {
 };
 
 
-
-
-
-
+export const reportJob = async (jobId: string) => {
+  try {
+    const client = authorizedApiClient;
+    const response = await client.post(`${baseRoutes}/reportjob/${jobId}`);
+    return response.data; 
+  } catch (error) {
+    console.error("Failed to remove saved job:", error);
+    throw error;
+  }
+};
 
 
 export const getAgencyDetails = async (agencyId: any) => { 

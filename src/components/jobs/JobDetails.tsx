@@ -1,6 +1,6 @@
-import React, { useCallback, useState,useEffect} from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import styles from "./JobDetail.module.scss";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
@@ -28,9 +28,15 @@ import {
 } from "@/helpers/constants";
 import { FullScreenImage } from "../common/FullScreenImage";
 import { Loader, NotFound } from "../common/Feedbacks";
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from "react-bootstrap/Spinner";
 import { LuExpand } from "react-icons/lu";
-import { getJobDetails, saveJob, removeSavedJob,getAgencyDetails } from "@/apis/jobs";
+import {
+  getJobDetails,
+  saveJob,
+  removeSavedJob,
+  getAgencyDetails,
+  reportJob,
+} from "@/apis/jobs";
 import { truncateText } from "@/helpers/truncate";
 import { JobPositions } from "./JobPositions";
 import { CurrencyConverter } from "./CurrencyConverter";
@@ -38,6 +44,7 @@ import JobApply from "./Job Apply";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
+import { INDIAN_STATES } from "@/helpers/states";
 
 type PostedJobDetailsProps = {
   jobId: string;
@@ -49,6 +56,112 @@ type AgencyDetailsType = {
   phone: string;
   state: string;
 };
+
+const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
+  const t = useTranslations("Details");
+  const { data, isLoading, isFetching, isError } = useQuery({
+    queryKey: ["agencyDetails", agencyDetailsId],
+    queryFn: () => {
+      if (agencyDetailsId) {
+        return getAgencyDetails(agencyDetailsId);
+      }
+      throw new Error("jobId is null or undefined");
+    },
+    enabled: !!agencyDetailsId,
+  });
+
+  if (isLoading || isFetching) {
+    return <Loader text="Fetching agency details" />;
+  }
+
+  if (isError || !data) {
+    return <NotFound text="Agency details are not present" />;
+  }
+  const agencyDetails = data?.agency;
+  return (
+    <div className={styles.recruiterDetails}>
+      <table>
+        <tr>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span className={styles.label}>{t("Hiring_Organization")}</span>
+            </h3>
+          </td>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span>{agencyDetails.name}</span>
+            </h3>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span className={styles.label}>Name</span>
+            </h3>
+          </td>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span>{agencyDetails.name}</span>
+            </h3>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span className={styles.label}>Email</span>
+            </h3>
+          </td>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span>{agencyDetails.email}</span>
+            </h3>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span className={styles.label}>Address</span>
+            </h3>
+          </td>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span>{agencyDetails.address}</span>
+            </h3>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span className={styles.label}>State</span>
+            </h3>
+          </td>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span>
+                {INDIAN_STATES.find(
+                  (st) => st.state_code === agencyDetails.state
+                )?.name || "N/A"}
+              </span>
+            </h3>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span className={styles.label}>City</span>
+            </h3>
+          </td>
+          <td>
+            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+              <span>{agencyDetails.city}</span>
+            </h3>
+          </td>
+        </tr>
+      </table>
+    </div>
+  );
+};
+
 const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const t = useTranslations("Details");
   const [agencyDetails, setAgencyDetails] = useState<any>(null);
@@ -58,10 +171,11 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const [showFullText, setShowFullText] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [isSaving, setIsSaving] = useState(false); 
+  const [isSaving, setIsSaving] = useState(false);
   const { setOpenLogin } = useAuthUserStore();
   const isLoggedIn = isTokenValid();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["jobDetails", jobId],
     queryFn: () => {
@@ -72,48 +186,6 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     },
     enabled: !!jobId,
   });
-
-  
-
- 
-  const fetchAgencyDetails = async (agencyId: any) => {
-    console.log("Fetching agency details for agencyId:", agencyId);
-    try {
-      const agencyData = await getAgencyDetails(agencyId); 
-      setAgencyDetails(agencyData);
-      console.log("Fetched agency details:", agencyData);
-    } catch (error) {
-      console.error("Error fetching agency details:", error);
-      toast.error("Failed to fetch agency details.");
-    }
-  };
-
-
-  useEffect(() => {
-    const agencyId = data?.job?.agencyId; 
-    if (agencyId) {
-      fetchAgencyDetails(agencyId.id || agencyId);
-    }
-  }, [data]);
-
- 
-  const renderAgencyDetails = () => {
-    if (!agencyDetails) {
-      return <p>Loading agency details...</p>; 
-    }
-
-    return (
-      <div>
-        <h3>{agencyDetails.name || "Agency Name Not Provided"}</h3>
-        <p><strong>Email:</strong> {agencyDetails.email || "Email Not Provided"}</p>
-        <p><strong>Phone:</strong> {agencyDetails.phone || "Phone Not Provided"}</p>
-        <p><strong>Address:</strong> {agencyDetails.address || "Address Not Provided"}</p>
-        <p><strong>State:</strong> {agencyDetails.state || "State Not Provided"}</p>
-        <p><strong>City:</strong> {agencyDetails.city || "City Not Provided"}</p>
-      </div>
-    );
-  };
-
 
   const {
     _id,
@@ -130,14 +202,93 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     applied,
     description,
     amenities,
-    isSaved
+    isSaved,
   } = data?.job || {};
 
-  const {isDesktop,isTab,isMobile} = useReponsiveStore();
+  const { isDesktop, isTab, isMobile } = useReponsiveStore();
+
+  const handleSaveJob = async () => {
+    if (!isLoggedIn) {
+      setOpenLogin(true);
+      return true;
+    }
+    setIsSaving(true);
+    try {
+      await saveJob(jobId);
+      await queryClient.invalidateQueries({
+        queryKey: ["jobDetails", jobId],
+        refetchType: "all",
+      });
+      toast.success("Job saved successfully!");
+    } catch (error) {
+      console.error("Failed to save job:", error);
+      toast.error("Failed to save job. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleRemoveSavedJob = async () => {
+    setIsSaving(true);
+    try {
+      await removeSavedJob(jobId);
+      await queryClient.invalidateQueries({
+        queryKey: ["jobDetails", jobId],
+        refetchType: "all",
+      });
+      toast.success("Job removed from saved jobs successfully!");
+    } catch (error) {
+      console.error("Failed to remove saved job:", error);
+      toast.error("Failed to remove saved job. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const goBack = () => {
     router.back();
   };
+
+  const handlePositionSelect = (positionId: string, checked: boolean) => {
+    let selectedPos;
+    if (checked) {
+      selectedPos = [...selectedPosition, positionId];
+    } else {
+      selectedPos = selectedPosition.filter((x) => x !== positionId);
+    }
+    setSelectedPosition(selectedPos);
+  };
+
+  const handleReportJob = async () => {
+    if (!isLoggedIn) {
+      setOpenLogin(true);
+      return true;
+    }
+    const loading = toast.loading("Reporting the job posting")
+    try {
+      await reportJob(jobId);
+      toast.dismiss(loading);
+      toast.success("Job posting reported successfully!");
+    } catch (error) {
+      toast.dismiss(loading);
+      toast.error("Failed to report job. Please try again.");
+    }
+  };
+
+  const openModal = () => {
+    if (selectedPosition && isLoggedIn) {
+      setShowApplyModal(true);
+    } else {
+      setOpenLogin(true);
+    }
+  };
+
+  const onSuccess = () => {
+    setShowSuccess(true);
+    setShowApplyModal(false);
+  };
+
+  
 
   if (isLoading) {
     return (
@@ -162,107 +313,45 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     );
   }
 
-  const handlePositionSelect = (positionId: string, checked: boolean) => {
-    let selectedPos;
-    if (checked) {
-      selectedPos = [...selectedPosition, positionId];
-    } else {
-      selectedPos = selectedPosition.filter((x) => x !== positionId);
-    }
-    setSelectedPosition(selectedPos);
-  };
-
-  const openModal = () => {
-    if (selectedPosition && isLoggedIn) {
-      setShowApplyModal(true);
-    } else {
-      setOpenLogin(true);
-    }
-  };
-
-  const onSuccess = () => {
-    setShowSuccess(true);
-    setShowApplyModal(false);
-  };
-
-
- 
-  const handleSaveJob = async () => {
-    setIsSaving(true);
-    try {
-      await saveJob(jobId); 
-      toast.success("Job saved successfully!");
-    } catch (error) {
-      console.error("Failed to save job:", error);
-      toast.error("Failed to save job. Please try again."); 
-    } finally {
-      setIsSaving(false);
-    }
-  };
-  const handleRemoveSavedJob = async () => {
-    setIsSaving(true); 
-    try {
-      await removeSavedJob(jobId); 
-      toast.success("Job removed from saved jobs successfully!");
-    
-    } catch (error) {
-      console.error("Failed to remove saved job:", error);
-      toast.error("Failed to remove saved job. Please try again."); 
-    } finally {
-      setIsSaving(false); 
-    }
-  };
-
- 
- 
-
-  const renderJobPositions = () => (
-    <JobPositions
-      positions={positions}
-      onPositionSelect={handlePositionSelect}
-    />
-  );
- 
   return (
     <main className="main-section">
       <Container fluid>
         <Row>
           <Col lg={4} className="p-0">
             <Card className={styles.summaryCard}>
-              {
-                !isDesktop && <CardHeader className={styles.cardHeader}>
-                <div
-                  className={`${styles.detailsCardHeader} ${styles.cardActionsHeader}`}
-                >
-                  <h3 onClick={goBack} className={styles.backlink}>
-                    <FaChevronLeft fontSize={16} color="#000" />
-                    Job Posting Details
-                  </h3>
-                  <div className={styles.actionContainer}>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        className={styles.dropdownButton}
-                        variant="success"
-                        id="dropdown-basic"
-                      >
-                        <BsThreeDots fontSize={24} />
-                      </Dropdown.Toggle>
+              {!isDesktop && (
+                <CardHeader className={styles.cardHeader}>
+                  <div
+                    className={`${styles.detailsCardHeader} ${styles.cardActionsHeader}`}
+                  >
+                    <h3 onClick={goBack} className={styles.backlink}>
+                      <FaChevronLeft fontSize={16} color="#000" />
+                      Job Posting Details
+                    </h3>
+                    <div className={styles.actionContainer}>
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          className={styles.dropdownButton}
+                          variant="success"
+                          id="dropdown-basic"
+                        >
+                          <BsThreeDots fontSize={24} />
+                        </Dropdown.Toggle>
 
-                      <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => {}}>
-                          {t("Save_Job")}
-                        </Dropdown.Item>
-                        <Dropdown.Item className="danger" onClick={() => {}}>
-                          {t("Report_Job")}
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                        <Dropdown.Menu>
+                          <Dropdown.Item onClick={() => {}}>
+                            {t("Save_Job")}
+                          </Dropdown.Item>
+                          <Dropdown.Item className="danger" onClick={() => {}}>
+                            {t("Report_Job")}
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </div>
                   </div>
-                </div>
-                
-              </CardHeader>
-              }
-           
+                </CardHeader>
+              )}
+
               <CardBody className={styles.summaryCardBody}>
                 <div className={styles.imageContainer}>
                   <Image
@@ -282,43 +371,43 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     <LuExpand size={25} onClick={() => setIsFullScreen(true)} />
                   </button>
                 </div>
-                {
-                  !isDesktop && <div className={styles.detailsCardHeader}>
-                  <div className={styles.agencyDetails}>
-                    <Image
-                      src="/icons/agency-logo.png"
-                      width={66}
-                      height={66}
-                      alt="agency-logo"
-                    />
-                    <div>
-                      <div className={styles.agencyNameContainer}>
-                        <h2 className={styles.agencyName}>{agencyId.name}</h2>
-                        <Image
-                          src="/icons/verified.svg"
-                          width={13}
-                          height={13}
-                          alt="verified-logo"
-                        />
+                {!isDesktop && (
+                  <div className={styles.detailsCardHeader}>
+                    <div className={styles.agencyDetails}>
+                      <Image
+                        src="/icons/agency-logo.png"
+                        width={66}
+                        height={66}
+                        alt="agency-logo"
+                      />
+                      <div>
+                        <div className={styles.agencyNameContainer}>
+                          <h2 className={styles.agencyName}>{agencyId.name}</h2>
+                          <Image
+                            src="/icons/verified.svg"
+                            width={13}
+                            height={13}
+                            alt="verified-logo"
+                          />
+                        </div>
+                        <p className="d-none d-sm-block">
+                          Approved by Ministry of external affairs Govt of India
+                        </p>
                       </div>
-                      <p className="d-none d-sm-block">
-                        Approved by Ministry of external affairs Govt of India
-                      </p>
+                    </div>
+                    <div className={styles.location}>
+                      <Image
+                        src={"/icons/location.svg"}
+                        width={18}
+                        height={18}
+                        alt="location"
+                      />
+                      {COUNTRIES[location as "bh"]?.label || location || "N/A"}
                     </div>
                   </div>
-                  <div className={styles.location}>
-                    <Image
-                      src={"/icons/location.svg"}
-                      width={18}
-                      height={18}
-                      alt="location"
-                    />
-                    {COUNTRIES[location as "bh"]?.label || location || "N/A"}
-                  </div>
-                </div>
-                }
+                )}
                 <div className={styles.summaryDetailsSection}>
-                  <h3>Job Details</h3>
+                  <h3 className={styles.infoData}>Job Details</h3>
                   <p>
                     {description ? (
                       <>
@@ -351,8 +440,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                 </div>
 
                 <div className={styles.summaryDetailsSection}>
-                  <h3 className="d-none d-sm-block">
-                    <span className={styles.label}>{t("Hiring_Organization")}</span>
+                  <h3 className={`d-none d-sm-block ${styles.infoData}`}>
+                    <span className={styles.label}>
+                      {t("Hiring_Organization")}
+                    </span>
                     <span>{agencyId.name}</span>
                   </h3>
                   <ul className={styles.benefits}>
@@ -364,9 +455,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                           width={16}
                           height={16}
                         />{" "}
-                        <span>
-                          {amenity}
-                        </span>
+                        <span>{amenity}</span>
                       </li>
                     ))}
                   </ul>
@@ -389,9 +478,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                       height={18}
                       alt="expiry"
                     />
-                     <span>
-                    Valid till{" "}
-                   {DateTime.fromISO(expiry).toFormat("dd-MMM-yyyy")}</span>
+                    <span>
+                      Valid till{" "}
+                      {DateTime.fromISO(expiry).toFormat("dd-MMM-yyyy")}
+                    </span>
                   </li>
                 </ul>
               </CardBody>
@@ -399,140 +489,157 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
           </Col>
           <Col lg={8} className={styles.detailsColumn}>
             <Card className={styles.detailsCard}>
-              {
-                isDesktop &&  <CardHeader className={styles.cardHeader}>
-                <div
-                  className={`${styles.detailsCardHeader} ${styles.cardActionsHeader}`}
-                >
-                  <h3 onClick={goBack} className={styles.backlink}>
-                    <FaChevronLeft fontSize={16} color="#000" />
-                    Job Posting Details
-                  </h3>
-                  <div className={styles.actionContainer}>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        className={styles.dropdownButton}
-                        variant="success"
-                        id="dropdown-basic"
-                      >
-                        <BsThreeDots fontSize={24} />
-                      </Dropdown.Toggle>
+              {isDesktop && (
+                <CardHeader className={styles.cardHeader}>
+                  <div
+                    className={`${styles.detailsCardHeader} ${styles.cardActionsHeader}`}
+                  >
+                    <h3 onClick={goBack} className={styles.backlink}>
+                      <FaChevronLeft fontSize={16} color="#000" />
+                      Job Posting Details
+                    </h3>
+                    <div className={styles.actionContainer}>
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          className={styles.dropdownButton}
+                          variant="success"
+                          id="dropdown-basic"
+                        >
+                          <BsThreeDots fontSize={24} />
+                        </Dropdown.Toggle>
 
-                      <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => {}}>
-                          {t("Save_Job")}
-                        </Dropdown.Item>
-                        <Dropdown.Item className="danger" onClick={() => {}}>
-                          {t("Report_Job")}
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
-                </div>
-                <div className={styles.detailsCardHeader}>
-                  <div className={styles.agencyDetails}>
-                    <Image
-                      src="/icons/agency-logo.png"
-                      width={66}
-                      height={66}
-                      alt="agency-logo"
-                    />
-                    <div>
-                      <div className={styles.agencyNameContainer}>
-                        <h2 className={styles.agencyName}>{agencyId.name}</h2>
-                        <Image
-                          src="/icons/verified.svg"
-                          width={13}
-                          height={13}
-                          alt="verified-logo"
-                        />
-                      </div>
-                      <p>
-                        Approved by Ministry of external affairs Govt of India
-                      </p>
+                        <Dropdown.Menu>
+                          <Dropdown.Item className="danger" onClick={handleReportJob}>
+                            {t("Report_Job")}
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                     </div>
                   </div>
-                  <div className={styles.location}>
-                    <Image
-                      src={"/icons/location.svg"}
-                      width={18}
-                      height={18}
-                      alt="location"
-                    />
-                    {COUNTRIES[location as "bh"]?.label || location || "N/A"}
+                  <div className={styles.detailsCardHeader}>
+                    <div className={styles.agencyDetails}>
+                      <Image
+                        src="/icons/agency-logo.png"
+                        width={66}
+                        height={66}
+                        alt="agency-logo"
+                      />
+                      <div>
+                        <div className={styles.agencyNameContainer}>
+                          <h2 className={styles.agencyName}>{agencyId.name}</h2>
+                          <Image
+                            src="/icons/verified.svg"
+                            width={13}
+                            height={13}
+                            alt="verified-logo"
+                          />
+                        </div>
+                        <p>
+                          Approved by Ministry of external affairs Govt of India
+                        </p>
+                      </div>
+                    </div>
+                    <div className={styles.location}>
+                      <Image
+                        src={"/icons/location.svg"}
+                        width={18}
+                        height={18}
+                        alt="location"
+                      />
+                      {COUNTRIES[location as "bh"]?.label || location || "N/A"}
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              }
-             
+                </CardHeader>
+              )}
+
               <CardBody className={styles.detailsCardBody}>
                 <div className={styles.tabContainer}>
-                  <Tabs variant="pills" className={styles.navPills} defaultActiveKey="home" id="jobDetailTab">
+                  <Tabs
+                    variant="pills"
+                    className={styles.navPills}
+                    defaultActiveKey="home"
+                    id="jobDetailTab"
+                  >
                     <Tab eventKey="home" title="Positions">
-                      {renderJobPositions()}
+                      <JobPositions
+                        positions={positions}
+                        onPositionSelect={handlePositionSelect}
+                      />
                     </Tab>
-                    <Tab eventKey="agency" title="Agency">
-                    {agencyDetails ? renderAgencyDetails() : <Spinner animation="border" />}
-                  </Tab>
-                    {
-                      !isMobile && <Tab eventKey="aboutRecruiters" title="About Recruiters">
-                      {t("Tab_content_for_Profile")}
-
-                    </Tab>
-                    }{
-                      !isMobile &&<Tab eventKey="contact" title="More Info">
-                      <p className={styles.moreDetails}>Interested candidates can send their updated CV, Passport Copy, Photo & Experience Certificates by email with the position applied in the subject line.</p>
-                    </Tab>
-                    
-                    
-                    }
-                   
+                    {!isMobile && (
+                      <Tab eventKey="aboutRecruiters" title="About Recruiters">
+                        <AgencyDetails agencyDetailsId={agencyId} />
+                      </Tab>
+                    )}
+                    {!isMobile && (
+                      <Tab eventKey="contact" title="More Info">
+                        <p className={styles.moreDetails}>
+                          Interested candidates can send their updated CV,
+                          Passport Copy, Photo & Experience Certificates by
+                          email with the position applied in the subject line.
+                        </p>
+                      </Tab>
+                    )}
                   </Tabs>
                 </div>
                 {COUNTRIES[location as "bh"] && (
                   <CurrencyConverter
                     currency={COUNTRIES[location as "bh"].currency}
                     country={COUNTRIES[location as "bh"].label}
-                    jobId={jobId}  
+                    jobId={jobId}
                   />
                 )}
-          <div className={styles.jobActions}>
-  {(showSuccess || applied) ? (
-    <div className={styles.successMessage}>
-      <BsCheckCircleFill /> You’ve successfully applied for this job
-    </div>
-  ) : (
-    <>
-     <Button 
-  className={styles.saveJobButton} 
-  variant="secondary" 
-  onClick={handleSaveJob} 
-  disabled={isSaving}
->
-  {isSaving ? (
-    <>
-      <Spinner animation="border" size="sm" />
-      <span className="ms-2"></span>
-    </>
-  ) : (
-    t("Save_Job") 
-  )}
-</Button>
+                <div className={styles.jobActions}>
+                  {showSuccess || applied ? (
+                    <div className={styles.successMessage}>
+                      <BsCheckCircleFill /> You’ve successfully applied for this
+                      job
+                    </div>
+                  ) : (
+                    <>
+                      {isSaved ? (
+                        <Button
+                          className={styles.saveJobButton}
+                          variant="secondary"
+                          onClick={handleRemoveSavedJob}
+                          disabled={isSaving}
+                        >
+                          {isSaving ? (
+                            <>
+                              <Spinner animation="border" size="sm" />
+                              <span className="ms-2"></span>
+                            </>
+                          ) : (
+                            t("Unsave_Job")
+                          )}
+                        </Button>
+                      ) : (
+                        <Button
+                          className={styles.saveJobButton}
+                          variant="secondary"
+                          onClick={handleSaveJob}
+                          disabled={isSaving}
+                        >
+                          {isSaving ? (
+                            <>
+                              <Spinner animation="border" size="sm" />
+                              <span className="ms-2"></span>
+                            </>
+                          ) : (
+                            t("Save_Job")
+                          )}
+                        </Button>
+                      )}
 
-
-                  
-
-                  
-                  <Button
+                      <Button
                         className={styles.easyApplyButton}
                         onClick={openModal}
                         disabled={selectedPosition.length === 0}
                       >
                         {t("Easy_Apply")}
                       </Button>
-
                     </>
- )}
+                  )}
                 </div>
               </CardBody>
             </Card>
@@ -543,7 +650,9 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
       {showApplyModal && (
         <JobApply
           show={showApplyModal}
-          onHide={() => {setShowApplyModal(false)}}
+          onHide={() => {
+            setShowApplyModal(false);
+          }}
           onApplySuccess={onSuccess}
           selectedPosition={selectedPosition}
           allPositions={positions}
