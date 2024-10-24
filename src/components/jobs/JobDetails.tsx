@@ -501,7 +501,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   >
                     <h3 onClick={goBack} className={styles.backlink}>
                       <FaChevronLeft fontSize={16} color="#000" />
-                      {t('job_posting_details')}
+                      {t('job_details')}
                     </h3>
                     <div className={styles.actionContainer}>
                       <Dropdown>
