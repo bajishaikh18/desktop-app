@@ -60,3 +60,12 @@ export const verifyOtp = async (otp: string,phone:string) => {
   }
 };
 
+
+export const getUserDetails = async () => {
+  try {
+    const response = await authorizedApiClient.get(`/user`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

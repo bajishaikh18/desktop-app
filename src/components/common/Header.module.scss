@@ -40,7 +40,7 @@
   margin: 0;
   padding: 24px 48px;
   width: 100vw;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -156,4 +156,51 @@
 .dropdownItem:hover {
   background-color: #f0f0f0;
 }
+.mobileMenu{
+  display: none;
+}
 
+@media screen and (max-width:991px) {
+    .header{
+      padding:24px 24px;
+    }
+}
+
+@media screen and (max-width:768px) {
+  .navContainer{
+    padding-left: 0px;
+    padding-top: 30px;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .mobileMenu{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 10px;
+    .languageSelection{
+      padding-left: 0px !important;
+    }
+  }
+  .divider{
+    display: none;
+  }
+  .userName{
+    font-size: 14px;
+    padding: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(217, 217, 217);
+  }
+  .authNav{
+    .navListItem{
+      gap:2px;
+    }
+  }
+  .rightNavItems{
+     align-items: flex-start;
+     a{
+      margin-top: 10px;
+     }
+   
+  }
+}

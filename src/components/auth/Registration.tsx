@@ -6,7 +6,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import styles from "../app/page.module.scss";
+import styles from "../../app/page.module.scss";
 import DatePicker from "react-datepicker";
 import ProfessionalDetails from "./ProfessionalDetails";
 import UploadResumeModal from "./UploadResume";

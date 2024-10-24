@@ -27,7 +27,7 @@ export default function LocaleSwitcherSelect() {
       <Dropdown align={"end"}> 
         <Dropdown.Toggle id="dropdown-basic" className={styles.languageSelection}>
           <Image
-            src="/language.png"
+            src="/icons/language.svg"
             alt="Picture of the author"
             width={19}
             height={20}

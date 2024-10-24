@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.scss";
 import Header from "@/components/common/Header";
-import {NextIntlClientProvider} from 'next-intl';
-import {getMessages} from 'next-intl/server';
-import { Toaster } from "react-hot-toast";
 
-const inter = Inter({ subsets: ["latin"] });
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import { Toaster } from "react-hot-toast";
+import { ReactQueryProvider } from "./react-query-provider";
+import NextTopLoader from 'nextjs-toploader';
+
 
 export const metadata: Metadata = {
   title: "Wonderly Desktop App",
@@ -21,17 +23,15 @@ export default async function RootLayout({
   const messages = await getMessages();
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
+      <NextTopLoader />
         <NextIntlClientProvider messages={messages}>
-        <Header/>
-        <Toaster
-          position="top-right"
-        />
-        {children}
+        <ReactQueryProvider>
+          <Header />
+          <Toaster position="top-right" />
+          {children}</ReactQueryProvider>
         </NextIntlClientProvider>
-
-        </body>
+      </body>
     </html>
   );
 }
-

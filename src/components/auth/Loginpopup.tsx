@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, InputGroup, Spinner } from "react-bootstrap";
-import styles from "../app/page.module.scss";
+import styles from "../../app/page.module.scss";
 import { loginWithPhone } from "@/apis/auth";  
 import RegistrationPopup from "./Registration";
-import "../app/globals.scss";
 import { useTranslations } from "next-intl";
 import toast  from "react-hot-toast";
 import { VerifyOtp } from "./VerifyOtp";

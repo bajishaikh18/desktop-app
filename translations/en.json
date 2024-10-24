@@ -85,13 +85,118 @@
     "upload_your_resume": "Upload Your Resume",
     "upload_your_cv": "Upload Your CV",
     "drop_file":"Drop the files here ...",
-    "pdf_docx":"PDF & Docx files only (5MB max file size)",
+    "pdf_docx":"PDF & Docx files only (10MB max file size)",
     "pdf, jpeg, excel": "PDF, JPEG, Excel",
     "choose_file": "Choose File",
     "upload_your_work_video": "Upload Your Work Video",
     "upload_a_video_of_your_work": "Upload a Video of Your Work (30 seconds to 2 minutes)",
     "skip": "Skip",
     "get_started": "Get Started",
+    "cancel":"Cancel",
+    "upload":"Upload",
+    "files_uploaded_securly": "Files have been uploaded securly",
+    "failed_to_upload":"Failed to upload files. Please try again.",
     "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "You can upload your cv to find relevant jobs and recommended jobs from Wonderly"
+  },
+  "Portal":{
+    "food": "Food",
+    "transport": "Transportation",
+    "stay": "Stay",
+    "recruitment": "Recruitment",
+    "valid_till":"Valid Till",
+    "loading_jobs":"Loading more Jobs...",
+    "no_job_found":"No Job Found",
+     "fetching_job_details": "Fetching job details"
+     
+  },
+     "Slider": {
+    "apply_International_Job_Openings_across":"Apply International Job Openings across",
+    "dubai,_Qatar,_Oman,_Bahrain_&_Saudi_Arabia":"Dubai, Qatar, Oman, Bahrain & Saudi Arabia",
+    "view_Job":"View Job",
+    "jobs_in_Oman":"Jobs in Oman",
+    "jobs_in_Qatar":"Jobs in Qatar",
+    "jobs_in_Kuwait":"Jobs in Kuwait",
+    "jobs_in_Dubai":"Jobs in Dubai",
+    "jobs_in_Bahrain":"Jobs in Bahrain",
+    "jobs_in_Saudi": "Jobs in Saudi",
+    "latest_Jobs":"Latest Jobs"
+},
+   "Search":{
+    
+    "dubai":"Dubai",
+    "oman":"Oman",
+    "qatar":"Qatar",
+    "kuwait":"Kuwait",
+    "bahrain":"Bahrain",
+    "saudi_Arabia":"Saudi Arabia",
+    "find_Jobs":"Find Jobs",
+    "search_job_title":"Search job title"
+     },
+     "Details":{
+      "hide":"Hide",
+      "read_more":"Read More",
+      "hiring_organization":"Hiring Organization",
+      "save_job":"Save Job",
+      "report_job":"Report Job",
+      "easy_apply":"Easy Apply",
+      "unsave_job":"Unsave Job",
+      "name":"Name",
+      "email":"Email",
+      "address":"address",
+      "city":"City",
+      "state":"State",
+      "fetching_agency_details":"Fetching agency Details",
+      "loading_job_details":"loading_job_details",
+     "approved_by_mofa_india": "Approved by Ministry of External Affairs, Govt of India",
+       "posting_details": "Job Posting Details",
+      "food": "Food",
+     "transportation": "Transportation",
+     "stay": "Stay",
+    "recruitment": "Recruitment",
+     "valid_till":"Valid Till",
+     "job_details":"Job Posting Details",
+     "positions":"Positions",
+     "about_recruiters":"About Recruiters",
+     "more_info":"More Info",
+      "job_application_success": "You’ve successfully applied for this Job",
+      "more_info_description": "Interested candidates can send their updated CV, passport copy, photo & experience certificates by email with the position applied in the subject line.",
+      "job_saved":"Job saved successfully!",
+      "submit_error":"Failed to save job. Please try again.",
+      "job_removed":"Job removed from saved jobs successfully!",
+      "remove_failed":"Failed to remove saved job. Please try again.",
+      "job_reported":"Job posting reported successfully!",
+     "agency_details_missing": "Agency details are not present",
+      "job_report_failed":"Failed to report job. Please try again.",
+      "job_details_not_present" :"Oops!, looks like job details are not present",
+       "job_details_error":"Something went wrong while accessing job details. Please try again",
+       "report_posting":"reporting the job posting"
+
+      
+    
+     
+ },
+     "JobApply":{
+      "select":"Select",
+     "apply_job": "Apply to this Job",
+      "applying_for":"Applying for",
+     "apply_existing_cv": "Apply Using Existing CV",
+      "last_updated":"Last Updated",
+     "upload_new_cv":"Upload New CV",
+     "click_here":"Click Here",
+     "upload_video": "Upload work video",  
+     "cancel":"Cancel",
+     "upload_your":"Upload Your",
+     "easy_apply":"Easy Apply",
+      "attach_work_video": "Attach Work Video",
+      "submission_failed":"Something went wrong while submitting the application. Please try again.",
+       "application_submitted":"Congratulations! Your application has been submitted to the Professional Recruiters Group."
+
+     },
+     "Currency":{
+      "convert_salary_to_inr": "Convert Salary to INR",
+      "enter_amount":"Enter Amount"
+
+
+     }
   }
-}
+

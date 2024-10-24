@@ -89,6 +89,112 @@
     "upload_a_video_of_your_work": "अपने काम का वीडियो अपलोड करें (30 सेकंड से 2 मिनट तक)",
     "skip": "छोडना",
     "get_started": "शुरू हो जाओ",
+    "cancel":"रद्द करना",
+    "upload":"अपलोड करें",
+    "files_uploaded_securly":"फ़ाइलें सुरक्षित रूप से अपलोड कर दी गई हैं", 
+    "failed_to_upload":"फ़ाइलें अपलोड करने में विफल. कृपया पुनः प्रयास करें.",
     "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "वंडरली से प्रासंगिक नौकरियां और अनुशंसित नौकरियां ढूंढने के लिए आप अपना सीवी अपलोड कर सकते हैं"
+  },
+  "Portal":{
+     "food": "खाना",
+     "transportation": "परिवहन",
+     "stay": "रहना",
+    "recruitment": "भर्ती" ,
+    "valid_till":"मान्य के लिएs",
+     "loading_jobs":"अधिक नौकरियां लोड हो रही हैं...",
+    "no_job_found":"कोई नौकरी नहीं मिली",
+    "fetching_job_details":"नौकरी विवरण प्राप्त करना"
+  },
+  "Slider": {
+    "apply_International_Job_Openings_across":"अंतर्राष्ट्रीय नौकरी के उद्घाटन पर आवेदन करें",
+    "dubai,_Qatar,_Oman,_Bahrain_&_Saudi_Arabia":"दुबई, कतर, ओमान, बहरीन और सऊदी अरब",
+    "view_Job":"नौकरी देखें",
+    "jobs_in_Oman":"ओमान में नौकरियाँ",
+    "jobs_in_Qatar":"कतर में नौकरियाँ",
+    "jobs_in_Kuwait":"कुवैत में नौकरियाँ",
+    "jobs_in_Dubai":"दुबई में नौकरियाँ",
+    "jobs_in_Bahrain":"बहरीन में नौकरियाँ",
+    "jobs_in_Saudi": "सऊदी में नौकरियाँ",
+    "latest_Jobs":"नवीनतम नौकरियां"
+},
+   "Search":{
+    
+    "dubai":"दुबई",
+    "oman":"ओमान",
+    "qatar":"कतर",
+    "kuwait":"कुवैट",
+    "bahrain":"बहरीन",
+    "saudi_Arabia":"सऊदी अरब",
+    "find_Jobs":"नौकरी ढूंढे",
+    "search_job_title":"खोज नौकरी का शीर्षक"
+     },
+     "Details":{
+      "hide":"छिपाना",
+      "read_more":"और पढ़ें",
+      "hiring_organization":"काम पर रखने वाला संगठन",
+      "save_job":"नौकरी बचाओ",
+      "report_job":"रिपोर्ट जॉब",
+      "easy_apply":"आसान आवेदन",
+      "unsave_job":"नौकरी सेव न करें",
+      "name":"नाम",
+      "email":"ईमेल",
+      "address":"पता",
+      "city":"शहर",
+      "state":"राज्य",
+      "fetching_agency_details":"एजेंसी विवरण प्राप्त करना",
+      "loading_job_details":"कार्य विवरण लोड हो रहा है",
+      "approved_by_mofa_india": "विदेश मंत्रालय, भारत सरकार द्वारा अनुमोदित",
+       "posting_details": "नौकरी पोस्टिंग विवरण",
+      "food": "खाना",
+     "transportation": "परिवहन",
+     "stay": "रहना",
+    "recruitment": "भर्ती",
+     "valid_till":"मान्य के लिएs",
+     "job_details":"नौकरी पोस्टिंग विवरण",
+     "positions":"पदों",
+     "about_recruiters":"भर्तीकर्ताओं के बारे में",
+     "more_info":"और जानकारी",
+      "job_application_success": "आपने इस नौकरी के लिए सफलतापूर्वक आवेदन कर दिया है",
+      "more_info_description": "इच्छुक अभ्यर्थी अपना अद्यतन बायोडाटा, पासपोर्ट की प्रति, फोटो एवं अनुभव प्रमाण पत्र ईमेल द्वारा भेज सकते हैं, विषय पंक्ति में आवेदित पद का उल्लेख करें।.",
+      "job_saved":"नौकरी सफलतापूर्वक सहेजी गई!",
+      "submit_error":"कार्य सहेजने में विफल। कृपया पुनः प्रयास करें।",
+      "job_removed":"सहेजे गए नौकरियों से नौकरी सफलतापूर्वक हटा दी गई!",
+      "remove_failed":"सहेजे गए कार्य को निकालने में विफल। कृपया पुनः प्रयास करें।",
+      "job_reported":"नौकरी पोस्टिंग सफलतापूर्वक रिपोर्ट की गई!",
+       "job_report_failed":"नौकरी की रिपोर्ट करने में विफल। कृपया पुनः प्रयास करें।",
+    "agency_details_missing":"एजेंसी का विवरण मौजूद नहीं है",
+      "job_details_not_present":"ओह!, ऐसा लगता है कि नौकरी का विवरण मौजूद नहीं है",
+      "job_details_error":"नौकरी विवरण तक पहुँचने में कुछ गड़बड़ी हुई। कृपया पुनः प्रयास करें",
+       "report_posting":"नौकरी पोस्टिंग की रिपोर्टिंग"
+    
+    
+     
+ },
+     "JobApply":{
+      "select":"चुनना",
+     "apply_job": "इस नौकरी के लिए आवेदन करें",
+      "applying_for":"के लिए आवेदन",
+     "apply_existing_cv": "मौजूदा CV का उपयोग करके आवेदन करें",
+      "last_updated":"आखरी अपडेट",
+     "upload_new_cv":"नया बायोडाटा अपलोड करें",
+     "click_here":"यहाँ क्लिक करें",
+     "upload_video": "कार्य वीडियो अपलोड करें",  
+     "upload_your":"अपना अपलोड करें",
+     "cancel":"रद्द करना",
+     "easy_apply":"आसान आवेदन",
+      "attach_work_video": "कार्य वीडियो संलग्न करें",
+      "submission_failed":"आवेदन सबमिट करते समय कुछ गड़बड़ी हुई। कृपया पुनः प्रयास करें।",
+       "application_submitted":"बधाई हो! आपका आवेदन प्रोफेशनल रिक्रूटर्स ग्रुप को भेज दिया गया है।"
+     },
+     "Currency":{
+      "convert_salary_to_inr": "वेतन को INR में बदलें",
+      "enter_amount":"राशि डालें"
+
+
+     }
   }
-}
+
+
+
+    
+

@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Modal, Form, Button, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import styles from "../app/page.module.scss";
-import "../app/globals.scss";
+import styles from "../../app/page.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";

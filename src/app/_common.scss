@@ -1,0 +1,88 @@
+.main-section {
+    padding: 110px 24px 30px 24px;
+    background: rgba(250, 248, 255, 1);
+}
+
+.expand-button {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    padding: 5px;
+    background: black;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.danger {
+    color: $color-danger !important;
+}
+
+.image-modal {
+    background: none;
+
+    .modal-dialog {
+        width: auto !important;
+        max-width: 685px !important;
+    }
+
+    .modal-content {
+        background: none;
+    }
+
+    .image-modal-close {
+        position: absolute;
+        right: 0;
+        top: -30px;
+        cursor: pointer;
+    }
+}
+
+.nav-pills{
+    border-bottom: 0.5px solid $color-grey-2;
+    .nav-item{
+        margin-right: 20px;
+        .nav-link{
+            color: $color-grey-4;
+            font-weight: 400;
+            font-size: 16px;
+            padding: 10px 15px 10px 0px;
+            border-radius: 0px;
+            &.active,&:focus,&:hover,&:focus-visible{
+                border:none;
+                outline: none;
+                font-weight: 600;
+                background: none;
+                color: $color-brand-1;
+                border-bottom: 2px solid $color-brand-1;
+            }
+        }
+    }
+}
+.form-check-input[type=checkbox]{
+    border-radius: 2px !important;
+}
+.form-check-input{
+    display: inline-block;
+    &:focus{
+        box-shadow: none !important;
+    }
+}
+@media (max-width: 768px) {
+    .navbar-toggler{
+        border: none !important;
+        padding: 0px !important;
+        &:focus{
+            border: none !important;
+            box-shadow: none !important;
+        }
+    }
+}
+@media (max-width: 600px) {
+    .main-section{
+        padding-top: 102px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
+}
