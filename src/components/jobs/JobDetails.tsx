@@ -71,11 +71,11 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
   });
 
   if (isLoading || isFetching) {
-    return <Loader text="Fetching agency details" />;
+    return <Loader text={t("fetching_agency_details")} />;
   }
 
   if (isError || !data) {
-    return <NotFound text="Agency details are not present" />;
+    return <NotFound text={t("agency_details_missing")} />;
   }
   const agencyDetails = data?.agency;
   return (
@@ -264,7 +264,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
       setOpenLogin(true);
       return true;
     }
-    const loading = toast.loading("Reporting the job posting")
+    const loading = toast.loading(t("report_posting"))
     try {
       await reportJob(jobId);
       toast.dismiss(loading);
@@ -293,7 +293,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   if (isLoading) {
     return (
       <main className="main-section">
-        <Loader text="Loading job details" />
+        <Loader text={t("loading_job_details")} />
       </main>
     );
   }
@@ -301,14 +301,14 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   if (!data) {
     return (
       <main className="main-section">
-        <NotFound text="Oops!, looks like job details are not present" />
+        <NotFound text={t("job_details_not_present")} />
       </main>
     );
   }
   if (isError) {
     return (
       <main className="main-section">
-        <NotFound text="Something went wrong while accessing job details. Please try again" />
+        <NotFound text={t("job_details_error")} />
       </main>
     );
   }
@@ -453,14 +453,15 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     <li key={index}>
       <Image
         src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
-        alt={amenity === "Food" ? t('food') : amenity} 
+        alt={t(amenity.toLowerCase())} 
         width={16}
         height={16}
       />{" "}
-      <span>{t(amenity.toLowerCase())}</span>
+      <span>{t(amenity.toLowerCase())}</span> 
     </li>
   ))}
 </ul>
+
 
                  
                 </div>
@@ -577,7 +578,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                       </Tab>
                     )}
                     {!isMobile && (
-                      <Tab eventKey="contact" title={("more_info")}>
+                      <Tab eventKey="contact" title={t("more_info")}>
                         <p className={styles.moreDetails}>
                         {t('more_info_description')}
 

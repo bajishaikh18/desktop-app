@@ -83,14 +83,14 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
       );
 
       await updateUser(userPayload);
-      toast.success("Files have been uploaded securly");
+      toast.success(t("files_uploaded_securly"));
       if(onSuccess){
         onSuccess();
       }else{
         handleClose();
       }
     } catch (e) {
-      toast.error("Failed to upload files. Please try again.");
+      toast.error(t("failed_to_upload"));
     } finally {
       setLoading(false);
     }
@@ -208,7 +208,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
         >
           <div className={styles.uploadActions}>
           <a className={styles.skipButton} onClick={onCancel}>
-              Cancel
+              {t('cancel')}
             </a>
             <Button
               className={`btn ${loading ? "btn-loading" : ""} ${
@@ -217,7 +217,8 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
               disabled={loading || (!cvFiles && !videoFiles)}
               onClick={uploadMedia}
             >
-              {loading ? <div className="spinner"></div> : "Upload"}
+             {loading ? <div className="spinner"></div> : t('upload')}
+              
             </Button>
           </div>
         </Modal.Footer>

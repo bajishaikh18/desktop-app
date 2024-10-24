@@ -157,9 +157,9 @@ const Header: React.FC = () => {
                 {t("jobs")}
               </Nav.Link>
               
-            <Link href="/walkins-details" passHref legacyBehavior>
-              <Nav.Link className={styles.navListItem}>{t("walkins")}</Nav.Link>
-            </Link>
+              <Nav.Link as={Link} href="/walk-in" className={styles.navListItem}>
+  {t("walkins")}
+</Nav.Link> 
               <Nav.Link className={styles.navListItem}                     href="javascript:;"
               >
                 {t("agenices")}

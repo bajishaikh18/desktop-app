@@ -100,7 +100,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
           </Modal.Title>
         ) : (
           <Modal.Title className={styles.modalTitleApply}>
-            Upload your {type}
+            {t('upload_your')} {type}
           </Modal.Title>
         )}
         <IoClose fontSize={22} onClick={onHide} />

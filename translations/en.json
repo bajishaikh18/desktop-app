@@ -92,6 +92,10 @@
     "upload_a_video_of_your_work": "Upload a Video of Your Work (30 seconds to 2 minutes)",
     "skip": "Skip",
     "get_started": "Get Started",
+    "cancel":"Cancel",
+    "upload":"Upload",
+    "files_uploaded_securly": "Files have been uploaded securly",
+    "failed_to_upload":"Failed to upload files. Please try again.",
     "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "You can upload your cv to find relevant jobs and recommended jobs from Wonderly"
   },
      "Slider": {
@@ -130,6 +134,8 @@
       "address":"address",
       "city":"City",
       "state":"State",
+      "fetching_agency_details":"Fetching agency Details",
+      "loading_job_details":"loading_job_details",
      "approved_by_mofa_india": "Approved by Ministry of External Affairs, Govt of India",
        "posting_details": "Job Posting Details",
       "food": "Food",
@@ -147,8 +153,11 @@
       "job_removed":"Job removed from saved jobs successfully!",
       "remove_failed":"Failed to remove saved job. Please try again.",
       "job_reported":"Job posting reported successfully!",
-      "job_report_failed":"Failed to report job. Please try again."
-    
+     "agency_details_missing": "Agency details are not present",
+      "job_report_failed":"Failed to report job. Please try again.",
+      "job_details_not_present" :"Oops!, looks like job details are not present",
+       "job_details_error":"Something went wrong while accessing job details. Please try again",
+       "report_posting":"reporting the job posting"
 
       
     
@@ -164,6 +173,7 @@
      "click_here":"Click Here",
      "upload_video": "Upload work video",  
      "cancel":"Cancel",
+     "upload_your":"Upload Your",
      "easy_apply":"Easy Apply",
       "attach_work_video": "Attach Work Video",
       "submission_failed":"Something went wrong while submitting the application. Please try again.",
