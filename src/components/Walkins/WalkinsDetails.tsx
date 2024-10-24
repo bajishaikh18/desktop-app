@@ -40,7 +40,6 @@ import {
 import { truncateText } from "@/helpers/truncate";
 import { JobPositions } from "./WalkinsPositions";
 import { CurrencyConverter } from "./Walkins CurrencyConverter";
-import JobApply from "./Walkins Apply";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
@@ -650,17 +649,6 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
         </Row>
       </Container>
 
-      {showApplyModal && (
-        <JobApply
-          show={showApplyModal}
-          onHide={() => {
-            setShowApplyModal(false);
-          }}
-          onApplySuccess={onSuccess}
-          selectedPosition={selectedPosition}
-          allPositions={positions}
-        />
-      )}
 
       <FullScreenImage
         isOpen={isFullScreen}

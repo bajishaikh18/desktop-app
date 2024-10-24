@@ -40,7 +40,7 @@ import {
 import { truncateText } from "@/helpers/truncate";
 import { JobPositions } from "./JobPositions";
 import { CurrencyConverter } from "./CurrencyConverter";
-import JobApply from "./Job Apply";
+import JobApply from "./JobApply";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
@@ -654,6 +654,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
 
       {showApplyModal && (
         <JobApply
+          id={jobId}
           show={showApplyModal}
           onHide={() => {
             setShowApplyModal(false);

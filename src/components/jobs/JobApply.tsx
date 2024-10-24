@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Spinner } from "react-bootstrap";
-import styles from "./WalkinsApply.module.scss";
-import UploadResume from "../../components/auth/UploadResume";
+import styles from "./JobApply.module.scss";
+import UploadResume from "../auth/UploadResume";
 import { useTranslations } from "next-intl";
 import { IoClose } from "react-icons/io5";
 import { isTokenValid } from "@/helpers/jwt";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { DateTime } from "luxon";
 import Link from "next/link";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import { getJobDetails } from "@/apis/jobs";
+import { useQueryClient } from "@tanstack/react-query";
 import { createApplication } from "@/apis/applications";
 import toast from "react-hot-toast";
 
 type EasyApplyModalProps = {
+  id:string;
   show: boolean;
   onHide: () => void;
   selectedPosition?: string[];
@@ -23,6 +22,7 @@ type EasyApplyModalProps = {
 };
 
 const JobApply: React.FC<EasyApplyModalProps> = ({
+  id,
   show,
   onHide,
   allPositions,
@@ -30,7 +30,6 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
   onApplySuccess
 }) => {
   const t = useTranslations("JobApply");  
-  const {id} = useParams();
   const [selectedOption, setSelectedOption] = useState<string>("existing");
   const [showUploadResume, setShowUploadResume] = useState(false);
   const [attachWorkVideo,setAttachWorkVideo] = useState(false);
@@ -68,12 +67,12 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
         "positions": selectedPosition!,
       }
       await createApplication(payload);
-      toast.success("Congratulations Your Application has been submitted to Professional Recruiters Group");
+      toast.success(t('application_submitted'));
       onApplySuccess();
       setLoading(false);
     }catch(e){
       setLoading(false);
-      toast.error("Something went wrong while submitting application. Please try again")
+      toast.error(t('submission_failed'));
     }
    
     
@@ -95,11 +94,12 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
       <Modal.Header className={styles.modalHeader}>
         {!showUploadResume ? (
           <Modal.Title className={styles.modalTitleApply}>
-            {t("Apply_to_this_Job")}
+          {t('apply_job')}
+
           </Modal.Title>
         ) : (
           <Modal.Title className={styles.modalTitleApply}>
-            Upload your {type}
+            {t('upload_your')} {type}
           </Modal.Title>
         )}
         <IoClose fontSize={22} onClick={onHide} />
@@ -110,11 +110,11 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
           <UploadResume handleClose={onHide} type={type} onSuccess={onSuccess} onCancel={onCancel} />
         ) : (
           <>
-            <h5 className={styles.applyingFor}>{t("Applying_for")}</h5>
+            <h5 className={styles.applyingFor}>{t("applying_for")}</h5>
 
             <div className={styles.jobTitleCont}>
               {selectedPosition?.map((position) => (
-                <p className={styles.jobTitle}>
+                <p className={styles.jobTitle} key={position}>
                   {allPositions.find((pos: any) => pos._id === position)
                     ?.title || "N/A"}
                 </p>
@@ -129,10 +129,11 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               >
                 <div className={styles.optionBody}>
                   <div className={styles.optionHeader}>
-                    <h5>{t("Apply_Using_Existing_CV")}</h5>
+                    <h5>{t('apply_existing_cv')}
+                    </h5>
 
                     <span className={styles.optionDate}>
-                      {t('Last_Updated')} {DateTime.fromISO(authUser?.resume?.uploadDate).toFormat('dd MMM yyyy')}
+                      {t('last_updated')} {DateTime.fromISO(authUser?.resume?.uploadDate).toFormat('dd MMM yyyy')}
                     </span>
                   </div>
                     <img
@@ -149,9 +150,9 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               >
                 <div className={styles.optionBody}>
                   <div className={styles.optionHeader}>
-                    <h5>{t("Upload_New_CV")}</h5>
+                    <h5>{t("upload_new_cv")}</h5>
                     <span className={styles.optionClick}>
-                      {t("Click_Here")}
+                      {t("click_here")}
                     </span>
                   </div>
                 
@@ -163,11 +164,13 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               disabled={!authUser.workVideo}
               onChange={(e)=>{setAttachWorkVideo(e.target.checked)}}
               className={styles.attachVideoCheckbox}
-              label="Attach Work Video"
+              label={t('attach_work_video')}
+
               id="attachVideo"
             />
             {
-              !authUser.workVideo && <Link  href={""} onClick={()=>handleOptionChange("new","video")}>{t('Upload_work_video')}</Link>
+              !authUser.workVideo && <Link  href={""} onClick={()=>handleOptionChange("new","video")}>{t('upload_video')}
+</Link>
             }
             </div>
           </>
@@ -191,7 +194,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               {loading ? (
                           <Spinner animation="border" size="sm" />
                         ) : (
-                          <>{t("Easy_Apply")}</>
+                          <>{t("easy_apply")}</>
                         )}
             </button>
           </div>
