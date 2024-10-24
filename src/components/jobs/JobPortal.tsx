@@ -8,11 +8,13 @@ import { getJobs } from "@/apis/jobs";
 import { Loader, NotFound } from "../common/Feedbacks";
 import { FACILITIES_IMAGES, IMAGE_BASE_URL } from "@/helpers/constants";
 import { DateTime } from "luxon";
+import { useTranslations } from "next-intl";
 // @ts-ignore
 import { useRouter } from 'nextjs-toploader/app';
 
 
 const JobPortal: React.FC<{
+ 
   selectedCountry: string;
   field: string;
   filter: string;
@@ -34,6 +36,7 @@ const JobPortal: React.FC<{
         location: selectedCountry,
         [field as "jobTitle"]: filter
       };
+     
       const filters = Object.entries(filtersPlaceholder).reduce((obj,[key,val])=>{
         if(key && val){
           obj[key as "jobTitle"]= val;
@@ -78,7 +81,7 @@ const JobPortal: React.FC<{
         fetchNextPage();
       }
     };
-
+   
     observer.current = new IntersectionObserver(callback);
 
     if (loadMoreRef.current) {
@@ -89,9 +92,10 @@ const JobPortal: React.FC<{
       if (observer.current) observer.current.disconnect();
     };
   }, [hasNextPage, fetchNextPage]);
-
+  const t = useTranslations("Portal");
   if (isLoading || isFetching) {
-    return <Loader text="Fetching job details" />;
+    return <Loader text={t('fetching_job_details')} />;
+
   }
 
   return (
@@ -134,20 +138,20 @@ const JobPortal: React.FC<{
                           idx % 2 !== 0 ? styles.contentRight : ""
                         }`}
                       >
-                        <Image
-                          src={
-                            FACILITIES_IMAGES[
-                              amenity as keyof typeof FACILITIES_IMAGES
-                            ]
-                          }
-                          alt={amenity}
-                          width={16}
-                          height={16}
-                        />
-                        <span>{amenity}</span>
+                           <Image
+                   src={  FACILITIES_IMAGES[
+            amenity as keyof typeof FACILITIES_IMAGES
+          ]
+        }
+        alt={t(amenity.toLowerCase())}
+        width={16}
+        height={16}
+      />
+      <span>{t(amenity.toLowerCase())}</span> 
                       </div>
                     ))}
                   </div>
+          
                   <div className={styles.jobMetaContainer}>
                     <div className={styles.jobMeta}>
                       <Image
@@ -174,7 +178,7 @@ const JobPortal: React.FC<{
                         height={16}
                       />
                       <span>
-                        Valid till:{" "}
+                        {t('valid_till')}:{" "}
                         {job.expiry
                           ? DateTime.fromISO(job.expiry).toFormat("dd-MMM-yyyy")
                           : "N/A"}
@@ -186,12 +190,12 @@ const JobPortal: React.FC<{
             </Col>
           ))
         ) : (
-          <NotFound text="No Job Found"/>
+          <NotFound text={t("no_job_found")}/>
         )}
       </Row>
 
       {hasNextPage && <div ref={loadMoreRef} style={{ height: "20px" }} />}
-      {isFetchingNextPage && <Loader text="Loading more jobs..." />}
+      {isFetchingNextPage && <Loader text={t("loading_jobs")} />}
     </Container>
   );
 };

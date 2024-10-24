@@ -95,7 +95,16 @@
     "failed_to_upload":"ഫയലുകൾ അപ്‌ലോഡ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു. ദയവായി വീണ്ടും ശ്രമിക്കുക.",
     "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "വണ്ടർലിയിൽ നിന്ന് പ്രസക്തമായ ജോലികളും ശുപാർശ ചെയ്യുന്ന ജോലികളും കണ്ടെത്താൻ നിങ്ങൾക്ക് നിങ്ങളുടെ സിവി അപ്‌ലോഡ് ചെയ്യാം"
   },
-
+  "Portal":{
+     "food": "ഭക്ഷണം",
+     "transportation": "ഗതാഗതം",
+     "stay": "താമസിക്കുക",
+    "recruitment": "റിക്രൂട്ട്മെൻ്റ്",
+      "valid_till":"സാധുതയുള്ള",
+       "loading_jobs":"കൂടുതൽ ജോലികൾ ലോഡ് ചെയ്യുന്നു...",
+    "no_job_found":"ജോലി കണ്ടെത്തിയില്ല",
+    "fetching_job_details":"ജോലി വിശദാംശങ്ങൾ ലഭ്യമാക്കുന്നു"
+  },
   "Slider": {
     "apply_International_Job_Openings_across":"അന്താരാഷ്ട്ര തൊഴിൽ അവസരങ്ങൾ ഉടനീളം പ്രയോഗിക്കുക",
     "dubai,_Qatar,_Oman,_Bahrain_&_Saudi_Arabia":"ദുബായ്, ഖത്തർ, ഒമാൻ, ബഹ്റൈൻ & സൗദി അറേബ്യ",
@@ -141,6 +150,7 @@
      "stay": "താമസിക്കുക",
     "recruitment": "റിക്രൂട്ട്മെൻ്റ്",
      "valid_till":"സാധുതയുള്ള",
+     "job_details":"ജോലി വിശദാംശങ്ങൾ",
      "positions":"സ്ഥാനങ്ങൾ",
      "about_recruiters":"റിക്രൂട്ടർമാരെ കുറിച്ച്",
      "more_info":"കൂടുതൽ വിവരങ്ങൾ",

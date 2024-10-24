@@ -409,7 +409,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   </div>
                 )}
                 <div className={styles.summaryDetailsSection}>
-                  <h3 className={styles.infoData}>{t('posting_details')}</h3>
+                  <h3 className={styles.infoData}>{t('job_details')}</h3>
                   <p>
                     {description ? (
                       <>

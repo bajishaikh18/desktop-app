@@ -95,6 +95,16 @@
     "failed_to_upload":"फ़ाइलें अपलोड करने में विफल. कृपया पुनः प्रयास करें.",
     "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "वंडरली से प्रासंगिक नौकरियां और अनुशंसित नौकरियां ढूंढने के लिए आप अपना सीवी अपलोड कर सकते हैं"
   },
+  "Portal":{
+     "food": "खाना",
+     "transportation": "परिवहन",
+     "stay": "रहना",
+    "recruitment": "भर्ती" ,
+    "valid_till":"मान्य के लिएs",
+     "loading_jobs":"अधिक नौकरियां लोड हो रही हैं...",
+    "no_job_found":"कोई नौकरी नहीं मिली",
+    "fetching_job_details":"नौकरी विवरण प्राप्त करना"
+  },
   "Slider": {
     "apply_International_Job_Openings_across":"अंतर्राष्ट्रीय नौकरी के उद्घाटन पर आवेदन करें",
     "dubai,_Qatar,_Oman,_Bahrain_&_Saudi_Arabia":"दुबई, कतर, ओमान, बहरीन और सऊदी अरब",
@@ -140,6 +150,7 @@
      "stay": "रहना",
     "recruitment": "भर्ती",
      "valid_till":"मान्य के लिएs",
+     "job_details":"नौकरी विवरण",
      "positions":"पदों",
      "about_recruiters":"भर्तीकर्ताओं के बारे में",
      "more_info":"और जानकारी",
