@@ -58,7 +58,7 @@ export const convertCurrency = async (
       amount,
     });
 
-    return response.data.convertedAmount;
+    return response.data.amount;
   } catch (error) {
     console.error("Failed to convert currency:", error);
     throw error;
