@@ -11,7 +11,7 @@ export type Position = {
   salary: string;
 };
 
-export const JobPositions = ({ positions, onPositionSelect }: { positions: Position[], onPositionSelect: (positionId: string,checked:boolean) => void }) => {
+export const WalkinsPositions = ({ positions, onPositionSelect }: { positions: Position[], onPositionSelect: (positionId: string,checked:boolean) => void }) => {
   console.log(positions)
   const handlePositionSelect = (positionTitle: string,e:any) => {
     onPositionSelect(positionTitle,e.target.checked); 
@@ -58,3 +58,4 @@ export const JobPositions = ({ positions, onPositionSelect }: { positions: Posit
     </>
   );
 };
+export default WalkinsPositions;

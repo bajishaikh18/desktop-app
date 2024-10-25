@@ -158,8 +158,9 @@ const Header: React.FC = () => {
               </Nav.Link>
               
               <Nav.Link as={Link} href="/walk-in" className={styles.navListItem}>
-  {t("walkins")}
-</Nav.Link> 
+             {t("walkins")}
+               </Nav.Link> 
+             
               <Nav.Link className={styles.navListItem}                     href="javascript:;"
               >
                 {t("agenices")}

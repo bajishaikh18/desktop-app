@@ -36,15 +36,17 @@ import {
   removeSavedJob,
   getAgencyDetails,
   reportJob,
-} from "@/apis/jobs";
+} from "@/apis/Walkins";
 import { truncateText } from "@/helpers/truncate";
-import { JobPositions } from "./WalkinsPositions";
+import  Positions  from "./WalkinsPositions";
 import { CurrencyConverter } from "./Walkins CurrencyConverter";
+import Apply from "./WalkinsApply" ;
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { INDIAN_STATES } from "@/helpers/states";
-type PostedWalkinsProps = {
+
+type PostedWalkinsDetailsProps = {
   jobId: string;
 };
 type AgencyDetailsType = {
@@ -69,11 +71,11 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
   });
 
   if (isLoading || isFetching) {
-    return <Loader text="Fetching agency details" />;
+    return <Loader text={t("fetching_agency_details")} />;
   }
 
   if (isError || !data) {
-    return <NotFound text="Agency details are not present" />;
+    return <NotFound text={t("agency_details_missing")} />;
   }
   const agencyDetails = data?.agency;
   return (
@@ -160,7 +162,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
   );
 };
 
-const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
+const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
   const t = useTranslations("Details");
   const [agencyDetails, setAgencyDetails] = useState<any>(null);
 
@@ -262,7 +264,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
       setOpenLogin(true);
       return true;
     }
-    const loading = toast.loading("Reporting the job posting")
+    const loading = toast.loading(t("report_posting"))
     try {
       await reportJob(jobId);
       toast.dismiss(loading);
@@ -291,7 +293,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
   if (isLoading) {
     return (
       <main className="main-section">
-        <Loader text="Loading job details" />
+        <Loader text={t("loading_job_details")} />
       </main>
     );
   }
@@ -299,14 +301,14 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
   if (!data) {
     return (
       <main className="main-section">
-        <NotFound text="Oops!, looks like job details are not present" />
+        <NotFound text={t("job_details_not_present")} />
       </main>
     );
   }
   if (isError) {
     return (
       <main className="main-section">
-        <NotFound text="Something went wrong while accessing job details. Please try again" />
+        <NotFound text={t("job_details_error")} />
       </main>
     );
   }
@@ -407,7 +409,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                   </div>
                 )}
                 <div className={styles.summaryDetailsSection}>
-                  <h3 className={styles.infoData}>{t('posting_details')}</h3>
+                  <h3 className={styles.infoData}>{t('job_details')}</h3>
                   <p>
                     {description ? (
                       <>
@@ -451,14 +453,15 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
     <li key={index}>
       <Image
         src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
-        alt={amenity === "Food" ? t('food') : amenity} 
+        alt={t(amenity.toLowerCase())} 
         width={16}
         height={16}
       />{" "}
-      <span>{t(amenity.toLowerCase())}</span>
+      <span>{t(amenity.toLowerCase())}</span> 
     </li>
   ))}
 </ul>
+
 
                  
                 </div>
@@ -498,7 +501,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                   >
                     <h3 onClick={goBack} className={styles.backlink}>
                       <FaChevronLeft fontSize={16} color="#000" />
-                      {t('job_posting_details')}
+                      {t('job_details')}
                     </h3>
                     <div className={styles.actionContainer}>
                       <Dropdown>
@@ -564,7 +567,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                     id="jobDetailTab"
                   >
                     <Tab eventKey="home" title={t("positions")}>
-                      <JobPositions
+                      <Positions
                         positions={positions}
                         onPositionSelect={handlePositionSelect}
                       />
@@ -575,7 +578,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                       </Tab>
                     )}
                     {!isMobile && (
-                      <Tab eventKey="contact" title={("more_info")}>
+                      <Tab eventKey="contact" title={t("more_info")}>
                         <p className={styles.moreDetails}>
                         {t('more_info_description')}
 
@@ -649,6 +652,18 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
         </Row>
       </Container>
 
+      {showApplyModal && (
+        <Apply
+          id={jobId}
+          show={showApplyModal}
+          onHide={() => {
+            setShowApplyModal(false);
+          }}
+          onApplySuccess={onSuccess}
+          selectedPosition={selectedPosition}
+          allPositions={positions}
+        />
+      )}
 
       <FullScreenImage
         isOpen={isFullScreen}

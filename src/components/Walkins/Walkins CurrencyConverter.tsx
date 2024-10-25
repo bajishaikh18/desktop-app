@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FormControl } from "react-bootstrap";
-import { convertCurrency } from "@/apis/jobs"; 
+import { convertCurrency } from "@/apis/Walkins"; 
 import styles from "./WalkinsDetail.module.scss";
 
 export const CurrencyConverter = ({ jobId, currency, country }: { jobId: string, currency: string, country: string }) => {
