@@ -100,7 +100,7 @@
   },
   "Portal":{
     "food": "Food",
-    "transport": "Transportation",
+    "transportation": "Transportation",
     "stay": "Stay",
     "recruitment": "Recruitment",
     "valid_till":"Valid Till",
