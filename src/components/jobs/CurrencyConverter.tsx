@@ -1,17 +1,30 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormControl } from "react-bootstrap";
 import { convertCurrency } from "@/apis/jobs"; 
 import styles from "./JobDetail.module.scss";
 import { useTranslations } from "next-intl";
+import { useDebounce } from "@uidotdev/usehooks";
+
 export const CurrencyConverter = ({ jobId, currency, country }: { jobId: string, currency: string, country: string }) => {
   const [amount, setAmount] = useState<number | string>("");
   const [convertedAmount, setConvertedAmount] = useState<string>("₹0.00");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const t = useTranslations("Currency");  
+  const debouncedAmount = useDebounce(amount, 300);
+
+  useEffect(()=>{
+    if(debouncedAmount){
+      sendRequest(debouncedAmount as string)
+    }
+  },[debouncedAmount])
+
+
   const handleAmountChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputAmount = e.target.value; 
     setAmount(inputAmount); 
+  };
 
+  const sendRequest = useCallback(async (inputAmount: string) => {
     const parsedAmount = parseFloat(inputAmount); 
 
     if (!isNaN(parsedAmount) && parsedAmount > 0) {
@@ -34,7 +47,8 @@ export const CurrencyConverter = ({ jobId, currency, country }: { jobId: string,
      
       setConvertedAmount(inputAmount ? `₹${inputAmount}` : "₹0.00");
     }
-  };
+  }, []);
+
 
   return (
     <div className={styles.currencyContainer}>
