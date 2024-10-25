@@ -1,7 +1,7 @@
 import { isTokenValid } from "@/helpers/jwt";
 import { apiClient, authorizedApiClient } from "./common";
 
-const baseRoutes = "/Jobs";
+const baseRoutes = "/Job";
 
 export const getJobs = async ({
   page,

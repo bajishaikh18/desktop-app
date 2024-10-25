@@ -29,7 +29,7 @@ const WalkinsApply: React.FC<EasyApplyModalProps> = ({
   selectedPosition,
   onApplySuccess
 }) => {
-  const t = useTranslations("JobApply");  
+  const t = useTranslations("Walkin Apply");  
   const [selectedOption, setSelectedOption] = useState<string>("existing");
   const [showUploadResume, setShowUploadResume] = useState(false);
   const [attachWorkVideo,setAttachWorkVideo] = useState(false);
@@ -94,7 +94,7 @@ const WalkinsApply: React.FC<EasyApplyModalProps> = ({
       <Modal.Header className={styles.modalHeader}>
         {!showUploadResume ? (
           <Modal.Title className={styles.modalTitleApply}>
-          {t('apply_job')}
+          {t('apply_walkin')}
 
           </Modal.Title>
         ) : (

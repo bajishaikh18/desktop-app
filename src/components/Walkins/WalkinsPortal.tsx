@@ -92,9 +92,9 @@ const WalkinsPortal: React.FC<{
       if (observer.current) observer.current.disconnect();
     };
   }, [hasNextPage, fetchNextPage]);
-  const t = useTranslations("Portal");
+  const t = useTranslations("Walkin Portal");
   if (isLoading || isFetching) {
-    return <Loader text={t('fetching_job_details')} />;
+    return <Loader text={t('fetching_walkin_details')} />;
 
   }
 
@@ -190,12 +190,12 @@ const WalkinsPortal: React.FC<{
             </Col>
           ))
         ) : (
-            <NotFound text={t("no_job_found")}/>
+            <NotFound text={t("no_walkin_found")}/>
         )}
       </Row>
 
       {hasNextPage && <div ref={loadMoreRef} style={{ height: "20px" }} />}
-      {isFetchingNextPage && <Loader text={t("loading_jobs")} />}
+      {isFetchingNextPage && <Loader text={t("loading_walkins")} />}
     </Container>
   );
 };

@@ -96,10 +96,10 @@
     "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "वंडरली से प्रासंगिक नौकरियां और अनुशंसित नौकरियां ढूंढने के लिए आप अपना सीवी अपलोड कर सकते हैं"
   },
   "Portal":{
-     "food": "खाना",
-     "transportation": "परिवहन",
-     "stay": "रहना",
-    "recruitment": "भर्ती" ,
+     "food":"खाना",
+     "transportation":"परिवहन",
+     "stay":"रहना",
+    "recruitment":"भर्ती" ,
     "valid_till":"मान्य के लिएs",
      "loading_jobs":"अधिक नौकरियां लोड हो रही हैं...",
     "no_job_found":"कोई नौकरी नहीं मिली",
@@ -145,10 +145,10 @@
       "loading_job_details":"कार्य विवरण लोड हो रहा है",
       "approved_by_mofa_india": "विदेश मंत्रालय, भारत सरकार द्वारा अनुमोदित",
        "posting_details": "नौकरी पोस्टिंग विवरण",
-      "food": "खाना",
-     "transportation": "परिवहन",
-     "stay": "रहना",
-    "recruitment": "भर्ती",
+      "food":"खाना",
+     "transportation":"परिवहन",
+     "stay":"रहना",
+    "recruitment":"भर्ती",
      "valid_till":"मान्य के लिएs",
      "job_details":"नौकरी पोस्टिंग विवरण",
      "positions":"पदों",
@@ -191,8 +191,94 @@
       "enter_amount":"राशि डालें"
 
 
-     }
+     },
+
+     
+     "Walkins Slider":{
+    "apply_International_Job_Openings_across":"अंतर्राष्ट्रीय नौकरी के उद्घाटन पर आवेदन करें",
+    "dubai,_Qatar,_Oman,_Bahrain_&_Saudi_Arabia":"दुबई, कतर, ओमान, बहरीन और सऊदी अरब",
+    "view_Job":"View Job",
+      "latest_walkins":"नवीनतम वॉकइन्स",
+      "walkin_oman":"ओमान में वॉकइन",
+      "walkin_kuwait":"कुवैत में वॉकइन",
+      "walkin_qatar":"कतर में वॉकइन",
+      "walkin_saudi":"सऊदी अरब में वॉकइन",
+     "walkin_bahrain":"बहरीन में वॉकइन्स",
+      "walkin_dubai":"दुबई में वॉकइन"
+
+     },
+
+     "Walkin Portal":{
+      "food":"खाना",
+     "transportation":"परिवहन",
+     "stay":"रहना",
+    "recruitment":"भर्ती" ,
+    "valid_till":"मान्य के लिएs",
+      "loading_walkins":"अधिक वॉकइन लोड हो रहे हैं...",
+      "no_walkin_found":"कोई वॉकइन नहीं मिला",
+       "fetching_walkin_details": "वॉकइन विवरण प्राप्त किया जा रहा है"
+       
+    },
+     "Walkin Details":{
+     "hide":"छिपाना",
+      "read_more":"और पढ़ें",
+      "hiring_organization":"काम पर रखने वाला संगठन",
+      "save_job":"नौकरी बचाओ",
+      "report_job":"रिपोर्ट जॉब",
+      "easy_apply":"आसान आवेदन",
+      "unsave_job":"नौकरी सेव न करें",
+      "name":"नाम",
+      "email":"ईमेल",
+      "address":"पता",
+      "city":"शहर",
+      "state":"राज्य",
+      "fetching_agency_details":"एजेंसी विवरण प्राप्त करना",
+      "loading_walkin_details":"वॉकइन्स विवरण लोड हो रहा है",
+      "approved_by_mofa_india": "विदेश मंत्रालय, भारत सरकार द्वारा अनुमोदित",
+       "posting_details": "वॉकिन्स पोस्टिंग विवरण",
+       "food": "खाना",
+       "transportation":"परिवहन",
+       "stay": "रहना",
+      "recruitment": "भर्ती",
+       "valid_till":"मान्य के लिएs",
+     "walkin_details":"वॉकिन्स पोस्टिंग विवरण",
+     "positions":"पदों",
+     "about_recruiters":"भर्तीकर्ताओं के बारे में",
+     "more_info":"और जानकारी",
+      "walkin_application_success":"आपने इस वॉकइन के लिए सफलतापूर्वक आवेदन कर दिया है",
+      "more_info_description": "इच्छुक अभ्यर्थी अपना अद्यतन बायोडाटा, पासपोर्ट की प्रति, फोटो एवं अनुभव प्रमाण पत्र ईमेल द्वारा भेज सकते हैं, विषय पंक्ति में आवेदित पद का उल्लेख करें।.",
+      "walkin_saved":"वॉकिन सफलतापूर्वक सहेजा गया!",
+      "submit_error":"वॉकइन सहेजने में विफल। कृपया पुनः प्रयास करें।",
+      "walkin_removed":"सहेजे गए वॉकिन से वॉकिन को सफलतापूर्वक हटा दिया गया!",
+      "remove_failed":"सहेजे गए वॉकिन को हटाने में विफल। कृपया पुनः प्रयास करें।",
+      "walkin_reported":"वॉकिन पोस्टिंग सफलतापूर्वक रिपोर्ट की गई!",
+      "agency_details_missing":"एजेंसी का विवरण मौजूद नहीं है",
+      "walkin_report_failed":"वॉकइन की रिपोर्ट करने में विफल। कृपया पुनः प्रयास करें।",
+      "walkin_details_not_present" :"ओह!, ऐसा लगता है कि वॉकइन विवरण मौजूद नहीं हैं",
+       "walkin_details_error":"वॉकइन विवरण तक पहुँचने में कुछ गड़बड़ी हुई। कृपया पुनः प्रयास करें",
+       "report_posting":"वॉकिन पोस्टिंग की रिपोर्टिंग"
+
+  },
+  "Walkin Apply":{
+    "apply_walkin": "इस वॉकिन पर आवेदन करें",
+   "select":"चुनना",
+    "applying_for":"के लिए आवेदन",
+     "apply_existing_cv": "मौजूदा CV का उपयोग करके आवेदन करें",
+      "last_updated":"आखरी अपडेट",
+     "upload_new_cv":"नया बायोडाटा अपलोड करें",
+     "click_here":"यहाँ क्लिक करें",
+     "upload_video": "कार्य वीडियो अपलोड करें",  
+     "upload_your":"अपना अपलोड करें",
+     "cancel":"रद्द करना",
+     "easy_apply":"आसान आवेदन",
+      "attach_work_video": "कार्य वीडियो संलग्न करें",
+      "submission_failed":"आवेदन सबमिट करते समय कुछ गड़बड़ी हुई। कृपया पुनः प्रयास करें।",
+       "application_submitted":"बधाई हो! आपका आवेदन प्रोफेशनल रिक्रूटर्स ग्रुप को भेज दिया गया है।"
   }
+}
+
+
+  
 
 
 

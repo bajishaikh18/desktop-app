@@ -58,7 +58,7 @@ type AgencyDetailsType = {
 };
 
 const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
-  const t = useTranslations("Details");
+  const t = useTranslations("Walkin Details");
   const { data, isLoading, isFetching, isError } = useQuery({
     queryKey: ["agencyDetails", agencyDetailsId],
     queryFn: () => {
@@ -163,7 +163,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
 };
 
 const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
-  const t = useTranslations("Details");
+  const t = useTranslations("Walkin Details");
   const [agencyDetails, setAgencyDetails] = useState<any>(null);
 
   const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
@@ -219,9 +219,9 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
         queryKey: ["jobDetails", jobId],
         refetchType: "all",
       });
-      toast.success(t('job_saved'));
+      toast.success(t('walkin_saved'));
     } catch (error) {
-      console.error("Failed to save job:", error);
+      console.error("Failed to save walkin:", error);
       toast.error(t('submit_error'));
     } finally {
       setIsSaving(false);
@@ -236,9 +236,9 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
         queryKey: ["jobDetails", jobId],
         refetchType: "all",
       });
-      toast.success(t('job_removed'));
+      toast.success(t('walkin_removed'));
     } catch (error) {
-      console.error("Failed to remove saved job:", error);
+      console.error("Failed to remove saved walkin:", error);
       toast.error(t('remove_failed'));
     } finally {
       setIsSaving(false);
@@ -268,10 +268,10 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
     try {
       await reportJob(jobId);
       toast.dismiss(loading);
-      toast.success(t('job_reported'));
+      toast.success(t('walkin_reported'));
     } catch (error) {
       toast.dismiss(loading);
-      toast.error(t('job_report_failed'));
+      toast.error(t('walkin_report_failed'));
     }
   };
 
@@ -293,7 +293,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
   if (isLoading) {
     return (
       <main className="main-section">
-        <Loader text={t("loading_job_details")} />
+        <Loader text={t("loading_walkin_details")} />
       </main>
     );
   }
@@ -301,14 +301,14 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
   if (!data) {
     return (
       <main className="main-section">
-        <NotFound text={t("job_details_not_present")} />
+        <NotFound text={t("walkin_details_not_present")} />
       </main>
     );
   }
   if (isError) {
     return (
       <main className="main-section">
-        <NotFound text={t("job_details_error")} />
+        <NotFound text={t("walkin_details_error")} />
       </main>
     );
   }
@@ -409,7 +409,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
                   </div>
                 )}
                 <div className={styles.summaryDetailsSection}>
-                  <h3 className={styles.infoData}>{t('job_details')}</h3>
+                  <h3 className={styles.infoData}>{t('walkin_details')}</h3>
                   <p>
                     {description ? (
                       <>
@@ -501,7 +501,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
                   >
                     <h3 onClick={goBack} className={styles.backlink}>
                       <FaChevronLeft fontSize={16} color="#000" />
-                      {t('job_details')}
+                      {t('walkin_details')}
                     </h3>
                     <div className={styles.actionContainer}>
                       <Dropdown>
@@ -597,7 +597,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
                 <div className={styles.jobActions}>
                   {showSuccess || applied ? (
                     <div className={styles.successMessage}>
-                      <BsCheckCircleFill />{t('job_application_success')}
+                      <BsCheckCircleFill />{t('walkin_application_success')}
 
                     </div>
                   ) : (

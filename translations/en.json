@@ -99,10 +99,10 @@
     "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "You can upload your cv to find relevant jobs and recommended jobs from Wonderly"
   },
   "Portal":{
-    "food": "Food",
-    "transport": "Transportation",
-    "stay": "Stay",
-    "recruitment": "Recruitment",
+    "food":"Food",
+    "transport":"Transportation",
+    "stay":"Stay",
+    "recruitment":"Recruitment",
     "valid_till":"Valid Till",
     "loading_jobs":"Loading more Jobs...",
     "no_job_found":"No Job Found",
@@ -149,10 +149,10 @@
       "loading_job_details":"loading_job_details",
      "approved_by_mofa_india": "Approved by Ministry of External Affairs, Govt of India",
        "posting_details": "Job Posting Details",
-      "food": "Food",
-     "transportation": "Transportation",
-     "stay": "Stay",
-    "recruitment": "Recruitment",
+      "food":"Food",
+     "transportation":"Transportation",
+     "stay":"Stay",
+    "recruitment":"Recruitment",
      "valid_till":"Valid Till",
      "job_details":"Job Posting Details",
      "positions":"Positions",
@@ -193,10 +193,94 @@
 
      },
      "Currency":{
-      "convert_salary_to_inr": "Convert Salary to INR",
+      "convert_salary_to_inr":"Convert Salary to INR",
       "enter_amount":"Enter Amount"
 
 
-     }
+     },
+
+
+
+     "Walkins Slider":{
+      "apply_International_Job_Openings_across":"Apply International Job Openings across",
+    "dubai,_Qatar,_Oman,_Bahrain_&_Saudi_Arabia":"Dubai, Qatar, Oman, Bahrain & Saudi Arabia",
+    "view_Job":"View Job",
+      "latest_walkins":"Latest Walkins",
+      "walkin_oman":"Walkins in Oman",
+      "walkin_kuwait":"Walkins in Kuwait",
+      "walkin_qatar":"Walkins in Qatar",
+      "walkin_saudi":"Walkins in Saudi Arabia",
+     "walkin_bahrain":"Walkins in Bahrain",
+      "walkin_dubai":"Walkins in Dubai"
+
+     },
+
+     "Walkin Portal":{
+      "food":"Food",
+      "transport":"Transportation",
+      "stay":"Stay",
+      "recruitment":"Recruitment",
+      "valid_till":"Valid Till",
+      "loading_walkins":"Loading more walkins...",
+      "no_walkin_found":"No walkins Found",
+       "fetching_walkin_details": "Fetching walkins details"
+       
+    },
+     "Walkin Details":{
+      "hide":"Hide",
+      "read_more":"Read More",
+      "hiring_organization":"Hiring Organization",
+      "save_job":"Save Job",
+      "report_job":"Report Job",
+      "easy_apply":"Easy Apply",
+      "unsave_job":"Unsave Job",
+      "name":"Name",
+      "email":"Email",
+      "address":"address",
+      "city":"City",
+      "state":"State",
+      "fetching_agency_details":"Fetching agency Details",
+      "loading_walkin_details":"loading Walkins details",
+     "approved_by_mofa_india": "Approved by Ministry of External Affairs, Govt of India",
+       "posting_details": "Walkins Posting Details",
+      "food": "Food",
+     "transportation": "Transportation",
+     "stay": "Stay",
+    "recruitment": "Recruitment",
+     "valid_till":"Valid Till",
+     "walkin_details":"Walkins Posting Details",
+     "positions":"Positions",
+     "about_recruiters":"About Recruiters",
+     "more_info":"More Info",
+      "walkin_application_success": "You’ve successfully applied for this Walkin",
+      "more_info_description": "Interested candidates can send their updated CV, passport copy, photo & experience certificates by email with the position applied in the subject line.",
+      "walkin_saved":"Walkin saved successfully!",
+      "submit_error":"Failed to save walkin. Please try again.",
+      "walkin_removed":"Walkin removed from saved Walkins successfully!",
+      "remove_failed":"Failed to remove saved Walkin. Please try again.",
+      "walkin_reported":"Walkin posting reported successfully!",
+     "agency_details_missing": "Agency details are not present",
+      "walkin_report_failed":"Failed to report walkin. Please try again.",
+      "walkin_details_not_present" :"Oops!, looks like walkin details are not present",
+       "walkin_details_error":"Something went wrong while accessing walkin details. Please try again",
+       "report_posting":"reporting the walkin posting"
+
+  },
+  "Walkin Apply":{
+    "apply_walkin": "Apply to this Walkin",
+    "select":"Select",
+    "applying_for":"Applying for",
+   "apply_existing_cv": "Apply Using Existing CV",
+    "last_updated":"Last Updated",
+     "upload_new_cv":"Upload New CV",
+     "click_here":"Click Here",
+     "upload_video": "Upload work video",  
+     "cancel":"Cancel",
+     "upload_your":"Upload Your",
+     "easy_apply":"Easy Apply",
+     "attach_work_video": "Attach Work Video",
+    "submission_failed":"Something went wrong while submitting the application. Please try again.",
+     "application_submitted":"Congratulations! Your application has been submitted to the Professional Recruiters Group."
   }
+}
 
