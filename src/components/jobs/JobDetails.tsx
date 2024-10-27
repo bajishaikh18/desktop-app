@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import styles from "./JobDetail.module.scss";
+import styles from "../common/styles/Details.module.scss";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useTranslations } from "next-intl";

@@ -63,7 +63,11 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  text-decoration: none;
   &:hover{
+    color: $color-brand-1;
+  }
+  &.active{
     color: $color-brand-1;
   }
 }

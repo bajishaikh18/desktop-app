@@ -1,4 +1,4 @@
-@import "../../app/variables";
+@import "../../../app/variables";
 
 .backlink {
     cursor: pointer;
@@ -12,26 +12,29 @@
     line-height: 19px;
 }
 
+h3.infoData{
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    span{
+        vertical-align: middle;
+    }
+    .label {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        vertical-align: middle;
+        margin-right: 16px;
+    }
+}
+
+
 .summaryCard {
     .summaryCardBody {
         padding: 24px;
 
-        h3 {
-            font-size: 16px;
-            line-height: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            span{
-                vertical-align: middle;
-            }
-            .label {
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 20px;
-                vertical-align: middle;
-                margin-right: 16px;
-            }
-        }
+       
 
         p {
             font-size: 14px;
@@ -327,6 +330,11 @@
                 color: #000;
             }
         }
+
+        .recruiterDetails{
+        margin-top: 20px;
+            
+        }
         .moreDetails{
             font-size: 14px;
             font-weight:400;
@@ -366,6 +374,42 @@
             .currencyInput {
                 display: flex;
                 gap: 16px;
+                align-items: center;
+            }
+        }
+    }
+    .walkinDetailsCardBody {
+        padding-top: 38px;
+        .interviewDetails{
+            margin-bottom: 40px;
+            h3{
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 19px;
+                margin-bottom: 16px;
+            }
+            h6{
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 19px;
+                margin: 0px;
+                color: #1A1919;
+                a{
+                    text-decoration: none;
+                }
+            }
+            .detailItemsRow{
+                display: flex;
+                gap: 48px;
+                margin-bottom: 16px;
+                
+            }
+            &:last-of-type{
+                    margin-bottom: 0px;
+            }
+            .detailItem{
+                display: flex;
+                gap: 8px;
                 align-items: center;
             }
         }
@@ -528,6 +572,18 @@
             }
             .currencyOutput{
                 width: 100%;
+            }
+        }
+        
+    }
+    .walkinDetailsCardBody {
+        .interviewDetails{
+            .detailItemsRow{
+                gap: 38px !important;
+            }
+            h6{
+                font-size: 14px !important;
+                
             }
         }
     }

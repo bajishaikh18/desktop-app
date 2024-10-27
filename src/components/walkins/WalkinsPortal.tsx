@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Row, Col, Card, Container } from "react-bootstrap";
 import styles from "../common/styles/Card.module.scss";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
-import { getJobs } from "@/apis/Walkins";
+import { getWalkins } from "@/apis/walkins";
 import { Loader, NotFound } from "../common/Feedbacks";
 import { FACILITIES_IMAGES, IMAGE_BASE_URL } from "@/helpers/constants";
 import { DateTime } from "luxon";
@@ -30,7 +30,7 @@ const WalkinsPortal: React.FC<{
     refetch,
     hasNextPage,
   } = useInfiniteQuery<any>({
-    queryKey: ["joblist", selectedCountry,field,filter],
+    queryKey: ["walkinsList", selectedCountry,field,filter],
     queryFn: ({ pageParam = 1 }) =>{
       const filtersPlaceholder = {
         location: selectedCountry,
@@ -44,7 +44,7 @@ const WalkinsPortal: React.FC<{
         return obj
       },{} as { jobTitle?:string,location?:string})
       
-      return getJobs({
+      return getWalkins({
         page: pageParam as number,
         fetchSize: fetchSize,
         filters:filters
@@ -61,8 +61,8 @@ const WalkinsPortal: React.FC<{
     placeholderData: keepPreviousData,
   });
 
-  const jobs = React.useMemo(
-    () => data?.pages?.flatMap((page: any) => page?.jobs) ?? [],
+  const interviews = React.useMemo(
+    () => data?.pages?.flatMap((page: any) => page?.interviews) ?? [],
     [data]
   );
 
@@ -92,7 +92,7 @@ const WalkinsPortal: React.FC<{
       if (observer.current) observer.current.disconnect();
     };
   }, [hasNextPage, fetchNextPage]);
-  const t = useTranslations("Walkin Portal");
+  const t = useTranslations("Portal");
   if (isLoading || isFetching) {
     return <Loader text={t('fetching_walkin_details')} />;
 
@@ -101,13 +101,13 @@ const WalkinsPortal: React.FC<{
   return (
     <Container className={`${styles.cardContainer}`}>
       <Row className="g-4">
-        {jobs.length > 0 ? (
-          jobs.map((job: any, index: number) => (
+        {interviews.length > 0 ? (
+          interviews.map((job: any, index: number) => (
             <Col key={index} md={6} lg={4} xl={3} className={styles.cardCol}>
               <Card
                 className={`h-100 ${styles.jobCard}`}
                 onClick={() => {
-                  router.push(`/jobs/${job._id}`);
+                  router.push(`/walk-in/${job._id}`);
                 }}
               >
                 <Image

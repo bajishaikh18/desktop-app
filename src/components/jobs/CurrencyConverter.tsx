@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { FormControl } from "react-bootstrap";
 import { convertCurrency } from "@/apis/jobs"; 
-import styles from "./JobDetail.module.scss";
+import styles from "../common/styles/Details.module.scss";
 import { useTranslations } from "next-intl";
 import { useDebounce } from "@uidotdev/usehooks";
 

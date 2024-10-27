@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import Select from "react-select";
-import styles from "@/components/Walkins/Slider.module.scss";
+import styles from "@/components/walkins/Slider.module.scss";
 import { useTranslations } from "next-intl";
 import { getJobs } from "@/apis/jobs";
 import { COUNTRIES } from "@/helpers/constants";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Table } from "react-bootstrap";
-import styles from "./JobDetail.module.scss";
+import styles from "../common/styles/Details.module.scss";
 import Image from "next/image";
 
 export type Position = {

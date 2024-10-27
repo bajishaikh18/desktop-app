@@ -7,9 +7,7 @@ import JobPortal from '@/components/jobs/JobPortal';
 import styles from './Slider.module.scss';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-
-import './styling.scss';
+import '../common/styles/SliderStylings.scss';
 import { useTranslations } from 'next-intl';
 import { Container } from 'react-bootstrap';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';

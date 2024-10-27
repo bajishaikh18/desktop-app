@@ -1,9 +1,9 @@
 import { isTokenValid } from "@/helpers/jwt";
 import { apiClient, authorizedApiClient } from "./common";
 
-const baseRoutes = "/Job";
+const baseRoutes = "/interview";
 
-export const getJobs = async ({
+export const getWalkins = async ({
   page,
   fetchSize,
   filters,
@@ -17,7 +17,7 @@ export const getJobs = async ({
 }) => {
   try {
    const client = isTokenValid() ? authorizedApiClient : apiClient;
-    const response = await client.get(`${baseRoutes}/jobs`, {
+    const response = await client.get(`${baseRoutes}/interviews`, {
       params: {
         page: page,
         limit: fetchSize,
@@ -31,7 +31,7 @@ export const getJobs = async ({
   }
 };
 
-export const getJobDetails = async (id: string) => {
+export const getWalkinsDetails = async (id: string) => {
   try {
     const client = isTokenValid() ? authorizedApiClient : apiClient;
     const response = await client.get(`${baseRoutes}/${id}`);
@@ -43,7 +43,7 @@ export const getJobDetails = async (id: string) => {
 };
 
 export const convertCurrency = async (
-  jobId: string,
+  id: string,
   amount: number,
   fromCurrency: string,
   toCurrency: string
@@ -52,7 +52,7 @@ export const convertCurrency = async (
     const client = isTokenValid() ? authorizedApiClient : apiClient;
 
     const response = await client.post(`/convertCurrency`, {
-      name: jobId,
+      name: id,
       from: fromCurrency.toLowerCase(), 
       to: toCurrency.toLowerCase(),      
       amount,
@@ -69,10 +69,10 @@ export const convertCurrency = async (
 
 
 
-export const saveJob = async (jobId: string) => {
+export const saveWalkins = async (id: string) => {
   try {
     const client = authorizedApiClient;
-    const response = await client.patch(`/user/addSavedJob/${jobId}`); 
+    const response = await client.patch(`/user/addSavedWalkins/${id}`); 
     return response.data;
   } catch (error) {
     console.error("Failed to save job:", error);
@@ -80,10 +80,10 @@ export const saveJob = async (jobId: string) => {
   }
 };
 
-export const removeSavedJob = async (jobId: string) => {
+export const removeSavedWalkins = async (id: string) => {
   try {
     const client = authorizedApiClient;
-    const response = await client.patch(`/user/removeSavedJob/${jobId}`);
+    const response = await client.patch(`/user/removeSavedWalkins/${id}`);
     return response.data; 
   } catch (error) {
     console.error("Failed to remove saved job:", error);
@@ -92,7 +92,7 @@ export const removeSavedJob = async (jobId: string) => {
 };
 
 
-export const reportJob = async (jobId: string) => {
+export const reportWalkins = async (jobId: string) => {
   try {
     const client = authorizedApiClient;
     const response = await client.post(`${baseRoutes}/reportjob/${jobId}`);

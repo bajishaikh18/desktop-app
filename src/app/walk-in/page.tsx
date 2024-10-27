@@ -1,6 +1,6 @@
 
 "use client";
-import WalkinsSlider from '@/components/Walkins/WalkinsSlider';
+import WalkinsSlider from '@/components/walkins/WalkinsSlider';
 
 const WalkinPage: React.FC = () => {
   return (

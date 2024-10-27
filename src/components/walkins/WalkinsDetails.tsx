@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import styles from "./WalkinsDetail.module.scss";
+import styles from "../common/styles/Details.module.scss";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
@@ -31,23 +31,21 @@ import { Loader, NotFound } from "../common/Feedbacks";
 import Spinner from "react-bootstrap/Spinner";
 import { LuExpand } from "react-icons/lu";
 import {
-  getJobDetails,
-  saveJob,
-  removeSavedJob,
-  getAgencyDetails,
-  reportJob,
-} from "@/apis/Walkins";
+  getWalkinsDetails,
+  removeSavedWalkins,
+  reportWalkins,
+  saveWalkins,
+} from "@/apis/walkins";
 import { truncateText } from "@/helpers/truncate";
 import  Positions  from "./WalkinsPositions";
-import { CurrencyConverter } from "./Walkins CurrencyConverter";
-import Apply from "./WalkinsApply" ;
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { INDIAN_STATES } from "@/helpers/states";
+import { getAgencyDetails } from "@/apis/jobs";
 
 type PostedWalkinsDetailsProps = {
-  jobId: string;
+  walkinId: string;
 };
 type AgencyDetailsType = {
   address: string;
@@ -57,115 +55,8 @@ type AgencyDetailsType = {
   state: string;
 };
 
-const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
-  const t = useTranslations("Walkin Details");
-  const { data, isLoading, isFetching, isError } = useQuery({
-    queryKey: ["agencyDetails", agencyDetailsId],
-    queryFn: () => {
-      if (agencyDetailsId) {
-        return getAgencyDetails(agencyDetailsId);
-      }
-      throw new Error("jobId is null or undefined");
-    },
-    enabled: !!agencyDetailsId,
-  });
-
-  if (isLoading || isFetching) {
-    return <Loader text={t("fetching_agency_details")} />;
-  }
-
-  if (isError || !data) {
-    return <NotFound text={t("agency_details_missing")} />;
-  }
-  const agencyDetails = data?.agency;
-  return (
-    <div className={styles.recruiterDetails}>
-      <table>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t("hiring_organization")}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>{agencyDetails.name}</span>
-            </h3>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('name')}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>{agencyDetails.name}</span>
-            </h3>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('email')}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>{agencyDetails.email}</span>
-            </h3>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('address')}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>{agencyDetails.address}</span>
-            </h3>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('state')}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>
-                {INDIAN_STATES.find(
-                  (st) => st.state_code === agencyDetails.state
-                )?.name || "N/A"}
-              </span>
-            </h3>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('city')}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>{agencyDetails.city}</span>
-            </h3>
-          </td>
-        </tr>
-      </table>
-    </div>
-  );
-};
-
-const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
-  const t = useTranslations("Walkin Details");
-  const [agencyDetails, setAgencyDetails] = useState<any>(null);
-
+const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
+  const t = useTranslations("WalkinDetails");
   const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
@@ -177,14 +68,14 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["jobDetails", jobId],
+    queryKey: ["walkinDetails", walkinId],
     queryFn: () => {
-      if (jobId) {
-        return getJobDetails(jobId);
+      if (walkinId) {
+        return getWalkinsDetails(walkinId);
       }
-      throw new Error("jobId is null or undefined");
+      throw new Error("walkinId is null or undefined");
     },
-    enabled: !!jobId,
+    enabled: !!walkinId,
   });
 
   const {
@@ -195,15 +86,20 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
     agencyName,
     imageUrl,
     location,
+    interviewDate,
     positions,
     contactNumbers,
     email,
     status,
+    interviewAddress,
+    latitude, 
+    longitude,
+    interviewLocation,
     applied,
     description,
     amenities,
     isSaved,
-  } = data?.job || {};
+  } = data?.interview || {};
 
   const { isDesktop, isTab, isMobile } = useReponsiveStore();
 
@@ -214,9 +110,9 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
     }
     setIsSaving(true);
     try {
-      await saveJob(jobId);
+      await saveWalkins(walkinId);
       await queryClient.invalidateQueries({
-        queryKey: ["jobDetails", jobId],
+        queryKey: ["walkinDetails", walkinId],
         refetchType: "all",
       });
       toast.success(t('walkin_saved'));
@@ -231,9 +127,9 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
   const handleRemoveSavedJob = async () => {
     setIsSaving(true);
     try {
-      await removeSavedJob(jobId);
+      await removeSavedWalkins(walkinId);
       await queryClient.invalidateQueries({
-        queryKey: ["jobDetails", jobId],
+        queryKey: ["walkinDetails", walkinId],
         refetchType: "all",
       });
       toast.success(t('walkin_removed'));
@@ -266,7 +162,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
     }
     const loading = toast.loading(t("report_posting"))
     try {
-      await reportJob(jobId);
+      await reportWalkins(walkinId);
       toast.dismiss(loading);
       toast.success(t('walkin_reported'));
     } catch (error) {
@@ -275,12 +171,9 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
     }
   };
 
-  const openModal = () => {
-    if (selectedPosition && isLoggedIn) {
-      setShowApplyModal(true);
-    } else {
-      setOpenLogin(true);
-    }
+  const openMaps = () => {
+    const url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude},${longitude}`;
+    window.open(url)
   };
 
   const onSuccess = () => {
@@ -384,7 +277,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
                       />
                       <div>
                         <div className={styles.agencyNameContainer}>
-                          <h2 className={styles.agencyName}>{agencyId.name}</h2>
+                          <h2 className={styles.agencyName}>{agencyId?.name}</h2>
                           <Image
                             src="/icons/verified.svg"
                             width={13}
@@ -449,46 +342,23 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
                     <span>{agencyId.name}</span>
                   </h3>
                   <ul className={styles.benefits}>
-  {amenities.map((amenity: string, index: number) => (
-    <li key={index}>
-      <Image
-        src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
-        alt={t(amenity.toLowerCase())} 
-        width={16}
-        height={16}
-      />{" "}
-      <span>{t(amenity.toLowerCase())}</span> 
-    </li>
-  ))}
-</ul>
+                    {amenities.map((amenity: string, index: number) => (
+                      <li key={index}>
+                        <Image
+                          src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
+                          alt={t(amenity.toLowerCase())} 
+                          width={16}
+                          height={16}
+                        />{" "}
+                        <span>{t(amenity.toLowerCase())}</span> 
+                      </li>
+                    ))}
+                  </ul>
 
 
                  
                 </div>
 
-                <ul className={styles.footerInfo}>
-                  <li>
-                    <Image
-                      src={"/icons/clock.svg"}
-                      width={18}
-                      height={18}
-                      alt="clock"
-                    />
-                    <span>{DateTime.fromISO(createdAt).toRelative()}</span>
-                  </li>
-                  <li>
-                    <Image
-                      src={"/icons/expiry-icon.svg"}
-                      width={18}
-                      height={18}
-                      alt="expiry"
-                    />
-                    <span>
-                      {t('valid_till')}{" "}
-                      {DateTime.fromISO(expiry).toFormat("dd-MMM-yyyy")}
-                    </span>
-                  </li>
-                </ul>
               </CardBody>
             </Card>
           </Col>
@@ -558,42 +428,68 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
                 </CardHeader>
               )}
 
-              <CardBody className={styles.detailsCardBody}>
-                <div className={styles.tabContainer}>
-                  <Tabs
-                    variant="pills"
-                    className={styles.navPills}
-                    defaultActiveKey="home"
-                    id="jobDetailTab"
-                  >
-                    <Tab eventKey="home" title={t("positions")}>
-                      <Positions
-                        positions={positions}
-                        onPositionSelect={handlePositionSelect}
-                      />
-                    </Tab>
-                    {!isMobile && (
-                      <Tab eventKey="aboutRecruiters" title={t("about_recruiters")}>
-                        <AgencyDetails agencyDetailsId={agencyId} />
-                      </Tab>
-                    )}
-                    {!isMobile && (
-                      <Tab eventKey="contact" title={t("more_info")}>
-                        <p className={styles.moreDetails}>
-                        {t('more_info_description')}
+              <CardBody className={`${styles.detailsCardBody} ${styles.walkinDetailsCardBody}`}>
+               <Row>
+                <Col md={6}>
+                  <div className={styles.interviewDetails}>
+                      <h3>Interview Date & Time</h3>
+                      <div className={styles.detailItemsRow}>
 
-                        </p>
-                      </Tab>
-                    )}
-                  </Tabs>
-                </div>
-                {COUNTRIES[location as "bh"] && (
-                  <CurrencyConverter
-                    currency={COUNTRIES[location as "bh"].currency}
-                    country={COUNTRIES[location as "bh"].label}
-                    jobId={jobId}
-                  />
-                )}
+                      <div className={styles.detailItem}>
+                          <Image width={18} height={18} src={'/icons/location.svg'} alt="location"/>
+                          <h6>{interviewLocation}</h6>
+                      </div>
+                      <div className={styles.detailItem}>
+                          <Image width={16} height={16} src={'/icons/calendar.svg'} alt="location"/>
+                          <h6>{DateTime.fromISO(interviewDate).toFormat("dd MMM yyyy (cccc)")}</h6>
+                      </div>
+                      </div>
+                      <div className={styles.detailItemsRow}>
+
+                      <div className={styles.detailItem}>
+                          <Image width={16} height={16} src={"/icons/clock.svg"} alt="location"/>
+                          <h6>{DateTime.fromISO(createdAt).toRelative()}</h6>
+                      </div>
+                      <div className={styles.detailItem}>
+                          <Image width={17} height={17} src={"/icons/expiry-icon.svg"} alt="location"/>
+                          <h6>{t('valid_till')} {DateTime.fromISO(expiry).toFormat("dd-MMM-yyyy")}</h6>
+                      </div>
+                      </div>
+                  </div>
+                  <div className={styles.interviewDetails}>
+                      <h3>Address</h3>
+                      <div className={styles.detailItemsRow}>
+                        <h6>{interviewAddress}</h6>
+                      </div>
+                  </div>
+                  <div className={styles.interviewDetails}>
+                      <h3>Contact</h3>
+                      <div className={styles.detailItemsRow}>
+
+                      <div className={styles.detailItem}>
+                          <Image width={16} height={16} src={'/icons/phone.png'} alt="location"/>
+                          {
+                            contactNumbers.map((num:string,i:number)=>{
+                              return <>{i!==0&&","}<h6><Link href={`tel:${num}`}>{num}</Link></h6> </>
+                            })
+                          }
+                      </div>
+                      
+                      </div>
+                      <div className={styles.detailItemsRow}>
+
+                      <div className={styles.detailItem}>
+                          <Image width={16} height={16} src={"/icons/mail.svg"} alt="location"/>
+                          <h6><Link href={`mailto:${email}`}>{email}</Link></h6>
+                      </div>
+                     
+                      </div>
+                  </div>
+                </Col>
+                <Col md={6}>
+                </Col>
+               </Row>
+             
                 <div className={styles.jobActions}>
                   {showSuccess || applied ? (
                     <div className={styles.successMessage}>
@@ -638,10 +534,9 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
 
                       <Button
                         className={styles.easyApplyButton}
-                        onClick={openModal}
-                        disabled={selectedPosition.length === 0}
+                        onClick={openMaps}
                       >
-                        {t("easy_apply")}
+                        {t("view_direction")}
                       </Button>
                     </>
                   )}
@@ -651,19 +546,6 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ jobId }) => {
           </Col>
         </Row>
       </Container>
-
-      {showApplyModal && (
-        <Apply
-          id={jobId}
-          show={showApplyModal}
-          onHide={() => {
-            setShowApplyModal(false);
-          }}
-          onApplySuccess={onSuccess}
-          selectedPosition={selectedPosition}
-          allPositions={positions}
-        />
-      )}
 
       <FullScreenImage
         isOpen={isFullScreen}
