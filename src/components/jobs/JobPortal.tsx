@@ -111,7 +111,7 @@ const JobPortal: React.FC<{
                 }}
               >
                 <Image
-                  src={`${IMAGE_BASE_URL}/${job.imageUrl}`}
+                  src={job.imageUrl ? `${IMAGE_BASE_URL}/${job.imageUrl}`:"/no_image.jpg"}
                   alt={job._id}
                   className={styles.jobImage}
                   width={378}
