@@ -260,10 +260,10 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={() => {}}>
-                            {t("save_job")}
+                          <Dropdown.Item onClick={addToCalendar}>
+                            {t("add_to_calendar")}
                           </Dropdown.Item>
-                          <Dropdown.Item className="danger" onClick={() => {}}>
+                          <Dropdown.Item className="danger" onClick={handleReportJob}>
                             {t("report_job")}
                           </Dropdown.Item>
                         </Dropdown.Menu>
