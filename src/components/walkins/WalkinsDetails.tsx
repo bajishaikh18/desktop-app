@@ -6,6 +6,8 @@ import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
+import { AddToCalendarButton } from 'add-to-calendar-button-react';
+
 import {
   Button,
   Card,
@@ -14,6 +16,7 @@ import {
   Col,
   Container,
   Dropdown,
+  DropdownItem,
   Row,
   Tab,
   Tabs,
@@ -32,12 +35,12 @@ import Spinner from "react-bootstrap/Spinner";
 import { LuExpand } from "react-icons/lu";
 import {
   getWalkinsDetails,
-  removeSavedWalkins,
+  removeSavedInterview,
   reportWalkins,
-  saveWalkins,
+  saveInterview,
 } from "@/apis/walkins";
 import { truncateText } from "@/helpers/truncate";
-import  Positions  from "./WalkinsPositions";
+//import  Positions  from "./WalkinsPositions";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
@@ -55,9 +58,9 @@ type AgencyDetailsType = {
   state: string;
 };
 
+
 const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
-  const t = useTranslations("WalkinDetails");
-  const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
+const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
@@ -78,7 +81,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
     enabled: !!walkinId,
   });
 
-  const {
+   const {
     _id,
     agencyId,
     createdAt,
@@ -103,38 +106,38 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
 
   const { isDesktop, isTab, isMobile } = useReponsiveStore();
 
-  const handleSaveJob = async () => {
+  const handleSaveInterview = async () => {
     if (!isLoggedIn) {
       setOpenLogin(true);
       return true;
     }
     setIsSaving(true);
     try {
-      await saveWalkins(walkinId);
+      await saveInterview(walkinId);
       await queryClient.invalidateQueries({
         queryKey: ["walkinDetails", walkinId],
         refetchType: "all",
       });
-      toast.success(t('walkin_saved'));
+      toast.success(t('Interview_saved'));
     } catch (error) {
-      console.error("Failed to save walkin:", error);
+      console.error("Failed to save Interview:", error);
       toast.error(t('submit_error'));
     } finally {
       setIsSaving(false);
     }
   };
 
-  const handleRemoveSavedJob = async () => {
+  const handleRemoveSavedInterview = async () => {
     setIsSaving(true);
     try {
-      await removeSavedWalkins(walkinId);
+      await removeSavedInterview(walkinId);
       await queryClient.invalidateQueries({
         queryKey: ["walkinDetails", walkinId],
         refetchType: "all",
       });
-      toast.success(t('walkin_removed'));
+      toast.success(t('interview_removed'));
     } catch (error) {
-      console.error("Failed to remove saved walkin:", error);
+      console.error("Failed to remove saved interview:", error);
       toast.error(t('remove_failed'));
     } finally {
       setIsSaving(false);
@@ -171,18 +174,26 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
     }
   };
 
-  const openMaps = () => {
-    const url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude},${longitude}`;
-    window.open(url)
-  };
 
-  const onSuccess = () => {
+  const openMaps = () => {
+    if (latitude && longitude) {
+        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+        const openStreetMap = `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=13/${latitude}/${longitude}`;
+
+        window.open(openStreetMap, '_blank');
+    } else {
+        console.log('No map found');
+    }
+};
+
+  
+   const onSuccess = () => {
     setShowSuccess(true);
     setShowApplyModal(false);
   };
-
   
-
+  
+  const t = useTranslations("WalkinDetails");
   if (isLoading) {
     return (
       <main className="main-section">
@@ -206,6 +217,8 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
     );
   }
 
+
+  
   return (
     <main className="main-section">
       <Container fluid>
@@ -382,9 +395,20 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                         >
                           <BsThreeDots fontSize={24} />
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu>
-                          <Dropdown.Item className="danger" onClick={handleReportJob}>
+                        <Dropdown.Item >
+                        <AddToCalendarButton
+                        name="Interview Date&Time"
+                        options={['Google']}
+                        startDate="2024-11-04"
+                        endDate="2024-11-04"
+                        startTime="10:00"
+                        endTime="11:00"
+                        timeZone="America/New_York"
+                       ></AddToCalendarButton>
+                      </Dropdown.Item>
+                         
+              <Dropdown.Item className="danger" onClick={handleReportJob}>
                             {t("report_job")}
                           </Dropdown.Item>
                         </Dropdown.Menu>
@@ -432,7 +456,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                <Row>
                 <Col md={6}>
                   <div className={styles.interviewDetails}>
-                      <h3>Interview Date & Time</h3>
+                      <h3>{t('interview')}</h3>
                       <div className={styles.detailItemsRow}>
 
                       <div className={styles.detailItem}>
@@ -457,13 +481,13 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                       </div>
                   </div>
                   <div className={styles.interviewDetails}>
-                      <h3>Address</h3>
+                      <h3>{t('address')}</h3>
                       <div className={styles.detailItemsRow}>
                         <h6>{interviewAddress}</h6>
                       </div>
                   </div>
                   <div className={styles.interviewDetails}>
-                      <h3>Contact</h3>
+                      <h3>{t('contact')}</h3>
                       <div className={styles.detailItemsRow}>
 
                       <div className={styles.detailItem}>
@@ -502,7 +526,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                         <Button
                           className={styles.saveJobButton}
                           variant="secondary"
-                          onClick={handleRemoveSavedJob}
+                          onClick={handleRemoveSavedInterview}
                           disabled={isSaving}
                         >
                           {isSaving ? (
@@ -518,7 +542,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                         <Button
                           className={styles.saveJobButton}
                           variant="secondary"
-                          onClick={handleSaveJob}
+                          onClick={handleSaveInterview}
                           disabled={isSaving}
                         >
                           {isSaving ? (
@@ -557,5 +581,6 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
     </main>
   );
 };
+
 
 export default WalkinsDetails;

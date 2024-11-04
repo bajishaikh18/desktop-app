@@ -13,7 +13,7 @@ import { Container } from 'react-bootstrap';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 
 const WalkinsSlider: React.FC = () => {
-  const t = useTranslations("Walkins Slider");
+  const t = useTranslations("WalkinsSlider");
   const [selectedCountry, setSelectedCountry] = useState<string>(''); 
   const [field, setField] = useState(""); 
   const [filter, setFilter] = useState(""); 

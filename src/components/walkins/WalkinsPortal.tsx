@@ -92,7 +92,7 @@ const WalkinsPortal: React.FC<{
       if (observer.current) observer.current.disconnect();
     };
   }, [hasNextPage, fetchNextPage]);
-  const t = useTranslations("Portal");
+  const t = useTranslations("WalkinPortal");
   if (isLoading || isFetching) {
     return <Loader text={t('fetching_walkin_details')} />;
 

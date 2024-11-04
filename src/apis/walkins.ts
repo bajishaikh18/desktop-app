@@ -69,24 +69,24 @@ export const convertCurrency = async (
 
 
 
-export const saveWalkins = async (id: string) => {
+export const saveInterview = async (interviewId: string) => {
   try {
     const client = authorizedApiClient;
-    const response = await client.patch(`/user/addSavedWalkins/${id}`); 
+    const response = await client.patch(`/user/addSavedInterview/${interviewId}`); 
     return response.data;
   } catch (error) {
-    console.error("Failed to save job:", error);
+    console.error("Failed to save interview:", error);
     throw error;
   }
 };
 
-export const removeSavedWalkins = async (id: string) => {
+export const removeSavedInterview = async (interviewId: string)  => {
   try {
     const client = authorizedApiClient;
-    const response = await client.patch(`/user/removeSavedWalkins/${id}`);
+    const response = await client.patch(`/user/removeSavedInterview/${interviewId}`);
     return response.data; 
   } catch (error) {
-    console.error("Failed to remove saved job:", error);
+    console.error("Failed to remove saved Interview:", error);
     throw error;
   }
 };
