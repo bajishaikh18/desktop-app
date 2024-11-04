@@ -255,6 +255,7 @@
     "walkin_details_not_present":"Oops!, looks like walkin details are not present",
     "walkin_details_error":"Something went wrong while accessing walkin details. Please try again",
     "report_posting":"reporting the walkin posting",
+    "add_to_calendar":"Add to calendar",
     "hide_map":"Hide Map"
   }
 }

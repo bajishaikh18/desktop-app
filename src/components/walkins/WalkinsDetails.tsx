@@ -6,7 +6,7 @@ import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-
+import {atcb_action} from 'add-to-calendar-button-react'
 
 
 import {
@@ -115,6 +115,20 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
 
   const { isDesktop, isTab, isMobile } = useReponsiveStore();
 
+  const addToCalendar = useCallback((e:any)=>{
+    const date = DateTime.fromISO(interviewDate,{ zone: 'Asia/Kolkata' });
+    const config = {
+      name: `Walkin for ${agencyId?.name}`,
+      description:`Location : ${interviewAddress} ,${interviewLocation}`,
+      location: `${latitude} ${longitude}`,
+      startDate: date.toFormat('yyyy-MM-dd'),
+      startTime:date.toFormat('HH:mm'),
+      endTime:"23:59",
+      options: ["Google" as "Google"], 
+    };
+    atcb_action(config,e.target)
+  },[interviewDate,latitude,longitude, agencyId, description])
+
   const handleSaveInterview = async () => {
     if (!isLoggedIn) {
       setOpenLogin(true);
@@ -184,10 +198,8 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
   };
 
   const openMaps = () => {
-    setShowMap((prevShowMap) => {
-      console.log("Current showMap state:", prevShowMap); 
-      return !prevShowMap; 
-    });
+    const url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude},${longitude}`;
+     window.open(url)
   };
 
   const onSuccess = () => {
@@ -397,15 +409,12 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                           <BsThreeDots fontSize={24} />
                         </Dropdown.Toggle>
                          <Dropdown.Menu>
-                      <Dropdown.Item>
+                      <Dropdown.Item onClick={addToCalendar}>
     <span
     className="calendarTextButton"
-    onClick={() => window.open(
-      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Interview+Date&dates=20241104T043000Z/20241104T053000Z&details=Interview+Details&location=Online&trp=false', 
-      '_blank'
-    )}
+    
   >
-    Add to Calendar
+    {t('add_to_calendar')}
   </span>
 </Dropdown.Item>
   <Dropdown.Item className="danger" onClick={handleReportJob}>
