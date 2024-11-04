@@ -6,7 +6,8 @@ import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { AddToCalendarButton } from 'add-to-calendar-button-react';
+
+
 
 import {
   Button,
@@ -59,8 +60,14 @@ type AgencyDetailsType = {
 };
 
 
+
+
+
+
 const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
-const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
+
+
+    const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
@@ -81,7 +88,9 @@ const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
     enabled: !!walkinId,
   });
 
-   const {
+
+
+  const {
     _id,
     agencyId,
     createdAt,
@@ -118,7 +127,7 @@ const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
         queryKey: ["walkinDetails", walkinId],
         refetchType: "all",
       });
-      toast.success(t('Interview_saved'));
+      toast.success(t('interview_saved'));
     } catch (error) {
       console.error("Failed to save Interview:", error);
       toast.error(t('submit_error'));
@@ -174,20 +183,11 @@ const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
     }
   };
 
-
   const openMaps = () => {
-    if (latitude && longitude) {
-        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-        const openStreetMap = `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=13/${latitude}/${longitude}`;
-
-        window.open(openStreetMap, '_blank');
-    } else {
-        console.log('No map found');
-    }
-};
-
-  
-   const onSuccess = () => {
+    const url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude},${longitude}`;
+    window.open(url)
+  };
+  const onSuccess = () => {
     setShowSuccess(true);
     setShowApplyModal(false);
   };
@@ -217,8 +217,6 @@ const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
     );
   }
 
-
-  
   return (
     <main className="main-section">
       <Container fluid>
@@ -395,20 +393,19 @@ const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
                         >
                           <BsThreeDots fontSize={24} />
                         </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                        <Dropdown.Item >
-                        <AddToCalendarButton
-                        name="Interview Date&Time"
-                        options={['Google']}
-                        startDate="2024-11-04"
-                        endDate="2024-11-04"
-                        startTime="10:00"
-                        endTime="11:00"
-                        timeZone="America/New_York"
-                       ></AddToCalendarButton>
-                      </Dropdown.Item>
-                         
-              <Dropdown.Item className="danger" onClick={handleReportJob}>
+                         <Dropdown.Menu>
+                      <Dropdown.Item>
+    <span
+    className="calendarTextButton"
+    onClick={() => window.open(
+      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Interview+Date&dates=20241104T043000Z/20241104T053000Z&details=Interview+Details&location=Online&trp=false', 
+      '_blank'
+    )}
+  >
+    Add to Calendar
+  </span>
+</Dropdown.Item>
+  <Dropdown.Item className="danger" onClick={handleReportJob}>
                             {t("report_job")}
                           </Dropdown.Item>
                         </Dropdown.Menu>

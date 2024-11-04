@@ -159,10 +159,12 @@ const Header: React.FC = () => {
              {t("walkins")}
                </Link> 
              
-              <Link className={styles.navListItem}                     href="javascript:;"
-              >
+               <Link href="/agency"  className={`${styles.navListItem} ${
+                  pathname == "/agency" ? styles.active : ""
+                }`}>
                 {t("agenices")}
               </Link>
+
               <Link className={styles.navListItem}                     href="javascript:;"
               >
                 {t("travel")}
