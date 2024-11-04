@@ -296,7 +296,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                   <div className={styles.detailsCardHeader}>
                     <div className={styles.agencyDetails}>
                       <Image
-                        src="/icons/agency-logo.png"
+                        src={`${agencyId?.profilePic ? `${IMAGE_BASE_URL}/${agencyId?.profilePic}`: '/no_image.jpg'}`}
                         width={66}
                         height={66}
                         alt="agency-logo"
@@ -427,7 +427,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                   <div className={styles.detailsCardHeader}>
                     <div className={styles.agencyDetails}>
                       <Image
-                        src="/icons/agency-logo.png"
+                        src={`${agencyId?.profilePic ? `${IMAGE_BASE_URL}/${agencyId?.profilePic}`: '/no_image.jpg'}`}
                         width={66}
                         height={66}
                         alt="agency-logo"
