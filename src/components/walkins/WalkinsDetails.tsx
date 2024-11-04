@@ -66,7 +66,7 @@ type AgencyDetailsType = {
 
 const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
 
-
+  const [showMap, setShowMap] = useState(false);
     const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
@@ -184,9 +184,12 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
   };
 
   const openMaps = () => {
-    const url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude},${longitude}`;
-    window.open(url)
+    setShowMap((prevShowMap) => {
+      console.log("Current showMap state:", prevShowMap); 
+      return !prevShowMap; 
+    });
   };
+
   const onSuccess = () => {
     setShowSuccess(true);
     setShowApplyModal(false);
@@ -510,7 +513,17 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                 <Col md={6}>
                 </Col>
                </Row>
-             
+         
+               {showMap && (
+          <div className={styles.mapContainer}>
+           <iframe
+             title="Google Maps"
+             src={`https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude},${longitude}`}
+            allowFullScreen
+           loading="lazy"
+           />
+         </div>
+    )}
                 <div className={styles.jobActions}>
                   {showSuccess || applied ? (
                     <div className={styles.successMessage}>
@@ -553,11 +566,12 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                         </Button>
                       )}
 
+
                       <Button
                         className={styles.easyApplyButton}
                         onClick={openMaps}
                       >
-                        {t("view_direction")}
+                       {showMap ? t("hide_map") : t("view_direction")}
                       </Button>
                     </>
                   )}
@@ -566,6 +580,9 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
             </Card>
           </Col>
         </Row>
+     
+
+        
       </Container>
 
       <FullScreenImage

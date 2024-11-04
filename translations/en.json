@@ -254,6 +254,7 @@
     "walkin_report_failed":"Failed to report walkin. Please try again.",
     "walkin_details_not_present":"Oops!, looks like walkin details are not present",
     "walkin_details_error":"Something went wrong while accessing walkin details. Please try again",
-    "report_posting":"reporting the walkin posting"
+    "report_posting":"reporting the walkin posting",
+    "hide_map":"Hide Map"
   }
 }
