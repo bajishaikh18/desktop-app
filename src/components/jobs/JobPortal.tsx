@@ -120,9 +120,7 @@ const JobPortal: React.FC<{
                 />
                 <Card.Body className={styles.cardBody}>
                   <Card.Title className={styles.cardTitle}>
-                    {typeof job.agencyId === "string"
-                      ? job.agencyId
-                      : job.agencyId?.name || "Unknown Agency"}
+                    {job?.agency || "Unknown Agency"}
                     <Image
                       src="/icons/verified.svg"
                       width={16}
