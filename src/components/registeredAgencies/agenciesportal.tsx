@@ -24,7 +24,7 @@ const AgencyData: Agency[] = [
     name: 'Continental Holding.inc',
     regNo: 'B-2345/MUM/COM/1000+/5/0242/2023',
     jobsPosted: 27,
-    validity: '02 Aug 2024',
+    validity: '03 Aug 2024',
   },
   {
     logo: '/muthuinternational.png', 
