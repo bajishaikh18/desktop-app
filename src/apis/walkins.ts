@@ -26,7 +26,6 @@ export const getWalkins = async ({
     });
     return response.data;
   } catch (error) {
-    console.error("Failed to update user details:", error);
     throw error;
   }
 };
@@ -35,7 +34,6 @@ export const getWalkinsDetails = async (id: string) => {
   try {
     const client = isTokenValid() ? authorizedApiClient : apiClient;
     const response = await client.get(`${baseRoutes}/${id}`);
-    console.log("API Response:", response.data);
     return response.data;
   } catch (error) {
     throw error;
@@ -60,7 +58,6 @@ export const convertCurrency = async (
 
     return response.data.convertedAmount;
   } catch (error) {
-    console.error("Failed to convert currency:", error);
     throw error;
   }
 };
@@ -75,7 +72,6 @@ export const saveInterview = async (interviewId: string) => {
     const response = await client.patch(`/user/addSavedInterview/${interviewId}`); 
     return response.data;
   } catch (error) {
-    console.error("Failed to save interview:", error);
     throw error;
   }
 };
@@ -86,7 +82,6 @@ export const removeSavedInterview = async (interviewId: string)  => {
     const response = await client.patch(`/user/removeSavedInterview/${interviewId}`);
     return response.data; 
   } catch (error) {
-    console.error("Failed to remove saved Interview:", error);
     throw error;
   }
 };
@@ -95,10 +90,9 @@ export const removeSavedInterview = async (interviewId: string)  => {
 export const reportWalkins = async (jobId: string) => {
   try {
     const client = authorizedApiClient;
-    const response = await client.post(`${baseRoutes}/reportjob/${jobId}`);
+    const response = await client.post(`${baseRoutes}/report/${jobId}`);
     return response.data; 
   } catch (error) {
-    console.error("Failed to remove saved job:", error);
     throw error;
   }
 };
@@ -112,7 +106,6 @@ export const getAgencyDetails = async (agencyId: any) => {
     console.log("Agency API Response:", response.data); 
     return response.data;
   } catch (error) {   
-    console.error("Failed to fetch agency details:", error);
     throw error;
   }
 };
