@@ -1,0 +1,210 @@
+@import "../../app/variables";
+
+.sliderContainer {
+  width: 100%;        
+  height: auto;      
+  position: relative; 
+  padding-top: 86px;
+}
+
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  padding: 0px 50px;
+}
+
+.slide{
+  width: 100%;
+  display: flex !important;
+  height: 170px;
+  padding-top: 38px;
+  background-position: center;
+  background-size: cover;
+  background-image: url('/slider.png');
+}
+
+.textCommon {
+  color: #fff;              
+  font-weight: 300;         
+  font-size: 20px;          
+  text-align: left; 
+  line-height: 24px;
+  margin-bottom: 0px;
+  &.subtitle{
+    font-weight: 800;
+    font-size: 16px;
+  }
+}
+
+
+.viewJobsButton {
+  padding: 11px 55px;
+  border: 1px solid #fff;   
+  background-color: transparent;  
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+
+.viewJobsButton:hover {
+  background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.jobListingContainer {
+  margin-top: 40px; 
+  text-align: center; 
+  
+}
+
+.jobList {
+  display: flex; 
+  justify-content: center; 
+  flex-wrap: wrap; 
+  gap: 64px;
+  
+  span {
+    font-size: 14px; 
+    font-weight: 400;
+    line-height:16px;
+    margin: 0;
+    cursor: pointer; 
+    &.active{
+      color: $color-brand-1;
+    }
+
+    &:hover {
+      color: $color-brand-1; 
+    }
+  }
+}
+
+
+.searchImageContainer {
+  margin: -70px auto 0px auto;
+  position: relative;
+  background-color: #fff;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 16px 20px rgba(34, 34, 34, 0.16);
+  padding: 10px 20px;
+  max-width: 100%;
+  width: 960px;
+}
+
+.searchBox{
+  flex: 1;
+}
+.searchImageContainer input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 50px;
+
+}
+
+.searchImageContainer .searchIcon {
+  margin-right: 10px;
+}
+
+.findJobsButton {
+  background-color: $color-brand-1;
+  border-radius: 60px;
+  color: white;
+  padding: 20px 45px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 70px; 
+  border: none;
+  margin-bottom: -8px;
+  margin-right: -18px;
+  margin-top: -8px;
+}
+
+.locationDropdown:focus {
+  outline: none;
+}
+
+.locationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+
+}
+
+.separator {
+  width: 1px;
+  height: 30px; 
+  background-color: #ccc; 
+  margin-right: 20px; 
+
+}
+@media (max-width: 1190px) {
+  .sliderContainer{
+    padding-top: 70px;
+  }
+}
+@media (max-width: 767px) {
+  .jobListingContainer{
+    margin-top: 40px;
+  }
+  .slide{
+    padding-top: 20px;
+  }
+  .jobList{
+    gap: 20px;
+    
+  }
+  .overlay{
+    display: block;
+  }
+  .viewJobsButton{
+    padding: 5px 20px;
+    float: right;
+    margin-top: 0px;
+    font-size: 12px;
+  }
+  .textCommon{
+    font-size: 14px;
+  }
+  .searchImageContainer{
+    position: relative;
+    gap: 0px;
+    justify-content: flex-start;
+    .searchBox{
+      display: flex;
+      align-items: center;
+      width:48%;
+      font-size: 12px;
+      flex: none;
+      .searchInput{
+        width: 100%;
+      }
+    }
+    .separator{
+      margin-right: 10px;
+    }
+    .findJobsButton{
+      padding: 16px 25px;
+      position: absolute;
+      margin-left: 0px;
+      right: 20px;
+    }
+  }
+}
+
+// @media (max-width: 400px) {
+//   .searchImageContainer{
+//     .findJobsButton{
+//       padding: 20px;
+//       margin-left: 10px;
+//     }
+//   }
+// }

@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Slider from 'react-slick';
-import JobSearch from '@/components/jobs/JobSearch'; 
-import JobPortal from '@/components/jobs/JobPortal';
+import Search from '@/components/walkins/WalkinsSearch'; 
+import Portal from '@/components/walkins/WalkinsPortal';
 import styles from './Slider.module.scss';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,8 +12,8 @@ import { useTranslations } from 'next-intl';
 import { Container } from 'react-bootstrap';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 
-const JobSlider: React.FC = () => {
-  const t = useTranslations("Slider");
+const WalkinsSlider: React.FC = () => {
+  const t = useTranslations("WalkinsSlider");
   const [selectedCountry, setSelectedCountry] = useState<string>(''); 
   const [field, setField] = useState(""); 
   const [filter, setFilter] = useState(""); 
@@ -56,7 +56,7 @@ const JobSlider: React.FC = () => {
             </div>
             <div className={styles.buttonRightContainer}>
               <button className={styles.viewJobsButton} onClick={() => window.location.href = '/jobs'}>
-                {t('view_Job')}
+              {t('view_Job')}
               </button>
             </div>
           </div>
@@ -85,55 +85,57 @@ const JobSlider: React.FC = () => {
       </Slider>
       
      <Container fluid>
-      <JobSearch onSearch={handleSearch} onCountryChange={setSelectedCountry} />
+      <Search onSearch={handleSearch} onCountryChange={setSelectedCountry} />
       </Container>
       <div className={styles.jobListingContainer}>
         <div className={styles.jobList}>
           <span            onClick={() => handleCountrySelect('')}
- className={selectedCountry === '' ? styles.active : ''}>{t('latest_Jobs')}</span>
+      className={selectedCountry === '' ? styles.active : ''}>{t('latest_walkins')}</span>
           <span
             className={selectedCountry === 'om' ? styles.active : ''}
             onClick={() => handleCountrySelect('om')}
           >
-            {t('jobs_in_Oman')}
+            {t('walkin_oman')}
           </span>
           <span
             className={selectedCountry === 'qa' ? styles.active : ''}
             onClick={() => handleCountrySelect('qa')}
           >
-            {t('jobs_in_Qatar')}
+            {t('walkin_qatar')}
           </span>
           <span
             className={selectedCountry === 'kw' ? styles.active : ''}
             onClick={() => handleCountrySelect('kw')}
           >
-            {t('jobs_in_Kuwait')}
+            {t('walkin_kuwait')}
           </span>
           <span
             className={selectedCountry === 'ae' ? styles.active : ''}
             onClick={() => handleCountrySelect('ae')}
           >
-            {t('jobs_in_Dubai')}
+            {t('walkin_dubai')}
           </span>
           <span
             className={selectedCountry === 'sa' ? styles.active : ''}
             onClick={() => handleCountrySelect('sa')}
           >
-            {t('jobs_in_Saudi')}
+            {t('walkin_saudi')}
           </span>
           <span
             className={selectedCountry === 'bh' ? styles.active : ''}
             onClick={() => handleCountrySelect('bh')}
           >
-            {t('jobs_in_Bahrain')}
+            {t('walkin_bahrain')}
           </span>
         </div>
       </div>
 
       {/* Pass the selected country to the JobPortal */}
-      <JobPortal selectedCountry={selectedCountry} filter={filter} field={field} />
+      <Portal selectedCountry={selectedCountry} filter={filter} field={field} />
+
+      
     </div>
   );
 };
 
-export default JobSlider;
+export default WalkinsSlider;

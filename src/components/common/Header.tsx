@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { BiSolidUserCircle } from "react-icons/bi";
 import Link from 'next/link';
+import { usePathname } from "next/navigation";
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {
@@ -29,11 +30,12 @@ const Header: React.FC = () => {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
-  const [dropdownVisible, setDropdownVisible] = useState(false);
   const [getDetails,setGetDetails]= useState(false);
   const { authUser, setAuthUser,openLogin,setOpenLogin } = useAuthUserStore();
   const {setIsDesktop} = useReponsiveStore();
-  const { data, isLoading, isError } = useQuery({
+  const pathname = usePathname();
+
+  const { data } = useQuery({
     queryKey: ["userDetail",getDetails],
     queryFn: () => {
       if (getDetails) {
@@ -44,10 +46,7 @@ const Header: React.FC = () => {
     enabled: true,
   });
   
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
-
+  
   function handleResize() {
     setWindowDimensions(getWindowDimensions());
   }
@@ -60,10 +59,6 @@ const Header: React.FC = () => {
       setIsDesktop(isDesktop,isTab,isMobile)
     }
   },[windowDimensions])
-
-
-  const getUser =async ()=>{
-  }
 
   useEffect(()=>{
     if(data){
@@ -149,25 +144,31 @@ const Header: React.FC = () => {
 
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className={styles.navContainer}>
-              <Nav.Link
-                className={styles.navListItem}
-                href="#dashboard"
-                style={{ color: "blue" }}
+              <Link
+                className={`${styles.navListItem} ${
+                  pathname == "/" ? styles.active : ""
+                }`}
+                href="/"
               >
                 {t("jobs")}
-              </Nav.Link>
+              </Link>
               
-              <Nav.Link as={Link} href="/walk-in" className={styles.navListItem}>
-  {t("walkins")}
-</Nav.Link> 
-              <Nav.Link className={styles.navListItem}                     href="javascript:;"
-              >
+              <Link href="/walk-in"  className={`${styles.navListItem} ${
+                  pathname == "/walk-in" ? styles.active : ""
+                }`}>
+             {t("walkins")}
+               </Link> 
+             
+               <Link href="/agency"  className={`${styles.navListItem} ${
+                  pathname == "/agency" ? styles.active : ""
+                }`}>
                 {t("agenices")}
-              </Nav.Link>
-              <Nav.Link className={styles.navListItem}                     href="javascript:;"
+              </Link>
+
+              <Link className={styles.navListItem}                     href="javascript:;"
               >
                 {t("travel")}
-              </Nav.Link>
+              </Link>
               <NavDropdown title={t("services")} className={styles.navListItem} drop="down">
                 <NavDropdown.Item
                   className={styles.navListItem}

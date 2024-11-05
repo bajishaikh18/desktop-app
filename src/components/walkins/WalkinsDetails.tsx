@@ -1,11 +1,14 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import styles from "./WalkinsDetail.module.scss";
+import styles from "../common/styles/Details.module.scss";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
+import {atcb_action} from 'add-to-calendar-button-react'
+
+
 import {
   Button,
   Card,
@@ -14,6 +17,7 @@ import {
   Col,
   Container,
   Dropdown,
+  DropdownItem,
   Row,
   Tab,
   Tabs,
@@ -31,21 +35,21 @@ import { Loader, NotFound } from "../common/Feedbacks";
 import Spinner from "react-bootstrap/Spinner";
 import { LuExpand } from "react-icons/lu";
 import {
-  getJobDetails,
-  saveJob,
-  removeSavedJob,
-  getAgencyDetails,
-  reportJob,
-} from "@/apis/jobs";
+  getWalkinsDetails,
+  removeSavedInterview,
+  reportWalkins,
+  saveInterview,
+} from "@/apis/walkins";
 import { truncateText } from "@/helpers/truncate";
-import { JobPositions } from "./WalkinsPositions";
-import { CurrencyConverter } from "./Walkins CurrencyConverter";
+//import  Positions  from "./WalkinsPositions";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { INDIAN_STATES } from "@/helpers/states";
-type PostedWalkinsProps = {
-  jobId: string;
+import { getAgencyDetails } from "@/apis/jobs";
+
+type PostedWalkinsDetailsProps = {
+  walkinId: string;
 };
 type AgencyDetailsType = {
   address: string;
@@ -55,116 +59,15 @@ type AgencyDetailsType = {
   state: string;
 };
 
-const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
-  const t = useTranslations("Details");
-  const { data, isLoading, isFetching, isError } = useQuery({
-    queryKey: ["agencyDetails", agencyDetailsId],
-    queryFn: () => {
-      if (agencyDetailsId) {
-        return getAgencyDetails(agencyDetailsId);
-      }
-      throw new Error("jobId is null or undefined");
-    },
-    enabled: !!agencyDetailsId,
-  });
 
-  if (isLoading || isFetching) {
-    return <Loader text="Fetching agency details" />;
-  }
 
-  if (isError || !data) {
-    return <NotFound text="Agency details are not present" />;
-  }
-  const agencyDetails = data?.agency;
-  return (
-    <div className={styles.recruiterDetails}>
-      <table>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t("hiring_organization")}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>{agencyDetails.name}</span>
-            </h3>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('name')}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>{agencyDetails.name}</span>
-            </h3>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('email')}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>{agencyDetails.email}</span>
-            </h3>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('address')}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>{agencyDetails.address}</span>
-            </h3>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('state')}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>
-                {INDIAN_STATES.find(
-                  (st) => st.state_code === agencyDetails.state
-                )?.name || "N/A"}
-              </span>
-            </h3>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('city')}</span>
-            </h3>
-          </td>
-          <td>
-            <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span>{agencyDetails.city}</span>
-            </h3>
-          </td>
-        </tr>
-      </table>
-    </div>
-  );
-};
 
-const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
-  const t = useTranslations("Details");
-  const [agencyDetails, setAgencyDetails] = useState<any>(null);
 
-  const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
+
+const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
+
+  const [showMap, setShowMap] = useState(false);
+    const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
@@ -175,15 +78,17 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["jobDetails", jobId],
+    queryKey: ["walkinDetails", walkinId],
     queryFn: () => {
-      if (jobId) {
-        return getJobDetails(jobId);
+      if (walkinId) {
+        return getWalkinsDetails(walkinId);
       }
-      throw new Error("jobId is null or undefined");
+      throw new Error("walkinId is null or undefined");
     },
-    enabled: !!jobId,
+    enabled: !!walkinId,
   });
+
+
 
   const {
     _id,
@@ -193,50 +98,69 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
     agencyName,
     imageUrl,
     location,
+    interviewDate,
     positions,
     contactNumbers,
     email,
     status,
+    interviewAddress,
+    latitude, 
+    longitude,
+    interviewLocation,
     applied,
     description,
     amenities,
     isSaved,
-  } = data?.job || {};
+  } = data?.interview || {};
 
   const { isDesktop, isTab, isMobile } = useReponsiveStore();
 
-  const handleSaveJob = async () => {
+  const addToCalendar = useCallback((e:any)=>{
+    const date = DateTime.fromISO(interviewDate,{ zone: 'Asia/Kolkata' });
+    const config = {
+      name: `Walkin for ${agencyId?.name}`,
+      description:`Location : ${interviewAddress} ,${interviewLocation}`,
+      location: `${latitude} ${longitude}`,
+      startDate: date.toFormat('yyyy-MM-dd'),
+      startTime:date.toFormat('HH:mm'),
+      endTime:"23:59",
+      options: ["Google" as "Google"], 
+    };
+    atcb_action(config,e.target)
+  },[interviewDate,latitude,longitude, agencyId, description])
+
+  const handleSaveInterview = async () => {
     if (!isLoggedIn) {
       setOpenLogin(true);
       return true;
     }
     setIsSaving(true);
     try {
-      await saveJob(jobId);
+      await saveInterview(walkinId);
       await queryClient.invalidateQueries({
-        queryKey: ["jobDetails", jobId],
+        queryKey: ["walkinDetails", walkinId],
         refetchType: "all",
       });
-      toast.success(t('job_saved'));
+      toast.success(t('interview_saved'));
     } catch (error) {
-      console.error("Failed to save job:", error);
+      console.error("Failed to save Interview:", error);
       toast.error(t('submit_error'));
     } finally {
       setIsSaving(false);
     }
   };
 
-  const handleRemoveSavedJob = async () => {
+  const handleRemoveSavedInterview = async () => {
     setIsSaving(true);
     try {
-      await removeSavedJob(jobId);
+      await removeSavedInterview(walkinId);
       await queryClient.invalidateQueries({
-        queryKey: ["jobDetails", jobId],
+        queryKey: ["walkinDetails", walkinId],
         refetchType: "all",
       });
-      toast.success(t('job_removed'));
+      toast.success(t('interview_removed'));
     } catch (error) {
-      console.error("Failed to remove saved job:", error);
+      console.error("Failed to remove saved interview:", error);
       toast.error(t('remove_failed'));
     } finally {
       setIsSaving(false);
@@ -262,36 +186,33 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
       setOpenLogin(true);
       return true;
     }
-    const loading = toast.loading("Reporting the job posting")
+    const loading = toast.loading(t("report_posting"))
     try {
-      await reportJob(jobId);
+      await reportWalkins(walkinId);
       toast.dismiss(loading);
-      toast.success(t('job_reported'));
+      toast.success(t('walkin_reported'));
     } catch (error) {
       toast.dismiss(loading);
-      toast.error(t('job_report_failed'));
+      toast.error(t('walkin_report_failed'));
     }
   };
 
-  const openModal = () => {
-    if (selectedPosition && isLoggedIn) {
-      setShowApplyModal(true);
-    } else {
-      setOpenLogin(true);
-    }
+  const openMaps = () => {
+    const url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude},${longitude}`;
+     window.open(url)
   };
 
   const onSuccess = () => {
     setShowSuccess(true);
     setShowApplyModal(false);
   };
-
   
-
+  
+  const t = useTranslations("WalkinDetails");
   if (isLoading) {
     return (
       <main className="main-section">
-        <Loader text="Loading job details" />
+        <Loader text={t("loading_walkin_details")} />
       </main>
     );
   }
@@ -299,14 +220,14 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
   if (!data) {
     return (
       <main className="main-section">
-        <NotFound text="Oops!, looks like job details are not present" />
+        <NotFound text={t("walkin_details_not_present")} />
       </main>
     );
   }
   if (isError) {
     return (
       <main className="main-section">
-        <NotFound text="Something went wrong while accessing job details. Please try again" />
+        <NotFound text={t("walkin_details_error")} />
       </main>
     );
   }
@@ -339,10 +260,10 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={() => {}}>
-                            {t("save_job")}
+                          <Dropdown.Item onClick={addToCalendar}>
+                            {t("add_to_calendar")}
                           </Dropdown.Item>
-                          <Dropdown.Item className="danger" onClick={() => {}}>
+                          <Dropdown.Item className="danger" onClick={handleReportJob}>
                             {t("report_job")}
                           </Dropdown.Item>
                         </Dropdown.Menu>
@@ -375,14 +296,14 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                   <div className={styles.detailsCardHeader}>
                     <div className={styles.agencyDetails}>
                       <Image
-                        src="/icons/agency-logo.png"
+                        src={`${agencyId?.profilePic ? `${IMAGE_BASE_URL}/${agencyId?.profilePic}`: '/no_image.jpg'}`}
                         width={66}
                         height={66}
                         alt="agency-logo"
                       />
                       <div>
                         <div className={styles.agencyNameContainer}>
-                          <h2 className={styles.agencyName}>{agencyId.name}</h2>
+                          <h2 className={styles.agencyName}>{agencyId?.name}</h2>
                           <Image
                             src="/icons/verified.svg"
                             width={13}
@@ -407,7 +328,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                   </div>
                 )}
                 <div className={styles.summaryDetailsSection}>
-                  <h3 className={styles.infoData}>{t('posting_details')}</h3>
+                  <h3 className={styles.infoData}>{t('walkin_details')}</h3>
                   <p>
                     {description ? (
                       <>
@@ -447,45 +368,23 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                     <span>{agencyId.name}</span>
                   </h3>
                   <ul className={styles.benefits}>
-  {amenities.map((amenity: string, index: number) => (
-    <li key={index}>
-      <Image
-        src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
-        alt={amenity === "Food" ? t('food') : amenity} 
-        width={16}
-        height={16}
-      />{" "}
-      <span>{t(amenity.toLowerCase())}</span>
-    </li>
-  ))}
-</ul>
+                    {amenities.map((amenity: string, index: number) => (
+                      <li key={index}>
+                        <Image
+                          src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
+                          alt={t(amenity.toLowerCase())} 
+                          width={16}
+                          height={16}
+                        />{" "}
+                        <span>{t(amenity.toLowerCase())}</span> 
+                      </li>
+                    ))}
+                  </ul>
+
 
                  
                 </div>
 
-                <ul className={styles.footerInfo}>
-                  <li>
-                    <Image
-                      src={"/icons/clock.svg"}
-                      width={18}
-                      height={18}
-                      alt="clock"
-                    />
-                    <span>{DateTime.fromISO(createdAt).toRelative()}</span>
-                  </li>
-                  <li>
-                    <Image
-                      src={"/icons/expiry-icon.svg"}
-                      width={18}
-                      height={18}
-                      alt="expiry"
-                    />
-                    <span>
-                      {t('valid_till')}{" "}
-                      {DateTime.fromISO(expiry).toFormat("dd-MMM-yyyy")}
-                    </span>
-                  </li>
-                </ul>
               </CardBody>
             </Card>
           </Col>
@@ -498,7 +397,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                   >
                     <h3 onClick={goBack} className={styles.backlink}>
                       <FaChevronLeft fontSize={16} color="#000" />
-                      {t('job_posting_details')}
+                      {t('walkin_details')}
                     </h3>
                     <div className={styles.actionContainer}>
                       <Dropdown>
@@ -509,9 +408,16 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                         >
                           <BsThreeDots fontSize={24} />
                         </Dropdown.Toggle>
-
-                        <Dropdown.Menu>
-                          <Dropdown.Item className="danger" onClick={handleReportJob}>
+                         <Dropdown.Menu>
+                      <Dropdown.Item onClick={addToCalendar}>
+    <span
+    className="calendarTextButton"
+    
+  >
+    {t('add_to_calendar')}
+  </span>
+</Dropdown.Item>
+  <Dropdown.Item className="danger" onClick={handleReportJob}>
                             {t("report_job")}
                           </Dropdown.Item>
                         </Dropdown.Menu>
@@ -521,7 +427,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                   <div className={styles.detailsCardHeader}>
                     <div className={styles.agencyDetails}>
                       <Image
-                        src="/icons/agency-logo.png"
+                        src={`${agencyId?.profilePic ? `${IMAGE_BASE_URL}/${agencyId?.profilePic}`: '/no_image.jpg'}`}
                         width={66}
                         height={66}
                         alt="agency-logo"
@@ -555,46 +461,82 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                 </CardHeader>
               )}
 
-              <CardBody className={styles.detailsCardBody}>
-                <div className={styles.tabContainer}>
-                  <Tabs
-                    variant="pills"
-                    className={styles.navPills}
-                    defaultActiveKey="home"
-                    id="jobDetailTab"
-                  >
-                    <Tab eventKey="home" title={t("positions")}>
-                      <JobPositions
-                        positions={positions}
-                        onPositionSelect={handlePositionSelect}
-                      />
-                    </Tab>
-                    {!isMobile && (
-                      <Tab eventKey="aboutRecruiters" title={t("about_recruiters")}>
-                        <AgencyDetails agencyDetailsId={agencyId} />
-                      </Tab>
-                    )}
-                    {!isMobile && (
-                      <Tab eventKey="contact" title={("more_info")}>
-                        <p className={styles.moreDetails}>
-                        {t('more_info_description')}
+              <CardBody className={`${styles.detailsCardBody} ${styles.walkinDetailsCardBody}`}>
+               <Row>
+                <Col md={6}>
+                  <div className={styles.interviewDetails}>
+                      <h3>{t('interview')}</h3>
+                      <div className={styles.detailItemsRow}>
 
-                        </p>
-                      </Tab>
-                    )}
-                  </Tabs>
-                </div>
-                {COUNTRIES[location as "bh"] && (
-                  <CurrencyConverter
-                    currency={COUNTRIES[location as "bh"].currency}
-                    country={COUNTRIES[location as "bh"].label}
-                    jobId={jobId}
-                  />
-                )}
+                      <div className={styles.detailItem}>
+                          <Image width={18} height={18} src={'/icons/location.svg'} alt="location"/>
+                          <h6>{interviewLocation}</h6>
+                      </div>
+                      <div className={styles.detailItem}>
+                          <Image width={16} height={16} src={'/icons/calendar.svg'} alt="location"/>
+                          <h6>{DateTime.fromISO(interviewDate).toFormat("dd MMM yyyy (cccc)")}</h6>
+                      </div>
+                      </div>
+                      <div className={styles.detailItemsRow}>
+
+                      <div className={styles.detailItem}>
+                          <Image width={16} height={16} src={"/icons/clock.svg"} alt="location"/>
+                          <h6>{DateTime.fromISO(createdAt).toRelative()}</h6>
+                      </div>
+                      <div className={styles.detailItem}>
+                          <Image width={17} height={17} src={"/icons/expiry-icon.svg"} alt="location"/>
+                          <h6>{t('valid_till')} {DateTime.fromISO(expiry).toFormat("dd-MMM-yyyy")}</h6>
+                      </div>
+                      </div>
+                  </div>
+                  <div className={styles.interviewDetails}>
+                      <h3>{t('address')}</h3>
+                      <div className={styles.detailItemsRow}>
+                        <h6>{interviewAddress}</h6>
+                      </div>
+                  </div>
+                  <div className={styles.interviewDetails}>
+                      <h3>{t('contact')}</h3>
+                      <div className={styles.detailItemsRow}>
+
+                      <div className={styles.detailItem}>
+                          <Image width={16} height={16} src={'/icons/phone.png'} alt="location"/>
+                          {
+                            contactNumbers.map((num:string,i:number)=>{
+                              return <>{i!==0&&","}<h6><Link href={`tel:${num}`}>{num}</Link></h6> </>
+                            })
+                          }
+                      </div>
+                      
+                      </div>
+                      <div className={styles.detailItemsRow}>
+
+                      <div className={styles.detailItem}>
+                          <Image width={16} height={16} src={"/icons/mail.svg"} alt="location"/>
+                          <h6><Link href={`mailto:${email}`}>{email}</Link></h6>
+                      </div>
+                     
+                      </div>
+                  </div>
+                </Col>
+                <Col md={6}>
+                </Col>
+               </Row>
+         
+               {showMap && (
+          <div className={styles.mapContainer}>
+           <iframe
+             title="Google Maps"
+             src={`https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude},${longitude}`}
+            allowFullScreen
+           loading="lazy"
+           />
+         </div>
+    )}
                 <div className={styles.jobActions}>
                   {showSuccess || applied ? (
                     <div className={styles.successMessage}>
-                      <BsCheckCircleFill />{t('job_application_success')}
+                      <BsCheckCircleFill />{t('walkin_application_success')}
 
                     </div>
                   ) : (
@@ -603,7 +545,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                         <Button
                           className={styles.saveJobButton}
                           variant="secondary"
-                          onClick={handleRemoveSavedJob}
+                          onClick={handleRemoveSavedInterview}
                           disabled={isSaving}
                         >
                           {isSaving ? (
@@ -619,7 +561,7 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                         <Button
                           className={styles.saveJobButton}
                           variant="secondary"
-                          onClick={handleSaveJob}
+                          onClick={handleSaveInterview}
                           disabled={isSaving}
                         >
                           {isSaving ? (
@@ -633,12 +575,12 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
                         </Button>
                       )}
 
+
                       <Button
                         className={styles.easyApplyButton}
-                        onClick={openModal}
-                        disabled={selectedPosition.length === 0}
+                        onClick={openMaps}
                       >
-                        {t("easy_apply")}
+                       {showMap ? t("hide_map") : t("view_direction")}
                       </Button>
                     </>
                   )}
@@ -647,8 +589,10 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
             </Card>
           </Col>
         </Row>
-      </Container>
+     
 
+        
+      </Container>
 
       <FullScreenImage
         isOpen={isFullScreen}
@@ -660,5 +604,6 @@ const WalkinsDetails: React.FC<PostedWalkinsProps> = ({ jobId }) => {
     </main>
   );
 };
+
 
 export default WalkinsDetails;

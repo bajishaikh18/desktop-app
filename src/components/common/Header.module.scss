@@ -63,7 +63,11 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  text-decoration: none;
   &:hover{
+    color: $color-brand-1;
+  }
+  &.active{
     color: $color-brand-1;
   }
 }
@@ -170,7 +174,7 @@
   .navContainer{
     padding-left: 0px;
     padding-top: 30px;
-    gap: 10px;
+    gap: 20px;
     align-items: flex-start;
   }
   .mobileMenu{
@@ -182,6 +186,7 @@
       padding-left: 0px !important;
     }
   }
+
   .divider{
     display: none;
   }

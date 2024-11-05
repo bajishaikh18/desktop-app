@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import styles from "./JobDetail.module.scss";
+import styles from "../common/styles/Details.module.scss";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
@@ -377,7 +377,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   <div className={styles.detailsCardHeader}>
                     <div className={styles.agencyDetails}>
                       <Image
-                        src="/icons/agency-logo.png"
+                        src={`${agencyId?.profilePic ? `${IMAGE_BASE_URL}/${agencyId?.profilePic}`: '/no_image.jpg'}`}
                         width={66}
                         height={66}
                         alt="agency-logo"
@@ -524,7 +524,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   <div className={styles.detailsCardHeader}>
                     <div className={styles.agencyDetails}>
                       <Image
-                        src="/icons/agency-logo.png"
+                        src={`${agencyId?.profilePic ? `${IMAGE_BASE_URL}/${agencyId?.profilePic}`: '/no_image.jpg'}`}
                         width={66}
                         height={66}
                         alt="agency-logo"
