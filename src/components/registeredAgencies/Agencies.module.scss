@@ -1,0 +1,102 @@
+.container {
+  padding: 20px;
+ width: 100%;
+  margin-top: 350px; 
+  background-color: #f8f8f8;
+  border-radius: 8px;
+
+}
+
+.mainCard {
+ width: 110%; 
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.agencySection {
+  display: flex;
+  flex-direction: column; 
+  padding: 20px 0;
+  margin-top: 80px;
+  
+  &:last-child {
+      border-bottom: none;
+  }
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-top: -80px;
+  margin-left: -30px;
+  flex-shrink: 0; 
+}
+
+.companyName {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-top: -70px;
+
+}
+
+.verifiedIcon {
+  color: green;
+  margin-left: 5px;
+}
+
+.regNo {
+  font-size: 16px;
+  color: #888;
+  margin-top: -10px;
+
+}
+
+.jobsPosted {
+  font-size: 16px;
+  color: #333;
+  margin-left: 10px;
+  margin-top: -80px;
+
+}
+
+.jobsPostedIcon{
+  flex-shrink: 0; 
+  margin-left: -100px;
+  margin-top: -80px;
+
+}
+.alarmIcon{
+  flex-shrink: 0;
+  margin-left: -40px;
+  margin-top: -80px;
+}
+.validity {
+  font-size: 16px;
+  color: #333;
+  white-space: nowrap; 
+  margin-top: -80px;
+  margin-left: 10px;
+
+}
+
+.viewJobsButton {
+  white-space: nowrap;
+  margin-top: -80px; 
+  margin-left: 140px;
+  padding: 10px 25px;    
+  font-size: 14px;     
+  color: blue;            
+  background-color: white;
+  border: 1px solid blue; 
+  border-radius: 25px;   
+  cursor: pointer;      
+  transition: background-color 0.3s, color 0.3s; 
+  
+  &:hover {
+      background-color: blue;
+      color: white;          
+  }
+}
