@@ -5,13 +5,17 @@ import JobPortal from "@/components/jobs/JobPortal";
 
 
 
+
+
+
 export default function Home() {
   return (
     <main className={styles.main}>
       {/* Include the JobSlider component */}
       <JobSlider />
 
-      {/* Include the JobPortal component */}
+     
+     
     </main>
   );
 }

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Card, Row, Col } from 'react-bootstrap';
 import styles from './Agencies.module.scss';
 
+
 interface Agency {
   logo: string;
   name: string;
@@ -51,7 +52,9 @@ const AgencyData: Agency[] = [
 
 const AgencyPortal: React.FC = () => {
   return (
+  
     <div className={`${styles.container} container`}> 
+    
       <Card className={`${styles.mainCard} shadow-sm p-3 mb-5 bg-white rounded`}>
         {AgencyData.map((agency, index) => (
           <Card.Body 
@@ -111,6 +114,7 @@ const AgencyPortal: React.FC = () => {
         ))}
       </Card>
     </div>
+    
   );
 };
 
