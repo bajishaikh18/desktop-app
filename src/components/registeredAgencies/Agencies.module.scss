@@ -312,11 +312,7 @@
   color: #333;
 }
 
-.arrow {
-  font-size: 12px;
-  color: #888;
-  transition: background-color 0.3s, color 0.3s;
-}
+
 
 .cityDropdown {
   margin-top: 5px;
@@ -327,7 +323,7 @@
 .cityItem {
   padding: 10px 16px;
   cursor: pointer;
-  margin-left: -15px;
+  margin-left: 10px;
   border-bottom: 1px solid #f0f0f0;
 
   &:last-child {
@@ -336,9 +332,14 @@
 }
 
 
-.arrowSelected {
+.arrowSelected{
   background-color: blue;
   border-radius: 50%;
   color: white;
   padding: 5px;
+  margin-left: 5px;
+}
+
+.arrow {
+  margin-left: 8px;
 }
