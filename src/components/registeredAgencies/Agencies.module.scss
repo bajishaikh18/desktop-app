@@ -1,17 +1,15 @@
-@import "../../app/variables";
 
+@import "../../app/variables";
 .container {
   padding: 20px;
- width: 100%;
-  margin-top: 80px; 
+  width: 100%;
+  margin-top: 80px;
   background-color: #f8f8f8;
   border-radius: 8px;
-
-
 }
 
 .mainCard {
- width: 110%; 
+  width: 100%;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -20,12 +18,16 @@
 
 .agencySection {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   padding: 20px 0;
   margin-top: 80px;
-  
+
   &:last-child {
-      border-bottom: none;
+    border-bottom: none;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 20px;
   }
 }
 
@@ -34,7 +36,13 @@
   height: 50px;
   margin-top: -80px;
   margin-left: -30px;
-  flex-shrink: 0; 
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    margin-left: 0;
+  }
 }
 
 .companyName {
@@ -43,11 +51,19 @@
   color: #333;
   margin-top: -70px;
 
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 .verifiedIcon {
   color: green;
   margin-left: 5px;
+
+  @media (max-width: 768px) {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .regNo {
@@ -55,6 +71,9 @@
   color: #888;
   margin-top: -10px;
 
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 }
 
 .jobsPosted {
@@ -63,44 +82,104 @@
   margin-left: 10px;
   margin-top: -80px;
 
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-top: 10px;
+  }
 }
 
-.jobsPostedIcon{
-  flex-shrink: 0; 
+.jobsPostedIcon {
+  flex-shrink: 0;
   margin-left: -100px;
   margin-top: -80px;
 
+  @media (max-width: 768px) {
+    margin-left: -50px;
+    margin-top: 0;
+  }
 }
-.alarmIcon{
+
+.alarmIcon {
   flex-shrink: 0;
   margin-left: -40px;
   margin-top: -80px;
+
+  @media (max-width: 768px) {
+    margin-left: -20px;
+    margin-top: 0;
+  }
 }
+
 .validity {
   font-size: 16px;
   color: #333;
-  white-space: nowrap; 
+  white-space: nowrap;
   margin-top: -80px;
   margin-left: 10px;
 
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-top: 10px;
+    margin-left: 5px;
+  }
 }
 
 .viewJobsButton {
   white-space: nowrap;
-  margin-top: -80px; 
-  margin-left: 140px;
-  padding: 10px 25px;    
-  font-size: 14px;     
-  color: blue;            
+  margin-top: -80px;
+  margin-left: 125px;
+  padding: 10px 25px;
+  font-size: 14px;
+  color: blue;
   background-color: white;
-  border: 1px solid blue; 
-  border-radius: 25px;   
-  cursor: pointer;      
-  transition: background-color 0.3s, color 0.3s; 
-  
+  border: 1px solid blue;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
   &:hover {
-      background-color: blue;
-      color: white;          
+    background-color: blue;
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 10px;
+    margin-left: 20px;
+    padding: 8px 20px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .agencySection {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .logo {
+    margin-top: -60px;
+    margin-left: 0;
+  }
+
+  .companyName {
+    font-size: 16px;
+    margin-top: -60px;
+  }
+
+  .jobsPosted, .validity {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+
+  .jobsPostedIcon, .alarmIcon {
+    margin-top: 0;
+    margin-left: 10px;
+  }
+
+  .viewJobsButton {
+    margin-top: 10px;
+    margin-left: 0;
+    font-size: 12px;
   }
 }
 
@@ -276,6 +355,7 @@
   font-weight: bold;
   color: $color-brand-1;
   cursor: pointer;
+  position: relative;
 }
 
 .dropdownMenu {
@@ -283,7 +363,7 @@
   margin-top: 30px;
   margin-left: -650px;
   transform: translateX(-50%);
-  width: 200px;
+  width: 250px; 
   background-color: #fff;
   border: 1px solid #ddd;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -291,6 +371,8 @@
   z-index: 1000;
   padding: 8px 0;
   text-align: left;
+  max-height: 300px; 
+  overflow-y: auto;
 }
 
 .stateItem {
@@ -302,8 +384,11 @@
     border-bottom: none;
   }
 
-
+  &:hover {
+    background-color: #f0f0f0;
+  }
 }
+
 .stateLabel {
   display: flex;
   justify-content: space-between;
@@ -312,34 +397,36 @@
   color: #333;
 }
 
-
+.arrow {
+  font-size: 12px;
+  color: #888;
+  transition: background-color 0.3s, color 0.3s;
+}
 
 .cityDropdown {
   margin-top: 5px;
-  font-size: 16px;
+  font-size: 14px;
   color: #333;
 }
 
 .cityItem {
   padding: 10px 16px;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: -15px;
   border-bottom: 1px solid #f0f0f0;
 
   &:last-child {
     border-bottom: none;
   }
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
 }
 
-
-.arrowSelected{
+.arrowSelected {
   background-color: blue;
   border-radius: 50%;
   color: white;
   padding: 5px;
-  margin-left: 5px;
-}
-
-.arrow {
-  margin-left: 8px;
 }

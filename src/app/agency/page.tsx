@@ -1,5 +1,5 @@
 "use client";
-import Agenciesportal from "@/components/registeredAgencies/agenciesportal";
+import Agenciesportal from "@/components/registeredAgencies/Agenciesportal";
 import AgencieSearch from "@/components/registeredAgencies/AgencieSearch";
 const AgencyPage: React.FC = () => {
   return (
