@@ -62,7 +62,7 @@ const AgencyPortal: React.FC = () => {
             className={`${styles.agencySection} ${index < AgencyData.length - 1 ? 'border-bottom' : ''}`} 
           >
             <Row className="align-items-center">
-              <Col md={6} className="d-flex align-items-center">
+              <Col xs={12} md={6} className="d-flex align-items-center">
                 <Image 
                   src={agency.logo} 
                   alt={agency.name} 
@@ -84,7 +84,7 @@ const AgencyPortal: React.FC = () => {
                   <p className={`${styles.regNo} text-muted small mb-0`}>REG No: {agency.regNo}</p>
                 </div>
               </Col>
-              <Col md={2} className="d-flex align-items-center justify-content-start">
+              <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">
                 <Image 
                   src="/posted.png" 
                   alt="Jobs Posted" 
@@ -94,7 +94,7 @@ const AgencyPortal: React.FC = () => {
                 /> 
                 <p className={`${styles.jobsPosted} mb-0`}>{agency.jobsPosted} Jobs Posted</p>
               </Col>
-              <Col md={2} className="d-flex align-items-center justify-content-start">
+              <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">
                 <Image 
                   src="/alarm-clock-check.png" 
                   alt="Valid Till" 
@@ -104,7 +104,7 @@ const AgencyPortal: React.FC = () => {
                 />
                 <p className={`${styles.validity} mb-0`}>Valid up to {agency.validity}</p>
               </Col>
-              <Col md={2} className="text-end d-flex align-items-center">
+              <Col xs={12} md={2} className="d-flex text-end align-items-center">
                 <button className={styles.viewJobsButton}>
                   View Job
                 </button>

@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { GetCountries, GetState, GetCity } from "react-country-state-city";
-import styles from './Agencies.module.scss';
+import styles from "./Agencies.module.scss";
 import { useTranslations } from "next-intl";
+import Select, { components, GroupProps } from "react-select";
+import { Accordion } from "react-bootstrap";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+import AsyncSelect from "react-select/async";
 
 
 interface Country {
@@ -19,135 +23,171 @@ interface City {
 }
 
 const AgencyListing: React.FC = () => {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [countries, setCountries] = useState<Country[]>([]); 
-    const [states, setStates] = useState<State[]>([]); 
-    const [cities, setCities] = useState<City[]>([]); 
-    const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-    const [selectedState, setSelectedState] = useState<string | null>(null);
-    const [selectedCity, setSelectedCity] = useState<string | null>(null);
-    const t = useTranslations("Search");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [states, setStates] = useState<
+    { id: string; name: string; state_code: string }[]
+  >([]);
+  const [options, setOptions] = useState<any>([]);
+  const t = useTranslations("Search");
 
+  useEffect(() => {
+    const fetchStates = async () => {
+      const statesList = await GetState(101);
+      setStates(statesList);
+    };
+    fetchStates();
+  }, []);
 
-    useEffect(() => {
-        const fetchCountries = async () => {
-            const countriesList = await GetCountries();
-            const indiaCountry = countriesList.find((country) => country.name === "India");
-            if (indiaCountry) {
-                setCountries([indiaCountry]); 
-            }
-        };
-        fetchCountries();
-    }, []);
-
+ const handleChange = (options:any) => {
+    console.log(options);
+  };
   
-    useEffect(() => {
-        const fetchStates = async () => {
-            if (selectedCountry === "IN") {  
-                const statesList = await GetState("IN");
-                setStates(statesList);
-            } else {
-                setStates([]);
-            }
-        };
-        fetchStates();
-    }, [selectedCountry]);
+  useEffect(()=>{ 
+    if(states && states.length>0){
+      const optionsOfState = states.map(state=>({label:state.name,options:[{value:"",label:""}]}))
+      setOptions(optionsOfState)
+    }
+  },[states])
 
+  const loadOptions =  async (state:any) => {
+      const isStateHaveData = options.find((x:any)=>x.label===state.name && x.options.length>1);
+      if(isStateHaveData){
+        return
+      }
+      const cities = await GetCity(101,state.id);
+      const newOptions = options.map((x:any)=>{
+        if(x.label===state.name){
+          return {
+            label : state.name,
+            options : cities.map((city:any)=>{
+                return {
+                    value: city.name,
+                    label: city.name
+                }
+            })
+        }
+        }else{
+          return x;
+        }
+      });
+     setOptions(newOptions);
+   };
+
+  const handleHeaderClick = async (id: any,label:string) => {
   
-    useEffect(() => {
-        const fetchCities = async () => {
-            if (selectedState) {
-                const citiesList = await GetCity(selectedState);
-                setCities(citiesList);
-            } else {
-                setCities([]);
-            }
-        };
-        fetchCities();
-    }, [selectedState]);
+    const node = document?.querySelector(`#${id}`)?.parentElement
+      ?.nextElementSibling;
+    const classes = node?.classList;
+    if (classes?.contains("collapsed-open")) {
+      node?.classList.remove("collapsed-open");
+    } else {
+      const selectedState = states.find(s=>s.name===label);
+      await loadOptions(selectedState);
+      node?.classList.add("collapsed-open");
+    }
+  };
 
-    const toggleDropdown = () => {
-        setIsDropdownOpen((prev) => !prev);
-    };
 
-    const selectCountry = (countryCode: string) => {
-        setSelectedCountry(countryCode);
-        setSelectedState(null);
-        setSelectedCity(null);
-        setCities([]);
-    };
-
-    const selectState = (stateCode: string) => {
-        setSelectedState(stateCode);
-        setSelectedCity(null);
-    };
-
+  const GroupHeading = (props: any) => {
     return (
-        <div className={styles.jobListingContainer}>
-            <div className={styles.jobList}>
-                <div className={styles.labelWithIcon} onClick={toggleDropdown}>
-                    <span>Select State & City</span>
-                    <img src="/Vector.png" alt="Dropdown Icon" className={styles.vectorIcon} />
-                </div>
+      <div
+        className="group-heading-wrapper"
+        onClick={() => handleHeaderClick(props.id,props.data.label)}
+      >
+        <components.GroupHeading {...props}>
+          <div className={styles.agencyStates}>
+            <label>{props.data?.label}</label>
+            {
+              props.data?.isOpen ?   <FaChevronUp fontSize={12} />
+              :    <FaChevronDown fontSize={12} />
 
-                {isDropdownOpen && (
-                    <div className={styles.dropdownMenu}>
-                       
-                        <select
-                            value={selectedCountry || ""}
-                            onChange={(e) => selectCountry(e.target.value)}
-                            className={styles.dropdown}
-                        >
-                            <option value="">Select Country</option>
-                            {countries.map((country: Country) => ( 
-                                <option key={country.isoCode} value={country.isoCode}>
-                                    {country.name}
-                                </option>
-                            ))}
-                        </select>
-
-                       
-                        {selectedCountry === "IN" && (
-                            <select
-                                value={selectedState || ""}
-                                onChange={(e) => selectState(e.target.value)}
-                                className={styles.dropdown}
-                            >
-                                <option value="">Select State</option>
-                                {states.map((state: State) => ( 
-                                    <option key={state.isoCode} value={state.isoCode}>
-                                        {state.name}
-                                    </option>
-                                ))}
-                            </select>
-                        )}
-
-                       
-                        {selectedState && (
-                            <select
-                                value={selectedCity || ""}
-                                onChange={(e) => setSelectedCity(e.target.value)}
-                                className={styles.dropdown}
-                            >
-                                <option value="">Select City</option>
-                                {cities.map((city: City) => (  
-                                    <option key={city.name} value={city.name}>
-                                        {city.name}
-                                    </option>
-                                ))}
-                            </select>
-                        )}
-                    </div>
-                )}
-
-                <span>Oman Agencies</span>
-                <span>Qatar Agencies</span>
-                <span>Kuwait Agencies</span>
-                <span>Dubai Agencies</span>
-                <span>Bahrain Agencies</span>
-            </div>
-        </div>
+            }
+          </div>
+        </components.GroupHeading>
+      </div>
     );
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  return (
+    <div className={styles.jobListingContainer}>
+      <div className={styles.jobList}>
+        <div>
+          <div className={styles.labelWithIcon} onClick={toggleDropdown}>
+            <span>Select Country, State & City</span>
+            {
+              isDropdownOpen ?  <FaChevronUp fontSize={12} /> : <FaChevronDown fontSize={12} />
+            }
+           
+          </div>
+
+          {isDropdownOpen  && options.length > 0 && (
+            <Select
+              options={options}
+              menuIsOpen={isDropdownOpen}
+              isMulti={true}
+              hideSelectedOptions={false}
+              theme={(theme) => ({
+                ...theme,
+                borderRadius: 0,
+                colors: {
+                  ...theme.colors,
+                  primary25: "rgba(246, 241, 255, 1)",
+                  primary: "#0045E6",
+                },
+              })}
+              onChange={handleChange}
+              components={{
+                GroupHeading,
+              }}
+              styles={{
+                option: (baseStyles, state) => ({
+                  ...baseStyles,
+                  borderBottom: "1px solid rgba(217, 217, 217, 1)",
+                  padding: "12px 16px",
+                }),
+                control: (baseStyles, state) => ({
+                  display: "none",
+                }),
+                menuList: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: "0px",
+                  fontSize: "14px",
+                  textAlign: "left",
+
+                  color: "rgba(0, 0, 0, 1)",
+                  background: "rgba(250, 248, 255, 1)",
+                }),
+                group: (base, props) => ({
+                  ...base,
+                  padding: "0px",
+                }),
+                groupHeading: (baseStyles, state) => ({
+                  ...baseStyles,
+                  textAlign: "left",
+                  textTransform: "capitalize",
+                  fontSize: "14px",
+                  padding: "15px 16px",
+                  marginBottom: "0px",
+                  background: "#fff",
+                  color: "#000",
+                  borderBottom: "1px solid rgba(217, 217, 217, 1)",
+                }),
+              }}
+            />
+          )}
+        </div>
+        <span>Oman Agencies</span>
+        <span>Qatar Agencies</span>
+        <span>Kuwait Agencies</span>
+        <span>Dubai Agencies</span>
+        <span>Bahrain Agencies</span>
+      </div>
+    </div>
+  );
 };
 
 export default AgencyListing;

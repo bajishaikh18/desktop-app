@@ -250,3 +250,10 @@ a {
 
     }
   }
+  .group-heading-wrapper ~ div{
+    display: none;
+  }
+  
+  .collapsed-open{
+    display: block !important;
+  }
