@@ -1,4 +1,5 @@
 
+
 @import "../../app/variables";
 .container {
   padding: 20px;
@@ -20,6 +21,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.selectedCities{
+  flex:1;
 }
 
 .agencySection {
@@ -91,6 +95,29 @@
   @media (max-width: 768px) {
     font-size: 14px;
     margin-top: 10px;
+  }
+}
+
+.selectedCities{
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .tag{
+    color: #fff;
+    border-radius: 5px;
+    padding: 2px 10px;
+    background-color: $color-brand-1;
+    .close{
+      cursor: pointer !important;
+    }
+  }
+  .moreCities{
+    color: $color-brand-1;
+    font-weight: 600;
+  }
+  .allCities{
+    color: $color-grey-1;
   }
 }
 
@@ -311,12 +338,12 @@
 
 .jobListingContainer {
   margin-top: 40px; 
+  padding: 0px 80px;
   text-align: center; 
 }
 
 .jobList {
   display: flex; 
-  justify-content: center; 
   flex-wrap: wrap; 
   gap: 64px;
   
@@ -359,8 +386,19 @@
   align-items: center;
   font-size: 16px;
   font-weight: bold;
-  color: $color-brand-1;
-  cursor: pointer;
+  color: #000;
+  cursor: pointer !important;
+  position: relative;
+}
+
+.selectContainer{
+  width: 250px;
+  position: absolute;
+  z-index: 9;
+  bottom: 0px;
+  left: 0px;
+}
+.dropdownContainer{
   position: relative;
 }
 

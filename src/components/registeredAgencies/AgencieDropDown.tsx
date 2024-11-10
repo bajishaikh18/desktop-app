@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { GetCountries, GetState, GetCity } from "react-country-state-city";
 import styles from "./Agencies.module.scss";
 import { useTranslations } from "next-intl";
 import Select, { components, GroupProps } from "react-select";
-import { Accordion } from "react-bootstrap";
+import { Accordion, Container } from "react-bootstrap";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import AsyncSelect from "react-select/async";
+import { IoClose } from "react-icons/io5";
 
 
 interface Country {
@@ -22,13 +23,26 @@ interface City {
     name: string;
 }
 
-const AgencyListing: React.FC = () => {
+const AgencyDropDown: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [states, setStates] = useState<
     { id: string; name: string; state_code: string }[]
   >([]);
   const [options, setOptions] = useState<any>([]);
+  const [selectedCities, setSelectedCities] = useState([]);
   const t = useTranslations("Search");
+  const selectRef = useRef(null)
+
+  const outsideClose = (e: any) => {
+    let filterDiv = document.getElementById("select-container");
+    if (
+      filterDiv &&
+      !filterDiv?.contains(e.target) &&
+      selectRef?.current !== undefined
+    ) {
+        setIsDropdownOpen(false)
+    }
+  };
 
   useEffect(() => {
     const fetchStates = async () => {
@@ -36,10 +50,17 @@ const AgencyListing: React.FC = () => {
       setStates(statesList);
     };
     fetchStates();
+    document.addEventListener("mousedown", (e: any) => outsideClose(e));
+    return () => {
+       document.removeEventListener("mousedown", (e: any) =>
+        outsideClose(e)
+       );
+     };
   }, []);
 
  const handleChange = (options:any) => {
-    console.log(options);
+  console.log(options);
+  setSelectedCities(options);
   };
   
   useEffect(()=>{ 
@@ -47,6 +68,7 @@ const AgencyListing: React.FC = () => {
       const optionsOfState = states.map(state=>({label:state.name,options:[{value:"",label:""}]}))
       setOptions(optionsOfState)
     }
+  
   },[states])
 
   const loadOptions =  async (state:any) => {
@@ -72,6 +94,12 @@ const AgencyListing: React.FC = () => {
       });
      setOptions(newOptions);
    };
+
+
+  const removeCity = (cityVal:string)=>{
+    const modifiedCities = selectedCities.filter((city:any)=>city.value != cityVal);
+    setSelectedCities(modifiedCities);
+  }
 
   const handleHeaderClick = async (id: any,label:string) => {
   
@@ -113,23 +141,27 @@ const AgencyListing: React.FC = () => {
   };
 
   return (
+    <Container>
     <div className={styles.jobListingContainer}>
       <div className={styles.jobList}>
-        <div>
+        <div className={styles.dropdownContainer}  id="select-container">
           <div className={styles.labelWithIcon} onClick={toggleDropdown}>
-            <span>Select Country, State & City</span>
+            
+            <span style={{color:isDropdownOpen ? "#0045E6" : "#000"}}>Select Country, State & City</span>
             {
-              isDropdownOpen ?  <FaChevronUp fontSize={12} /> : <FaChevronDown fontSize={12} />
+              isDropdownOpen ?  <FaChevronUp fontSize={12} color="#0045E6" /> : <FaChevronDown fontSize={12} />
             }
            
           </div>
-
+          <div className={styles.selectContainer}>
           {isDropdownOpen  && options.length > 0 && (
             <Select
               options={options}
+              ref={selectRef}
               menuIsOpen={isDropdownOpen}
               isMulti={true}
               hideSelectedOptions={false}
+              value={selectedCities}
               theme={(theme) => ({
                 ...theme,
                 borderRadius: 0,
@@ -179,15 +211,29 @@ const AgencyListing: React.FC = () => {
               }}
             />
           )}
+          </div>
         </div>
-        <span>Oman Agencies</span>
-        <span>Qatar Agencies</span>
-        <span>Kuwait Agencies</span>
-        <span>Dubai Agencies</span>
-        <span>Bahrain Agencies</span>
+        <div className={styles.selectedCities}>
+          {
+            selectedCities.length > 0 ?
+            
+            selectedCities.map((city:any,i:number)=>(
+             
+              <>
+               {
+                i< 5 && <div className={styles.tag}>{city.label} <IoClose fontSize={15} fontWeight={700} className={styles.close} onClick={()=>removeCity(city.value)}/></div>
+
+              }
+              </>
+            )) : <p className={styles.allCities}>Showing results for all cities</p>
+          }{
+            selectedCities.length > 5 && <span className={styles.moreCities}>+ {selectedCities.length-5} More</span>
+          }
+        </div>
       </div>
     </div>
+    </Container>
   );
 };
 
-export default AgencyListing;
+export default AgencyDropDown;

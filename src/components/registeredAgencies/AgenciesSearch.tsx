@@ -5,7 +5,8 @@ import styles from './Agencies.module.scss';
 import { useTranslations } from "next-intl";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { BsSearch } from "react-icons/bs";
-import AgencyListing from "@/components/registeredAgencies/AgencieDropDown";
+import AgencyDropDown from "@/components/registeredAgencies/AgencieDropDown";
+import { Container } from "react-bootstrap";
 
 interface AgencieSearchProps {
   onSearch: (term: string) => void;
@@ -29,7 +30,7 @@ const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange
   const t = useTranslations("Search");
 
   return (
-    <div>
+    <Container>
       <div className={styles.searchImageContainer}>
         <div className={styles.searchBox}>
           <Image
@@ -55,8 +56,8 @@ const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange
         </button>
       </div>
       
-      <AgencyListing />
-    </div>
+      <AgencyDropDown />
+    </Container>
   );
 };
 
