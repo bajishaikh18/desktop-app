@@ -84,6 +84,7 @@ const Header: React.FC = () => {
 
   const logout = () => {
     localStorage.clear();
+    location.reload();
     setAuthUser(null);
   };
 
