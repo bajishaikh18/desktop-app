@@ -13,6 +13,7 @@ export const getJobs = async ({
   filters:{
     jobTitle?: string;
     location?:string;
+    agencyId?:string;
   }
 }) => {
   try {
