@@ -1,5 +1,6 @@
 import { isTokenValid } from "@/helpers/jwt";
 import { apiClient, authorizedApiClient } from "./common";
+import AgencyDetails from "@/components/registeredAgencies/AgencyDetails";
 
 const baseRoutes = "/agency";
 
@@ -41,4 +42,3 @@ export const getAgencies = async ({
       throw error;
     }
   };
-  

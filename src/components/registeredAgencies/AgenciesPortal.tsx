@@ -13,7 +13,7 @@ interface Agency {
   regNo: string;
   jobsPosted: number;
   validity: string;
-  id: string;
+  _id: string;
 }
 
 const fetchAgencies = async () => {
@@ -24,12 +24,13 @@ const fetchAgencies = async () => {
   });
 
   console.log("API Response:", response); 
-  return response.data;
+  return response.agencies; 
+
 };
 
 const AgencyPortal: React.FC = () => {
   const router = useRouter();
-  const { data, isLoading, error } = useQuery<Agency[], Error>({
+  const { data: agencies, isLoading, error } = useQuery<Agency[], Error>({
     queryKey: ['agencies'],
     queryFn: fetchAgencies,
   });
@@ -43,16 +44,15 @@ const AgencyPortal: React.FC = () => {
     return <NotFound text="There was an error loading the agencies" />;
   }
 
-  console.log("Fetched data:", data); 
-
+ 
   return (
     <div className={`${styles.container} container`}>
-      {data && data.length > 0 ? (
+      {agencies && agencies.length > 0 ? (
         <Card className={`${styles.mainCard} shadow-sm p-3 mb-5 bg-white rounded`}>
-          {data.map((agency: Agency, index: number) => (
+          {agencies.map((agency: Agency, index: number) => (
             <Card.Body
               key={index}
-              className={`${styles.agencySection} ${index < data.length - 1 ? 'border-bottom' : ''}`}
+              className={`${styles.agencySection} ${index < agencies.length- 1 ? 'border-bottom' : ''}`}
             >
               <Row className="align-items-center">
                 <Col xs={12} md={6} className="d-flex align-items-center">
@@ -100,7 +100,7 @@ const AgencyPortal: React.FC = () => {
                 <Col xs={12} md={2} className="d-flex text-end align-items-center">
                   <button
                     className={styles.viewJobsButton}
-                    onClick={() => router.push(`/agency/${agency.id}`)}
+                    onClick={() => router.push(`/agency/${agency._id}`)}
                   >
                     View Job
                   </button>

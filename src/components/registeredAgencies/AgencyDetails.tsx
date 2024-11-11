@@ -25,7 +25,7 @@ import { INDIAN_STATES } from "@/helpers/states";
 import { getAgencyDetails } from "@/apis/agency";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 
-type PostedJobDetailsProps = {
+type PostedAgencyDetailsProps = {
   agencyId: string;
 };
 
@@ -253,7 +253,7 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
     </>
   );
 };
-const AgencyDetails: React.FC<PostedJobDetailsProps> = ({ agencyId }) => {
+const AgencyDetails: React.FC<PostedAgencyDetailsProps> = ({ agencyId }) => {
   const { isDesktop } = useReponsiveStore();
 
   const { data, isLoading, isError } = useQuery({
@@ -262,10 +262,12 @@ const AgencyDetails: React.FC<PostedJobDetailsProps> = ({ agencyId }) => {
       if (agencyId) {
         return getAgencyDetails(agencyId);
       }
-      throw new Error("jobId is null or undefined");
+      throw new Error("agencyId is null or undefined");
     },
     enabled: !!agencyId,
   });
+
+
 
   if (isLoading) {
     return (
