@@ -1,12 +1,10 @@
-
-
 @import "../../app/variables";
+
 .container {
   padding: 20px;
   width: 100%;
   margin-top: 80px;
   background-color: #f8f8f8;
-  border-radius: 8px;
 }
 
 .mainCard {
@@ -17,6 +15,168 @@
   border: 1px solid #e0e0e0;
 }
 
+.agencySection {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-left: -30px;
+  flex-shrink: 0;
+}
+
+.companyName {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.verifiedIcon {
+  color: green;
+  margin-left: 5px;
+}
+
+.regNo {
+  font-size: 16px;
+  color: #888;
+}
+
+.jobsPosted {
+  font-size: 16px;
+  white-space: nowrap;
+  color: #333;
+  margin-left: 10px;
+}
+
+.jobsPostedIcon {
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-left: -80px;
+}
+
+.alarmIcon {
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: -40px;
+}
+
+.validity {
+  font-size: 16px;
+  color: #333;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.viewJobsButton {
+  white-space: nowrap;
+  margin-left: 100px;
+  padding: 10px 25px;
+  font-size: 14px;
+  color: blue;
+  background-color: white;
+  border: 1px solid blue;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: blue;
+    color: white;
+  }
+}
+
+
+@media (max-width: 576px) {
+  .agencySection {
+    flex-direction: column;
+    padding: 15px 0;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+    margin-left: 0;
+  }
+
+  .companyName {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .verifiedIcon,
+  .jobsPostedIcon,
+  .alarmIcon {
+    margin-left: 0;
+  }
+
+  .jobsPosted,
+  .validity,
+  .regNo {
+    font-size: 14px;
+    margin-left: 0;
+  }
+
+  .viewJobsButton {
+    margin-left: 0;
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .mainCard {
+    padding: 15px;
+  }
+
+  .companyName {
+    font-size: 17px;
+  }
+
+  .jobsPosted,
+  .validity,
+  .regNo {
+    font-size: 15px;
+  }
+
+  .viewJobsButton {
+    padding: 8px 22px;
+    font-size: 13px;
+    margin-left: 0;
+  }
+}
+
+
+@media (max-width: 992px) {
+  .mainCard {
+    padding: 18px;
+  }
+
+  .companyName {
+    font-size: 18px;
+  }
+
+  .jobsPosted,
+  .validity,
+  .regNo {
+    font-size: 16px;
+  }
+
+  .viewJobsButton {
+    padding: 10px 25px;
+    font-size: 14px;
+  }
+}
+
+
+
 .agencyStates{
   display: flex;
   justify-content: space-between;
@@ -24,78 +184,6 @@
 }
 .selectedCities{
   flex:1;
-}
-
-.agencySection {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 0;
-  margin-top: 80px;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  @media (max-width: 768px) {
-    margin-top: 20px;
-  }
-}
-
-.logo {
-  width: 50px;
-  height: 50px;
-  margin-top: -80px;
-  margin-left: -30px;
-  flex-shrink: 0;
-
-  @media (max-width: 768px) {
-    width: 40px;
-    height: 40px;
-    margin-left: 0;
-  }
-}
-
-.companyName {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  margin-top: -70px;
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-}
-
-.verifiedIcon {
-  color: green;
-  margin-left: 5px;
-
-  @media (max-width: 768px) {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-.regNo {
-  font-size: 16px;
-  color: #888;
-  margin-top: -10px;
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
-}
-
-.jobsPosted {
-  font-size: 16px;
-  color: #333;
-  margin-left: 10px;
-  margin-top: -80px;
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-    margin-top: 10px;
-  }
 }
 
 .selectedCities{
@@ -120,102 +208,6 @@
     color: $color-grey-1;
   }
 }
-
-.jobsPostedIcon {
-  flex-shrink: 0;
-  margin-left: -100px;
-  margin-top: -80px;
-
-  @media (max-width: 768px) {
-    margin-left: -50px;
-    margin-top: 0;
-  }
-}
-
-.alarmIcon {
-  flex-shrink: 0;
-  margin-left: -40px;
-  margin-top: -80px;
-
-  @media (max-width: 768px) {
-    margin-left: -20px;
-    margin-top: 0;
-  }
-}
-
-.validity {
-  font-size: 16px;
-  color: #333;
-  white-space: nowrap;
-  margin-top: -80px;
-  margin-left: 10px;
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-    margin-top: 10px;
-    margin-left: 5px;
-  }
-}
-
-.viewJobsButton {
-  white-space: nowrap;
-  margin-top: -80px;
-  margin-left: 125px;
-  padding: 10px 25px;
-  font-size: 14px;
-  color: blue;
-  background-color: white;
-  border: 1px solid blue;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-
-  &:hover {
-    background-color: blue;
-    color: white;
-  }
-
-  @media (max-width: 768px) {
-    margin-top: 10px;
-    margin-left: 20px;
-    padding: 8px 20px;
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 768px) {
-  .agencySection {
-    flex-direction: column;
-    padding: 15px;
-  }
-
-  .logo {
-    margin-top: -60px;
-    margin-left: 0;
-  }
-
-  .companyName {
-    font-size: 16px;
-    margin-top: -60px;
-  }
-
-  .jobsPosted, .validity {
-    margin-top: 5px;
-    font-size: 14px;
-  }
-
-  .jobsPostedIcon, .alarmIcon {
-    margin-top: 0;
-    margin-left: 10px;
-  }
-
-  .viewJobsButton {
-    margin-top: 10px;
-    margin-left: 0;
-    font-size: 12px;
-  }
-}
-
 
 //Search
 .searchImageContainer {

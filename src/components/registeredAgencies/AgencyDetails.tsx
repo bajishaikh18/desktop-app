@@ -22,7 +22,7 @@ import { Loader, NotFound } from "../common/Feedbacks";
 import { AgencyJobPostings } from "./AgencyJobPostings";
 import { IMAGE_BASE_URL } from "@/helpers/constants";
 import { INDIAN_STATES } from "@/helpers/states";
-import { getAgencyDetails } from "@/apis/jobs";
+import { getAgencyDetails } from "@/apis/agency";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 
 type PostedJobDetailsProps = {
@@ -32,6 +32,8 @@ type PostedJobDetailsProps = {
 type TabType = "about" | "jobs";
 
 const AgencySummary = ({ data }: { data: any }) => {
+
+  const router = useRouter();
   const {
     regNo,
     name,
@@ -44,6 +46,10 @@ const AgencySummary = ({ data }: { data: any }) => {
     email,
   } = data?.agency || {};
 
+
+  const goBack = () => {
+    router.back();
+  };
   return (
     <Card className={`${styles.summaryCard} ${agencyStyles.summaryCard}`}>
       <CardHeader className={agencyStyles.summaryCardHeader}>
