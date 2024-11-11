@@ -17,8 +17,6 @@ import { getJobs } from "@/apis/jobs";
 type AgencyJobPostingsType = {
   agencyId: string;
   postedJobs: number;
-  activeJobCount: number;
-  expiredJobCount: number;
 };
 
 type TabType = "active" | "expired";
@@ -70,7 +68,7 @@ const JobCard = ({
           return (
             <>
               <Row className={agencyStyles.jobContainer}>
-                <Col md={5} className={agencyStyles.jobColumn}>
+                <Col md={5} sm={6} className={agencyStyles.jobColumn}>
                   <Image
                     src={`${
                       job.imageUrl
@@ -88,7 +86,7 @@ const JobCard = ({
                     }}
                   />
                 </Col>
-                <Col md={7} className={agencyStyles.agencyJobDetailsContainer}>
+                <Col md={7} sm={6} className={agencyStyles.agencyJobDetailsContainer}>
                   <div>
                     <div className={agencyStyles.heading}>
                       <h3>

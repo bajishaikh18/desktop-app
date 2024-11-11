@@ -52,10 +52,8 @@
         margin-bottom: 16px;
     }
     p{
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 24px;
-        color: rgba(26, 25, 25, 1);
+        font-size: 16px !important;
+        margin-bottom: 16px !important;
     }
 }
 .contactSection{
@@ -185,5 +183,67 @@
     &:hover{
         background-color: $color-brand-1;
         color: #fff;
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .approvedText{
+        font-size: 10px;
+    }
+    .addressSection,.contactSection{
+        
+        p{
+            font-size: 14px !important;
+            margin-bottom: 16px !important;
+        }
+    }
+    .summaryCardHeader{
+        padding-left:24px !important ;
+    }
+    .detailsCardHeader{
+        padding: 32px 32px 32px 32px !important;
+        border-bottom: 1px solid $color-light-grey !important;
+    }
+    .detailsCard{
+        padding-left: 24px !important;
+        box-shadow:  none !important;
+    }
+    .detailCardBody{
+        border-top: 0px;
+    }
+    .summaryCard{
+        box-shadow:  none !important;
+    }
+  
+
+}
+
+@media screen and (max-width:600px) {
+    .detailsCardHeader{
+        padding: 30px 15px !important;
+        flex-direction: row !important;
+    }
+    .summaryCard{
+        padding: 0px !important;
+    }
+    .summaryCardHeader{
+        padding-left:15px !important ;
+        margin-bottom: 20px !important;
+    }
+    .summaryCardBody{
+        padding: 0px 15px !important;
+    }
+
+    .detailCardBody{
+        padding-right: 35px !important;
+    }
+    .detailsCard{
+        padding-left: 15px !important;
+        box-shadow:  none !important;
+    }
+    .jobContainer{
+        .heading{
+            margin-top: 24px !important;
+        }
     }
 }
