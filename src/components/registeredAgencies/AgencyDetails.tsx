@@ -22,7 +22,7 @@ import { Loader, NotFound } from "../common/Feedbacks";
 import { AgencyJobPostings } from "./AgencyJobPostings";
 import { IMAGE_BASE_URL } from "@/helpers/constants";
 import { INDIAN_STATES } from "@/helpers/states";
-import { getAgencyDetails } from "@/apis/agency";
+import { getAgencyDetails } from "@/apis/jobs";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 
 type PostedAgencyDetailsProps = {

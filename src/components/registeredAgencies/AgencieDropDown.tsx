@@ -23,7 +23,7 @@ interface City {
     name: string;
 }
 
-const AgencyDropDown: React.FC = () => {
+const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> = ({ onCitiesChange }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [states, setStates] = useState<
     { id: string; name: string; state_code: string }[]
@@ -58,9 +58,10 @@ const AgencyDropDown: React.FC = () => {
      };
   }, []);
 
- const handleChange = (options:any) => {
-  console.log(options);
-  setSelectedCities(options);
+
+  const handleChange = (options: any) => {
+    setSelectedCities(options);
+    onCitiesChange(options.map((city: any) => city.value));
   };
   
   useEffect(()=>{ 

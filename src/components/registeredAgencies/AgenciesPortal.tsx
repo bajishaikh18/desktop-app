@@ -14,24 +14,30 @@ interface Agency {
   jobsPosted: number;
   validity: string;
   _id: string;
+  
 }
 
-const fetchAgencies = async () => {
-  const response = await getAgencies({
-    page: 1,
-    fetchSize: 10,
-    filters: {}
-  });
 
-  console.log("API Response:", response); 
-  return response.agencies; 
+interface AgencyPortalProps {
+  selectedCities: string[]; 
+}
 
-};
-
-const AgencyPortal: React.FC = () => {
+const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
   const router = useRouter();
+
+  console.log("Fetching agencies with filters:", { cities: selectedCities });
+
+  const fetchAgencies = async () => {
+    const response = await getAgencies({
+      page: 1,
+      fetchSize: 10,
+      filters: { cities: selectedCities },
+    });
+    return response.agencies;
+  };
+
   const { data: agencies, isLoading, error } = useQuery<Agency[], Error>({
-    queryKey: ['agencies'],
+    queryKey: ['agencies', selectedCities],
     queryFn: fetchAgencies,
   });
 
@@ -42,6 +48,10 @@ const AgencyPortal: React.FC = () => {
   if (error) {
     console.error("Error fetching agencies:", error);
     return <NotFound text="There was an error loading the agencies" />;
+  }
+
+  if (agencies) {
+    console.log("Fetched Agencies:", agencies);
   }
 
  
@@ -98,12 +108,13 @@ const AgencyPortal: React.FC = () => {
                   <p className={`${styles.validity} mb-0`}>Valid up to {agency.validity}</p>
                 </Col>
                 <Col xs={12} md={2} className="d-flex text-end align-items-center">
-                  <button
-                    className={styles.viewJobsButton}
-                    onClick={() => router.push(`/agency/${agency._id}`)}
-                  >
-                    View Job
-                  </button>
+                <button
+  className={styles.viewJobsButton}
+  onClick={() => router.push(`/agency/${agency._id}`)}
+>
+  View Job
+</button>
+
                 </Col>
               </Row>
             </Card.Body>

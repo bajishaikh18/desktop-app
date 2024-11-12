@@ -7,6 +7,8 @@ import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { BsSearch } from "react-icons/bs";
 import AgencyDropDown from "@/components/registeredAgencies/AgencieDropDown";
 import { Container } from "react-bootstrap";
+import AgenciesPortal from "@/components/registeredAgencies/AgenciesPortal";
+
 
 interface AgencieSearchProps {
   onSearch: (term: string) => void;
@@ -16,6 +18,7 @@ interface AgencieSearchProps {
 const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("ae");
+  const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const { isDesktop } = useReponsiveStore();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +59,9 @@ const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange
         </button>
       </div>
       
-      <AgencyDropDown />
+      <AgencyDropDown onCitiesChange={setSelectedCities} /> 
+      
+      <AgenciesPortal selectedCities={selectedCities} />
     </Container>
   );
 };
