@@ -30,7 +30,7 @@ const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange
     onCountryChange(selectedLocation);
   };
 
-  const t = useTranslations("Search");
+  const t = useTranslations("AgencySearch");
 
   return (
     <Container>
@@ -45,7 +45,7 @@ const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange
           />
           <input
             type="text"
-            placeholder={("search Agency")}
+            placeholder={t("search_agency")}
             className={styles.searchInput}
             value={searchTerm}
             onChange={handleSearchChange}
@@ -55,7 +55,7 @@ const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange
           
         </div>
         <button className={styles.findJobsButton} onClick={handleFindAgencies}>
-          {isDesktop ? ("Find Agencies") : <BsSearch />}
+          {isDesktop ? t("find_agencies") : <BsSearch />}
         </button>
       </div>
       

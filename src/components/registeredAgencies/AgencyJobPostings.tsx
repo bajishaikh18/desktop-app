@@ -4,6 +4,7 @@ import { Loader, NotFound } from "../common/Feedbacks";
 import agencyStyles from "./AgencyDetails.module.scss";
 import { Col, Row } from "react-bootstrap";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import {
   COUNTRIES,
   FACILITIES_IMAGES,
@@ -31,6 +32,7 @@ const JobCard = ({
   postedJobs: number;
 }) => {
   const router = useRouter();
+  const t = useTranslations("AgencyPostings");
   const { data, isLoading, isFetching, error } = useQuery({
     queryKey: ["jobs", agencyId, type],
     queryFn: () => {
@@ -46,15 +48,15 @@ const JobCard = ({
   });
 
   if (isLoading || isFetching) {
-    return <Loader text={`Fetching ${type} jobs`} />;
+    return <Loader text={t('fetching', { type })} />;
   }
   if (error) {
     return (
-      <NotFound text={`Something went wrong while fetching ${type} jobs`} />
+      <NotFound text={t('fetch_Error', { type })} />
     );
   }
   if (!data || !data?.jobs || data?.jobs?.length === 0) {
-    return <NotFound text={`No ${type} jobs found for the agency`} />;
+    return <NotFound text={t('no_jobs', { type })} />;
   }
 
   const handleJobDetails = (id: string) => {
@@ -90,9 +92,9 @@ const JobCard = ({
                   <div>
                     <div className={agencyStyles.heading}>
                       <h3>
-                        Jobs for {COUNTRIES[job.location as "bh"].label}{" "}
+                        {t('jobs_for')} {COUNTRIES[job.location as "bh"].label}{" "}
                         <span>
-                          Approved <AiOutlineInfoCircle fontSize={16} />
+                          {t('approved')} <AiOutlineInfoCircle fontSize={16} />
                         </span>
                       </h3>
                       <ul>
@@ -120,7 +122,7 @@ const JobCard = ({
                     className={`outlined action-buttons ${agencyStyles.button}`}
                     onClick={() => handleJobDetails(job.jobId)}
                   >
-                    View Job Details
+                    {t('view_details')}
                   </Link>
                 </Col>
               </Row>

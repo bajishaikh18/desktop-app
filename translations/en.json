@@ -257,5 +257,45 @@
     "report_posting":"reporting the walkin posting",
     "add_to_calendar":"Add to calendar",
     "hide_map":"Hide Map"
-  }
+  },
+  "AgencyDetails":{
+    "approved_by_mea":"Approved by Ministry of External Affairs Govt of India",
+    "jobs_posted":"Jobs Posted",
+    "address":"Address",
+    "contact":"Contact",
+    "notify":"Notify jobs for this agency",
+   "report_issue":"Report an issue",
+   "about":"About",
+   "jobs":"Jobs",
+    "loading_agency":"Loading agency details",
+    "not_present":"Oops!, looks like agency details are not present",
+    "agency_details_error":"Something went wrong while accessing agency details. Please try again"
+  },
+  "AgencyPostings":{
+    "jobs_for":"Jobs For",
+    "approved":"Approved",
+    "view_details":"View Job Details",
+    "fetch_error":"Something went wrong while fetching jobs",
+    "fetching":"Fetching Jobs",
+    "no_jobs":"No jobs found for the agency"
+ },
+ "Agencydropdown":{
+  "select":"Select Country, State & City",
+  "showing":"Showing results for all cities"
+
+ },
+ "AgencySearch":{
+  "search_agency":"Search Agency",
+  "find_agencies":"Find Agencies"
+ },
+  "AgencyPortal":{
+    "fetching_details":"Fetching agency details",
+    "error_agencies":"There was an error loading the agencies",
+    "Not_found":"No agencies found",
+    "view_job":"View Job",
+    "jobs_posted":"Jobs Posted",
+    "reg_no":"REG NO"
+
+}
+ 
 }

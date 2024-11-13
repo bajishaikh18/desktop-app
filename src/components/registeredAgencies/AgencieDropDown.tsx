@@ -30,7 +30,7 @@ const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> =
   >([]);
   const [options, setOptions] = useState<any>([]);
   const [selectedCities, setSelectedCities] = useState([]);
-  const t = useTranslations("Search");
+  const t = useTranslations("Agencydropdown");
   const selectRef = useRef(null)
 
   const outsideClose = (e: any) => {
@@ -148,7 +148,7 @@ const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> =
         <div className={styles.dropdownContainer}  id="select-container">
           <div className={styles.labelWithIcon} onClick={toggleDropdown}>
             
-            <span style={{color:isDropdownOpen ? "#0045E6" : "#000"}}>Select Country, State & City</span>
+            <span style={{color:isDropdownOpen ? "#0045E6" : "#000"}}>{t('select')}</span>
             {
               isDropdownOpen ?  <FaChevronUp fontSize={12} color="#0045E6" /> : <FaChevronDown fontSize={12} />
             }
@@ -226,7 +226,7 @@ const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> =
 
               }
               </>
-            )) : <p className={styles.allCities}>Showing results for all cities</p>
+            )) : <p className={styles.allCities}>{t('showing')}</p>
           }{
             selectedCities.length > 5 && <span className={styles.moreCities}>+ {selectedCities.length-5} More</span>
           }

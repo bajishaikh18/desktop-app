@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import styles from "../common/styles/Details.module.scss";
 import agencyStyles from "./AgencyDetails.module.scss";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { FaChevronLeft } from "react-icons/fa6";
 import {
   Button,
@@ -50,6 +51,7 @@ const AgencySummary = ({ data }: { data: any }) => {
   const goBack = () => {
     router.back();
   };
+  const t = useTranslations("AgencyDetails");
   return (
     <Card className={`${styles.summaryCard} ${agencyStyles.summaryCard}`}>
       <CardHeader className={agencyStyles.summaryCardHeader}>
@@ -78,8 +80,8 @@ const AgencySummary = ({ data }: { data: any }) => {
           </div>
         </div>
         <h5 className={`${agencyStyles.approvedText} success`}>
-          Approved by Ministry of External affairs Govt of India
-        </h5>
+        {t('approved_by_mea')}
+          </h5>
       </CardHeader>
       <CardBody className={`${styles.summaryCardBody} ${agencyStyles.summaryCardBody}`}>
         <ul className={`${styles.jobInfoList} ${agencyStyles.agencyInfoList}`}>
@@ -90,11 +92,11 @@ const AgencySummary = ({ data }: { data: any }) => {
               height={20}
               alt="suitcase"
             />
-            <span>{postedJobs} Jobs Posted</span>
+            <span>{postedJobs} {t('jobs_posted')}</span>
           </li>
         </ul>
         <div className={agencyStyles.addressSection}>
-          <h3>Address</h3>
+          <h3>{t('address')}</h3>
           <p>
             {address}, {city || ""},{" "}
             {INDIAN_STATES.find((x) => x.state_code === state)?.name ||
@@ -110,7 +112,7 @@ const AgencySummary = ({ data }: { data: any }) => {
           ></iframe>
         </div>
         <div className={agencyStyles.contactSection}>
-          <h3>Contact</h3>
+          <h3>{t('contact')}</h3>
           <ul
             className={`${styles.jobInfoList} ${agencyStyles.agencyContactList}`}
           >
@@ -141,7 +143,9 @@ const AgencySummary = ({ data }: { data: any }) => {
 
 const AgencyJobs = ({ data }: { data: any }) => {
   const { isDesktop } = useReponsiveStore();
+  const t = useTranslations("AgencyDetails");
   const { _id, postedJobs } = data?.agency || {};
+  
   return (
     <Card className={`${styles.detailsCard} ${agencyStyles.detailsCard}`}>
       {isDesktop && (
@@ -149,7 +153,7 @@ const AgencyJobs = ({ data }: { data: any }) => {
           className={`${styles.detailsCardHeader} ${agencyStyles.detailsCardHeader}`}
         >
           <div className={agencyStyles.detailInfoHeader}>
-            <h3>Jobs Posted ({postedJobs})</h3>
+            <h3>{t('jobs_posted')} ({postedJobs})</h3>
           </div>
           <div className={styles.actionContainer}>
             <Dropdown>
@@ -163,10 +167,10 @@ const AgencyJobs = ({ data }: { data: any }) => {
 
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => {}}>
-                  Notify jobs for this agency
+                  {t('notify')}
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => {}}>
-                  Report an issue
+                 {t('report_issue')}
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -181,6 +185,7 @@ const AgencyJobs = ({ data }: { data: any }) => {
 };
 
 const AgencyDetailsMobile = ({ data }: { data: any }) => {
+  const t = useTranslations("AgencyDetails");
   const [activeTab, setActiveTab] = useState<TabType>("about");
   const handleTabClick = (tab: TabType) => {
     setActiveTab(tab);
@@ -217,10 +222,10 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
 
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => {}}>
-                  Notify jobs for this agency
+                {t('notify')}
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => {}}>
-                  Report an issue
+                {t('report_issue')}
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -233,13 +238,13 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
               className={`tab-button ${activeTab === "about" ? "active" : ""}`}
               onClick={() => handleTabClick("about")}
             >
-              About
+              {t('about')}
             </button>
             <button
               className={`tab-button ${activeTab === "jobs" ? "active" : ""}`}
               onClick={() => handleTabClick("jobs")}
             >
-              Jobs
+              {t('jobs')}
             </button>
           </div>
         </div>
@@ -254,6 +259,7 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
   );
 };
 const AgencyDetails: React.FC<PostedAgencyDetailsProps> = ({ agencyId }) => {
+  const t = useTranslations("AgencyDetails");
   const { isDesktop } = useReponsiveStore();
 
   const { data, isLoading, isError } = useQuery({
@@ -272,7 +278,7 @@ const AgencyDetails: React.FC<PostedAgencyDetailsProps> = ({ agencyId }) => {
   if (isLoading) {
     return (
       <main className="main-section">
-        <Loader text="Loading agency details" />
+        <Loader text={t("loading_agency")} />
       </main>
     );
   }
@@ -280,14 +286,14 @@ const AgencyDetails: React.FC<PostedAgencyDetailsProps> = ({ agencyId }) => {
   if (!data) {
     return (
       <main className="main-section">
-        <NotFound text="Oops!, looks like agency details are not present" />
+        <NotFound text={t("not_present")} />
       </main>
     );
   }
   if (isError) {
     return (
       <main className="main-section">
-        <NotFound text="Something went wrong while accessing agency details. Please try again" />
+        <NotFound text={t("agency_details_error")} />
       </main>
     );
   }

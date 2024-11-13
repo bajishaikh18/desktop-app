@@ -6,26 +6,26 @@ import { useRouter } from 'nextjs-toploader/app';
 import styles from './Agencies.module.scss';
 import { getAgencies } from '@/apis/agency';
 import { Loader, NotFound } from "../common/Feedbacks";
+import { IMAGE_BASE_URL } from "@/helpers/constants";
+import { useTranslations } from "next-intl";
+
 
 interface Agency {
-  logo: string;
+  profilePic: string;
   name: string;
   regNo: string;
   jobsPosted: number;
   validity: string;
   _id: string;
-  
 }
 
-
 interface AgencyPortalProps {
-  selectedCities: string[]; 
+  selectedCities: string[];
 }
 
 const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
+  const t = useTranslations("AgencyPortal");
   const router = useRouter();
-
-  console.log("Fetching agencies with filters:", { cities: selectedCities });
 
   const fetchAgencies = async () => {
     const response = await getAgencies({
@@ -33,6 +33,7 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
       fetchSize: 10,
       filters: { cities: selectedCities },
     });
+    console.log("Response:", response); 
     return response.agencies;
   };
 
@@ -42,32 +43,31 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
   });
 
   if (isLoading) {
-    return <Loader text="Fetching agency details" />;
+    return <Loader text={t("fetching_details")} />;
   }
 
   if (error) {
     console.error("Error fetching agencies:", error);
-    return <NotFound text="There was an error loading the agencies" />;
+    return <NotFound text={t("error_agencies")} />;
   }
 
   if (agencies) {
     console.log("Fetched Agencies:", agencies);
   }
 
- 
   return (
     <div className={`${styles.container} container`}>
       {agencies && agencies.length > 0 ? (
         <Card className={`${styles.mainCard} shadow-sm p-3 mb-5 bg-white rounded`}>
           {agencies.map((agency: Agency, index: number) => (
             <Card.Body
-              key={index}
-              className={`${styles.agencySection} ${index < agencies.length- 1 ? 'border-bottom' : ''}`}
+              key={agency._id}
+              className={`${styles.agencySection} ${index < agencies.length - 1 ? 'border-bottom' : ''}`}
             >
               <Row className="align-items-center">
                 <Col xs={12} md={6} className="d-flex align-items-center">
                   <Image
-                    src={agency.logo}
+                    src={agency.profilePic ? `${IMAGE_BASE_URL}/${agency.profilePic}` : "/no_image.jpg"}
                     alt={agency.name}
                     width={64}
                     height={48}
@@ -84,7 +84,9 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
                         className={`${styles.verifiedIcon} ms-2`}
                       />
                     </h3>
-                    <p className={`${styles.regNo} text-muted small mb-0`}>REG No: {agency.regNo}</p>
+                    <p className={`${styles.regNo} text-muted small mb-0`}>
+                      {t('reg_no')}: {agency.regNo}
+                    </p>
                   </div>
                 </Col>
                 <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">
@@ -95,7 +97,9 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
                     height={14.4}
                     className={`${styles.jobsPostedIcon} me-2`}
                   />
-                  <p className={`${styles.jobsPosted} mb-0`}>{agency.jobsPosted} Jobs Posted</p>
+                  <p className={`${styles.jobsPosted} mb-0`}>
+                    {agency.jobsPosted} {t('jobs_posted')}
+                  </p>
                 </Col>
                 <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">
                   <Image
@@ -105,23 +109,24 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
                     height={18}
                     className={`${styles.alarmIcon} me-2`}
                   />
-                  <p className={`${styles.validity} mb-0`}>Valid up to {agency.validity}</p>
+                  <p className={`${styles.validity} mb-0`}>
+                    validity
+                  </p>
                 </Col>
                 <Col xs={12} md={2} className="d-flex text-end align-items-center">
-                <button
-  className={styles.viewJobsButton}
-  onClick={() => router.push(`/agency/${agency._id}`)}
->
-  View Job
-</button>
-
+                  <button
+                    className={styles.viewJobsButton}
+                    onClick={() => router.push(`/agency/${agency._id}`)}
+                  >
+                    {t('view_job')}
+                  </button>
                 </Col>
               </Row>
             </Card.Body>
           ))}
         </Card>
       ) : (
-        <NotFound text="No agencies found" />
+        <NotFound text={t("not_found")} />
       )}
     </div>
   );
