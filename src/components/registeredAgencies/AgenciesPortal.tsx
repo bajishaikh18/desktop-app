@@ -110,7 +110,7 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
                     className={`${styles.alarmIcon} me-2`}
                   />
                   <p className={`${styles.validity} mb-0`}>
-                    validity
+                 {t('validity')}
                   </p>
                 </Col>
                 <Col xs={12} md={2} className="d-flex text-end align-items-center">
