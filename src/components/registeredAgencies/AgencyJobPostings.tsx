@@ -103,17 +103,19 @@ const JobCard = ({
                     </div>
                     <div className={agencyStyles.facilities}>
                       <ul>
-                        {job.amenities.map((amenity: string, index: number) => (
-                          <li key={index}>
-                            <Image
-                              src={FACILITIES_IMAGES[amenity as "Food"]}
-                              alt={amenity}
-                              width={16}
-                              height={16}
-                            />{" "}
-                            <span>{amenity}</span>
-                          </li>
-                        ))}
+                      
+{job.amenities.map((amenity: string, index: number) => (
+
+    <li key={index}>
+      <Image
+        src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
+        alt={t(amenity.toLowerCase())} 
+        width={16}
+        height={16}
+      />{" "}
+      <span>{t(amenity.toLowerCase())}</span> 
+    </li>
+  ))}
                       </ul>
                     </div>
                   </div>
