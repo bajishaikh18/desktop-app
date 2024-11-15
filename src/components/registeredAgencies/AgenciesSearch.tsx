@@ -33,7 +33,9 @@ const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange
   const t = useTranslations("AgencySearch");
 
   return (
-    <Container>
+    <Container fluid className={styles.agenciesSearchContainer}>
+      <section className={styles.agenciesSearchBox}>
+
       <div className={styles.searchImageContainer}>
         <div className={styles.searchBox}>
           <Image
@@ -60,7 +62,8 @@ const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange
       </div>
       
       <AgencyDropDown onCitiesChange={setSelectedCities} /> 
-      
+      </section>
+
       <AgenciesPortal selectedCities={selectedCities} />
     </Container>
   );

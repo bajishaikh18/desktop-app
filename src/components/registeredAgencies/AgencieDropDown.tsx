@@ -1,28 +1,21 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { GetCountries, GetState, GetCity } from "react-country-state-city";
+import React, { useState, useEffect, useRef } from "react";
+import { GetState, GetCity } from "react-country-state-city";
 import styles from "./Agencies.module.scss";
 import { useTranslations } from "next-intl";
-import Select, { components, GroupProps } from "react-select";
-import { Accordion, Container } from "react-bootstrap";
+import Select, { components } from "react-select";
+import { Container } from "react-bootstrap";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
-import AsyncSelect from "react-select/async";
 import { IoClose } from "react-icons/io5";
+import { useReponsiveStore } from "@/stores/useResponsiveStore";
 
 
-interface Country {
-    isoCode: string;
-    name: string;
+
+const tagSize = (isDesktop:boolean,isMobile:boolean, isTab:boolean)=>{
+  if(isDesktop) return 5;
+  if(isMobile) return 2;
+  if(isTab) return 3;
+  return 0;
 }
-
-interface State {
-    isoCode: string;
-    name: string;
-}
-
-interface City {
-    name: string;
-}
-
 const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> = ({ onCitiesChange }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [states, setStates] = useState<
@@ -31,8 +24,9 @@ const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> =
   const [options, setOptions] = useState<any>([]);
   const [selectedCities, setSelectedCities] = useState([]);
   const t = useTranslations("Agencydropdown");
+  const {isDesktop,isMobile,isTab} = useReponsiveStore();
   const selectRef = useRef(null)
-
+  const cityLimit = tagSize(isDesktop,isMobile,isTab);
   const outsideClose = (e: any) => {
     let filterDiv = document.getElementById("select-container");
     if (
@@ -222,13 +216,13 @@ const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> =
              
               <>
                {
-                i< 5 && <div className={styles.tag}>{city.label} <IoClose fontSize={15} fontWeight={700} className={styles.close} onClick={()=>removeCity(city.value)}/></div>
+                i< cityLimit && <div className={styles.tag}>{city.label} <IoClose fontSize={15} fontWeight={700} className={styles.close} onClick={()=>removeCity(city.value)}/></div>
 
               }
               </>
             )) : <p className={styles.allCities}>{t('showing')}</p>
           }{
-            selectedCities.length > 5 && <span className={styles.moreCities}>+ {selectedCities.length-5} More</span>
+            selectedCities.length > cityLimit && <span className={styles.moreCities}>+ {selectedCities.length-cityLimit} More</span>
           }
         </div>
       </div>

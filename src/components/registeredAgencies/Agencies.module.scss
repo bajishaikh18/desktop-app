@@ -1,16 +1,26 @@
 @import "../../app/variables";
 
 .container {
-  padding: 20px;
+  padding: 0px;
   width: 100%;
-  margin-top: 80px;
+  margin-top: 24px;
   background-color: #f8f8f8;
+}
+
+.agenciesSearchBox {
+  background-color: #fff;
+  padding-top: 150px;
+  padding-bottom: 24px;
+}
+
+.agenciesSearchContainer {
+  padding: 0px;
 }
 
 .mainCard {
   width: 100%;
   background-color: #fff;
-  padding: 20px;
+  padding: 0px;
   border-radius: 8px;
   border: 1px solid #e0e0e0;
 }
@@ -18,7 +28,7 @@
 .agencySection {
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
+  padding: 40px 24px !important;
 
   &:last-child {
     border-bottom: none;
@@ -26,21 +36,15 @@
 }
 
 .logo {
-  width: 50px;
-  height: 50px;
-  margin-left: -30px;
+  height: auto;
   flex-shrink: 0;
+  margin-right: 16px;
 }
 
 .companyName {
   font-size: 18px;
-  font-weight: 600;
-  color: #333;
-}
-
-.verifiedIcon {
-  color: green;
-  margin-left: 5px;
+  font-weight: 700;
+  color: #000;
 }
 
 .regNo {
@@ -48,17 +52,20 @@
   color: #888;
 }
 
+.agencyRow {
+  justify-content: space-between;
+}
+
 .jobsPosted {
   font-size: 16px;
   white-space: nowrap;
-  color: #333;
-  margin-left: 10px;
+  color: #000;
+  margin-left: 12px;
 }
 
 .jobsPostedIcon {
   flex-shrink: 0;
   white-space: nowrap;
-  margin-left: -80px;
 }
 
 .alarmIcon {
@@ -76,7 +83,6 @@
 
 .viewJobsButton {
   white-space: nowrap;
-  margin-left: 100px;
   padding: 10px 25px;
   font-size: 14px;
   color: blue;
@@ -109,96 +115,31 @@
     font-size: 16px;
     margin-top: 10px;
   }
-
-  .verifiedIcon,
-  .jobsPostedIcon,
-  .alarmIcon {
-    margin-left: 0;
-  }
-
-  .jobsPosted,
-  .validity,
-  .regNo {
-    font-size: 14px;
-    margin-left: 0;
-  }
-
-  .viewJobsButton {
-    margin-left: 0;
-    padding: 8px 20px;
-    font-size: 13px;
-  }
 }
-
-
-@media (max-width: 768px) {
-  .mainCard {
-    padding: 15px;
-  }
-
-  .companyName {
-    font-size: 17px;
-  }
-
-  .jobsPosted,
-  .validity,
-  .regNo {
-    font-size: 15px;
-  }
-
-  .viewJobsButton {
-    padding: 8px 22px;
-    font-size: 13px;
-    margin-left: 0;
-  }
-}
-
-
-@media (max-width: 992px) {
-  .mainCard {
-    padding: 18px;
-  }
-
-  .companyName {
-    font-size: 18px;
-  }
-
-  .jobsPosted,
-  .validity,
-  .regNo {
-    font-size: 16px;
-  }
-
-  .viewJobsButton {
-    padding: 10px 25px;
-    font-size: 14px;
-  }
-}
-
 
 
 
 
 //Search
 .searchImageContainer {
-  margin: 150px auto 0px auto;
-
   background-color: #fff;
   border-radius: 50px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 16px 20px rgba(34, 34, 34, 0.16);
+  box-shadow: 0px 16px 40px 0px rgba(34, 34, 34, 0.16);
   padding: 10px 20px;
   max-width: 100%;
   width: 960px;
- // margin-top: 100px;
-  
+  // margin-top: 100px;
+
 }
 
-.searchBox{
+.searchBox {
   flex: 1;
 }
+
 .searchImageContainer input {
   border: none;
   outline: none;
@@ -219,7 +160,7 @@
   padding: 20px 45px;
   font-size: 14px;
   font-weight: 500;
-  margin-left: 70px; 
+  margin-left: 70px;
   border: none;
   margin-bottom: -8px;
   margin-right: -18px;
@@ -239,147 +180,57 @@
 
 .separator {
   width: 1px;
-  height: 30px; 
-  background-color: #ccc; 
-  margin-right: 20px; 
+  height: 30px;
+  background-color: #ccc;
+  margin-right: 20px;
 
 }
-@media (max-width: 1190px) {
-  .sliderContainer{
-    padding-top: 70px;
-  }
-}
-@media (max-width: 767px) {
-  .jobListingContainer{
-    margin-top: 40px;
-  }
-  .slide{
-    padding-top: 20px;
-  }
-  .jobList{
-    gap: 20px;
-    
-  }
-  .overlay{
-    display: block;
-  }
-  .viewJobsButton{
-    padding: 5px 20px;
-    float: right;
-    margin-top: 0px;
-    font-size: 12px;
-  }
-  .textCommon{
-    font-size: 14px;
-  }
-  .searchImageContainer{
-    position: relative;
-    gap: 0px;
-    justify-content: flex-start;
-    .searchBox{
-      display: flex;
-      align-items: center;
-      width:48%;
-      font-size: 12px;
-      flex: none;
-      .searchInput{
-        width: 100%;
-      }
-    }
-    .separator{
-      margin-right: 10px;
-    }
-    .findJobsButton{
-      padding: 16px 25px;
-      position: absolute;
-      margin-left: 0px;
-      right: 20px;
-    }
-  }
-}
+
+
 
 .jobListingContainer {
-  margin-top: 40px; 
+  margin-top: 48px;
   padding: 0px 80px;
-  text-align: center; 
-  
-  @media (max-width: 1200px) {
-    padding: 0 60px;
-  }
+  text-align: center;
 
-  @media (max-width: 992px) {
-    padding: 0 40px;
-  }
-
-  @media (max-width: 768px) {
-    padding: 0 20px;
-    margin-top: 30px;
-  }
-
-  @media (max-width: 576px) {
-    padding: 0 15px;
-    margin-top: 20px;
-  }
 }
 
 .jobList {
-  display: flex; 
-  flex-wrap: wrap; 
+  display: flex;
+  flex-wrap: wrap;
   gap: 64px;
 
   span {
-    font-size: 14px; 
+    font-size: 14px;
     font-weight: 400;
     line-height: 16px;
     margin: 0;
-    cursor: pointer; 
-    
+    cursor: pointer;
+
     &.active {
       color: $color-brand-1;
     }
 
     &:hover {
-      color: $color-brand-1; 
+      color: $color-brand-1;
     }
-  }
-
-  @media (max-width: 992px) {
-    gap: 30px;
-  }
-
-  @media (max-width: 768px) {
-    gap: 20px;
-    justify-content: center;
-  }
-
-  @media (max-width: 576px) {
-    gap: 15px;
-    flex-direction: column;
   }
 }
 
 .vectorIcon {
-  width: 10px; 
-  height: 5px; 
+  width: 10px;
+  height: 5px;
   margin-left: 0px;
   margin-top: 5px;
-
-  @media (max-width: 576px) {
-    width: 8px;
-    height: 4px;
-  }
 }
 
 .jobList span {
-  display: inline-flex; 
+  display: inline-flex;
 }
 
 .jobList span:first-child {
-  margin-right: 15px; 
-  
-  @media (max-width: 576px) {
-    margin-right: 10px;
-  }
+  margin-right: 15px;
+
 }
 
 .labelWithIcon {
@@ -390,10 +241,6 @@
   color: #000;
   cursor: pointer !important;
   position: relative;
-
-  @media (max-width: 576px) {
-    font-size: 14px;
-  }
 }
 
 .selectContainer {
@@ -402,10 +249,6 @@
   z-index: 9;
   bottom: 0px;
   left: 0px;
-
-  @media (max-width: 576px) {
-    width: 200px;
-  }
 }
 
 .dropdownContainer {
@@ -417,7 +260,7 @@
   margin-top: 30px;
   margin-left: -650px;
   transform: translateX(-50%);
-  width: 250px; 
+  width: 250px;
   background-color: #fff;
   border: 1px solid #ddd;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -425,13 +268,8 @@
   z-index: 1000;
   padding: 8px 0;
   text-align: left;
-  max-height: 300px; 
+  max-height: 300px;
   overflow-y: auto;
-
-  @media (max-width: 576px) {
-    width: 200px;
-    margin-left: -500px;
-  }
 }
 
 .stateItem {
@@ -446,10 +284,6 @@
   &:hover {
     background-color: #f0f0f0;
   }
-
-  @media (max-width: 576px) {
-    padding: 8px 12px;
-  }
 }
 
 .stateLabel {
@@ -458,20 +292,12 @@
   align-items: center;
   font-size: 14px;
   color: #333;
-
-  @media (max-width: 576px) {
-    font-size: 12px;
-  }
 }
 
 .arrow {
   font-size: 12px;
   color: #888;
   transition: background-color 0.3s, color 0.3s;
-
-  @media (max-width: 576px) {
-    font-size: 10px;
-  }
 }
 
 .cityDropdown {
@@ -479,9 +305,6 @@
   font-size: 14px;
   color: #333;
 
-  @media (max-width: 576px) {
-    font-size: 12px;
-  }
 }
 
 .cityItem {
@@ -498,9 +321,6 @@
     background-color: #f0f0f0;
   }
 
-  @media (max-width: 576px) {
-    padding: 8px 12px;
-  }
 }
 
 .arrowSelected {
@@ -509,9 +329,6 @@
   color: white;
   padding: 5px;
 
-  @media (max-width: 576px) {
-    padding: 4px;
-  }
 }
 
 .agencyStates {
@@ -519,20 +336,7 @@
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 576px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
 
-.selectedCities {
-  flex: 1;
-
-  @media (max-width: 576px) {
-    text-align: left;
-    display: flex;
-    flex-wrap: wrap;
-  }
 }
 
 .selectedCities {
@@ -550,11 +354,6 @@
     .close {
       cursor: pointer !important;
     }
-
-    @media (max-width: 576px) {
-      font-size: 12px;
-      padding: 2px 8px;
-    }
   }
 
   .moreCities {
@@ -564,5 +363,115 @@
 
   .allCities {
     color: $color-grey-1;
+    margin-bottom: 0px;
+  }
+}
+
+
+@media screen and (max-width:1190px) {
+  .sliderContainer {
+    padding-top: 70px;
+  }
+}
+
+@media screen and (max-width:991px) {
+  .agenciesSearchBox{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .jobListingContainer{
+    padding: 0px;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .jobListingContainer {
+    margin-top: 40px;
+  }
+
+  .mainCard {
+    padding: 15px;
+  }
+
+  .companyName {
+    font-size: 17px;
+  }
+  .agencySection{
+    padding: 20px !important;
+  }
+  .agencyStats{
+    margin-top: 20px;
+  }
+  .jobsPosted,
+  .validity,
+  .regNo {
+    font-size: 15px;
+  }
+
+
+  .slide {
+    padding-top: 20px;
+  }
+
+  .jobList {
+    gap: 20px;
+
+  }
+
+  .overlay {
+    display: block;
+  }
+
+  .textCommon {
+    font-size: 14px;
+  }
+
+  .searchImageContainer {
+    position: relative;
+    gap: 0px;
+    justify-content: flex-start;
+
+    .searchBox {
+      display: flex;
+      align-items: center;
+      width: 48%;
+      font-size: 12px;
+      flex: none;
+
+      .searchInput {
+        width: 100%;
+      }
+    }
+
+    .separator {
+      margin-right: 10px;
+    }
+
+    .findJobsButton {
+      padding: 16px 25px;
+      position: absolute;
+      margin-left: 0px;
+      right: 20px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+
+
+  .selectedCities {
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+
+    .tag {
+      font-size: 12px;
+      padding: 2px 8px;
+    }
+  }
+
+  .arrowSelected {
+    padding: 4px;
   }
 }

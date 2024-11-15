@@ -1,14 +1,13 @@
-import React from 'react';
-import Image from 'next/image';
-import { Card, Row, Col } from 'react-bootstrap';
-import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'nextjs-toploader/app';
-import styles from './Agencies.module.scss';
-import { getAgencies } from '@/apis/agency';
+import React from "react";
+import Image from "next/image";
+import { Card, Row, Col, Container } from "react-bootstrap";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "nextjs-toploader/app";
+import styles from "./Agencies.module.scss";
+import { getAgencies } from "@/apis/agency";
 import { Loader, NotFound } from "../common/Feedbacks";
 import { IMAGE_BASE_URL } from "@/helpers/constants";
 import { useTranslations } from "next-intl";
-
 
 interface Agency {
   profilePic: string;
@@ -33,12 +32,16 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
       fetchSize: 10,
       filters: { cities: selectedCities },
     });
-    console.log("Response:", response); 
+    console.log("Response:", response);
     return response.agencies;
   };
 
-  const { data: agencies, isLoading, error } = useQuery<Agency[], Error>({
-    queryKey: ['agencies', selectedCities],
+  const {
+    data: agencies,
+    isLoading,
+    error,
+  } = useQuery<Agency[], Error>({
+    queryKey: ["agencies", selectedCities],
     queryFn: fetchAgencies,
   });
 
@@ -56,22 +59,28 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
   }
 
   return (
-    <div className={`${styles.container} container`}>
+    <Container className={styles.container}>
       {agencies && agencies.length > 0 ? (
-        <Card className={`${styles.mainCard} shadow-sm p-3 mb-5 bg-white rounded`}>
+        <Card className={`${styles.mainCard} shadow-sm bg-white rounded`}>
           {agencies.map((agency: Agency, index: number) => (
             <Card.Body
               key={agency._id}
-              className={`${styles.agencySection} ${index < agencies.length - 1 ? 'border-bottom' : ''}`}
+              className={`${styles.agencySection} ${
+                index < agencies.length - 1 ? "border-bottom" : ""
+              }`}
             >
-              <Row className="align-items-center">
-                <Col xs={12} md={6} className="d-flex align-items-center">
+              <Row className={`align-items-center ${styles.agencyRow}`}>
+                <Col xs={12} md={8} lg={6} className="d-flex align-items-center">
                   <Image
-                    src={agency.profilePic ? `${IMAGE_BASE_URL}/${agency.profilePic}` : "/no_image.jpg"}
+                    src={
+                      agency.profilePic
+                        ? `${IMAGE_BASE_URL}/${agency.profilePic}`
+                        : "/no_image.jpg"
+                    }
                     alt={agency.name}
                     width={64}
                     height={48}
-                    className={`${styles.logo} rounded-circle me-3`}
+                    className={`${styles.logo} rounded-circle`}
                   />
                   <div>
                     <h3 className={`${styles.companyName} h5`}>
@@ -85,23 +94,27 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
                       />
                     </h3>
                     <p className={`${styles.regNo} text-muted small mb-0`}>
-                      {t('reg_no')}: {agency.regNo}
+                      {t("reg_no")}: {agency.regNo}
                     </p>
                   </div>
                 </Col>
-                <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">
+                <Col
+                  xs={12}
+                  md={2} lg={2}
+                  className={`d-flex align-items-center justify-content-start ${styles.agencyStats}`}
+                >
                   <Image
                     src="/posted.png"
                     alt="Jobs Posted"
                     width={16}
-                    height={14.4}
-                    className={`${styles.jobsPostedIcon} me-2`}
+                    height={14}
+                    className={`${styles.jobsPostedIcon}`}
                   />
                   <p className={`${styles.jobsPosted} mb-0`}>
-                    {agency.jobsPosted} {t('jobs_posted')}
+                    {agency.jobsPosted} {t("jobs_posted")}
                   </p>
                 </Col>
-                <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">
+                {/* <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">
                   <Image
                     src="/alarm-clock-check.png"
                     alt="Valid Till"
@@ -112,13 +125,17 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
                   <p className={`${styles.validity} mb-0`}>
                  {t('validity')}
                   </p>
-                </Col>
-                <Col xs={12} md={2} className="d-flex text-end align-items-center">
+                </Col> */}
+                <Col
+                  xs={12}
+                  md={2}
+                  className={`d-flex text-end align-items-center justify-sm-content-end justify-content-start ${styles.agencyStats}`}
+                >
                   <button
                     className={styles.viewJobsButton}
                     onClick={() => router.push(`/agency/${agency._id}`)}
                   >
-                    {t('view_job')}
+                    {t("view_job")}
                   </button>
                 </Col>
               </Row>
@@ -128,7 +145,7 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
       ) : (
         <NotFound text={t("not_found")} />
       )}
-    </div>
+    </Container>
   );
 };
 
