@@ -9,7 +9,7 @@ import AgencyDropDown from "@/components/registeredAgencies/AgencieDropDown";
 import { Container } from "react-bootstrap";
 import AgencyPortal from "@/components/registeredAgencies/AgenciesPortal";
 
-const AgencieSearch = () => {
+const AgenciesSearch = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("ae");
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
@@ -63,4 +63,4 @@ const AgencieSearch = () => {
   );
 };
 
-export default AgencieSearch;
+export default AgenciesSearch;

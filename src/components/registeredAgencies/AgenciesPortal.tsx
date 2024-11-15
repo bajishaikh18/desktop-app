@@ -8,6 +8,7 @@ import { getAgencies } from "@/apis/agency";
 import { Loader, NotFound } from "../common/Feedbacks";
 import { IMAGE_BASE_URL } from "@/helpers/constants";
 import { useTranslations } from "next-intl";
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface Agency {
   profilePic: string;
@@ -23,19 +24,19 @@ interface AgencyPortalProps {
   searchText: string;
 }
 
-const fetchSize = 10;
+const fetchSize = 100;
 
 const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities,searchText }) => {
   const t = useTranslations("AgencyPortal");
   const router = useRouter();
-
   const {
     data,
     isLoading,
     fetchNextPage,
     isFetching,
+    isFetchingNextPage,
     isError:error,
-  } = useInfiniteQuery<{agencies:Agency[]}>({
+  } = useInfiniteQuery<{agencies:Agency[],totalAgencyCount:number}>({
     queryKey: ["agencies", selectedCities, searchText],
     queryFn: async ({ pageParam = 1 }) =>{
       return getAgencies({
@@ -46,12 +47,7 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities,searchText }
     }
      ,
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage?.agencies?.length === fetchSize
-        ? allPages.length + 1
-        : undefined;
-    },
-    refetchOnMount: true,
+    getNextPageParam: (_lastGroup, groups) => groups.length+1,
     placeholderData: keepPreviousData,
   });
 
@@ -60,16 +56,22 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities,searchText }
     [data]
   );
 
-  if (isLoading || isFetching) {
+  const total = data?.pages[0].totalAgencyCount || 0;
+
+  if (isLoading || (isFetching && !isFetchingNextPage)) {
     return <Loader text={t("fetching_agencies")} />;
   }
 
   if (error) {
     return <NotFound text={t("error_agencies")} />;
   } 
-
   return (
+
+    <InfiniteScroll dataLength={agencies.length} next={fetchNextPage}
+ hasMore={agencies.length < total}  loader={ <Loader text={t("fetching_agencies")} />}
+    >
     <Container className={styles.container}>
+
       {agencies && agencies.length > 0 ? (
         <Card className={`${styles.mainCard} shadow-sm bg-white rounded`}>
           {agencies.map((agency: Agency, index: number) => (
@@ -155,7 +157,10 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities,searchText }
       ) : (
         <NotFound text={t("not_found")} />
       )}
+      
     </Container>
+    </InfiniteScroll>
+
   );
 };
 

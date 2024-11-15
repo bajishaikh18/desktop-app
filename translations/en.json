@@ -284,12 +284,12 @@
     "recruitment":"Recruitment"
  },
  "Agencydropdown":{
-  "select":"Select Country, State & City",
-  "showing":"Showing results for all cities"
+  "select":"Select State & City",
+  "showing":"Showing results across all cities"
 
  },
  "AgencySearch":{
-  "search_agency":"Search Agency",
+  "search_agency":"Search Agency By Name",
   "find_agencies":"Find Agencies"
  },
   "AgencyPortal":{

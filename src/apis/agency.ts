@@ -18,8 +18,8 @@ export const getAgencies = async ({
     const response = await client.get(`${baseRoutes}/agencies`, {
       params: {
         page: page,
-          limit: fetchSize,
-          filters: filters || {}
+        limit: fetchSize,
+        filters: filters || {}
       },
     });
     return response.data;
