@@ -199,6 +199,56 @@ const Header: React.FC = () => {
                     >
                       Logout
                     </NavDropdown.Item>
+                    <NavDropdown.Item
+            href="/settings"
+          className={styles.navListItem}
+        >
+                    
+                    Settings
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    > Jobs
+                    
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Upload CV
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Upload Work Video
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Need Help
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Privacy Poilcy
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Terms & Conditions
+                    </NavDropdown.Item>
                   </NavDropdown>
                   {
                     authUser.profilePic ? <Image src={authUser.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
