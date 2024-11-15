@@ -10,6 +10,7 @@ import { StateSelect } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { getFormattedJobTitles } from "@/helpers/jobTitles";
 import { debounce } from "lodash";
+import { INDUSTRIES } from "@/helpers/constants";
 
 interface ProfessionalDetailsProps {
   onSubmit: (screen: number) => void;
@@ -49,20 +50,12 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     currentState: "",
   });
 
-  const industries: any = [
-    {
-      value: "IT",
-      label: t("iT"),
-    },
-    {
-      value: "construction",
-      label: t("construction"),
-    },
-    {
-      value: "healthcare",
-      label: t("healthcare"),
-    },
-  ];
+  const industries: any = Object.entries(INDUSTRIES).map(([key,val],i)=>{
+    return {
+      value:key,
+      label: val
+    }
+  })
 
   const yearsOfExpericence: any = [
     {

@@ -38,7 +38,7 @@ const JobCard = ({
     queryFn: () => {
       if (agencyId) {
         return getJobs({
-          page: 0,
+          page: 1,
           fetchSize: postedJobs,
           filters: { agencyId: agencyId },
         });

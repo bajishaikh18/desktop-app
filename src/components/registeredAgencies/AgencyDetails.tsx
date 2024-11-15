@@ -1,21 +1,18 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import styles from "../common/styles/Details.module.scss";
 import agencyStyles from "./AgencyDetails.module.scss";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { FaChevronLeft } from "react-icons/fa6";
 import {
-  Button,
   Card,
   CardBody,
   CardHeader,
   Col,
   Container,
   Dropdown,
-  Modal,
   Row,
 } from "react-bootstrap";
 import { BsThreeDots } from "react-icons/bs";
@@ -40,7 +37,7 @@ const AgencySummary = ({ data }: { data: any }) => {
     name,
     address,
     phone,
-    postedJobs,
+    activeJobCount,
     profilePic,
     city,
     state,
@@ -75,7 +72,7 @@ const AgencySummary = ({ data }: { data: any }) => {
               />
             </div>
             <p className={agencyStyles.regNo}>
-              {regNo || "REG No: B-1853/MUM/COM/1000+/5/0242/2023 "}
+              {regNo || "N/A"}
             </p>
           </div>
         </div>
@@ -92,7 +89,7 @@ const AgencySummary = ({ data }: { data: any }) => {
               height={20}
               alt="suitcase"
             />
-            <span>{postedJobs} {t('jobs_posted')}</span>
+            <span>{activeJobCount} {t('jobs_posted')}</span>
           </li>
         </ul>
         <div className={agencyStyles.addressSection}>
@@ -144,7 +141,7 @@ const AgencySummary = ({ data }: { data: any }) => {
 const AgencyJobs = ({ data }: { data: any }) => {
   const { isDesktop } = useReponsiveStore();
   const t = useTranslations("AgencyDetails");
-  const { _id, postedJobs } = data?.agency || {};
+  const { _id, activeJobCount } = data?.agency || {};
   
   return (
     <Card className={`${styles.detailsCard} ${agencyStyles.detailsCard}`}>
@@ -153,7 +150,7 @@ const AgencyJobs = ({ data }: { data: any }) => {
           className={`${styles.detailsCardHeader} ${agencyStyles.detailsCardHeader}`}
         >
           <div className={agencyStyles.detailInfoHeader}>
-            <h3>{t('jobs_posted')} ({postedJobs})</h3>
+            <h3>{t('jobs_posted')} ({activeJobCount})</h3>
           </div>
           <div className={styles.actionContainer}>
             <Dropdown>
@@ -178,7 +175,7 @@ const AgencyJobs = ({ data }: { data: any }) => {
         </CardHeader>
       )}
       <CardBody className={agencyStyles.detailCardBody}>
-        <AgencyJobPostings agencyId={_id} postedJobs={postedJobs} />
+        <AgencyJobPostings agencyId={_id} postedJobs={activeJobCount} />
       </CardBody>
     </Card>
   );
@@ -191,15 +188,7 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
     setActiveTab(tab);
   };
   const {
-    regNo,
     name,
-    address,
-    phone,
-    postedJobs,
-    profilePic,
-    city,
-    state,
-    email,
   } = data?.agency || {};
   return (
     <>

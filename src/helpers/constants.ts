@@ -22,3 +22,19 @@ export const FACILITIES_IMAGES = {
     "Recruitment":"/icons/recruit.svg"
 }
   
+export const INDUSTRIES = {
+  oil_gas: "Oil & Gas",
+  constructions: "Constructions",
+  facility_management: "Facility Management / Operations Maintenance",
+  hospitality: "Hospitality",
+  manufacturing: "Manufacturing",
+  logistics: "Logistics & E-Commerce",
+  health_care:"Health Care",
+  information_technology:"Information Technology",
+  education:"Education",
+  travel_tourism:"Travel & Tourism",
+  tele_communication:"Tele Communication",
+  banking_finance:"Banking & Finance",
+  fcmg:"FMCG",
+  retail:"Retail"
+};
