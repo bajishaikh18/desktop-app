@@ -84,6 +84,7 @@ const Header: React.FC = () => {
 
   const logout = () => {
     localStorage.clear();
+    location.reload();
     setAuthUser(null);
   };
 
@@ -146,7 +147,7 @@ const Header: React.FC = () => {
             <Nav className={styles.navContainer}>
               <Link
                 className={`${styles.navListItem} ${
-                  pathname == "/" ? styles.active : ""
+                  pathname == "/" || pathname.includes('job') ? styles.active : ""
                 }`}
                 href="/"
               >
@@ -154,13 +155,13 @@ const Header: React.FC = () => {
               </Link>
               
               <Link href="/walk-in"  className={`${styles.navListItem} ${
-                  pathname == "/walk-in" ? styles.active : ""
+                  pathname.includes('walk-in') ? styles.active : ""
                 }`}>
              {t("walkins")}
                </Link> 
              
                <Link href="/agency"  className={`${styles.navListItem} ${
-                  pathname == "/agency" ? styles.active : ""
+                  pathname.includes('agency') ? styles.active : ""
                 }`}>
                 {t("agenices")}
               </Link>

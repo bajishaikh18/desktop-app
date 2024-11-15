@@ -127,7 +127,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                     </Form>
                   </>
                 ),
-                1:<VerifyOtp phone={phone} successAction={onClose}/>,
+                1:<VerifyOtp phone={phone} successAction={()=>{onClose();location.reload()}}/>,
                 2: <RegistrationPopup  handleClose={onClose} backToSignIn={()=>setCurrentScreen(0)}/>,
               }[currentScreen]
             }
