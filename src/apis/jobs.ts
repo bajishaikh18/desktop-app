@@ -13,6 +13,7 @@ export const getJobs = async ({
   filters:{
     jobTitle?: string;
     location?:string;
+    agencyId?:string;
   }
 }) => {
   try {
@@ -107,7 +108,7 @@ export const reportJob = async (jobId: string) => {
 export const getAgencyDetails = async (agencyId: any) => { 
   try {
     const client = isTokenValid() ? authorizedApiClient : apiClient;
-    const response = await client.get(`/agency/${agencyId._id}`, {});
+    const response = await client.get(`/agency/${agencyId}`, {});
 
     console.log("Agency API Response:", response.data); 
     return response.data;

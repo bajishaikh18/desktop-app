@@ -574,7 +574,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     </Tab>
                     {!isMobile && (
                       <Tab eventKey="aboutRecruiters" title={t("about_recruiters")}>
-                        <AgencyDetails agencyDetailsId={agencyId} />
+                        <AgencyDetails agencyDetailsId={agencyId._id} />
                       </Tab>
                     )}
                     {!isMobile && (
