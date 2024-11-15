@@ -294,13 +294,13 @@
  },
   "AgencyPortal":{
     "fetching_details":"Fetching agency details",
+    "fetching_agencies":"Fetching agencies",
     "error_agencies":"There was an error loading the agencies",
-    "Not_found":"No agencies found",
+    "not_found":"No agencies found",
     "view_job":"View Job",
     "jobs_posted":"Jobs Posted",
     "reg_no":"REG NO",
     "validity":"Validity"
-
 }
  
 }

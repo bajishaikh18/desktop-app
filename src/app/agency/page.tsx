@@ -6,8 +6,6 @@ const AgencyPage: React.FC = () => {
     <div>
        <AgencieSearch/>
      
-    
-     
     </div>
   );
 };

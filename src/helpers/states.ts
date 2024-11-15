@@ -180,3 +180,266 @@ export const INDIAN_STATES = [
     state_code: "WB",
   },
 ];
+
+
+export const CITIES = {
+  "AN":[
+    "Bamboo Flat",
+    "Nicobar",
+    "Port Blair",
+    "South Andaman"
+  ],
+  "AP": [
+    "Visakhapatnam",
+    "Vijayawada",
+    "Guntur",
+    "Nellore",
+    "Tirupati",
+    "Kakinada",
+    "Eluru",
+    "Anantapur",
+    "Kadapa",
+    "Kurnool"
+  ],
+  "AR": [
+    "Itanagar",
+    "Tawang",
+    "Ziro",
+    "Pasighat"
+  ],
+  "AS": [
+    "Guwahati",
+    "Dibrugarh",
+    "Silchar",
+    "Jorhat",
+    "Tezpur",
+    "Nagaon"
+  ],
+  "BR": [
+    "Patna",
+    "Gaya",
+    "Bhagalpur",
+    "Muzaffarpur",
+    "Darbhanga",
+    "Purnia"
+  ],
+  "CH":[
+    "Chandigarh"
+  ],
+  "CT": [
+    "Raipur",
+    "Bhilai",
+    "Bilaspur",
+    "Korba",
+    "Durg",
+    "Rajnandgaon"
+  ],
+  "DH":[
+    "Silvassa",
+    "Dadra",
+    "Khanvel"
+  ],
+  "DL":[
+    "Delhi"
+  ],
+  
+  "GA": [
+    "Panaji",
+    "Margao",
+    "Vasco da Gama",
+    "Mapusa",
+    "Ponda"
+  ],
+  "GJ": [
+    "Ahmedabad",
+    "Surat",
+    "Vadodara",
+    "Rajkot",
+    "Bhavnagar",
+    "Jamnagar",
+    "Junagadh",
+    "Gandhinagar"
+  ],
+  "HR": [
+    "Faridabad",
+    "Gurgaon",
+    "Panipat",
+    "Hisar",
+    "Karnal",
+    "Rohtak"
+  ],
+  "HP": [
+    "Shimla",
+    "Dharamshala",
+    "Mandi",
+    "Solan",
+    "Una"
+  ],
+  "JK": [
+    "Srinagar",
+    "Jammu",
+    "Anantnag",
+    "Baramulla",
+    "Kashmir",
+    "Udhampur",
+    "Rajouri",
+    "Poonch",
+    "Kupwara",
+    "Kathua"
+  ],
+  "JH": [
+    "Ranchi",
+    "Jamshedpur",
+    "Dhanbad",
+    "Bokaro",
+    "Hazaribagh"
+  ],
+  "KA": [
+    "Bengaluru",
+    "Mysuru",
+    "Mangaluru",
+    "Hubballi-Dharwad",
+    "Belagavi",
+    "Davangere",
+    "Shivamogga"
+  ],
+  "KL": [
+    "Kochi",
+    "Thiruvananthapuram",
+    "Kozhikode",
+    "Kollam",
+    "Thrissur",
+    "Alappuzha"
+  ],
+  "MP": [
+    "Indore",
+    "Bhopal",
+    "Gwalior",
+    "Jabalpur",
+    "Ujjain",
+    "Sagar",
+    "Rewa"
+  ],
+  "MH": [
+    "Mumbai",
+    "Pune",
+    "Nagpur",
+    "Nashik",
+    "Aurangabad",
+    "Solapur",
+    "Kolhapur",
+    "Amravati"
+  ],
+  "MN": [
+    "Imphal",
+    "Thoubal",
+    "Churachandpur"
+  ],
+  "ML": [
+    "Shillong",
+    "Tura",
+    "Jowai"
+  ],
+  "MZ": [
+    "Aizawl",
+    "Lunglei",
+    "Serchhip"
+  ],
+  "NL": [
+    "Kohima",
+    "Dimapur",
+    "Mokokchung"
+  ],
+  "LA": [
+    "Leh",
+    "Kargil"
+  ],
+  "LD": [
+    "Kavaratti",
+    "Agatti",
+    "Andrott",
+    "Minicoy",
+  ],
+  "OR": [
+    "Bhubaneswar",
+    "Cuttack",
+    "Rourkela",
+    "Sambalpur",
+    "Balasore",
+    "Puri"
+  ],
+  "PB": [
+    "Ludhiana",
+    "Amritsar",
+    "Jalandhar",
+    "Patiala",
+    "Bathinda"
+  ],
+  "PY":[
+    "Puducherry",
+    "Auroville",
+    "Yanam",
+    "Karaikal",
+    "Mahe"
+  ],
+  "RJ": [
+    "Jaipur",
+    "Jodhpur",
+    "Udaipur",
+    "Kota",
+    "Bikaner",
+    "Ajmer",
+    "Alwar"
+  ],
+  "SK": [
+    "Gangtok",
+    "Namchi"
+  ],
+  "TN": [
+    "Chennai",
+    "Coimbatore",
+    "Madurai",
+    "Tiruchirappalli",
+    "Salem",
+    "Vellore",
+    "Erode",
+    "Tirunelveli"
+  ],
+  "TG": [
+    "Hyderabad",
+    "Warangal",
+    "Nizamabad",
+    "Khammam",
+    "Karimnagar"
+  ],
+  "TR": [
+    "Agartala",
+    "Udaipur",
+    "Dharmanagar"
+  ],
+  "UP": [
+    "Lucknow",
+    "Kanpur",
+    "Ghaziabad",
+    "Agra",
+    "Varanasi",
+    "Meerut",
+    "Allahabad",
+    "Bareilly",
+    "Aligarh"
+  ],
+  "UT": [
+    "Dehradun",
+    "Haridwar",
+    "Haldwani",
+    "Rudrapur"
+  ],
+  "WB": [
+    "Kolkata",
+    "Asansol",
+    "Siliguri",
+    "Durgapur",
+    "Howrah",
+    "Kharagpur"
+  ]
+}

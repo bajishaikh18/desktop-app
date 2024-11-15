@@ -7,27 +7,21 @@ import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { BsSearch } from "react-icons/bs";
 import AgencyDropDown from "@/components/registeredAgencies/AgencieDropDown";
 import { Container } from "react-bootstrap";
-import AgenciesPortal from "@/components/registeredAgencies/AgenciesPortal";
+import AgencyPortal from "@/components/registeredAgencies/AgenciesPortal";
 
-
-interface AgencieSearchProps {
-  onSearch: (term: string) => void;
-  onCountryChange: (country: string) => void;
-}
-
-const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange }) => {
+const AgencieSearch = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("ae");
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const { isDesktop } = useReponsiveStore();
+  const [searchText, setSearchText] = useState<string>("");
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
   const handleFindAgencies = async () => {
-    onSearch(searchTerm);
-    onCountryChange(selectedLocation);
+    setSearchText(searchTerm);
   };
 
   const t = useTranslations("AgencySearch");
@@ -64,7 +58,7 @@ const AgencieSearch: React.FC<AgencieSearchProps> = ({ onSearch, onCountryChange
       <AgencyDropDown onCitiesChange={setSelectedCities} /> 
       </section>
 
-      <AgenciesPortal selectedCities={selectedCities} />
+      <AgencyPortal selectedCities={selectedCities} searchText={searchText} />
     </Container>
   );
 };

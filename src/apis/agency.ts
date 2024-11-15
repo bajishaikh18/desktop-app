@@ -11,7 +11,7 @@ export const getAgencies = async ({
 }: {
   page: number;
   fetchSize: number;
-  filters: { cities?: string[] }; 
+  filters: { cities?: string,name?:string }; 
 }) => {
   try {
     const client = isTokenValid() ? authorizedApiClient : apiClient;
@@ -20,8 +20,6 @@ export const getAgencies = async ({
         page: page,
           limit: fetchSize,
           filters: filters || {}
-
-       
       },
     });
     return response.data;

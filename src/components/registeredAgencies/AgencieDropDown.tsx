@@ -7,6 +7,7 @@ import { Container } from "react-bootstrap";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
+import { CITIES } from "@/helpers/states";
 
 
 
@@ -62,8 +63,7 @@ const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> =
     if(states && states.length>0){
       const optionsOfState = states.map(state=>({label:state.name,options:[{value:"",label:""}]}))
       setOptions(optionsOfState)
-    }
-  
+    }  
   },[states])
 
   const loadOptions =  async (state:any) => {
@@ -71,15 +71,15 @@ const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> =
       if(isStateHaveData){
         return
       }
-      const cities = await GetCity(101,state.id);
+      const cities = CITIES[state.state_code as "KL"];
       const newOptions = options.map((x:any)=>{
         if(x.label===state.name){
           return {
             label : state.name,
             options : cities.map((city:any)=>{
                 return {
-                    value: city.name,
-                    label: city.name
+                    value: city,
+                    label: city
                 }
             })
         }
@@ -93,6 +93,7 @@ const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> =
 
   const removeCity = (cityVal:string)=>{
     const modifiedCities = selectedCities.filter((city:any)=>city.value != cityVal);
+    onCitiesChange(modifiedCities.map((city: any) => city.value));
     setSelectedCities(modifiedCities);
   }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Card, Row, Col, Container } from "react-bootstrap";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useRouter } from "nextjs-toploader/app";
 import styles from "./Agencies.module.scss";
 import { getAgencies } from "@/apis/agency";
@@ -13,50 +13,60 @@ interface Agency {
   profilePic: string;
   name: string;
   regNo: string;
-  jobsPosted: number;
+  postedJobs: number;
   validity: string;
   _id: string;
 }
 
 interface AgencyPortalProps {
   selectedCities: string[];
+  searchText: string;
 }
 
-const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
+const fetchSize = 10;
+
+const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities,searchText }) => {
   const t = useTranslations("AgencyPortal");
   const router = useRouter();
 
-  const fetchAgencies = async () => {
-    const response = await getAgencies({
-      page: 1,
-      fetchSize: 10,
-      filters: { cities: selectedCities },
-    });
-    console.log("Response:", response);
-    return response.agencies;
-  };
-
   const {
-    data: agencies,
+    data,
     isLoading,
-    error,
-  } = useQuery<Agency[], Error>({
-    queryKey: ["agencies", selectedCities],
-    queryFn: fetchAgencies,
+    fetchNextPage,
+    isFetching,
+    isError:error,
+  } = useInfiniteQuery<{agencies:Agency[]}>({
+    queryKey: ["agencies", selectedCities, searchText],
+    queryFn: async ({ pageParam = 1 }) =>{
+      return getAgencies({
+        page: pageParam as number,
+        fetchSize: fetchSize,
+        filters: { cities: selectedCities.join(','), name:searchText },
+      });
+    }
+     ,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage?.agencies?.length === fetchSize
+        ? allPages.length + 1
+        : undefined;
+    },
+    refetchOnMount: true,
+    placeholderData: keepPreviousData,
   });
 
-  if (isLoading) {
-    return <Loader text={t("fetching_details")} />;
+  const agencies = React.useMemo(
+    () => data?.pages?.flatMap((page: any) => page?.agencies) ?? [],
+    [data]
+  );
+
+  if (isLoading || isFetching) {
+    return <Loader text={t("fetching_agencies")} />;
   }
 
   if (error) {
-    console.error("Error fetching agencies:", error);
     return <NotFound text={t("error_agencies")} />;
-  }
-
-  if (agencies) {
-    console.log("Fetched Agencies:", agencies);
-  }
+  } 
 
   return (
     <Container className={styles.container}>
@@ -111,7 +121,7 @@ const AgencyPortal: React.FC<AgencyPortalProps> = ({ selectedCities }) => {
                     className={`${styles.jobsPostedIcon}`}
                   />
                   <p className={`${styles.jobsPosted} mb-0`}>
-                    {agency.jobsPosted} {t("jobs_posted")}
+                    {agency.postedJobs} {t("jobs_posted")}
                   </p>
                 </Col>
                 {/* <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">

@@ -138,6 +138,8 @@
 
 .searchBox {
   flex: 1;
+  display: flex;
+  align-items: center;
 }
 
 .searchImageContainer input {
@@ -146,6 +148,7 @@
   font-size: 16px;
   padding: 8px;
   border-radius: 50px;
+  width: 100%;
 
 }
 
