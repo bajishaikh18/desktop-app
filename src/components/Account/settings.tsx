@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from '../../components/Account/SettingsProfile.module.scss';
 import { Form, Button, Card, Collapse } from 'react-bootstrap';
-
+import Image from 'next/image';
 interface UserProfile {
   name: string;
-  phoneNumber: string;
+  phone: string;
   email: string;
-  birthday: string;
+  dob: string;
   jobTitle: string;
   industry: string;
   experience: string;
@@ -22,9 +22,9 @@ interface SettingsProfileProps {
 const SettingsProfile: React.FC<SettingsProfileProps> = ({ 
   userProfile = {  
     name: '',
-    phoneNumber: '',
+    phone: '',
     email: '',
-    birthday: '',
+    dob: '',
     jobTitle: '',
     industry: '',
     experience: '',
@@ -54,7 +54,17 @@ const SettingsProfile: React.FC<SettingsProfileProps> = ({
         <div className={styles.settingsProfile}>
           <Form>
             <div className={styles.section}>
-              <h3>Personal Details</h3>
+              <h3>Personal Details   <Image 
+    src="/setting.png" 
+    alt="Settings" 
+    width={16} 
+    height={16} 
+    style={{
+      right:'50px', 
+      position: 'absolute',   
+      display: 'inline-block' 
+    }} 
+  /> </h3>
               <div className={styles.formRow}>
                 <Form.Group className={styles.formGroup}>
                   <Form.Label>Name</Form.Label>
@@ -77,8 +87,8 @@ const SettingsProfile: React.FC<SettingsProfileProps> = ({
                     </Form.Select>
                     <Form.Control 
                       type="text" 
-                      value={profile.phoneNumber}
-                      onChange={(e) => handleChange('phoneNumber', e.target.value)}
+                      value={profile.phone}
+                      onChange={(e) => handleChange('phone', e.target.value)}
                       placeholder="Enter your phone number" 
                     />
                   </div>
@@ -98,8 +108,8 @@ const SettingsProfile: React.FC<SettingsProfileProps> = ({
                   <Form.Label>Birthday</Form.Label>
                   <Form.Control 
                     type="text" 
-                    value={profile.birthday}
-                    onChange={(e) => handleChange('birthday', e.target.value)}
+                    value={profile.dob}
+                    onChange={(e) => handleChange('dob', e.target.value)}
                     placeholder="Enter your birthday" 
                   />
                 </Form.Group>
@@ -107,7 +117,17 @@ const SettingsProfile: React.FC<SettingsProfileProps> = ({
             </div>
             
             <div className={styles.section}>
-              <h3>Professional Details</h3>
+              <h3>Professional Details    <Image 
+    src="/setting.png" 
+    alt="Settings" 
+    width={16} 
+    height={16} 
+    style={{
+      right:'50px', 
+      position: 'absolute',   
+      display: 'inline-block' 
+    }} 
+  /> </h3>
               <div className={styles.formRow}>
                 <Form.Group className={styles.formGroup}>
                   <Form.Label>Job Title</Form.Label>
@@ -152,8 +172,20 @@ const SettingsProfile: React.FC<SettingsProfileProps> = ({
 
             {['Account Settings', 'Notification Preference', 'Language'].map((section) => (
               <div key={section} className={`${styles.section} ${styles.collapsible}`} onClick={() => toggleSection(section)}>
-                <h3>{section}</h3>
-               
+                <h3>
+                  {section}
+                  <Image 
+                    src="/Icon.png" 
+                    alt="Section Icon" 
+                    width={16} 
+                    height={16} 
+                    style={{
+                      position: 'absolute',
+                      right: '50px',
+                      display: 'inline-block',
+                    }} 
+                  />
+                </h3>
               </div>
             ))}
 
