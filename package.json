@@ -15,8 +15,8 @@
     "@tanstack/react-virtual": "^3.10.8",
     "@types/lodash": "^4.17.10",
     "@types/react-leaflet": "^3.0.0",
-    "add-to-calendar-button-react": "^2.7.3",
     "@uidotdev/usehooks": "^2.4.1",
+    "add-to-calendar-button-react": "^2.7.3",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "date-fns": "^4.1.0",
@@ -39,6 +39,7 @@
     "react-leaflet": "^4.2.1",
     "react-select": "^5.8.1",
     "react-slick": "^0.30.2",
+    "react-toastify": "^10.0.6",
     "slick-carousel": "^1.8.1",
     "zustand": "^5.0.0-rc.2"
   },

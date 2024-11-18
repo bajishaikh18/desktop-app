@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../../components/Account/SettingsProfile.module.scss';
 import { Form, Button, Card, Collapse } from 'react-bootstrap';
 import Image from 'next/image';
+import { useAuthUserStore } from '../../stores/useAuthUserStore';
+
 interface UserProfile {
   name: string;
   phone: string;
@@ -14,38 +16,45 @@ interface UserProfile {
 }
 
 interface SettingsProfileProps {
-  userProfile?: UserProfile;
-  onSave: (updatedProfile: UserProfile) => void;
-  onCancel: () => void;
+  onSave?: (updatedProfile: UserProfile) => void;
+  onCancel?: () => void;
 }
 
-const SettingsProfile: React.FC<SettingsProfileProps> = ({ 
-  userProfile = {  
-    name: '',
-    phone: '',
-    email: '',
+const SettingsProfile: React.FC<SettingsProfileProps> = ({ onSave = () => {}, onCancel = () => {} }) => {
+  const { authUser } = useAuthUserStore();
+
+  const [profile, setProfile] = useState<UserProfile>({
+    name: authUser ? `${authUser.firstName} ${authUser.lastName}` : '',
+    phone: authUser?.phone || '',
+    email: authUser?.email || '',
     dob: '',
     jobTitle: '',
     industry: '',
     experience: '',
-    state: ''
-  },
-  onSave, 
-  onCancel 
-}) => {
-  const [profile, setProfile] = React.useState<UserProfile>(userProfile);
-  const [openSection, setOpenSection] = React.useState<string | null>(null);
+    state: authUser?.country || '',
+  });
+
+  const [openSection, setOpenSection] = useState<string | null>(null);
 
   const handleChange = (field: keyof UserProfile, value: string) => {
-    setProfile((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSave = () => {
-    onSave(profile);
+    console.log(`Field: ${field}, Value: ${value}`);
+    setProfile((prev) => {
+      const updatedProfile = { ...prev, [field]: value };
+      console.log('Updated Profile:', updatedProfile); 
+      return updatedProfile;
+    });
   };
 
   const toggleSection = (section: string) => {
+    console.log(`Toggling section: ${section}`); 
     setOpenSection(openSection === section ? null : section);
+  };
+
+  const handleSave = () => {
+    console.log('Saving profile:', profile);
+    if (onSave) {
+      onSave(profile);
+    }
   };
 
   return (
@@ -53,24 +62,24 @@ const SettingsProfile: React.FC<SettingsProfileProps> = ({
       <Card.Body>
         <div className={styles.settingsProfile}>
           <Form>
+            
             <div className={styles.section}>
-              <h3>Personal Details   <Image 
-    src="/setting.png" 
-    alt="Settings" 
-    width={16} 
-    height={16} 
-    style={{
-      right:'50px', 
-      position: 'absolute',   
-      display: 'inline-block' 
-    }} 
-  /> </h3>
+              <h3>
+                Personal Details
+                <Image
+                  src="/setting.png"
+                  alt="Settings"
+                  width={16}
+                  height={16}
+                  style={{ right: '50px', position: 'absolute', display: 'inline-block' }}
+                />
+              </h3>
               <div className={styles.formRow}>
                 <Form.Group className={styles.formGroup}>
                   <Form.Label>Name</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    value={profile.name} 
+                  <Form.Control
+                    type="text"
+                    value={profile.name}
                     onChange={(e) => handleChange('name', e.target.value)}
                     placeholder="Enter your name"
                   />
@@ -78,18 +87,15 @@ const SettingsProfile: React.FC<SettingsProfileProps> = ({
                 <Form.Group className={styles.formGroup}>
                   <Form.Label>Phone Number</Form.Label>
                   <div className={styles.phoneNumber}>
-                    <Form.Select 
-                      className={styles.countryCode}
-                      defaultValue="+01"
-                    >
+                    <Form.Select className={styles.countryCode} defaultValue="+01">
                       <option>+01</option>
                       <option>+91</option>
                     </Form.Select>
-                    <Form.Control 
-                      type="text" 
+                    <Form.Control
+                      type="text"
                       value={profile.phone}
                       onChange={(e) => handleChange('phone', e.target.value)}
-                      placeholder="Enter your phone number" 
+                      placeholder="Enter your phone number"
                     />
                   </div>
                 </Form.Group>
@@ -97,111 +103,103 @@ const SettingsProfile: React.FC<SettingsProfileProps> = ({
               <div className={styles.formRow}>
                 <Form.Group className={styles.formGroup}>
                   <Form.Label>Email</Form.Label>
-                  <Form.Control 
-                    type="email" 
+                  <Form.Control
+                    type="email"
                     value={profile.email}
                     onChange={(e) => handleChange('email', e.target.value)}
-                    placeholder="Enter your email" 
+                    placeholder="Enter your email"
                   />
                 </Form.Group>
                 <Form.Group className={styles.formGroup}>
                   <Form.Label>Birthday</Form.Label>
-                  <Form.Control 
-                    type="text" 
+                  <Form.Control
+                    type="text"
                     value={profile.dob}
                     onChange={(e) => handleChange('dob', e.target.value)}
-                    placeholder="Enter your birthday" 
-                  />
-                </Form.Group>
-              </div>
-            </div>
-            
-            <div className={styles.section}>
-              <h3>Professional Details    <Image 
-    src="/setting.png" 
-    alt="Settings" 
-    width={16} 
-    height={16} 
-    style={{
-      right:'50px', 
-      position: 'absolute',   
-      display: 'inline-block' 
-    }} 
-  /> </h3>
-              <div className={styles.formRow}>
-                <Form.Group className={styles.formGroup}>
-                  <Form.Label>Job Title</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    value={profile.jobTitle}
-                    onChange={(e) => handleChange('jobTitle', e.target.value)}
-                    placeholder="Enter your job title" 
-                  />
-                </Form.Group>
-                <Form.Group className={styles.formGroup}>
-                  <Form.Label>Industry</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    value={profile.industry}
-                    onChange={(e) => handleChange('industry', e.target.value)}
-                    placeholder="Enter your industry" 
-                  />
-                </Form.Group>
-              </div>
-              <div className={styles.formRow}>
-                <Form.Group className={styles.formGroup}>
-                  <Form.Label>Total Number of Years of Experience</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    value={profile.experience}
-                    onChange={(e) => handleChange('experience', e.target.value)}
-                    placeholder="Enter your experience" 
-                  />
-                </Form.Group>
-                <Form.Group className={styles.formGroup}>
-                  <Form.Label>Current State</Form.Label>
-                  <Form.Control 
-                    type="text" 
-                    value={profile.state}
-                    onChange={(e) => handleChange('state', e.target.value)}
-                    placeholder="Enter your state" 
+                    placeholder="Enter your birthday"
                   />
                 </Form.Group>
               </div>
             </div>
 
+            
+            <div className={styles.section}>
+              <h3>
+                Professional Details
+                <Image
+                  src="/setting.png"
+                  alt="Settings"
+                  width={16}
+                  height={16}
+                  style={{ right: '50px', position: 'absolute', display: 'inline-block' }}
+                />
+              </h3>
+              <div className={styles.formRow}>
+                <Form.Group className={styles.formGroup}>
+                  <Form.Label>Job Title</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={profile.jobTitle}
+                    onChange={(e) => handleChange('jobTitle', e.target.value)}
+                    placeholder="Enter your job title"
+                  />
+                </Form.Group>
+                <Form.Group className={styles.formGroup}>
+                  <Form.Label>Industry</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={profile.industry}
+                    onChange={(e) => handleChange('industry', e.target.value)}
+                    placeholder="Enter your industry"
+                  />
+                </Form.Group>
+              </div>
+              <div className={styles.formRow}>
+                <Form.Group className={styles.formGroup}>
+                  <Form.Label>Years of Experience</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={profile.experience}
+                    onChange={(e) => handleChange('experience', e.target.value)}
+                    placeholder="Enter your experience"
+                  />
+                </Form.Group>
+                <Form.Group className={styles.formGroup}>
+                  <Form.Label>State</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={profile.state}
+                    onChange={(e) => handleChange('state', e.target.value)}
+                    placeholder="Enter your state"
+                  />
+                </Form.Group>
+              </div>
+            </div>
+
+           
             {['Account Settings', 'Notification Preference', 'Language'].map((section) => (
-              <div key={section} className={`${styles.section} ${styles.collapsible}`} onClick={() => toggleSection(section)}>
-                <h3>
+              <div key={section} className={`${styles.section} ${styles.collapsible}`}>
+                <h3 onClick={() => toggleSection(section)}>
                   {section}
-                  <Image 
-                    src="/Icon.png" 
-                    alt="Section Icon" 
-                    width={16} 
-                    height={16} 
-                    style={{
-                      position: 'absolute',
-                      right: '50px',
-                      display: 'inline-block',
-                    }} 
+                  <Image
+                    src="/icon.png"
+                    alt={`${section} Icon`}
+                    width={16}
+                    height={16}
+                    style={{ position: 'absolute', right: '50px', display: 'inline-block' }}
                   />
                 </h3>
               </div>
             ))}
 
-<div className={styles.jobActions}>
-           <Button
-    className={styles.saveJobButton}
-                          variant="secondary"
-                         
-                        > cancel
-                        </Button>
-                         <Button
-                        className={styles.easyApplyButton}
-                        variant="secondary"
-                      >
-                       save
-                      </Button>
+            
+            <div className={styles.jobActions}>
+              <Button className={styles.saveJobButton} variant="secondary" onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button className={styles.easyApplyButton} variant="secondary" onClick={handleSave}>
+                Save
+              </Button>
             </div>
           </Form>
         </div>
