@@ -45,16 +45,45 @@
           border-radius: 5px;
         }
       }
-
-      .phoneNumber {
+      .phoneNumberContainer {
         display: flex;
-
-        .countryCode {
-          width: 25%;
-          margin-right: 10px;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+        height: 40px; 
+      
+        select.countryCodeDropdown {
+          width: 80px; 
+          border: none;
+          outline: none;
+          padding: 0 8px;
+          font-size: 14px;
+          background-color: transparent;
+          appearance: none; 
+          cursor: pointer;
         }
+      
+        .separator {
+          font-size: 14px;
+          color: #888;
+          margin-left: -15px;
+        }
+      
+        input.phoneInput {
+          flex: 1;
+          border: none;
+          outline: none;
+          font-size: 14px;
+          padding: 0 8px;
+          background-color: transparent;
+        }
+      
+       
       }
-    }
+      
+      
+   }
 
     
     &:last-child {

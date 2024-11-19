@@ -8,6 +8,7 @@ interface UserProfile {
   name: string;
   phone: string;
   email: string;
+  countryCode: string;
   dob: string;
   jobTitle: string;
   industry: string;
@@ -27,6 +28,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = ({ onSave = () => {}, on
     name: authUser ? `${authUser.firstName} ${authUser.lastName}` : '',
     phone: authUser?.phone || '',
     email: authUser?.email || '',
+    countryCode: '+91',
     dob: '',
     jobTitle: '',
     industry: '',
@@ -84,21 +86,33 @@ const SettingsProfile: React.FC<SettingsProfileProps> = ({ onSave = () => {}, on
                     placeholder="Enter your name"
                   />
                 </Form.Group>
+
                 <Form.Group className={styles.formGroup}>
-                  <Form.Label>Phone Number</Form.Label>
-                  <div className={styles.phoneNumber}>
-                    <Form.Select className={styles.countryCode} defaultValue="+01">
-                      <option>+01</option>
-                      <option>+91</option>
-                    </Form.Select>
-                    <Form.Control
-                      type="text"
-                      value={profile.phone}
-                      onChange={(e) => handleChange('phone', e.target.value)}
-                      placeholder="Enter your phone number"
-                    />
-                  </div>
-                </Form.Group>
+  <Form.Label>Phone Number</Form.Label>
+  <div className={styles.phoneNumberContainer}>
+    <select
+      className={styles.countryCodeDropdown}
+      onChange={(e) => handleChange('countryCode', e.target.value)}
+      defaultValue="+91"
+    >
+      <option value="+91">+91</option>
+      <option value="+1">+01</option>
+     
+    </select>
+    <span className={styles.separator}>|</span>
+    <input
+      type="text"
+      value={profile.phone}
+      onChange={(e) => handleChange('phone', e.target.value)}
+      placeholder="Enter your phone number"
+      className={styles.phoneInput}
+    />
+  </div>
+</Form.Group>
+
+
+
+
               </div>
               <div className={styles.formRow}>
                 <Form.Group className={styles.formGroup}>
