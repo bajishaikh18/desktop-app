@@ -45,6 +45,7 @@ import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { INDIAN_STATES } from "@/helpers/states";
+import { getJobApplication } from "@/apis/applications";
 
 type PostedJobDetailsProps = {
   jobId: string;
@@ -96,7 +97,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('name')}</span>
+              <span className={styles.label}>{t("name")}</span>
             </h3>
           </td>
           <td>
@@ -108,7 +109,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('email')}</span>
+              <span className={styles.label}>{t("email")}</span>
             </h3>
           </td>
           <td>
@@ -120,7 +121,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('address')}</span>
+              <span className={styles.label}>{t("address")}</span>
             </h3>
           </td>
           <td>
@@ -132,7 +133,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('state')}</span>
+              <span className={styles.label}>{t("state")}</span>
             </h3>
           </td>
           <td>
@@ -148,7 +149,7 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
         <tr>
           <td>
             <h3 className={`d-none d-sm-block ${styles.infoData}`}>
-              <span className={styles.label}>{t('city')}</span>
+              <span className={styles.label}>{t("city")}</span>
             </h3>
           </td>
           <td>
@@ -205,6 +206,23 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     isSaved,
   } = data?.job || {};
 
+  const {
+    data: application,
+    isLoading: applicationLoading,
+    isError: applicationError,
+  } = useQuery({
+    queryKey: ["jobApplications", jobId, applied],
+    queryFn: () => {
+      if (applied) {
+        return getJobApplication(jobId);
+      }
+      throw new Error("jobId is null or undefined");
+    },
+    enabled: !!jobId,
+  });
+  const { positions: appliedPositions, _id: applicationId } =
+    application?.app || {};
+
   const { isDesktop, isTab, isMobile } = useReponsiveStore();
 
   const handleSaveJob = async () => {
@@ -219,10 +237,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
         queryKey: ["jobDetails", jobId],
         refetchType: "all",
       });
-      toast.success(t('job_saved'));
+      toast.success(t("job_saved"));
     } catch (error) {
       console.error("Failed to save job:", error);
-      toast.error(t('submit_error'));
+      toast.error(t("submit_error"));
     } finally {
       setIsSaving(false);
     }
@@ -236,10 +254,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
         queryKey: ["jobDetails", jobId],
         refetchType: "all",
       });
-      toast.success(t('job_removed'));
+      toast.success(t("job_removed"));
     } catch (error) {
       console.error("Failed to remove saved job:", error);
-      toast.error(t('remove_failed'));
+      toast.error(t("remove_failed"));
     } finally {
       setIsSaving(false);
     }
@@ -264,14 +282,14 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
       setOpenLogin(true);
       return true;
     }
-    const loading = toast.loading(t("report_posting"))
+    const loading = toast.loading(t("report_posting"));
     try {
       await reportJob(jobId);
       toast.dismiss(loading);
-      toast.success(t('job_reported'));
+      toast.success(t("job_reported"));
     } catch (error) {
       toast.dismiss(loading);
-      toast.error(t('job_report_failed'));
+      toast.error(t("job_report_failed"));
     }
   };
 
@@ -283,12 +301,22 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
     }
   };
 
-  const onSuccess = () => {
+  const onSuccess = async () => {
     setShowSuccess(true);
     setShowApplyModal(false);
+    await queryClient.invalidateQueries({
+      queryKey: ["jobDetails", jobId],
+      refetchType: "all",
+    });
+    await queryClient.invalidateQueries({
+     queryKey: ["jobApplications", jobId, applied],
+     refetchType: "all",
+    })
   };
 
-  
+  const allowReapply = positions?.every((pos: any) =>
+    appliedPositions?.includes(pos._id)
+  );
 
   if (isLoading) {
     return (
@@ -326,9 +354,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   >
                     <h3 onClick={goBack} className={styles.backlink}>
                       <FaChevronLeft fontSize={16} color="#000" />
-                      {t('posting_details')}
-
-
+                      {t("posting_details")}
                     </h3>
                     <div className={styles.actionContainer}>
                       <Dropdown>
@@ -377,7 +403,11 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   <div className={styles.detailsCardHeader}>
                     <div className={styles.agencyDetails}>
                       <Image
-                        src={`${agencyId?.profilePic ? `${IMAGE_BASE_URL}/${agencyId?.profilePic}`: '/no_image.jpg'}`}
+                        src={`${
+                          agencyId?.profilePic
+                            ? `${IMAGE_BASE_URL}/${agencyId?.profilePic}`
+                            : "/no_image.jpg"
+                        }`}
                         width={66}
                         height={66}
                         alt="agency-logo"
@@ -393,8 +423,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                           />
                         </div>
                         <p className="d-none d-sm-block">
-                        {t('approved_by_mofa_india')}
-                         </p>
+                          {t("approved_by_mofa_india")}
+                        </p>
                       </div>
                     </div>
                     <div className={styles.location}>
@@ -409,7 +439,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   </div>
                 )}
                 <div className={styles.summaryDetailsSection}>
-                  <h3 className={styles.infoData}>{t('job_details')}</h3>
+                  <h3 className={styles.infoData}>{t("job_details")}</h3>
                   <p>
                     {description ? (
                       <>
@@ -449,21 +479,26 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     <span>{agencyId.name}</span>
                   </h3>
                   <ul className={styles.benefits}>
-  {amenities.map((amenity: string, index: number) => (
-    <li key={index}>
-      <Image
-        src={FACILITIES_IMAGES[amenity as "Food" | "Transportation" | "Stay" | "Recruitment"]} 
-        alt={t(amenity.toLowerCase())} 
-        width={16}
-        height={16}
-      />{" "}
-      <span>{t(amenity.toLowerCase())}</span> 
-    </li>
-  ))}
-</ul>
-
-
-                 
+                    {amenities.map((amenity: string, index: number) => (
+                      <li key={index}>
+                        <Image
+                          src={
+                            FACILITIES_IMAGES[
+                              amenity as
+                                | "Food"
+                                | "Transportation"
+                                | "Stay"
+                                | "Recruitment"
+                            ]
+                          }
+                          alt={t(amenity.toLowerCase())}
+                          width={16}
+                          height={16}
+                        />{" "}
+                        <span>{t(amenity.toLowerCase())}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
                 <ul className={styles.footerInfo}>
@@ -484,7 +519,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                       alt="expiry"
                     />
                     <span>
-                      {t('valid_till')}{" "}
+                      {t("valid_till")}{" "}
                       {DateTime.fromISO(expiry).toFormat("dd-MMM-yyyy")}
                     </span>
                   </li>
@@ -501,7 +536,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   >
                     <h3 onClick={goBack} className={styles.backlink}>
                       <FaChevronLeft fontSize={16} color="#000" />
-                      {t('job_details')}
+                      {t("job_details")}
                     </h3>
                     <div className={styles.actionContainer}>
                       <Dropdown>
@@ -514,7 +549,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                          <Dropdown.Item className="danger" onClick={handleReportJob}>
+                          <Dropdown.Item
+                            className="danger"
+                            onClick={handleReportJob}
+                          >
                             {t("report_job")}
                           </Dropdown.Item>
                         </Dropdown.Menu>
@@ -524,7 +562,11 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   <div className={styles.detailsCardHeader}>
                     <div className={styles.agencyDetails}>
                       <Image
-                        src={`${agencyId?.profilePic ? `${IMAGE_BASE_URL}/${agencyId?.profilePic}`: '/no_image.jpg'}`}
+                        src={`${
+                          agencyId?.profilePic
+                            ? `${IMAGE_BASE_URL}/${agencyId?.profilePic}`
+                            : "/no_image.jpg"
+                        }`}
                         width={66}
                         height={66}
                         alt="agency-logo"
@@ -539,10 +581,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                             alt="verified-logo"
                           />
                         </div>
-                        <p>
-                        {t('approved_by_mofa_india')}
-
-                        </p>
+                        <p>{t("approved_by_mofa_india")}</p>
                       </div>
                     </div>
                     <div className={styles.location}>
@@ -567,21 +606,28 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                     id="jobDetailTab"
                   >
                     <Tab eventKey="home" title={t("positions")}>
-                      <JobPositions
-                        positions={positions}
-                        onPositionSelect={handlePositionSelect}
-                      />
+                      {applicationLoading ? (
+                        <Loader text="Validting positions" />
+                      ) : (
+                        <JobPositions
+                          positions={positions}
+                          appliedPositions={appliedPositions}
+                          onPositionSelect={handlePositionSelect}
+                        />
+                      )}
                     </Tab>
                     {!isMobile && (
-                      <Tab eventKey="aboutRecruiters" title={t("about_recruiters")}>
+                      <Tab
+                        eventKey="aboutRecruiters"
+                        title={t("about_recruiters")}
+                      >
                         <AgencyDetails agencyDetailsId={agencyId._id} />
                       </Tab>
                     )}
                     {!isMobile && (
                       <Tab eventKey="contact" title={t("more_info")}>
                         <p className={styles.moreDetails}>
-                        {t('more_info_description')}
-
+                          {t("more_info_description")}
                         </p>
                       </Tab>
                     )}
@@ -595,10 +641,10 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   />
                 )}
                 <div className={styles.jobActions}>
-                  {showSuccess || applied ? (
+                  {allowReapply ? (
                     <div className={styles.successMessage}>
-                      <BsCheckCircleFill />{t('job_application_success')}
-
+                      <BsCheckCircleFill />
+                      {t("job_application_success")}
                     </div>
                   ) : (
                     <>
@@ -659,6 +705,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
           onHide={() => {
             setShowApplyModal(false);
           }}
+          applicationId={applicationId}
+          appliedPositions={appliedPositions || []}
           onApplySuccess={onSuccess}
           selectedPosition={selectedPosition}
           allPositions={positions}

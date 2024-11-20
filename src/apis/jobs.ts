@@ -43,6 +43,7 @@ export const getJobDetails = async (id: string) => {
   }
 };
 
+
 export const convertCurrency = async (
   jobId: string,
   amount: number,

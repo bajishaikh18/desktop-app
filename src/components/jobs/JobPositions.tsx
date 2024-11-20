@@ -11,8 +11,9 @@ export type Position = {
   salary: string;
 };
 
-export const JobPositions = ({ positions, onPositionSelect }: { positions: Position[], onPositionSelect: (positionId: string,checked:boolean) => void }) => {
-  console.log(positions)
+export const JobPositions = ({ positions, onPositionSelect,appliedPositions }: { positions: Position[],appliedPositions:string[], onPositionSelect: (positionId: string,checked:boolean) => void }) => {
+  
+  
   const handlePositionSelect = (positionTitle: string,e:any) => {
     onPositionSelect(positionTitle,e.target.checked); 
   };
@@ -28,6 +29,8 @@ export const JobPositions = ({ positions, onPositionSelect }: { positions: Posit
                   <Form.Check
                     type="checkbox"
                     id={`position-${position._id}`}
+                    disabled={appliedPositions?.includes(position._id)}
+                    checked={appliedPositions?.includes(position._id) || undefined}
                     className={styles.positionCheckbox}
                     onChange={(e) => handlePositionSelect(position._id,e)} 
                   />
