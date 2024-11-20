@@ -335,22 +335,25 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                         {showFullText ? (
                           <>
                             {description}
-                            <Link
-                              href={""}
-                              onClick={() => setShowFullText(false)}
+                            <a
+                            href="javascript:;"
+                            onClick={() => setShowFullText(false)}
                             >
                               {t("hide")}
-                            </Link>{" "}
+                            </a>
                           </>
                         ) : (
                           <>
                             {truncateText(description, 100)}
-                            <Link
-                              href={""}
-                              onClick={() => setShowFullText(true)}
-                            >
-                              {t("read_more")}
-                            </Link>{" "}
+                            {
+                              description.length>100 && <a
+                              href="javascript:;"
+                                onClick={() => setShowFullText(true)}
+                              >
+                                {t("read_more")}
+                              </a>
+                            }
+                           
                           </>
                         )}
                       </>
