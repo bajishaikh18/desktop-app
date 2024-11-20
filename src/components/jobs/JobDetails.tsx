@@ -607,7 +607,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                   >
                     <Tab eventKey="home" title={t("positions")}>
                       {applicationLoading ? (
-                        <Loader text="Validting positions" />
+                        <Loader text={t("validating_job_positions")} />
                       ) : (
                         <JobPositions
                           positions={positions}
