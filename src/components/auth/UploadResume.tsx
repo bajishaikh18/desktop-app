@@ -126,17 +126,14 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
 
   return (
     <>
-    {!type && <>
-     <Modal.Title className={styles.modalTitle4}>
-     {t("upload_your_resume")}
-    </Modal.Title>
-    <p className={styles.modalDescription}>
-      {t(
-        "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from"
-      )}
-    </p>
-    </>
-    }
+        
+      <Modal.Title className={styles.modalTitle4}>
+        {t("upload_your_resume")}
+      </Modal.Title>
+      <p className={styles.modalDescription}>
+        {t("you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from")}
+      </p>
+
      
       {(type === "resume" || !type) && (
         <div className={styles.uploadBox} {...getCvRootProps()}>

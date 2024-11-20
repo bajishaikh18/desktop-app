@@ -192,13 +192,7 @@ const Header: React.FC = () => {
                     className={styles.navListItem}
                     style={{paddingRight:0}}
                   >
-                    <NavDropdown.Item
-                    href="javascript:;"
-                    className={styles.navListItem}
-                      onClick={logout}
-                    >
-                      Logout
-                    </NavDropdown.Item>
+                    
                     <NavDropdown.Item
             href="/settings"
           className={styles.navListItem}
@@ -248,6 +242,13 @@ const Header: React.FC = () => {
                      
                     >
                     Terms & Conditions
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                      onClick={logout}
+                    >
+                      Logout
                     </NavDropdown.Item>
                   </NavDropdown>
                   {

@@ -1,7 +1,7 @@
 "use client";
-import SettingsProfile from "@/components/Account/settings";
+import SettingsProfile from "@/components/Account/Settings";
 
-const settingsPage: React.FC = () => {
+const SettingsPage: React.FC = () => {
   return (
     <div>
    <SettingsProfile/>
@@ -9,4 +9,4 @@ const settingsPage: React.FC = () => {
   );
 };
 
-export default settingsPage;
+export default SettingsPage;
