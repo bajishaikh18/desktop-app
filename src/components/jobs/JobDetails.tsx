@@ -216,7 +216,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
       if (applied) {
         return getJobApplication(jobId);
       }
-      throw new Error("jobId is null or undefined");
+      return {app:{}}
     },
     enabled: !!jobId,
   });
