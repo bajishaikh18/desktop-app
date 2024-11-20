@@ -4,7 +4,7 @@ import WalkinsSlider from '@/components/walkins/WalkinsSlider';
 
 const WalkinPage: React.FC = () => {
   return (
-    <div>
+    <div className='main-list-section'>
      <WalkinsSlider />  
     </div>
   );

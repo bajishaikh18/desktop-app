@@ -3,7 +3,7 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://ec2-3-110-104-29.ap-south-1.compute.amazonaws.com:3030';
 
 
-export const IMAGE_BASE_URL = "https://wonderlybackendpublic.s3.ap-south-1.amazonaws.com";
+export const IMAGE_BASE_URL = "https://boon-backend-public-dev.s3.ap-south-1.amazonaws.com";
 
 export const COUNTRIES = {
     sa: { label: "Saudi Arabia", isdCode: "+966",currency:"SAR", iso3Code: "KSA" },
@@ -22,3 +22,19 @@ export const FACILITIES_IMAGES = {
     "Recruitment":"/icons/recruit.svg"
 }
   
+export const INDUSTRIES = {
+  oil_gas: "Oil & Gas",
+  constructions: "Constructions",
+  facility_management: "Facility Management / Operations Maintenance",
+  hospitality: "Hospitality",
+  manufacturing: "Manufacturing",
+  logistics: "Logistics & E-Commerce",
+  health_care:"Health Care",
+  information_technology:"Information Technology",
+  education:"Education",
+  travel_tourism:"Travel & Tourism",
+  tele_communication:"Tele Communication",
+  banking_finance:"Banking & Finance",
+  fcmg:"FMCG",
+  retail:"Retail"
+};

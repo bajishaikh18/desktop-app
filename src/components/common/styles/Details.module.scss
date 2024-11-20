@@ -74,8 +74,11 @@ h3.infoData{
 
             img {
                 margin-right: 8px;
+                vertical-align: middle;
             }
-
+            span{
+                vertical-align: middle;
+            }
             a {
                 color: $color-brand-1;
                 text-decoration: underline;
@@ -129,6 +132,30 @@ h3.infoData{
     padding: 0px 0px 0px 24px;
 }
 
+.agencyDetails {
+    gap: 12px;
+    display: flex;
+    align-items: center;
+
+    .agencyNameContainer {
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        margin-bottom: 8px;
+
+        img {
+            margin-top: 5px;
+        }
+    }
+
+    .agencyName {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 22px;
+        margin-bottom: 0px;
+    }
+
+}
 .detailsCardHeader {
     padding: 0px;
     display: flex;
@@ -146,30 +173,7 @@ h3.infoData{
         }
     }
 
-    .agencyDetails {
-        gap: 12px;
-        display: flex;
-        align-items: center;
-
-        .agencyNameContainer {
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
-            margin-bottom: 8px;
-
-            img {
-                margin-top: 5px;
-            }
-        }
-
-        .agencyName {
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 22px;
-            margin-bottom: 0px;
-        }
-
-    }
+    
 
     .location {
         display: flex;
