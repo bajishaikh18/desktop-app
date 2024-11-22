@@ -17,6 +17,14 @@ export interface AuthUser {
     keyName: string;
     uploadDate: string;
   };
+  industry:string;
+  totalExperience:string;
+  state:string;
+  gulfExperience:string;
+  currentJobTitle:{
+    title:string;
+    _id:string
+  }
 }
 
 interface UserStore {
