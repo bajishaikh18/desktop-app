@@ -380,7 +380,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                    <option value="Yes">{t('yes')}</option>
                    <option value="No">{t('no')}</option>
                     </Form.Select>
-                   {formErrors.gulfExperience && (<div className="invalid-feedback">{formErrors.gulfExperience}</div>
+                   {formErrors.gulfExperience &&(<div className="invalid-feedback">{formErrors.gulfExperience}</div>
                    )}
                 </Form.Group>
                  </div>
