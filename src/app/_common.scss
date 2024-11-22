@@ -2,6 +2,9 @@
     padding: 110px 24px 30px 24px;
     background: rgba(250, 248, 255, 1);
 }
+.main-list-section{
+    padding-bottom: 40px;
+}
 
 .expand-button {
     position: absolute;
@@ -68,6 +71,11 @@
         box-shadow: none !important;
     }
 }
+
+.success{
+    color: $color-success !important;
+  }
+
 @media (max-width: 768px) {
     .navbar-toggler{
         border: none !important;

@@ -1,10 +1,11 @@
 "use client";
-import Agenciesportal from "@/components/registeredAgencies/agenciesportal";
 
+import AgenciesSearch from "@/components/registeredAgencies/AgenciesSearch";
 const AgencyPage: React.FC = () => {
   return (
-    <div>
-     <Agenciesportal />  
+    <div className='main-list-section'>
+       <AgenciesSearch/>
+     
     </div>
   );
 };
