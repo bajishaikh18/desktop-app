@@ -74,14 +74,21 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
         email: authUser.email,
         countryCode: '+91',
         dob: authUser.dob,
-        currentJobTitle:'',
-        industry:'',
-        experienceYears:'',
-        gulfExperience:'',
-        currentState:'',
+        currentJobTitle: '',
+        industry: '',
+        experienceYears: '',
+        gulfExperience: '',
+        currentState: '',
       });
+  
+      
+      if (authUser.dob) {
+        const date = new Date(authUser.dob);
+        setSelectedDate(date);
+      }
     }
-  }, [authUser]); 
+  }, [authUser]);
+  
 
   const handleChange = (field: keyof UserProfile, value: string) => {
     setProfile((prev) => ({ ...prev, [field]: value }));
@@ -95,22 +102,20 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProfile({ ...profile, email: e.target.value });
   };
-
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    if (date) {
-      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-     
-
-      setFormErrors((prevErrors) => ({
-        ...prevErrors,
-        dob: "",
-      }));
-    }
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+ const selectedDate = new Date(e.target.value);
+    setProfile({ ...profile, dob: e.target.value });  
+    const formattedDate = `${selectedDate.getFullYear()}-${(selectedDate.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${selectedDate.getDate().toString().padStart(2, "0")}`;
+       setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      dob: "",
+    }));
+  
     setDatePickerVisible(false);
   };
+  
 
   const toggleSection = (section: string) => {
     setOpenSections((prevSections) =>
@@ -236,38 +241,49 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
 
                   <div className={styles.formRow}>
                   <Form.Group className={styles.formGroup} style={{ flex: 1, maxWidth: '340px' }}>
-                    <Form.Label>{t("dateofbirth")}</Form.Label>
-               <div style={{ position: 'relative' }}>
-                 <DatePicker
-                 selected={selectedDate}
-                 onChange={handleDateChange}
-                  dateFormat="dd-MM-yyyy"
-                  placeholderText="DD-MM-YYYY"
-                  popperClassName="custom-date-picker"
-                  customInput={
-                <Form.Control
-                 type="text"
-                  placeholder="YYYY-MM-DD"
-                 value={profile.dob}
-                 readOnly
-                isInvalid={!!formErrors.dob}
-               className={styles.dobInput} 
-               />
+  <Form.Label>{t("dateofbirth")}</Form.Label>
+  <div style={{ position: 'relative' }}>
+    <DatePicker
+      selected={selectedDate} 
+      dateFormat="dd-MM-yyyy"
+      placeholderText="DD-MM-YYYY"
+      popperClassName="custom-date-picker"
+      customInput={
+        <Form.Control
+          type="text"
+          placeholder="YYYY-MM-DD"
+          value={profile.dob}
+          onChange={handleDateChange}
+          readOnly
+          isInvalid={!!formErrors.dob}
+          className={styles.dobInput}
+        />
       }
-              className={styles.datePicker}
-              popperPlacement="bottom"
-              onClickOutside={() => setDatePickerVisible(false)}
-            />
-             <Image src="/mingcute_calendar-line.png" alt="Calendar" width={18} height={20} className={styles.calendarIcon}
-              onClick={() => setDatePickerVisible(!datePickerVisible)}
-          style={{   position: 'absolute',  right: '10px', top: '50%',  transform: 'translateY(-50%)',  cursor: 'pointer',
-        }}
-       />
-          {formErrors.dob && (
-          <Form.Text className="error">{formErrors.dob}</Form.Text>
-       )}
-               </div>
-           </Form.Group>
+      className={styles.datePicker}
+      popperPlacement="bottom"
+      onClickOutside={() => setDatePickerVisible(false)}
+    />
+    <Image
+      src="/mingcute_calendar-line.png"
+      alt="Calendar"
+      width={18}
+      height={20}
+      className={styles.calendarIcon}
+      onClick={() => setDatePickerVisible(!datePickerVisible)}
+      style={{
+        position: 'absolute',
+        right: '10px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        cursor: 'pointer',
+      }}
+    />
+    {formErrors.dob && (
+      <Form.Text className="error">{formErrors.dob}</Form.Text>
+    )}
+  </div>
+</Form.Group>
+
                </div>
                 </div>
               )}
