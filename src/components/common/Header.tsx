@@ -209,18 +209,18 @@ const Header: React.FC = () => {
                     
                     </NavDropdown.Item>
                     <NavDropdown.Item
-                    href="/UploadCV"
+                    href="/uploadCV"
                     className={styles.navListItem}
                      
                     >
-                    Upload CV
+                    uploadCV
                     </NavDropdown.Item>
                     <NavDropdown.Item
-                    href="/UploadWorkVideo"
+                    href="/uploadWorkVideo"
                     className={styles.navListItem}
                      
                     >
-                    Upload Work Video
+                    uploadWorkVideo
                     </NavDropdown.Item>
                     <NavDropdown.Item
                     href="javascript:;"
