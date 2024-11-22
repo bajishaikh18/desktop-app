@@ -1,5 +1,5 @@
 "use client";
-import SettingsProfile from "@/components/Account/Settings";
+import SettingsProfile from "@/components/account/Settings";
 
 const SettingsPage: React.FC = () => {
   return (

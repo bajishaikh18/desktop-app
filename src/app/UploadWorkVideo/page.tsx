@@ -1,5 +1,5 @@
 "use client";
-import UploadWorkVideo from '../../components/Account/UploadWorkVideo';
+import UploadWorkVideo from '../../components/account/UploadWorkVideo';
 
 
 const UploadWorkVideoPage: React.FC = () => {

@@ -1,5 +1,5 @@
 "use client";
-import UploadCV from '../../components/Account/UploadCV';
+import UploadCV from '../../components/account/UploadCV';
 
 
 const UploadCVPage: React.FC = () => {
