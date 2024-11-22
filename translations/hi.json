@@ -262,6 +262,41 @@
        "report_posting":"वॉकिन पोस्टिंग की रिपोर्टिंग",
        "hide_map":"नक्शा छुपाएं"
 
+  },
+  "Settings":{
+    "personal_details":"व्यक्तिगत विवरण",
+    "firstname":"पहला नाम",
+    "enter_firstname":"प्रथम नाम दर्ज करें",
+    "enter_lastname":"अंतिम नाम दर्ज करो",
+    "enter_mobileNo":"मोबाइल नंबर दर्ज करें",
+    "enter_email":"ईमेल दर्ज करें",
+    "lastname":"उपनाम",
+    "dateofbirth":"जन्म तिथि",
+    "Phone":"फ़ोन",
+    "email":"ईमेल",
+     "professional_details":"",
+     "current_job_title":"मौजूदा नौकरी का शीर्षक",
+     "select_job_title":"अपनी नौकरी का शीर्षक चुनें",
+     "industry":"उद्योग",
+     "select_industry":"उद्योग का चयन करें",
+     "iT":"यह",
+     "construction":"निर्माण",
+     "healthcare":"स्वास्थ्य देखभाल",
+    "select_experience":"अनुभव के वर्ष चुनें",
+     "gulf_experience?":"क्या आपके पास खाड़ी का अनुभव है?",
+     "no":"नहीं",
+     "yes":"हाँ",
+     "current_state":"वर्तमान स्थिति",
+     "select_state":"राज्य चुनें",
+    "experience_years":"अनुभव वर्ष",
+    "select_gulf":"खाड़ी अनुभव का चयन करें",
+    "cancel":"रद्द करना",
+    "save":"बचाना",
+    "change":"परिवर्तन",
+    "profile_picture":"प्रोफ़ाइल फोटो",
+   "language":"भाषा"
+
+
   }
 }
 

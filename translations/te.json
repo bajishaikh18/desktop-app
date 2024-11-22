@@ -262,6 +262,45 @@
           "report_posting":"వాకిన్ పోస్టింగ్‌ను నివేదిస్తోంది",
           "hide_map":"మ్యాప్‌ను దాచండి"
    
+     },
+     "Settings":{
+     "personal_details":"వ్యక్తిగత వివరాలు",
+     "firstname":"మొదటి పేరు",
+    "enter_firstname":"మొదటి పేరును నమోదు చేయండి",
+    "enter_lastname":"చివరి పేరును నమోదు చేయండి",
+    "enter_mobileNo":"మొబైల్ నంబర్‌ను నమోదు చేయండి",
+    "enter_email":"ఇమెయిల్‌ని నమోదు చేయండి",
+    "lastname":"చివరి పేరు",
+    "dateofbirth":"పుట్టిన తేదీ",
+    "Phone":"ఫోన్",
+    "email":"ఇమెయిల్",
+     "professional_details":"",
+     "current_job_title":"ప్రస్తుత ఉద్యోగ శీర్షిక",
+    "select_job_title":"మీ ఉద్యోగ శీర్షికను ఎంచుకోండి",
+    "industry":"పరిశ్రమ",
+    "select_industry":"పరిశ్రమను ఎంచుకోండి",
+    "iT":"ఐ.టి",
+    "construction":"నిర్మాణం",
+    "healthcare":"ఆరోగ్య సంరక్షణ",
+   "select_experience":"సంవత్సరాల అనుభవాన్ని ఎంచుకోండి",
+    "gulf_experience?":"మీకు గల్ఫ్ అనుభవం ఉందా",
+     "no":"నం",
+    "yes":"అవును",
+    "current_state":"ప్రస్తుత రాష్ట్రం",
+    "select_state":"రాష్ట్రం ఎంచుకోండి",
+     "experience_years":"సంవత్సరాల అనుభవం",
+    "select_gulf":"గల్ఫ్ అనుభవాన్ని ఎంచుకోండి",
+    "cancel":"రద్దు",
+    "save":"సేవ్ చేయండి",
+   "change":"మార్పు",
+    "profile_picture":"ప్రొఫైల్ చిత్రం",
+    "language":"భాష"
+
+
+
+
+
+
      }
    }
    

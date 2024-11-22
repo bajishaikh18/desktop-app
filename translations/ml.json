@@ -263,6 +263,47 @@
          "report_posting":"വാക്കിൻ പോസ്റ്റിംഗ് റിപ്പോർട്ട് ചെയ്യുന്നു",
          "hide_map":"മാപ്പ് മറയ്ക്കുക"
   
+    },
+    "Settings":{
+    "personal_details":"വ്യക്തിഗത വിശദാംശങ്ങൾ",
+    "firstname":"പേരിന്റെ ആദ്യഭാഗം",
+    "enter_firstname":"ആദ്യ നാമം നൽകുക",
+    "enter_lastname":"അവസാന നാമം നൽകുക",
+    "enter_mobileNo":"മൊബൈൽ നമ്പർ നൽകുക",
+    "enter_email":"ഇമെയിൽ നൽകുക",
+    "lastname":"പേരിന്റെ അവസാന ഭാഗം",
+    "dateofbirth":"ജനനത്തീയതി",
+    "Phone":"ഫോൺ",
+    "email":"ഇമെയിൽ",
+     "professional_details":"",
+     "current_job_title":"നിലവിലെ ജോലിയുടെ പേര്",
+     "select_job_title":"നിങ്ങളുടെ ജോലിയുടെ പേര് തിരഞ്ഞെടുക്കുക",
+     "industry":"വ്യവസായം",
+     "select_industry":"വ്യവസായം തിരഞ്ഞെടുക്കുക",
+     "iT":"ഐ.ടി",
+     "construction":"നിർമ്മാണം",
+     "healthcare":"ആരോഗ്യ പരിരക്ഷ",
+     "select_experience":"വർഷങ്ങളുടെ അനുഭവം തിരഞ്ഞെടുക്കുക",
+     "gulf_experience?":"നിങ്ങൾക്ക് ഗൾഫ് അനുഭവം ഉണ്ടോ",
+     "no":"ഇല്ല",
+     "yes":"അതെ",
+     "current_state":"നിലവിലെ സംസ്ഥാനം",
+     "select_state":"സംസ്ഥാനം തിരഞ്ഞെടുക്കുക",
+     "experience_years":"വർഷങ്ങളുടെ അനുഭവം",
+    "select_gulf":"ഗൾഫ് അനുഭവം തിരഞ്ഞെടുക്കുക",
+    "cancel":"റദ്ദാക്കുക",
+     "save":"സംരക്ഷിക്കുക",
+     "change":"മാറ്റം",
+     "profile_picture":"പ്രൊഫൈൽ ചിത്രം",
+     "language":"ഭാഷ"
+
+
+
+
+
+
+
+
     }
   }
   

@@ -7,10 +7,7 @@ export interface AuthUser {
   lastName: string;
   country: string;
   dob: string;       
-  jobTitle: string;   
-  industry: string;   
-  experience: string;
-  state: string;
+  
   resume: {
     keyName: string;
     uploadDate: string;
