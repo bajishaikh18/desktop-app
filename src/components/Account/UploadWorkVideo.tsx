@@ -1,6 +1,6 @@
 import React from "react";
 import UploadResumeModal from "../auth/UploadResume"; 
-import styles from "../../components/Account/SettingsProfile.module.scss";
+import styles from "../../components/account/SettingsProfile.module.scss";
 
 const UploadWorkVideo: React.FC = () => {
   return (

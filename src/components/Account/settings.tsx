@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../../components/Account/SettingsProfile.module.scss';
+import styles from '../../components/account/SettingsProfile.module.scss';
 import { Form, Button, Card, InputGroup, Accordion } from 'react-bootstrap';
 import { useAuthUserStore } from '../../stores/useAuthUserStore';
 import Image from 'next/image';
