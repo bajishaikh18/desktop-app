@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import styles from "../../app/page.module.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -14,7 +14,13 @@ interface UploadResumeModalProps {
   handleClose: () => void;
   onSuccess?:()=>void;
   onCancel?:()=>void;
+  onUpload?:()=>void;
   type?: "resume" | "video";
+  hideTitle?:boolean;
+  isReset?: {
+    "resume"?:boolean,
+    "video"?: boolean
+  }
 }
 
 const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
@@ -22,6 +28,9 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
   onSuccess,
   onCancel,
   type,
+  isReset,
+  hideTitle,
+  onUpload
 }) => {
   const t = useTranslations("Upload");
 
@@ -34,13 +43,33 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
     if (!file) {
       return;
     }
+    if(onUpload){
+      onUpload();
+    }
     setVideoFiles(file);
   }, []);
+
+  useEffect(()=>{
+    for(let key in isReset){
+      if(isReset[key as "resume"]){
+        if(key === "resume"){
+          setCvFiles(null)
+        }
+        if(key === "video"){
+          setVideoFiles(null)
+        }
+      }
+    }
+  
+  },[isReset])
 
   const onCvDrop = useCallback((acceptedFiles: any) => {
     const file = acceptedFiles[0];
     if (!file) {
       return;
+    }
+    if(onUpload){
+      onUpload();
     }
     setCvFiles(file);
   }, []);
@@ -115,7 +144,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
     getRootProps: getVideoRootProps,
     getInputProps: getVideoInputProps,
     isDragActive,
-    fileRejections: videoRejections,
+    fileRejections: videoRejections
   } = useDropzone({
     onDrop: onVideoDrop,
     maxSize: 50 * 1024 * 1024, //50 MB
@@ -126,14 +155,16 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
 
   return (
     <>
-        
-      <Modal.Title className={styles.modalTitle4}>
+      {
+        !hideTitle && <>  <Modal.Title className={styles.modalTitle4}>
         {t("upload_your_resume")}
       </Modal.Title>
       <p className={styles.modalDescription}>
         {t("you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from")}
       </p>
-
+                </>
+      }
+    
      
       {(type === "resume" || !type) && (
         <div className={styles.uploadBox} {...getCvRootProps()}>

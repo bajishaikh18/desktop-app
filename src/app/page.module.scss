@@ -315,8 +315,7 @@
     font-size: 14px;
     text-decoration: none;
     color: #000;
-    cursor: pointer;
-
+    cursor: pointer !important;
     &:hover {
       color: $color-brand-1;
     }
