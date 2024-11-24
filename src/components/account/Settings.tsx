@@ -139,7 +139,6 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
   const [formErrors, setFormErrors] = useState({
     firstName: "",
     lastName: "",
-    phone: "",
     email: "",
     dob: "",
     currentJobTitle: "",
@@ -243,7 +242,6 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
               ? true
               : false,
         };
-        console.log(payload);
         await updateUser(payload);
         queryClient.invalidateQueries({
           predicate: (query) => {
@@ -272,10 +270,6 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
     []
   );
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/^\+?91\s*/, "");
-    setProfile({ ...profile, phone: value });
-  };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProfile({ ...profile, email: e.target.value });
@@ -335,7 +329,6 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
     const errors = {
       firstName: profile.firstName ? "" : "First name is required",
       lastName: profile.lastName ? "" : "Last name is required",
-      phone: profile.phone ? "" : "Phone is required",
       email:
         profile.email && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(profile.email)
           ? ""
@@ -470,7 +463,8 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                               style={{ flex: 1 }}
                             >
                               <Form.Label>{t("Phone")}</Form.Label>
-                              <InputGroup>
+                              <h3 className={styles.phone}>{profile.phone}</h3>
+                              {/* <InputGroup>
                                 <InputGroup.Text
                                   id="basic-addon1"
                                   style={{ whiteSpace: "nowrap" }}
@@ -488,9 +482,8 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                                   isInvalid={!!formErrors.phone}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                  {formErrors.phone}
                                 </Form.Control.Feedback>
-                              </InputGroup>
+                              </InputGroup> */}
                             </Form.Group>
                           </Col>
                           <Col lg={6}>
