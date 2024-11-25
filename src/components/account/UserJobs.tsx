@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Row, Col, Card, Container } from "react-bootstrap";
 import styles from "../../components/account/UserJobs.module.scss";
@@ -8,102 +8,85 @@ import { FACILITIES_IMAGES, IMAGE_BASE_URL } from "@/helpers/constants";
 import { DateTime } from "luxon";
 import { useTranslations } from "next-intl";
 import { useRouter } from "nextjs-toploader/app";
-import { getAppliedJobs, getSavedJobs } from "@/apis/account"; 
+import { useQuery } from "@tanstack/react-query";
+import { getAppliedJobs, getSavedJobs } from "@/apis/account";
+
+type Job = {
+  _id: string;
+  imageUrl?: string;
+  agency?: string;
+  amenities: string[];
+  createdAt?: string;
+  expiry?: string;
+};
 
 const Jobscard: React.FC = () => {
   const router = useRouter();
   const t = useTranslations("Portal");
+  const [activeTab, setActiveTab] = useState<"applied" | "saved">("applied");
 
-  const [activeTab, setActiveTab] = useState("applied");
-  const [jobs, setJobs] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [fetchingJobs, setFetchingJobs] = useState(false);
+  const fetchJobs = async (): Promise<Job[]> => {
+    if (activeTab === "applied") {
+      const response = await getAppliedJobs();
+      return response.appliedJobs || [];
+    } else if (activeTab === "saved") {
+      const response = await getSavedJobs();
+      return response.savedJobs || [];
+    }
+    return [];
+  };
 
-  const handleTabClick = (tab: string) => {
+  const { data: jobs = [], isLoading, isError, error } = useQuery({
+    queryKey: ["jobs", activeTab],
+    queryFn: fetchJobs,
+    refetchOnWindowFocus: false,
+  });
+
+  const handleTabClick = (tab: "applied" | "saved") => {
     setActiveTab(tab);
   };
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-     
-      if (fetchingJobs || loading) return;
-
-      setFetchingJobs(true);
-      setLoading(true);
-      setError(null);
-
-      try {
-        let fetchedJobs;
-        if (activeTab === "applied") {
-          console.log("Fetching applied jobs...");
-          const appliedJobsResponse = await getAppliedJobs();
-          console.log("Applied jobs fetched:", appliedJobsResponse);
-          fetchedJobs = appliedJobsResponse.appliedJobs;
-        } else if (activeTab === "saved") {
-          console.log("Fetching saved jobs...");
-          const savedJobsResponse = await getSavedJobs();
-          console.log("Saved jobs fetched:", savedJobsResponse);
-          fetchedJobs = savedJobsResponse.savedJobs;
-
-          if (savedJobsResponse.savedJobs.length === 0) {
-            setError("No saved jobs found.");
-          }
-        }
-        setJobs(fetchedJobs);
-      } catch (err: any) {
-        console.error("Failed to fetch jobs:", err);
-        setError("Failed to fetch jobs.");
-      } finally {
-        setLoading(false);
-        setFetchingJobs(false); 
-      }
-    };
-
-    fetchJobs();
-  }, [activeTab]); 
-
-  
-
-  if (jobs.length === 0 && !loading && !error) {
-    return <NotFound text={activeTab === "applied" ? t("no_applied_jobs") : t("no_saved_jobs")} />;
+  if (isError) {
+    return <div className={styles.error}>{t("error_loading_jobs") || (error as Error)?.message}</div>;
   }
 
+  
   return (
-    <Container className={`${styles.cardContainer}`}>
+    <Container className={styles.cardContainer}>
       <div className={styles.tabsContainer}>
         <div className={styles.tabs}>
           <div
             className={`${styles.tab} ${activeTab === "applied" ? styles.active : ""}`}
             onClick={() => handleTabClick("applied")}
           >
-            Applied
+            {t('applied')}
           </div>
           <div
             className={`${styles.tab} ${activeTab === "saved" ? styles.active : ""}`}
             onClick={() => handleTabClick("saved")}
           >
-            Saved
+            {t('saved')}
           </div>
         </div>
       </div>
 
-      {loading && <Loader />}
-      {error && <div className={styles.error}>{error}</div>}
-      {!loading && !error && jobs.length === 0 && (
-        <div>{activeTab === "applied" ? t("no_applied_jobs") : t("no_saved_jobs")}</div>
+      {isLoading && <Loader />}
+
+    
+      {!isLoading && jobs.length === 0 && (
+        <NotFound
+          text={activeTab === "applied" ? t("no_applied_jobs") : t("no_saved_jobs")}
+        />
       )}
 
-      <Row className="g-4">
-        {!loading &&
-          !error &&
-          jobs.map((job, index) => (
-            <Col key={index} md={6} lg={4} xl={3} className={styles.cardCol}>
+    
+      {!isLoading && !isError && jobs.length > 0 && (
+        <Row className="g-4">
+          {jobs.map((job: Job) => (
+            <Col key={job._id} md={6} lg={4} xl={3} className={styles.cardCol}>
               <Card
                 className={`h-100 ${styles.jobCard}`}
-                onClick={() => {
-                  router.push(`/jobs/${job._id}`);
-                }}
+                onClick={() => router.push(`/jobs/${job._id}`)}
               >
                 <Image
                   src={job.imageUrl ? `${IMAGE_BASE_URL}/${job.imageUrl}` : "/no_image.jpg"}
@@ -115,7 +98,7 @@ const Jobscard: React.FC = () => {
                 />
                 <Card.Body className={styles.cardBody}>
                   <Card.Title className={styles.cardTitle}>
-                    {job?.agency || "Unknown Agency"}
+                    {job.agency || "Unknown Agency"}
                     <Image
                       src="/icons/verified.svg"
                       width={16}
@@ -124,19 +107,13 @@ const Jobscard: React.FC = () => {
                     />
                   </Card.Title>
                   <div className={styles.iconContainer}>
-                    {job.amenities.map((amenity: string, idx: number) => (
+                    {job.amenities.map((amenity, idx) => (
                       <div
                         key={idx}
-                        className={`${styles.iconWrapper} ${
-                          idx % 2 !== 0 ? styles.contentRight : ""
-                        }`}
+                        className={`${styles.iconWrapper} ${idx % 2 !== 0 ? styles.contentRight : ""}`}
                       >
                         <Image
-                          src={
-                            FACILITIES_IMAGES[
-                              amenity as keyof typeof FACILITIES_IMAGES
-                            ]
-                          }
+                          src={FACILITIES_IMAGES[amenity as keyof typeof FACILITIES_IMAGES]}
                           alt={t(amenity.toLowerCase())}
                           width={16}
                           height={16}
@@ -156,9 +133,7 @@ const Jobscard: React.FC = () => {
                         height={16}
                       />
                       <span>
-                        {job.createdAt
-                          ? DateTime.fromISO(job.createdAt).toFormat("dd-MMM-yyyy")
-                          : "N/A"}
+                        {job.createdAt ? DateTime.fromISO(job.createdAt).toFormat("dd-MMM-yyyy") : "N/A"}
                       </span>
                     </div>
                     <div className={styles.jobMeta}>
@@ -171,9 +146,7 @@ const Jobscard: React.FC = () => {
                       />
                       <span>
                         {t("valid_till")}:{" "}
-                        {job.expiry
-                          ? DateTime.fromISO(job.expiry).toFormat("dd-MMM-yyyy")
-                          : "N/A"}
+                        {job.expiry ? DateTime.fromISO(job.expiry).toFormat("dd-MMM-yyyy") : "N/A"}
                       </span>
                     </div>
                   </div>
@@ -181,7 +154,8 @@ const Jobscard: React.FC = () => {
               </Card>
             </Col>
           ))}
-      </Row>
+        </Row>
+      )}
     </Container>
   );
 };
