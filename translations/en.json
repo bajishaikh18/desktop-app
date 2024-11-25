@@ -265,6 +265,7 @@
     "address":"Address",
     "contact":"Contact",
     "notify":"Notify jobs for this agency",
+    "not_notify":"Disable notifications",
    "report_issue":"Report an issue",
    "about":"About",
    "notify_enabled":"Notifications enabled for any new job posted for this agency",

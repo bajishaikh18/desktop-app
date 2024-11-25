@@ -11,6 +11,7 @@ export interface AuthUser {
     uploadDate: string;
   };
   profilePic:string;
+  notifyFor:string[];
   workVideo: {
     keyName: string;
     uploadDate: string;

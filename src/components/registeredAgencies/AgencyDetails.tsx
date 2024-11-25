@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import styles from "../common/styles/Details.module.scss";
@@ -24,6 +24,8 @@ import { getAgencyDetails } from "@/apis/jobs";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { notifyForAgency } from "@/apis/user";
 import toast from "react-hot-toast";
+import { useAuthUserStore } from "@/stores/useAuthUserStore";
+import { isTokenValid } from "@/helpers/jwt";
 
 type PostedAgencyDetailsProps = {
   agencyId: string;
@@ -32,7 +34,6 @@ type PostedAgencyDetailsProps = {
 type TabType = "about" | "jobs";
 
 const AgencySummary = ({ data }: { data: any }) => {
-
   const router = useRouter();
   const {
     regNo,
@@ -46,12 +47,10 @@ const AgencySummary = ({ data }: { data: any }) => {
     email,
   } = data?.agency || {};
 
-
   const goBack = () => {
     router.back();
   };
 
- 
   const t = useTranslations("AgencyDetails");
   return (
     <Card className={`${styles.summaryCard} ${agencyStyles.summaryCard}`}>
@@ -75,16 +74,16 @@ const AgencySummary = ({ data }: { data: any }) => {
                 alt="agency-logo"
               />
             </div>
-            <p className={agencyStyles.regNo}>
-              {regNo || "N/A"}
-            </p>
+            <p className={agencyStyles.regNo}>{regNo || "N/A"}</p>
           </div>
         </div>
         <h5 className={`${agencyStyles.approvedText} success`}>
-        {t('approved_by_mea')}
-          </h5>
+          {t("approved_by_mea")}
+        </h5>
       </CardHeader>
-      <CardBody className={`${styles.summaryCardBody} ${agencyStyles.summaryCardBody}`}>
+      <CardBody
+        className={`${styles.summaryCardBody} ${agencyStyles.summaryCardBody}`}
+      >
         <ul className={`${styles.jobInfoList} ${agencyStyles.agencyInfoList}`}>
           <li>
             <Image
@@ -93,11 +92,13 @@ const AgencySummary = ({ data }: { data: any }) => {
               height={20}
               alt="suitcase"
             />
-            <span>{activeJobCount} {t('jobs_posted')}</span>
+            <span>
+              {activeJobCount} {t("jobs_posted")}
+            </span>
           </li>
         </ul>
         <div className={agencyStyles.addressSection}>
-          <h3>{t('address')}</h3>
+          <h3>{t("address")}</h3>
           <p>
             {address}, {city || ""},{" "}
             {INDIAN_STATES.find((x) => x.state_code === state)?.name ||
@@ -113,7 +114,7 @@ const AgencySummary = ({ data }: { data: any }) => {
           ></iframe>
         </div>
         <div className={agencyStyles.contactSection}>
-          <h3>{t('contact')}</h3>
+          <h3>{t("contact")}</h3>
           <ul
             className={`${styles.jobInfoList} ${agencyStyles.agencyContactList}`}
           >
@@ -145,22 +146,48 @@ const AgencySummary = ({ data }: { data: any }) => {
 const AgencyJobs = ({ data }: { data: any }) => {
   const { isDesktop } = useReponsiveStore();
   const t = useTranslations("AgencyDetails");
+  const { authUser } = useAuthUserStore();
   const { _id, activeJobCount } = data?.agency || {};
-  console.log(_id)
-  const enableNotify = async ()=>{
-    try{
-      await notifyForAgency(_id)
-      toast.success(t("notify_enabled"))
-    }catch(e:any){
-      if(e.status === 400){
-        toast.success(t("notify_exist_error"))
-      }else{
-        toast.error(t("notify_error"))
+  const [isInNotifyList,setIsInNotifyList] = useState(false);
+  const isLoggedIn = isTokenValid();
+  const { setOpenLogin } = useAuthUserStore();
 
+  const enableNotify = async () => {
+    if (!isLoggedIn) {
+      setOpenLogin(true);
+      return true;
+    }
+    try {
+      await notifyForAgency(_id);
+      setIsInNotifyList(true);
+      toast.success(t("notify_enabled"));
+    } catch (e: any) {
+      if (e.status === 400) {
+        toast.success(t("notify_exist_error"));
+      } else {
+        toast.error(t("notify_error"));
       }
     }
-  }
-  
+  };
+
+  const disableNotification = async () => {
+    try {
+      await notifyForAgency(_id);
+      toast.success(t("notify_enabled"));
+    } catch (e: any) {
+      if (e.status === 400) {
+        toast.success(t("notify_exist_error"));
+      } else {
+        toast.error(t("notify_error"));
+      }
+    }
+  };
+
+  useEffect(()=>{
+   if(_id && authUser){
+      setIsInNotifyList(authUser.notifyFor.includes(_id))
+   } 
+  },[_id,authUser]);
   return (
     <Card className={`${styles.detailsCard} ${agencyStyles.detailsCard}`}>
       {isDesktop && (
@@ -168,7 +195,9 @@ const AgencyJobs = ({ data }: { data: any }) => {
           className={`${styles.detailsCardHeader} ${agencyStyles.detailsCardHeader}`}
         >
           <div className={agencyStyles.detailInfoHeader}>
-            <h3>{t('jobs_posted')} ({activeJobCount})</h3>
+            <h3>
+              {t("jobs_posted")} ({activeJobCount})
+            </h3>
           </div>
           <div className={styles.actionContainer}>
             <Dropdown>
@@ -181,11 +210,18 @@ const AgencyJobs = ({ data }: { data: any }) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={enableNotify}>
-                  {t('notify')}
-                </Dropdown.Item>
+                {isInNotifyList ? (
+                  <Dropdown.Item onClick={disableNotification}>
+                    {t("not_notify")}
+                  </Dropdown.Item>
+                ) : (
+                  <Dropdown.Item onClick={enableNotify}>
+                    {t("notify")}
+                  </Dropdown.Item>
+                )}
+
                 <Dropdown.Item onClick={() => {}}>
-                 {t('report_issue')}
+                  {t("report_issue")}
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -205,26 +241,53 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
   const handleTabClick = (tab: TabType) => {
     setActiveTab(tab);
   };
-    
+  const { authUser } = useAuthUserStore();
+  const [isInNotifyList,setIsInNotifyList] = useState(false);
+  const isLoggedIn = isTokenValid();
+  const { _id, name } = data?.agency || {};
+  const { setOpenLogin } = useAuthUserStore();
 
-  const {
-    name,
-  } = data?.agency || {};
-
-  const enableNotify = async ()=>{
-    try{
-      if(data._id){
-        await notifyForAgency(data?._id)
-        toast.success(t("notify_enabled"))
-      }
-    }catch(e){
-      toast.success(t("notify_error"))
+  const enableNotify = async () => {
+    if (!isLoggedIn) {
+      setOpenLogin(true);
+      return true;
     }
-  }
+    try {
+      await notifyForAgency(_id);
+      setIsInNotifyList(true);
+      toast.success(t("notify_enabled"));
+    } catch (e: any) {
+      if (e.status === 400) {
+        toast.success(t("notify_exist_error"));
+      } else {
+        toast.error(t("notify_error"));
+      }
+    }
+  };
+
+  const disableNotification = async () => {
+    try {
+      await notifyForAgency(_id);
+      toast.success(t("notify_enabled"));
+    } catch (e: any) {
+      if (e.status === 400) {
+        toast.success(t("notify_exist_error"));
+      } else {
+        toast.error(t("notify_error"));
+      }
+    }
+  };
+
+  useEffect(()=>{
+   if(_id && authUser){
+      setIsInNotifyList(authUser.notifyFor.includes(_id))
+   } 
+  },[_id,authUser])
+  
   return (
     <>
-    <Card className={`${styles.summaryCard} ${agencyStyles.summaryCard}`}>
-      <CardHeader
+      <Card className={`${styles.summaryCard} ${agencyStyles.summaryCard}`}>
+        <CardHeader
           className={`${styles.detailsCardHeader} ${agencyStyles.detailsCardHeader}`}
         >
           <div className={agencyStyles.detailInfoHeader}>
@@ -241,11 +304,17 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={enableNotify}>
-                {t('notify')}
-                </Dropdown.Item>
+              {isInNotifyList ? (
+                  <Dropdown.Item onClick={disableNotification}>
+                    {t("not_notify")}
+                  </Dropdown.Item>
+                ) : (
+                  <Dropdown.Item onClick={enableNotify}>
+                    {t("notify")}
+                  </Dropdown.Item>
+                )}
                 <Dropdown.Item onClick={() => {}}>
-                {t('report_issue')}
+                  {t("report_issue")}
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -258,13 +327,13 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
               className={`tab-button ${activeTab === "about" ? "active" : ""}`}
               onClick={() => handleTabClick("about")}
             >
-              {t('about')}
+              {t("about")}
             </button>
             <button
               className={`tab-button ${activeTab === "jobs" ? "active" : ""}`}
               onClick={() => handleTabClick("jobs")}
             >
-              {t('jobs')}
+              {t("jobs")}
             </button>
           </div>
         </div>
@@ -292,8 +361,6 @@ const AgencyDetails: React.FC<PostedAgencyDetailsProps> = ({ agencyId }) => {
     },
     enabled: !!agencyId,
   });
-
-
 
   if (isLoading) {
     return (

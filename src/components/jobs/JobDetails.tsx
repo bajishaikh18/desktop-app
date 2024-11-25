@@ -365,12 +365,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
                         >
                           <BsThreeDots fontSize={24} />
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={() => {}}>
-                            {t("save_job")}
-                          </Dropdown.Item>
-                          <Dropdown.Item className="danger" onClick={() => {}}>
+                          <Dropdown.Item className="danger" onClick={handleReportJob}>
                             {t("report_job")}
                           </Dropdown.Item>
                         </Dropdown.Menu>
