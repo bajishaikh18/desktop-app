@@ -17,6 +17,7 @@ import { HiMenuAlt1 } from "react-icons/hi";
 import { BiSolidUserCircle } from "react-icons/bi";
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
+import { IMAGE_BASE_URL } from "@/helpers/constants";
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {
@@ -101,7 +102,7 @@ const Header: React.FC = () => {
              
               <NavDropdown
                 title={<> {
-                  authUser.profilePic ? <Image src={authUser.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
+                  authUser.profilePic ? <Image src={`${IMAGE_BASE_URL}/${authUser.profilePic}?ts=${new Date().getTime()}`} className={styles.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
                 }</>}
                 align={"end"}
                 drop="down-centered"
@@ -201,7 +202,7 @@ const Header: React.FC = () => {
                     </NavDropdown.Item>
                   </NavDropdown>
                   {
-                    authUser.profilePic ? <Image src={authUser.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
+                  authUser.profilePic ? <Image src={`${IMAGE_BASE_URL}/${authUser.profilePic}?ts=${new Date().getTime()}`} className={styles.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
                   }
                   
                 </div>

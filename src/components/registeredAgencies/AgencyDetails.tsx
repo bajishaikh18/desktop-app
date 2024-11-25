@@ -22,6 +22,8 @@ import { IMAGE_BASE_URL } from "@/helpers/constants";
 import { INDIAN_STATES } from "@/helpers/states";
 import { getAgencyDetails } from "@/apis/jobs";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
+import { notifyForAgency } from "@/apis/user";
+import toast from "react-hot-toast";
 
 type PostedAgencyDetailsProps = {
   agencyId: string;
@@ -48,6 +50,8 @@ const AgencySummary = ({ data }: { data: any }) => {
   const goBack = () => {
     router.back();
   };
+
+ 
   const t = useTranslations("AgencyDetails");
   return (
     <Card className={`${styles.summaryCard} ${agencyStyles.summaryCard}`}>
@@ -142,6 +146,20 @@ const AgencyJobs = ({ data }: { data: any }) => {
   const { isDesktop } = useReponsiveStore();
   const t = useTranslations("AgencyDetails");
   const { _id, activeJobCount } = data?.agency || {};
+  console.log(_id)
+  const enableNotify = async ()=>{
+    try{
+      await notifyForAgency(_id)
+      toast.success(t("notify_enabled"))
+    }catch(e:any){
+      if(e.status === 400){
+        toast.success(t("notify_exist_error"))
+      }else{
+        toast.error(t("notify_error"))
+
+      }
+    }
+  }
   
   return (
     <Card className={`${styles.detailsCard} ${agencyStyles.detailsCard}`}>
@@ -163,7 +181,7 @@ const AgencyJobs = ({ data }: { data: any }) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={() => {}}>
+                <Dropdown.Item onClick={enableNotify}>
                   {t('notify')}
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => {}}>
@@ -187,9 +205,22 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
   const handleTabClick = (tab: TabType) => {
     setActiveTab(tab);
   };
+    
+
   const {
     name,
   } = data?.agency || {};
+
+  const enableNotify = async ()=>{
+    try{
+      if(data._id){
+        await notifyForAgency(data?._id)
+        toast.success(t("notify_enabled"))
+      }
+    }catch(e){
+      toast.success(t("notify_error"))
+    }
+  }
   return (
     <>
     <Card className={`${styles.summaryCard} ${agencyStyles.summaryCard}`}>
@@ -210,7 +241,7 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={() => {}}>
+                <Dropdown.Item onClick={enableNotify}>
                 {t('notify')}
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => {}}>
