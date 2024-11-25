@@ -74,7 +74,10 @@
   }
 }
 
-
+.phone{
+  font-size: 16px;
+  margin-top: 10px;
+}
 .settingsProfile {
 
   .section {
@@ -83,8 +86,8 @@
     position: relative;
 
     .formRow {
-      margin-top: 20px;
       .formGroup {
+        margin-top: 20px;
         display: flex;
         flex-direction: column;
         width: 100%;

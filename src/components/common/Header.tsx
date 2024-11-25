@@ -32,11 +32,11 @@ const Header: React.FC = () => {
     getWindowDimensions()
   );
   const [getDetails,setGetDetails]= useState(false);
-  const { authUser, setAuthUser,openLogin,setOpenLogin } = useAuthUserStore();
+  const { authUser, setAuthUser,setAuthUserLoading,openLogin,setOpenLogin } = useAuthUserStore();
   const {setIsDesktop} = useReponsiveStore();
   const pathname = usePathname();
 
-  const { data } = useQuery({
+  const { data,isLoading } = useQuery({
     queryKey: ["userDetail",getDetails],
     queryFn: () => {
       if (getDetails) {
@@ -67,6 +67,10 @@ const Header: React.FC = () => {
     }
   },[data])
 
+  useEffect(()=>{
+    setAuthUserLoading(isLoading);
+  },[isLoading])
+
   useEffect(() => {
     if (isTokenValid() && !authUser) {
       setGetDetails(true);
@@ -95,6 +99,9 @@ const Header: React.FC = () => {
         <Image src="/logo.svg" alt="Logo" width={136} height={28} />
         <div className={styles.mobileMenu}>
         {
+            !isDesktop && <LocaleSwitcherSelect />
+          }
+        {
             !isDesktop && 
             
               authUser ?  <div className={styles.authNav}>
@@ -102,7 +109,7 @@ const Header: React.FC = () => {
              
               <NavDropdown
                 title={<> {
-                  authUser.profilePic ? <Image src={authUser.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
+                  authUser.profilePic ? <Image src={`${IMAGE_BASE_URL}/${authUser.profilePic}?ts=${new Date().getTime()}`} className={styles.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
                 }</>}
                 align={"end"}
                 drop="down-centered"
@@ -111,19 +118,62 @@ const Header: React.FC = () => {
               >
                 <NavDropdown.ItemText className={styles.userName}>{authUser.firstName || ""} {authUser.lastName || ""}</NavDropdown.ItemText>
                 <NavDropdown.Item
-                href="javascript:;"
-                className={styles.navListItem}
-                  onClick={logout}
-                >
-                  Profile
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                href="javascript:;"
-                className={styles.navListItem}
-                  onClick={logout}
-                >
-                  Logout
-                </NavDropdown.Item>
+            href="/settings"
+          className={styles.navListItem}
+        >
+                    
+                    Settings
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    > Jobs
+                    
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="/uploadCV"
+                    className={styles.navListItem}
+                     
+                    >
+                    Upload CV
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="/uploadWorkVideo"
+                    className={styles.navListItem}
+                     
+                    >
+                    Upload Work Video
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Need Help
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Privacy Poilcy
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Terms & Conditions
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                      onClick={logout}
+                    >
+                      Logout
+                    </NavDropdown.Item>
               </NavDropdown>
              
               
@@ -134,9 +184,7 @@ const Header: React.FC = () => {
 
             
           }
-         {
-            !isDesktop && <LocaleSwitcherSelect />
-          }
+        
            <Navbar.Toggle aria-controls="basic-navbar-nav" children={
             <><HiMenuAlt1 fontSize={25}/> </>
           }/>
@@ -191,7 +239,7 @@ const Header: React.FC = () => {
                   <NavDropdown
                     title={`${authUser.firstName || ""} ${authUser.lastName || ""}`}
                     className={styles.navListItem}
-                    style={{paddingRight:0}}
+                    style={{paddingRight:"20px"}}
                   >
                     
                     <NavDropdown.Item
@@ -214,14 +262,22 @@ const Header: React.FC = () => {
                     className={styles.navListItem}
                      
                     >
+
                     {t('uploadCV')}
+
+                    
+
                     </NavDropdown.Item>
                     <NavDropdown.Item
                     href="/uploadWorkVideo"
                     className={styles.navListItem}
                      
                     >
+
                     {t('uploadWorkVideo')}
+
+                   
+
                     </NavDropdown.Item>
                     <NavDropdown.Item
                     href="javascript:;"

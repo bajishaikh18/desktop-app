@@ -27,6 +27,7 @@ import toast from "react-hot-toast";
 import { useDropzone } from "react-dropzone";
 import { getSignedUrl, uploadFile } from "@/apis/common";
 import { useQueryClient } from "@tanstack/react-query";
+import { Loader } from "../common/Feedbacks";
 
 interface UserProfile {
   firstName: string;
@@ -97,7 +98,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
   const [jobTitleDefaultOptions, setJobTitleDefaultOptions] = useState<
     { label: string; value: string }[]
   >([]);
-  const { authUser } = useAuthUserStore();
+  const { authUser, authUserLoading } = useAuthUserStore();
   const [selectedProfilePic, setSelectedProfilePic] = useState<File|null>(null);
   const [ imagePreview,setImagePreview] = useState("");
   const [loading,setLoading] = useState(false);
@@ -138,7 +139,6 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
   const [formErrors, setFormErrors] = useState({
     firstName: "",
     lastName: "",
-    phone: "",
     email: "",
     dob: "",
     currentJobTitle: "",
@@ -231,6 +231,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
           if(signedUrlResp){
             await uploadFile(signedUrlResp.uploadurl, selectedProfilePic!);
           }
+          
         }
         const payload = {
           ...profile,
@@ -244,7 +245,6 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
               ? true
               : false,
         };
-        console.log(payload);
         await updateUser(payload);
         queryClient.invalidateQueries({
           predicate: (query) => {
@@ -252,6 +252,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
           },
           refetchType:'all'
         })
+        setSelectedProfilePic(null);
         toast.success(t("success"));
       } catch (error) {
         toast.error(t("submit_error"));
@@ -272,10 +273,6 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
     []
   );
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/^\+?91\s*/, "");
-    setProfile({ ...profile, phone: value });
-  };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProfile({ ...profile, email: e.target.value });
@@ -335,7 +332,6 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
     const errors = {
       firstName: profile.firstName ? "" : "First name is required",
       lastName: profile.lastName ? "" : "Last name is required",
-      phone: profile.phone ? "" : "Phone is required",
       email:
         profile.email && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(profile.email)
           ? ""
@@ -354,12 +350,18 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
     setFormErrors(errors);
     return !Object.values(errors).some((error) => error);
   };
+  if(authUserLoading){
+    return       <main className="main-section">
+<Loader text="Fetching user data"/>
+</main>
+  }
   return (
     <Container>
       <Card className={styles.settingsProfileCard}>
         <Card.Header className={styles.cardHeader}>
           <h3>My Account</h3>
         </Card.Header>
+        
         <Card.Body className={styles.cardBody}>
           <Row>
             <Col lg={8}>
@@ -370,7 +372,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                 <div className={styles.profileImageContainer}>
                   
                   <img
-                    src={`${imagePreview ? imagePreview:'/profile picture.png'}`}
+                    src={`${imagePreview ? imagePreview:'/no_image.jpg'}`}
                     alt="Profile Picture"
                     width={79}
                     height={79}
@@ -405,8 +407,8 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                           display: "inline-block",
                           cursor: "pointer",
                           transform: openSections.includes("personalDetails")
-                            ? "rotate(180deg)"
-                            : "rotate(0deg)",
+                            ? "rotate(0deg)"
+                            : "rotate(180deg)",
                           transition: "transform 0.3s ease",
                         }}
                       />
@@ -464,7 +466,8 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                               style={{ flex: 1 }}
                             >
                               <Form.Label>{t("Phone")}</Form.Label>
-                              <InputGroup>
+                              <h3 className={styles.phone}>{profile.phone}</h3>
+                              {/* <InputGroup>
                                 <InputGroup.Text
                                   id="basic-addon1"
                                   style={{ whiteSpace: "nowrap" }}
@@ -482,9 +485,8 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                                   isInvalid={!!formErrors.phone}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                  {formErrors.phone}
                                 </Form.Control.Feedback>
-                              </InputGroup>
+                              </InputGroup> */}
                             </Form.Group>
                           </Col>
                           <Col lg={6}>
@@ -584,8 +586,8 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                           transform: openSections.includes(
                             "professionalDetails"
                           )
-                            ? "rotate(180deg)"
-                            : "rotate(0deg)",
+                            ? "rotate(0deg)"
+                            : "rotate(180deg)",
                           transition: "transform 0.3s ease",
                         }}
                       />
@@ -594,7 +596,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                       <div>
                         <Row className={`${styles.formRow}`}>
                           <Col lg={6}>
-                            <Form.Group className="form-group">
+                            <Form.Group className={`form-group ${styles.formGroup}`}>
                               <Form.Label>{t("current_job_title")}</Form.Label>
                               <div className={styles.selectContainer}>
                                 <AsyncSelect
@@ -707,7 +709,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
 
                         <Row className={`${styles.formRow}`}>
                           <Col lg={6}>
-                            <Form.Group className="form-group">
+                            <Form.Group className={`form-group ${styles.formGroup}`}>
                               <Form.Label>{t("experience_years")}</Form.Label>
 
                               <div className={styles.selectContainer}>
