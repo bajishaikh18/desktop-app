@@ -28,7 +28,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
         <ReactQueryProvider>
           <Header />
-          <Toaster position="top-right" />
+          <Toaster position="top-center" />
           {children}</ReactQueryProvider>
         </NextIntlClientProvider>
       </body>

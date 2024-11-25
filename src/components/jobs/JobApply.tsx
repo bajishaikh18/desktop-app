@@ -9,8 +9,9 @@ import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { DateTime } from "luxon";
 import Link from "next/link";
 import { useQueryClient } from "@tanstack/react-query";
-import { createApplication } from "@/apis/applications";
+import { createApplication, updateApplication } from "@/apis/applications";
 import toast from "react-hot-toast";
+import { compact } from "lodash";
 
 type EasyApplyModalProps = {
   id:string;
@@ -18,6 +19,8 @@ type EasyApplyModalProps = {
   onHide: () => void;
   selectedPosition?: string[];
   allPositions: any;
+  applicationId?:string;
+  appliedPositions:string[];
   onApplySuccess:() => void;
 };
 
@@ -26,6 +29,8 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
   show,
   onHide,
   allPositions,
+  applicationId,
+  appliedPositions,
   selectedPosition,
   onApplySuccess
 }) => {
@@ -64,9 +69,13 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
         "resume": authUser?.resume.keyName!,
         "userId": authUser?._id!,
         "workVideo":  attachWorkVideo ? authUser?.resume.keyName : undefined,
-        "positions": selectedPosition!,
+        "positions": compact([...appliedPositions,...selectedPosition!]),
       }
-      await createApplication(payload);
+      if(applicationId){
+        await updateApplication(applicationId,payload);
+      }else{
+        await createApplication(payload);
+      }
       toast.success(t('application_submitted'));
       onApplySuccess();
       setLoading(false);
