@@ -190,14 +190,16 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
         countryCode: "+91",
         profilePic: authUser.profilePic,
         dob: authUser.dob,
-        currentJobTitle: authUser.currentJobTitle._id,
+        currentJobTitle: authUser.currentJobTitle ? authUser.currentJobTitle._id : null,
+
         industry: { label: INDUSTRIES[authUser.industry as "oil_gas"] || "", value: authUser.industry },
         totalExperience: {
           label: yearsOfExpericence.find(
-            (x: any) => x.value === authUser.totalExperience.toString()
-          )?.label,
-          value: authUser.totalExperience.toString(),
+            (x: any) => x.value === (authUser.totalExperience?.toString() || "")
+          )?.label || "",
+          value: authUser.totalExperience?.toString() || "",
         },
+        
         gulfExperience: {
           label: gulfExp.find(
             (x: any) => x.value === (authUser.gulfExperience ? "yes" : "no")
@@ -205,8 +207,9 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
           value: authUser.gulfExperience ? "yes" : "no",
         },
         currentState: INDIAN_STATES.find(
-          (x) => x.state_code.toLowerCase() === authUser.state.toLowerCase()
+          (x) => x.state_code.toLowerCase() === (authUser.state?.toLowerCase() || "")
         ),
+        
       });
 
       if (authUser.dob) {

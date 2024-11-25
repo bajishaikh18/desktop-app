@@ -8,7 +8,15 @@
     "documentAttestation": "दस्तावेज़ सत्यापन",
     "medicalTests": "मेडिकल परीक्षण",
     "employer": "मैं एक नियोक्ता हूँ",
-    "signIn": "दाखिल करना"
+    "signIn": "दाखिल करना",
+    "settings":"सेटिंग्स",
+    "user_jobs":"नौकरियाँ",
+    "uploadCV":"बायोडाटा अपलोड करो",
+    "uploadWorkVideo":"कार्य वीडियो अपलोड करें",
+    "needhelp":"मदद की ज़रूरत है",
+    "privacypoilcy":"गोपनीयता नीति",
+    "terms_conditions":"नियम एवं शर्तें",
+    "logout":"लॉग आउट"
   },
   "Authentication": {
     "login": "लॉग इन करें",
@@ -103,7 +111,9 @@
     "valid_till":"मान्य के लिएs",
      "loading_jobs":"अधिक नौकरियां लोड हो रही हैं...",
     "no_job_found":"कोई नौकरी नहीं मिली",
-    "fetching_job_details":"नौकरी विवरण प्राप्त करना"
+    "fetching_job_details":"नौकरी विवरण प्राप्त करना",
+   "applied":"लागू",
+    "saved":"सहेजा गया"
   },
   "Slider": {
     "apply_International_Job_Openings_across":"अंतर्राष्ट्रीय नौकरी के उद्घाटन पर आवेदन करें",

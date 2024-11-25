@@ -8,7 +8,15 @@
     "documentAttestation": "ഡോക്യുമെൻ്റ് അറ്റസ്റ്റേഷൻ",
     "medicalTests": "മെഡിക്കൽ ടെസ്റ്റുകൾ",
     "employer": "ഞാൻ ഒരു തൊഴിലുടമയാണ്",
-    "signIn": "സൈൻ ഇൻ"
+    "signIn": "സൈൻ ഇൻ",
+    "settings":"ക്രമീകരണങ്ങൾ",
+    "user_jobs":"ജോലികൾ",
+    "uploadCV":"CV അപ്‌ലോഡ് ചെയ്യുക",
+    "uploadWorkVideo":"ജോലി വീഡിയോ അപ്‌ലോഡ് ചെയ്യുക",
+    "needhelp":"സഹായം വേണം",
+    "privacypoilcy":"സ്വകാര്യതാ നയം",
+    "terms_conditions":"നിബന്ധനകളും വ്യവസ്ഥകളും",
+    "logout":"പുറത്തുകടക്കുക"
   },
   "Authentication": {
     "login": "ലോഗിൻ",
@@ -103,7 +111,10 @@
       "valid_till":"സാധുതയുള്ള",
      "loading_jobs":"കൂടുതൽ ജോലികൾ ലോഡ് ചെയ്യുന്നു...",
     "no_job_found":"ജോലി കണ്ടെത്തിയില്ല",
-    "fetching_job_details":"ജോലി വിശദാംശങ്ങൾ ലഭ്യമാക്കുന്നു"
+    "fetching_job_details":"ജോലി വിശദാംശങ്ങൾ ലഭ്യമാക്കുന്നു",
+    "applied":"പ്രയോഗിച്ചു",
+    "saved":"സംരക്ഷിച്ചു"
+
   },
   "Slider": {
     "apply_International_Job_Openings_across":"അന്താരാഷ്ട്ര തൊഴിൽ അവസരങ്ങൾ ഉടനീളം പ്രയോഗിക്കുക",

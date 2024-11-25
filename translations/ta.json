@@ -8,7 +8,15 @@
     "documentAttestation": "ஆவண சான்றளிப்பு",
     "medicalTests": "மருத்துவ பரிசோதனைகள்",
     "employer": "நான் ஒரு முதலாளி",
-    "signIn": "உள்நுழையவும்"
+    "signIn": "உள்நுழையவும்",
+    "settings":"அமைப்புகள்",
+    "user_jobs":"வேலைகள்",
+    "uploadCV":"CV ஐ பதிவேற்றவும்",
+    "uploadWorkVideo":"வேலை வீடியோவைப் பதிவேற்றவும்",
+    "needhelp":"உதவி தேவை",
+    "privacypoilcy":"தனியுரிமைக் கொள்கை",
+    "terms_conditions":"விதிமுறைகள் & நிபந்தனைகள்",
+    "logout":"வெளியேறு"
   },
   "Authentication": {
     "login": "உள்நுழைக",
@@ -103,7 +111,9 @@
     "valid_till":"செல்லுபடியாகும்",
      "loading_jobs":"மேலும் வேலைகளை ஏற்றுகிறது...",
     "no_job_found":"வேலை கிடைக்கவில்லை",
-    "fetching_job_details":"नौकरी विवरण प्राप्त करना"
+    "fetching_job_details":"नौकरी विवरण प्राप्त करना",
+    "applied":"விண்ணப்பிக்கப்பட்டது",
+    "saved":"சேமிக்கப்பட்டது"
   },
   "Slider": {
     "apply_International_Job_Openings_across":"சர்வதேச வேலை வாய்ப்புகள் முழுவதும் விண்ணப்பிக்கவும்",

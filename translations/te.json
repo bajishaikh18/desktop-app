@@ -8,7 +8,15 @@
     "documentAttestation": "డాక్యుమెంట్ అటెస్టేషన్",
     "medicalTests": "వైద్య పరీక్షలు",
     "employer": "నేను ఒక యజమానిని",
-    "signIn": "సైన్ ఇన్ చేయండి"
+    "signIn": "సైన్ ఇన్ చేయండి",
+    "settings":"సెట్టింగ్‌లు",
+    "user_jobs":"ఉద్యోగాలు",
+    "uploadCV":"CVని అప్‌లోడ్ చేయండి",
+    "uploadWorkVideo":"పని వీడియోను అప్‌లోడ్ చేయండి",
+    "needhelp":"సహాయం కావాలి",
+    "privacypoilcy":"గోప్యతా విధానం",
+    "terms_conditions":"నిబంధనలు & షరతులు",
+    "logout":"లాగ్అవుట్"
   },
   "Authentication": {
     "login": "లాగిన్ చేయండి",
@@ -103,7 +111,9 @@
     "valid_till":"చెల్లుబాటు అవుతుంది",
      "loading_jobs":"మరిన్ని ఉద్యోగాలను లోడ్ చేస్తోంది...",
     "no_job_found":"జాబ్ దొరకలేదుd",
-    "fetching_job_details":"ఉద్యోగ వివరాలను పొందడం"
+    "fetching_job_details":"ఉద్యోగ వివరాలను పొందడం",
+    "applied":"దరఖాస్తు చేసుకున్నారు",
+    "saved":"సేవ్ చేయబడింది"
   },
   "Slider": {
     "apply_International_Job_Openings_across":"అంతటా అంతర్జాతీయ ఉద్యోగ అవకాశాలను వర్తింపజేయండి",

@@ -199,14 +199,14 @@ const Header: React.FC = () => {
           className={styles.navListItem}
         >
                     
-                    Settings
+                    {t('settings')}
                     </NavDropdown.Item>
 
                     <NavDropdown.Item
-                    href="javascript:;"
+                    href="/userjobs"
                     className={styles.navListItem}
                      
-                    > Jobs
+                    > {t('user_jobs')}
                     
                     </NavDropdown.Item>
                     <NavDropdown.Item
@@ -214,42 +214,42 @@ const Header: React.FC = () => {
                     className={styles.navListItem}
                      
                     >
-                    uploadCV
+                    {t('uploadCV')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
                     href="/uploadWorkVideo"
                     className={styles.navListItem}
                      
                     >
-                    uploadWorkVideo
+                    {t('uploadWorkVideo')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
                     href="javascript:;"
                     className={styles.navListItem}
                      
                     >
-                    Need Help
+                    {t('needhelp')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
                     href="javascript:;"
                     className={styles.navListItem}
                      
                     >
-                    Privacy Poilcy
+                    {t('privacypoilcy')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
                     href="javascript:;"
                     className={styles.navListItem}
                      
                     >
-                    Terms & Conditions
+                    {t('terms_conditions')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
                     href="javascript:;"
                     className={styles.navListItem}
                       onClick={logout}
                     >
-                      Logout
+                      {t('logout')}
                     </NavDropdown.Item>
                   </NavDropdown>
                   {

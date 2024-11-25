@@ -8,7 +8,16 @@
     "documentAttestation": "Document Attestation",
     "medicalTests": "Medical Tests",
     "employer": "I am an Employer",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "settings":"Settings",
+    "user_jobs":"Jobs",
+    "uploadCV":"Upload CV",
+    "uploadWorkVideo":"Upload Work Video",
+    "needhelp":"Need Help",
+    "privacypoilcy":"Privacy Poilcy",
+    "terms_conditions":"Terms & Conditions",
+    "logout":"Logout"
+
   },
   "Authentication": {
     "login": "Login",
@@ -106,7 +115,9 @@
     "loading_jobs":"Loading more Jobs...",
     "no_job_found":"No Job Found",
     "fetching_job_details":"Fetching job details",
-    "no_walkin_found":"No Jobs Found"
+    "no_walkin_found":"No Jobs Found",
+    "applied":"Applied",
+    "saved":"Saved"
     
   },
   "Slider": {
