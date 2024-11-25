@@ -132,7 +132,8 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
 
             <h6 className={styles.selectLabel}>{t('select')}</h6>
             <div className={styles.optionContainer}>
-              <div
+              {
+                authUser?.resume && <div
                 className={`${styles.option} ${styles.selected}`}
                 onClick={() => handleOptionChange("existing", "resume")}
               >
@@ -152,6 +153,8 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
                     />
                 </div>
               </div>
+              }
+             
 
               <div
                 className={`${styles.option}`}
