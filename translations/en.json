@@ -305,7 +305,9 @@
     "save":"Save",
     "change":"change",
     "profile_picture":"Profile Picture",
-    "language":"Language"
+    "language":"Language",
+    "success":"Profile Saved successfully",
+    "submit_error":"Failed to Save Profile. Please try again."
   
 
   
