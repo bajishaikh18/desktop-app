@@ -22,7 +22,7 @@ import { IMAGE_BASE_URL } from "@/helpers/constants";
 import { INDIAN_STATES } from "@/helpers/states";
 import { getAgencyDetails } from "@/apis/jobs";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
-import { notifyForAgency } from "@/apis/user";
+import { toggleNotifyForAgency } from "@/apis/user";
 import toast from "react-hot-toast";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
@@ -158,7 +158,7 @@ const AgencyJobs = ({ data }: { data: any }) => {
       return true;
     }
     try {
-      await notifyForAgency(_id);
+      await toggleNotifyForAgency(_id,"notify");
       setIsInNotifyList(true);
       toast.success(t("notify_enabled"));
     } catch (e: any) {
@@ -172,13 +172,14 @@ const AgencyJobs = ({ data }: { data: any }) => {
 
   const disableNotification = async () => {
     try {
-      await notifyForAgency(_id);
-      toast.success(t("notify_enabled"));
+      await toggleNotifyForAgency(_id,'unnotify');
+      setIsInNotifyList(false);
+      toast.success(t("notify_disabled"));
     } catch (e: any) {
       if (e.status === 400) {
-        toast.success(t("notify_exist_error"));
+        toast.success(t("notify_disabled_exist_error"));
       } else {
-        toast.error(t("notify_error"));
+        toast.error(t("notify_disabled_error"));
       }
     }
   };
@@ -253,7 +254,7 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
       return true;
     }
     try {
-      await notifyForAgency(_id);
+      await toggleNotifyForAgency(_id,'notify');
       setIsInNotifyList(true);
       toast.success(t("notify_enabled"));
     } catch (e: any) {
@@ -267,13 +268,14 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
 
   const disableNotification = async () => {
     try {
-      await notifyForAgency(_id);
-      toast.success(t("notify_enabled"));
+      await toggleNotifyForAgency(_id,'unnotify');
+      setIsInNotifyList(false);
+      toast.success(t("notify_disabled"));
     } catch (e: any) {
       if (e.status === 400) {
-        toast.success(t("notify_exist_error"));
+        toast.success(t("notify_disabled_exist_error"));
       } else {
-        toast.error(t("notify_error"));
+        toast.error(t("notify_disabled_error"));
       }
     }
   };
