@@ -315,8 +315,7 @@
     font-size: 14px;
     text-decoration: none;
     color: #000;
-    cursor: pointer;
-
+    cursor: pointer !important;
     &:hover {
       color: $color-brand-1;
     }
@@ -378,7 +377,7 @@
 
 .uploadModalFooter{
   padding-bottom: 12px !important;
-    border-top: 1px solid #e0e0e0 !important;
+  //  border-top: 1px solid #e0e0e0 !important;
     padding-top: 12px !important;
   .uploadActions{
     justify-content: end;

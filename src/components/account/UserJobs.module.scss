@@ -1,0 +1,146 @@
+.cardContainer{
+  padding-top: 100px;
+  margin-bottom: 20px;
+  .jobCard{
+    padding: 16px;
+    box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.16);
+    .jobImage{
+      height: 378px !important;
+      object-fit: cover;
+    }
+    .cardBody{
+      padding: 0px !important;
+      padding-top: 16px !important;
+      .cardTitle{
+        font-size: 16px;
+        font-weight: 700;
+         display: flex;
+         gap: 6px;
+         margin-bottom: 12px;
+         align-items: center;
+      }
+      .iconContainer{
+        display: flex;
+        min-height: 70px;
+        margin-bottom: 5px;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        .contentRight{
+          padding-left: 20px;
+        }
+        img{
+          margin-right: 4px;
+          vertical-align: middle;
+        }
+        span{
+          font-size: 14px;
+          font-weight: 400;
+          vertical-align: middle;
+          color: rgba(117, 117, 117, 1);
+        }
+        .iconWrapper{
+          display: flex;
+          flex: 50%;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+      }
+      .jobMetaContainer{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .jobMeta{
+          display: flex;
+          align-items: center;
+        }
+        span{
+          font-size: 14px;
+          color: rgba(117, 117, 117, 1);
+          font-weight: 400;
+        }
+      }
+    }
+   
+    &:hover{
+      cursor: pointer;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.16);
+
+    }
+    
+  }
+  .cardCol{
+    padding: 0px 10px;
+  }
+@media screen and (max-width:1366px) {
+      padding-bottom: 20px;
+      .jobCard{
+          .cardBody{
+              .iconContainer{
+                  span{
+                      font-size: 13px;
+                  }
+              }
+              .jobMetaContainer{
+                  span{
+                      font-size: 11px;
+                  }
+              }
+          }
+      }
+  }
+}
+
+.tabsContainer {
+  margin-bottom: 20px; 
+  background-color: #fff; 
+  padding: 8px 0 15px 0px; 
+  border-radius: 8px;
+  box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.1); 
+}
+
+
+.tabs {
+  display: flex;
+  gap: 30px;
+}
+
+.tab {
+  padding: 8px 30px;
+  text-align: center;
+  font-weight: 600;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  
+}
+
+.tab:hover {
+  color: #2563eb;
+}
+
+.active {
+  color: #2563eb;
+  border-bottom: 4px solid #2563eb;
+  margin-bottom: -15px;  
+  
+}
+
+@media(max-width:600px){
+  .tabsContainer{
+    position: fixed;
+    top: 80px;
+    left: 0px;
+    width: 100%;
+    z-index: 9;
+  }
+  .tabs{
+    gap:0px
+  }
+  .tab{
+    flex: 1;
+  }
+  .cardContainer{
+    margin-top: 80px;
+  }
+}
