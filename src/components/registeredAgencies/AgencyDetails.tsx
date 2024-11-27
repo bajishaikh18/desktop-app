@@ -22,7 +22,8 @@ import { IMAGE_BASE_URL } from "@/helpers/constants";
 import { INDIAN_STATES } from "@/helpers/states";
 import { getAgencyDetails } from "@/apis/jobs";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
-import { toggleNotifyForAgency } from "@/apis/user";
+import { toggleNotifyForAgency  } from "@/apis/user";
+import { reportagencyissue } from "@/apis/agency";
 import toast from "react-hot-toast";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
@@ -152,6 +153,8 @@ const AgencyJobs = ({ data }: { data: any }) => {
   const isLoggedIn = isTokenValid();
   const { setOpenLogin } = useAuthUserStore();
 
+ 
+ 
   const enableNotify = async () => {
     if (!isLoggedIn) {
       setOpenLogin(true);
@@ -184,11 +187,28 @@ const AgencyJobs = ({ data }: { data: any }) => {
     }
   };
 
+  const reportIssue = async () => {
+    if (!isLoggedIn) {
+      setOpenLogin(true); 
+      return;
+    }
+  
+    try {
+      await reportagencyissue(_id);
+      toast.success(t("report_success"));
+    } catch (error:any){
+      toast.error(t("report_error"));
+    }
+  };
+
   useEffect(()=>{
    if(_id && authUser){
-      setIsInNotifyList(authUser.notifyFor.includes(_id))
+      setIsInNotifyList(authUser.notifyFor?.includes(_id))
    } 
   },[_id,authUser]);
+
+
+
   return (
     <Card className={`${styles.detailsCard} ${agencyStyles.detailsCard}`}>
       {isDesktop && (
@@ -220,10 +240,10 @@ const AgencyJobs = ({ data }: { data: any }) => {
                     {t("notify")}
                   </Dropdown.Item>
                 )}
+               <Dropdown.Item onClick={reportIssue}>
+                {t("report_issue")}
+                  </Dropdown.Item>
 
-                <Dropdown.Item onClick={() => {}}>
-                  {t("report_issue")}
-                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>
@@ -247,6 +267,7 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
   const isLoggedIn = isTokenValid();
   const { _id, name } = data?.agency || {};
   const { setOpenLogin } = useAuthUserStore();
+ 
 
   const enableNotify = async () => {
     if (!isLoggedIn) {
@@ -279,10 +300,10 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
       }
     }
   };
-
+ 
   useEffect(()=>{
    if(_id && authUser){
-      setIsInNotifyList(authUser.notifyFor.includes(_id))
+      setIsInNotifyList(authUser?.notifyFor?.includes(_id))
    } 
   },[_id,authUser])
   

@@ -277,7 +277,9 @@
    "jobs":"Jobs",
     "loading_agency":"Loading agency details",
     "not_present":"Oops!, looks like agency details are not present",
-    "agency_details_error":"Something went wrong while accessing agency details. Please try again"
+    "agency_details_error":"Something went wrong while accessing agency details. Please try again",
+    "report_success":"Agenct Reported Succesfully",
+    "report_error":"Something went wrong while Reporting Agencies"
   },
   "AgencyPostings":{
     "jobs_for":"Jobs For",
