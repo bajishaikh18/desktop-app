@@ -2,10 +2,10 @@ import {  authorizedApiClient } from "./common";
 
 const baseRoutes = "/user";
 
-export const notifyForAgency = async (agencyId:string) => {
+export const toggleNotifyForAgency = async (agencyId:string, type:'notify'|'unnotify') => {
   try {
     const response = await authorizedApiClient.patch(
-      `${baseRoutes}/notify/${agencyId}`
+      `${baseRoutes}/${type}/${agencyId}`
     );
     return response.data;
   } catch (error) {
@@ -13,3 +13,5 @@ export const notifyForAgency = async (agencyId:string) => {
     throw error;
   }
 };
+
+

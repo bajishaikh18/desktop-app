@@ -30,3 +30,14 @@ export const getAgencies = async ({
 };
 
 
+export const reportagencyissue = async (agencyId: string): Promise<any> => {
+  try {
+    const response = await authorizedApiClient.post(
+      `${baseRoutes}/reportagency/${agencyId}`
+    );
+    return response.data; 
+  } catch (error) {
+    console.error("Failed to send report agency confirmation email:", error);
+    throw error; 
+  }
+};
