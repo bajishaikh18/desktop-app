@@ -203,7 +203,7 @@ const AgencyJobs = ({ data }: { data: any }) => {
 
   useEffect(()=>{
    if(_id && authUser){
-      setIsInNotifyList(authUser.notifyFor.includes(_id))
+      setIsInNotifyList(authUser.notifyFor?.includes(_id))
    } 
   },[_id,authUser]);
 
@@ -303,7 +303,7 @@ const AgencyDetailsMobile = ({ data }: { data: any }) => {
  
   useEffect(()=>{
    if(_id && authUser){
-      setIsInNotifyList(authUser.notifyFor.includes(_id))
+      setIsInNotifyList(authUser?.notifyFor?.includes(_id))
    } 
   },[_id,authUser])
   
