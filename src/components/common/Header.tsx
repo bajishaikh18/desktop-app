@@ -218,8 +218,16 @@ const Header: React.FC = () => {
           <Nav className={styles.rightNavItems}>
             {authUser ? (
               <>
+              
                 <div className="d-none d-md-flex align-items-center">
+                     
+               <Nav.Link href="javascript:;" onClick={() => {setShowNotification(!showNotification)}} className={styles.notificationTrigger}>
+              <Image src="/bell.png" alt="bell" width={16} height={19} />
+              {!!unReadCount && <Badge className={styles.notificationBadge}>{unReadCount}</Badge>}
+              {showNotification && <Notifications notifications={notifications} isLoading={isLoading} error={error}/>}
+            </Nav.Link>
                   <div className={styles.divider}> |</div>
+               
                   <NavDropdown
                     title={`${authUser.firstName || ""} ${authUser.lastName || ""}`}
                     className={styles.navListItem}
@@ -246,12 +254,7 @@ const Header: React.FC = () => {
                   )}
                 </div>
 
-                {/* Notification Section */}
-                <Nav.Link href="javascript:;" onClick={() => {setShowNotification(!showNotification)}} className={styles.notificationTrigger}>
-              <Image src="/bell.png" alt="bell" width={16} height={19} />
-              {!!unReadCount && <Badge className={styles.notificationBadge}>{unReadCount}</Badge>}
-              {showNotification && <Notifications notifications={notifications} isLoading={isLoading} error={error}/>}
-            </Nav.Link>
+               
               </>
             ) : (
               <>
