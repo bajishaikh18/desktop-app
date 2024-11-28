@@ -35,6 +35,7 @@ export const Notifications = ({
           },
           refetchType:'all'
         })
+        toast.success("Notification marked as read.");
       } catch {
         toast.error("Something went wrong while marking notification status");
       }
