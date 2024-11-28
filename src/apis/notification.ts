@@ -10,7 +10,7 @@ export const createNotification = async (data: {
     target: string[]
 }) => {
     try {
-        const response = await authorizedApiClient.post(`${basePath}`, data);
+        const response = await apiClient.post(`${basePath}`, data);
         return response.data;
     } catch (error) {
         console.error("Error creating notification:", error);
@@ -45,7 +45,7 @@ export const getNotifications = async (
   filterTerm: string
 ) => {
     try {
-        const response = await authorizedApiClient.get(`${basePath}/notifications`, {
+        const response = await apiClient.get(`${basePath}/notifications`, {
             params: {
                 page: start + 1,
                 limit: fetchSize,
