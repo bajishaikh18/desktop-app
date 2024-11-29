@@ -8,7 +8,9 @@
     "documentAttestation": "ഡോക്യുമെൻ്റ് അറ്റസ്റ്റേഷൻ",
     "medicalTests": "മെഡിക്കൽ ടെസ്റ്റുകൾ",
     "employer": "ഞാൻ ഒരു തൊഴിലുടമയാണ്",
-    "signIn": "സൈൻ ഇൻ"
+    "signIn": "സൈൻ ഇൻ",
+    "fetched_successfully":"അറിയിപ്പുകൾ വിജയകരമായി ലഭിച്ചു!",
+    "error_fetching":"അറിയിപ്പുകൾ ലഭ്യമാക്കുന്നതിൽ പിശക്!"
   },
   "Authentication": {
     "login": "ലോഗിൻ",
@@ -317,6 +319,17 @@
     "reg_no":"റെജി നം",
     "validity":"സാധുത"
 
+},
+"Notification":{
+"notifications":"അറിയിപ്പുകൾ",
+"new":"പുതിയത്",
+"previous":"മുമ്പത്തെ",
+"mark_read":"എല്ലാം വായിച്ചതായി അടയാളപ്പെടുത്തുക",
+"notification_marked":"അറിയിപ്പ് വായിച്ചതായി അടയാളപ്പെടുത്തി.",
+"something_went_wrong":"അറിയിപ്പ് നില അടയാളപ്പെടുത്തുമ്പോൾ എന്തോ കുഴപ്പം സംഭവിച്ചു",
+"fetching_notifications":"അറിയിപ്പുകൾ ലഭ്യമാക്കുന്നു",
+"error_fetching":"അറിയിപ്പുകൾ ലഭ്യമാക്കുന്നതിൽ പിശക്",
+"no_notifications":"ഇതുവരെ അറിയിപ്പുകളൊന്നുമില്ല"
 }
   
 }

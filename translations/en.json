@@ -8,7 +8,9 @@
     "documentAttestation": "Document Attestation",
     "medicalTests": "Medical Tests",
     "employer": "I am an Employer",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "fetched_successfully":"Notifications fetched successfully!",
+    "error_fetching":"Error while fetching notifications!"
   },
   "Authentication": {
     "login": "Login",
@@ -311,6 +313,17 @@
     "jobs_posted":"Jobs Posted",
     "reg_no":"REG NO",
     "validity":"Validity"
+},
+"Notification":{
+"notifications":"Notifications",
+"new":"New",
+"previous":"Previous",
+"mark_read":"Mark all as read",
+"notification_marked":"Notification marked as read.",
+"something_went_wrong":"Something went wrong while marking notification status",
+"fetching_notifications":"Fetching notifications",
+"error_fetching":"Error while fetching notifications",
+"no_notifications":"No notifications yet"
 }
  
 }

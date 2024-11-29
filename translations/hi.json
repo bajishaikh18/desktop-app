@@ -8,7 +8,9 @@
     "documentAttestation": "दस्तावेज़ सत्यापन",
     "medicalTests": "मेडिकल परीक्षण",
     "employer": "मैं एक नियोक्ता हूँ",
-    "signIn": "दाखिल करना"
+    "signIn": "दाखिल करना",
+    "fetched_successfully":"अधिसूचनाएं सफलतापूर्वक प्राप्त की गईं!",
+    "error_fetching":"सूचनाएँ प्राप्त करते समय त्रुटि!"
   },
   "Authentication": {
     "login": "लॉग इन करें",
@@ -317,6 +319,17 @@
     "reg_no":"पंजीकृत संख्या",
     "validity":"वैधता"
 
+},
+"Notification":{
+"notifications":"सूचनाएं",
+"new":"नया",
+"previous":"पहले का",
+"mark_read":"सभी को पढ़ा हुआ मार्क करें",
+"notification_marked":"अधिसूचना को पढ़ा हुआ चिह्नित किया गया।",
+"something_went_wrong":"अधिसूचना स्थिति चिह्नित करते समय कुछ गड़बड़ी हुई",
+"fetching_notifications":"सूचनाएं प्राप्त करना",
+"error_fetching":"सूचनाएँ प्राप्त करते समय त्रुटि हुई",
+"no_notifications":"अभी तक कोई सूचना नहीं"
 }
 }
 

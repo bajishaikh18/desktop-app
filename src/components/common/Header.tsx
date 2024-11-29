@@ -20,7 +20,7 @@ import { IMAGE_BASE_URL } from "@/helpers/constants";
 import { Notifications } from "../notification/Notifications";
 import { getUserNotifications } from "@/apis/notification";
 import { Notification } from "@/stores/useNotificationStore";
-
+import toast from "react-hot-toast";
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {
@@ -95,16 +95,27 @@ const Header: React.FC = () => {
   const [notifCount,setNotifCount] = useState(0);
   const loggedIn = true;
   const {
-    data:notifications,
+    data: notifications,
     isLoading,
     error,
-  } = useQuery<Notification[]>({ queryKey: ["user-notifications",loggedIn], queryFn: async ()=>{
-    if(loggedIn){
-      const data = await getUserNotifications()
-      return data
-    }
-    return undefined;
-  },refetchInterval:10000, retry:1 });
+  } = useQuery<Notification[]>({
+    queryKey: ["user-notifications", loggedIn],
+    queryFn: async () => {
+      if (loggedIn) {
+        try {
+          const data = await getUserNotifications();
+          toast.success(t("fetched_successfully"));
+          return data;
+        } catch (err) {
+          toast.error(t("error_fetching"));
+          throw err;
+        }
+      }
+      return undefined;
+    },
+    refetchInterval: 10000,
+    retry: 1,
+  });
  
     useEffect(()=>{
     if(notifications){
