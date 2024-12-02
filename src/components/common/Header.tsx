@@ -104,10 +104,10 @@ const Header: React.FC = () => {
       if (loggedIn) {
         try {
           const data = await getUserNotifications();
-          toast.success(t("fetched_successfully"));
+          
           return data;
         } catch (err) {
-          toast.error(t("error_fetching"));
+         
           throw err;
         }
       }

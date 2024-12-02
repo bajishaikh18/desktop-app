@@ -6,7 +6,6 @@ import { Notification } from "@/stores/useNotificationStore";
 import { Loader, NotFound } from "../common/Feedbacks";
 import { DateTime } from "luxon";
 import { useCallback } from "react";
-import toast from "react-hot-toast";
 import Link from "next/link";
 import { FaPlus } from "react-icons/fa6";
 import { useRouter } from "nextjs-toploader/app";
@@ -39,9 +38,9 @@ export const Notifications = ({
           },
           refetchType:'all'
         })
-        toast.success(t("notification_marked"));
+       
       } catch {
-        toast.error(t("something_went_wrong"));
+       
       }
     },
     [notificationsNew]
