@@ -99,15 +99,15 @@ const Header: React.FC = () => {
   const [showNotification, setShowNotification] = useState(false);
   const [unReadCount, setUnReadCount] = useState(0);
   const [notifCount,setNotifCount] = useState(0);
-  const loggedIn = true;
+  const isLoggedIn = isTokenValid();
   const {
     data: notifications,
     isLoading:isNotifLoading,
     error,
   } = useQuery<Notification[]>({
-    queryKey: ["user-notifications", loggedIn],
+    queryKey: ["user-notifications", isLoggedIn],
     queryFn: async () => {
-      if (loggedIn) {
+      if (isLoggedIn) {
         try {
           const data = await getUserNotifications();
           
@@ -117,7 +117,7 @@ const Header: React.FC = () => {
           throw err;
         }
       }
-      return undefined;
+      return null;
     },
     refetchInterval: 10000,
     retry: 1,
