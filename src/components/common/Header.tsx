@@ -31,14 +31,16 @@ function getWindowDimensions() {
 
 const Header: React.FC = () => {
   const t = useTranslations("Header");
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-  const [getDetails, setGetDetails] = useState(false);
-  const { authUser, setAuthUser, openLogin, setOpenLogin } = useAuthUserStore();
-  const { setIsDesktop } = useReponsiveStore();
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+  const [getDetails,setGetDetails]= useState(false);
+  const { authUser, setAuthUser,setAuthUserLoading,openLogin,setOpenLogin } = useAuthUserStore();
+  const {setIsDesktop} = useReponsiveStore();
   const pathname = usePathname();
 
-  const { data } = useQuery({
-    queryKey: ["userDetail", getDetails],
+  const { data,isLoading } = useQuery({
+    queryKey: ["userDetail",getDetails],
     queryFn: () => {
       if (getDetails) {
         return getUserDetails();
@@ -68,6 +70,10 @@ const Header: React.FC = () => {
     }
   }, [data]);
 
+  useEffect(()=>{
+    setAuthUserLoading(isLoading);
+  },[isLoading])
+
   useEffect(() => {
     if (isTokenValid() && !authUser) {
       setGetDetails(true);
@@ -96,7 +102,7 @@ const Header: React.FC = () => {
   const loggedIn = true;
   const {
     data: notifications,
-    isLoading,
+    isLoading:isNotifLoading,
     error,
   } = useQuery<Notification[]>({
     queryKey: ["user-notifications", loggedIn],
@@ -130,8 +136,13 @@ const Header: React.FC = () => {
       <Navbar className={styles.header} expand="lg" fixed="top">
         <Image src="/logo.svg" alt="Logo" width={136} height={28} />
         <div className={styles.mobileMenu}>
-          {!isDesktop && authUser ? (
-            <div className={styles.authNav}>
+        {
+            !isDesktop && <LocaleSwitcherSelect />
+          }
+        {
+            !isDesktop && 
+            
+              authUser ?  <div className={styles.authNav}>
               <div className={styles.divider}> |</div>
               <NavDropdown
                 title={
@@ -158,31 +169,78 @@ const Header: React.FC = () => {
                   {authUser.firstName || ""} {authUser.lastName || ""}
                 </NavDropdown.ItemText>
                 <NavDropdown.Item
-                  href="javascript:;"
-                  className={styles.navListItem}
-                  onClick={logout}
-                >
-                  Profile
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  href="javascript:;"
-                  className={styles.navListItem}
-                  onClick={logout}
-                >
-                  Logout
-                </NavDropdown.Item>
+            href="/settings"
+          className={styles.navListItem}
+        >
+                    
+                    Settings
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item
+                    href="/userjobs"
+                    className={styles.navListItem}
+                     
+                    > Jobs
+                    
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="/uploadCV"
+                    className={styles.navListItem}
+                     
+                    >
+                    Upload CV
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="/uploadWorkVideo"
+                    className={styles.navListItem}
+                     
+                    >
+                    Upload Work Video
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Need Help
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Privacy Poilcy
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    Terms & Conditions
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                      onClick={logout}
+                    >
+                      Logout
+                    </NavDropdown.Item>
               </NavDropdown>
-            </div>
-          ) : (
-            <Nav.Link
-              className={`${styles.navListItem} ${styles.navListItemBlue}`}
-              onClick={openPopup}
-            >
-              {t("signIn")}
-            </Nav.Link>
-          )}
-          {!isDesktop && <LocaleSwitcherSelect />}
-          <Navbar.Toggle aria-controls="basic-navbar-nav" children={<><HiMenuAlt1 fontSize={25} /></>} />
+             
+              
+            </div>:<Nav.Link
+            className={`${styles.navListItem} ${styles.navListItemBlue}`}
+            onClick={openPopup}
+          >{t("signIn")}</Nav.Link>
+
+            
+          }
+        
+           <Navbar.Toggle aria-controls="basic-navbar-nav" children={
+            <><HiMenuAlt1 fontSize={25}/> </>
+          }/>
+         
+               
         </div>
 
         <Navbar.Collapse id="basic-navbar-nav">
@@ -235,34 +293,86 @@ const Header: React.FC = () => {
                <Nav.Link href="javascript:;" onClick={() => {setShowNotification(!showNotification)}} className={styles.notificationTrigger}>
               <Image src="/bell.png" alt="bell" width={16} height={19} />
               {!!unReadCount && <Badge className={styles.notificationBadge}>{unReadCount}</Badge>}
-              {showNotification && <Notifications notifications={notifications} isLoading={isLoading} error={error}/>}
+              {showNotification && <Notifications notifications={notifications} isLoading={isNotifLoading} error={error}/>}
             </Nav.Link>
                   <div className={styles.divider}> |</div>
                
                   <NavDropdown
                     title={`${authUser.firstName || ""} ${authUser.lastName || ""}`}
                     className={styles.navListItem}
-                    style={{ paddingRight: 0 }}
+                    style={{paddingRight:"20px"}}
                   >
+                    
+                    <NavDropdown.Item
+            href="/settings"
+          className={styles.navListItem}
+        >
+                    
+                    {t('settings')}
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item
+                    href="/userjobs"
+                    className={styles.navListItem}
+                     
+                    > {t('user_jobs')}
+                    
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="/uploadCV"
+                    className={styles.navListItem}
+                     
+                    >
+
+                    {t('uploadCV')}
+
+                    
+
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="/uploadWorkVideo"
+                    className={styles.navListItem}
+                     
+                    >
+
+                    {t('uploadWorkVideo')}
+
+                   
+
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    {t('needhelp')}
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    {t('privacypoilcy')}
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    href="javascript:;"
+                    className={styles.navListItem}
+                     
+                    >
+                    {t('terms_conditions')}
+                    </NavDropdown.Item>
                     <NavDropdown.Item
                       href="javascript:;"
                       className={styles.navListItem}
                       onClick={logout}
                     >
-                      Logout
+                      {t('logout')}
                     </NavDropdown.Item>
                   </NavDropdown>
-                  {authUser.profilePic ? (
-                    <Image
-                      src={`${IMAGE_BASE_URL}/${authUser.profilePic}?ts=${new Date().getTime()}`}
-                      className={styles.profilePic}
-                      width={32}
-                      height={32}
-                      alt=""
-                    />
-                  ) : (
-                    <BiSolidUserCircle fontSize={32} color="#0045E6" />
-                  )}
+                  {
+                    authUser.profilePic ? <Image src={`${IMAGE_BASE_URL}/${authUser.profilePic}?ts=${new Date().getTime()}`} className={styles.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
+                  }
+                  
                 </div>
 
                

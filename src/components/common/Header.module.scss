@@ -108,6 +108,10 @@
 .fa-bell:hover {
   color: blue;
 }
+.profilePic{
+  border-radius: 50%;
+  object-fit: cover;
+}
 
 .postJob {
   font-weight: bold;

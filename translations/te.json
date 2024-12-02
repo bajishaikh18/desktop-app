@@ -8,8 +8,15 @@
     "documentAttestation": "డాక్యుమెంట్ అటెస్టేషన్",
     "medicalTests": "వైద్య పరీక్షలు",
     "employer": "నేను ఒక యజమానిని",
-    "signIn": "సైన్ ఇన్ చేయండి"
-  
+    "signIn": "సైన్ ఇన్ చేయండి",
+    "settings":"సెట్టింగ్‌లు",
+    "user_jobs":"ఉద్యోగాలు",
+    "uploadCV":"CVని అప్‌లోడ్ చేయండి",
+    "uploadWorkVideo":"పని వీడియోను అప్‌లోడ్ చేయండి",
+    "needhelp":"సహాయం కావాలి",
+    "privacypoilcy":"గోప్యతా విధానం",
+    "terms_conditions":"నిబంధనలు & షరతులు",
+    "logout":"లాగ్అవుట్"
   },
   "Authentication": {
     "login": "లాగిన్ చేయండి",
@@ -104,7 +111,11 @@
     "valid_till":"చెల్లుబాటు అవుతుంది",
      "loading_jobs":"మరిన్ని ఉద్యోగాలను లోడ్ చేస్తోంది...",
     "no_job_found":"జాబ్ దొరకలేదుd",
-    "fetching_job_details":"ఉద్యోగ వివరాలను పొందడం"
+    "fetching_job_details":"ఉద్యోగ వివరాలను పొందడం",
+    "applied":"దరఖాస్తు చేసుకున్నారు",
+    "saved":"సేవ్ చేయబడింది",
+    "no_applied_jobs":"దరఖాస్తు చేసిన ఉద్యోగాలు ఏవీ కనుగొనబడలేదు",
+    "no_saved_jobs":"సేవ్ చేసిన ఉద్యోగాలు ఏవీ కనుగొనబడలేదు"
   },
   "Slider": {
     "apply_International_Job_Openings_across":"అంతటా అంతర్జాతీయ ఉద్యోగ అవకాశాలను వర్తింపజేయండి",
@@ -264,6 +275,49 @@
           "hide_map":"మ్యాప్‌ను దాచండి"
    
      },
+
+     "Settings":{
+     "personal_details":"వ్యక్తిగత వివరాలు",
+     "firstname":"మొదటి పేరు",
+    "enter_firstname":"మొదటి పేరును నమోదు చేయండి",
+    "enter_lastname":"చివరి పేరును నమోదు చేయండి",
+    "enter_mobileNo":"మొబైల్ నంబర్‌ను నమోదు చేయండి",
+    "enter_email":"ఇమెయిల్‌ని నమోదు చేయండి",
+    "lastname":"చివరి పేరు",
+    "dateofbirth":"పుట్టిన తేదీ",
+    "Phone":"ఫోన్",
+    "email":"ఇమెయిల్",
+     "professional_details":"వృత్తిపరమైన వివరాలు",
+     "current_job_title":"ప్రస్తుత ఉద్యోగ శీర్షిక",
+    "select_job_title":"మీ ఉద్యోగ శీర్షికను ఎంచుకోండి",
+    "industry":"పరిశ్రమ",
+    "select_industry":"పరిశ్రమను ఎంచుకోండి",
+    "iT":"ఐ.టి",
+    "construction":"నిర్మాణం",
+    "healthcare":"ఆరోగ్య సంరక్షణ",
+   "select_experience":"సంవత్సరాల అనుభవాన్ని ఎంచుకోండి",
+    "gulf_experience?":"మీకు గల్ఫ్ అనుభవం ఉందా",
+     "no":"నం",
+    "yes":"అవును",
+    "current_state":"ప్రస్తుత రాష్ట్రం",
+    "select_state":"రాష్ట్రం ఎంచుకోండి",
+     "experience_years":"సంవత్సరాల అనుభవం",
+    "select_gulf":"గల్ఫ్ అనుభవాన్ని ఎంచుకోండి",
+    "cancel":"రద్దు",
+    "save":"సేవ్ చేయండి",
+   "change":"మార్పు",
+    "profile_picture":"ప్రొఫైల్ చిత్రం",
+    "language":"భాష",
+    "success":"ప్రొఫైల్ విజయవంతంగా సేవ్ చేయబడింది",
+    "submit_error":"ప్రొఫైల్‌ను సేవ్ చేయడంలో విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి."
+  
+
+
+
+
+
+     },
+
      
     "AgencyDetails":{
       "approved_by_mea":"భారత ప్రభుత్వ విదేశీ వ్యవహారాల మంత్రిత్వ శాఖ ఆమోదించింది",
@@ -327,6 +381,7 @@
    "no_notifications":"ఇంకా నోటిఫికేషన్‌లు లేవు"
    }
    
+
    }
    
    

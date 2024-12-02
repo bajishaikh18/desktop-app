@@ -8,8 +8,16 @@
     "documentAttestation": "Document Attestation",
     "medicalTests": "Medical Tests",
     "employer": "I am an Employer",
-    "signIn": "Sign In"
-   
+    "signIn": "Sign In",
+    "settings":"Settings",
+    "user_jobs":"Jobs",
+    "uploadCV":"Upload CV",
+    "uploadWorkVideo":"Upload Work Video",
+    "needhelp":"Need Help",
+    "privacypoilcy":"Privacy Poilcy",
+    "terms_conditions":"Terms & Conditions",
+    "logout":"Logout"
+
   },
   "Authentication": {
     "login": "Login",
@@ -63,7 +71,7 @@
     "select_years_of_experience":"Select Years of Experience",
     "do_you_have_gulf_experience?":"Do You have Gulf Experience",
     "select_an_option":"Select an Option",
-    "no":"No",
+     "no":"No",
     "yes":"Yes",
     "current_state":"Current State",
     "select_state":"Select State",
@@ -107,7 +115,11 @@
     "loading_jobs":"Loading more Jobs...",
     "no_job_found":"No Job Found",
     "fetching_job_details":"Fetching job details",
-    "no_walkin_found":"No Jobs Found"
+    "no_walkin_found":"No Jobs Found",
+    "applied":"Applied",
+    "saved":"Saved",
+    "no_applied_jobs":"No Applied jobs found",
+    "no_saved_jobs":"No Saved Jobs Found"
     
   },
   "Slider": {
@@ -162,7 +174,7 @@
     "job_application_success":"You’ve successfully applied for this Job",
     "more_info_description":"Interested candidates can send their updated CV, passport copy, photo & experience certificates by email with the position applied in the subject line.",
     "job_saved":"Job saved successfully!",
-    "submit_error":"Failed to save job. Please try again.",
+    "submit_error":"Failed to  job. Please try again.",
     "job_removed":"Job removed from saved jobs successfully!",
     "remove_failed":"Failed to remove saved job. Please try again.",
     "job_reported":"Job posting reported successfully!",
@@ -260,6 +272,49 @@
     "add_to_calendar":"Add to calendar",
     "hide_map":"Hide Map"
   },
+
+  "Settings":{
+    "personal_details":"Personal Details",
+    "lastname": "Last Name",
+    "firstname": "First Name",
+    "enter_firstname":"Enter first name",
+    "enter_lastname":"Enter last name",
+    "enter_mobileNo":"Enter mobile number",
+    "enter_email":"Enter email",
+    "dateofbirth":"Date of Birth",
+    "Phone":"Phone",
+    "email":"Email",
+    "professional_details":"Professional Details",
+    "current_job_title":"Current Job Title",
+    "select_job_title":"Select Your Job Title",
+    "industry":"Industry",
+    "select_industry":"Select Industry",
+    "iT":"IT",
+    "construction":"Construction",
+    "healthcare":"Health Care",
+    "no":"No",
+    "yes":"Yes",
+    "current_state":"Current State",
+    "select_state":"Select State",
+    "select_experience":"Select Years of Experience",
+    "gulf_experience?":"Do You have Gulf Experience",
+    "experience_years":"Experience Years",
+    "select_gulf":"Select gulf Experience",
+    "submitting":"Saving your changes",
+    "cancel":"Cancel",
+    "save":"Save",
+    "change":"change",
+    "profile_picture":"Profile Picture",
+    "language":"Language",
+    "success":"Profile Saved successfully",
+    "submit_error":"Failed to Save Profile. Please try again."
+  
+
+  
+
+
+  },
+
   "AgencyDetails":{
     "approved_by_mea":"Approved by Ministry of External Affairs Govt of India",
     "jobs_posted":"Jobs Posted",
@@ -323,4 +378,5 @@
 "no_notifications":"No notifications yet"
 }
  
+
 }

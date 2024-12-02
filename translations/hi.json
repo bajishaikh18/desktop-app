@@ -8,8 +8,15 @@
     "documentAttestation": "दस्तावेज़ सत्यापन",
     "medicalTests": "मेडिकल परीक्षण",
     "employer": "मैं एक नियोक्ता हूँ",
-    "signIn": "दाखिल करना"
-   
+    "signIn": "दाखिल करना",
+    "settings":"सेटिंग्स",
+    "user_jobs":"नौकरियाँ",
+    "uploadCV":"बायोडाटा अपलोड करो",
+    "uploadWorkVideo":"कार्य वीडियो अपलोड करें",
+    "needhelp":"मदद की ज़रूरत है",
+    "privacypoilcy":"गोपनीयता नीति",
+    "terms_conditions":"नियम एवं शर्तें",
+    "logout":"लॉग आउट"
   },
   "Authentication": {
     "login": "लॉग इन करें",
@@ -104,7 +111,11 @@
     "valid_till":"मान्य के लिएs",
      "loading_jobs":"अधिक नौकरियां लोड हो रही हैं...",
     "no_job_found":"कोई नौकरी नहीं मिली",
-    "fetching_job_details":"नौकरी विवरण प्राप्त करना"
+    "fetching_job_details":"नौकरी विवरण प्राप्त करना",
+   "applied":"लागू",
+    "saved":"सहेजा गया",
+    "no_applied_jobs":"कोई आवेदन प्राप्त नौकरी नहीं मिली",
+    "no_saved_jobs":"कोई सहेजी गई नौकरी नहीं मिली"
   },
   "Slider": {
     "apply_International_Job_Openings_across":"अंतर्राष्ट्रीय नौकरी के उद्घाटन पर आवेदन करें",
@@ -264,6 +275,45 @@
        "hide_map":"नक्शा छुपाएं"
 
   },
+
+  "Settings":{
+    "personal_details":"व्यक्तिगत विवरण",
+    "firstname":"पहला नाम",
+    "enter_firstname":"प्रथम नाम दर्ज करें",
+    "enter_lastname":"अंतिम नाम दर्ज करो",
+    "enter_mobileNo":"मोबाइल नंबर दर्ज करें",
+    "enter_email":"ईमेल दर्ज करें",
+    "lastname":"उपनाम",
+    "dateofbirth":"जन्म तिथि",
+    "Phone":"फ़ोन",
+    "email":"ईमेल",
+     "professional_details":"व्यावसायिक विवरण",
+     "current_job_title":"मौजूदा नौकरी का शीर्षक",
+     "select_job_title":"अपनी नौकरी का शीर्षक चुनें",
+     "industry":"उद्योग",
+     "select_industry":"उद्योग का चयन करें",
+     "iT":"यह",
+     "construction":"निर्माण",
+     "healthcare":"स्वास्थ्य देखभाल",
+    "select_experience":"अनुभव के वर्ष चुनें",
+     "gulf_experience?":"क्या आपके पास खाड़ी का अनुभव है?",
+     "no":"नहीं",
+     "yes":"हाँ",
+     "current_state":"वर्तमान स्थिति",
+     "select_state":"राज्य चुनें",
+    "experience_years":"अनुभव वर्ष",
+    "select_gulf":"खाड़ी अनुभव का चयन करें",
+    "cancel":"रद्द करना",
+    "save":"बचाना",
+    "change":"परिवर्तन",
+    "profile_picture":"प्रोफ़ाइल फोटो",
+   "language":"भाषा",
+   "success":"प्रोफ़ाइल सफलतापूर्वक सहेजी गई",
+  "submit_error":"प्रोफ़ाइल सहेजने में विफल। कृपया पुनः प्रयास करें।"
+
+
+  },
+
   "AgencyDetails":{
     "approved_by_mea":"विदेश मंत्रालय, भारत सरकार द्वारा अनुमोदित",
     "jobs_posted":"पोस्ट की गई नौकरियां",
@@ -328,6 +378,7 @@
 "error_fetching":"सूचनाएँ प्राप्त करते समय त्रुटि हुई",
 "no_notifications":"अभी तक कोई सूचना नहीं"
 }
+
 }
 
 
