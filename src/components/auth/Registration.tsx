@@ -72,16 +72,15 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
       }));
     }
   };
-
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/^\+?91\s*/, "");
-    setFormData({ ...formData, phone: value });
-    if (value && phoneRegex.test(value)) {
+   const value = e.target.value.replace(/[^0-9]/g, "");
+   setFormData({ ...formData, phone: value });
+    if (value.length === 10 && phoneRegex.test(value)) {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
         phone: "",
       }));
-    }else{
+    } else {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
         phone: "Enter a valid 10 digit phone number",
