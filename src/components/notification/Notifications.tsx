@@ -1,7 +1,7 @@
 import { truncateText } from "@/helpers/common"
 import styles from "./Notifications.module.scss";
 import { useQueryClient } from "@tanstack/react-query";
-import { updateNotification } from "@/apis/notification"
+import {markNotificationAsRead ,updateNotification } from "@/apis/notification"
 import { Notification } from "@/stores/useNotificationStore";
 import { Loader, NotFound } from "../common/Feedbacks";
 import { DateTime } from "luxon";
@@ -15,30 +15,44 @@ import { useTranslations } from "next-intl";
 export const Notifications = ({
   notifications,
   isLoading,
+  handleClose,
   error,
 }: {
   notifications?: Notification[];
   isLoading: boolean;
+  handleClose: ()=>void
   error: any;
 }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const notificationsNew = notifications?.filter((notif) => !notif.dismissed);
   const notificationsPrev = notifications?.filter((notif) => notif.dismissed);
-
   const t = useTranslations("Notification");  
-
   const markAsRead = useCallback(
-    async (id: string) => {
+    async (ids: string[]) => {
       try {
-        await updateNotification(id, { dismissed: true });
+        await markNotificationAsRead({ notificationIds: ids });
         await queryClient.invalidateQueries({
           predicate: (query) => {
             return query.queryKey.includes('user-notifications');
           },
           refetchType:'all'
         })
-       
+      } catch {
+        
+      }
+    },
+    [notificationsNew]
+  );
+
+
+  const markAllAsRead = useCallback(
+    async () => {
+      try {
+        const ids = notificationsNew?.map(x=>x._id);
+        if(ids){
+          await markAsRead(ids);
+        }
       } catch {
        
       }
@@ -46,25 +60,13 @@ export const Notifications = ({
     [notificationsNew]
   );
 
-
-  // const markAllAsRead = useCallback(
-  //   async () => {
-  //     try {
-  //       const ids = notificationsNew?.map(x=>x._id);
-  //       await updateNotification(ids, { dismissed: true });
-  //     } catch {
-  //       toast.error("Something went wrong while marking notification status");
-  //     }
-  //   },
-  //   [notificationsNew]
-  // );
-
   const openNotification = useCallback(
     async (notification: Notification) => {
       try {
-        await markAsRead(notification._id);
+        await markAsRead([notification._id]);
       } catch (e) {}
       if (notification.data) {
+        handleClose();
         router.push(notification.data);
       }
     },
@@ -75,9 +77,12 @@ export const Notifications = ({
     <div className={styles.notificationPanel}>
       <div className={styles.notificationHeader}>
         <h3>{t('notifications')}</h3>
-        <a className={styles.markAllRead} href="#">
-          {t('mark_read')}
+        {
+        notificationsNew && notificationsNew?.length > 0 &&   <a className={styles.markAllRead} onClick={markAllAsRead}>
+         {t('mark_read')}
         </a>
+        }
+      
       </div>
       <div className={styles.notificationContentContainer}>
         {isLoading ? (
