@@ -105,6 +105,7 @@ export const Notifications = ({
               {notificationsNew?.map((notification) => {
                 return (
                   <div
+                    key={notification._id}
                     className={styles.notificationItem}
                     onClick={() => openNotification(notification)}
                   >
@@ -135,6 +136,7 @@ export const Notifications = ({
               {notificationsPrev?.map((notification) => {
                 return (
                   <div
+                    key={notification._id}
                     className={styles.notificationItem}
                     onClick={() => openNotification(notification)}
                   >
