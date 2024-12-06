@@ -213,3 +213,21 @@
    
   }
 }
+
+
+.notificationBadge{
+  border-radius: 100%;
+  position: absolute;
+  right: 0px;
+  font-size: 8px;
+  font-weight: 900;
+  padding: 0px;
+  width: 15px;
+  height: 15px;
+  padding-top: 4px;
+  background-color: $color-danger !important;
+}
+
+.notificationTrigger{
+  position: relative;
+}

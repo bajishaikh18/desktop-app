@@ -374,6 +374,15 @@
     "reg_no":"റെജി നം",
     "validity":"സാധുത"
 
+},
+"Notification":{
+"notifications":"അറിയിപ്പുകൾ",
+"new":"പുതിയത്",
+"previous":"മുമ്പത്തെ",
+"mark_read":"എല്ലാം വായിച്ചതായി അടയാളപ്പെടുത്തുക",
+"fetching_notifications":"അറിയിപ്പുകൾ ലഭ്യമാക്കുന്നു",
+"error_fetching":"അറിയിപ്പുകൾ ലഭ്യമാക്കുന്നതിൽ പിശക്",
+"no_notifications":"ഇതുവരെ അറിയിപ്പുകളൊന്നുമില്ല"
 }
   
 }

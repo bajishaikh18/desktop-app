@@ -368,6 +368,15 @@
     "reg_no":"पंजीकृत संख्या",
     "validity":"वैधता"
 
+},
+"Notification":{
+"notifications":"सूचनाएं",
+"new":"नया",
+"previous":"पहले का",
+"mark_read":"सभी को पढ़ा हुआ मार्क करें",
+"fetching_notifications":"सूचनाएं प्राप्त करना",
+"error_fetching":"सूचनाएँ प्राप्त करते समय त्रुटि हुई",
+"no_notifications":"अभी तक कोई सूचना नहीं"
 }
 
 }

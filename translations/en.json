@@ -367,6 +367,15 @@
     "jobs_posted":"Jobs Posted",
     "reg_no":"REG NO",
     "validity":"Validity"
+},
+"Notification":{
+"notifications":"Notifications",
+"new":"New",
+"previous":"Previous",
+"mark_read":"Mark all as read",
+"fetching_notifications":"Fetching notifications",
+"error_fetching":"Error while fetching notifications",
+"no_notifications":"No notifications yet"
 }
  
 

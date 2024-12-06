@@ -1,12 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import React, { useEffect, useRef, useState } from "react";
+import { Navbar, Nav, NavDropdown, Badge } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./Header.module.scss";
 import { useTranslations } from "next-intl";
 import LocaleSwitcherSelect from "./locale/LocaleSwitcherSelect";
 import LoginPopup from "../auth/Loginpopup";
-
 import { AuthUser, useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import Image from "next/image";
@@ -18,6 +17,10 @@ import { BiSolidUserCircle } from "react-icons/bi";
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
 import { IMAGE_BASE_URL } from "@/helpers/constants";
+import { Notifications } from "../notification/Notifications";
+import { getUserNotifications } from "@/apis/notification";
+import { Notification } from "@/stores/useNotificationStore";
+import toast from "react-hot-toast";
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {
@@ -31,6 +34,7 @@ const Header: React.FC = () => {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
+  const ref = useRef<any>(null);
   const [getDetails,setGetDetails]= useState(false);
   const { authUser, setAuthUser,setAuthUserLoading,openLogin,setOpenLogin } = useAuthUserStore();
   const {setIsDesktop} = useReponsiveStore();
@@ -46,26 +50,37 @@ const Header: React.FC = () => {
     },
     enabled: true,
   });
-  
-  
+
   function handleResize() {
     setWindowDimensions(getWindowDimensions());
   }
+  
   const isDesktop = windowDimensions.width > 1024;
   const isTab = windowDimensions.width >= 768 && windowDimensions.width < 1024;
   const isMobile = windowDimensions.width < 768;
 
-  useEffect(()=>{
-    if(windowDimensions.width){
-      setIsDesktop(isDesktop,isTab,isMobile)
+  const outsideClose = (e: any) => {
+    let filterDiv = document.getElementById("notification-menu");
+    if (
+      filterDiv &&
+      !filterDiv?.contains(e.target) &&
+      ref?.current !== undefined
+    ) {
+      setShowNotification(false)
     }
-  },[windowDimensions])
+  };
 
-  useEffect(()=>{
-    if(data){
-      setAuthUser(data.userDetails as AuthUser)
+  useEffect(() => {
+    if (windowDimensions.width) {
+      setIsDesktop(isDesktop, isTab, isMobile);
     }
-  },[data])
+  }, [windowDimensions]);
+
+  useEffect(() => {
+    if (data) {
+      setAuthUser(data.userDetails as AuthUser);
+    }
+  }, [data]);
 
   useEffect(()=>{
     setAuthUserLoading(isLoading);
@@ -76,7 +91,13 @@ const Header: React.FC = () => {
       setGetDetails(true);
     }
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    document.addEventListener("mousedown", (e: any) => outsideClose(e));
+    return () => {
+       window.removeEventListener("resize", handleResize)
+       document.removeEventListener("mousedown", (e: any) =>
+        outsideClose(e)
+       );
+     };
   }, []);
 
   const openPopup = () => {
@@ -93,6 +114,41 @@ const Header: React.FC = () => {
     setAuthUser(null);
   };
 
+  const [showNotification, setShowNotification] = useState(false);
+  const [unReadCount, setUnReadCount] = useState(0);
+  const [notifCount,setNotifCount] = useState(0);
+  const isLoggedIn = isTokenValid();
+  const {
+    data: notifications,
+    isLoading:isNotifLoading,
+    error,
+  } = useQuery<Notification[]>({
+    queryKey: ["user-notifications", isLoggedIn],
+    queryFn: async () => {
+      if (isLoggedIn) {
+        try {
+          const data = await getUserNotifications();
+          
+          return data;
+        } catch (err) {
+         
+          throw err;
+        }
+      }
+      return null;
+    },
+    refetchInterval: 10000,
+    retry: 1,
+  });
+ 
+    useEffect(()=>{
+    if(notifications){
+      const unread =notifications.filter(x=>!x.dismissed).length;
+      setUnReadCount(unread)
+      setNotifCount(notifications.length);
+    }
+  },[notifCount, notifications])
+
   return (
     <>
       <Navbar className={styles.header} expand="lg" fixed="top">
@@ -106,17 +162,30 @@ const Header: React.FC = () => {
             
               authUser ?  <div className={styles.authNav}>
               <div className={styles.divider}> |</div>
-             
               <NavDropdown
-                title={<> {
-                  authUser.profilePic ? <Image src={`${IMAGE_BASE_URL}/${authUser.profilePic}?ts=${new Date().getTime()}`} className={styles.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
-                }</>}
+                title={
+                  <>
+                    {authUser.profilePic ? (
+                      <Image
+                        src={`${IMAGE_BASE_URL}/${authUser.profilePic}?ts=${new Date().getTime()}`}
+                        className={styles.profilePic}
+                        width={32}
+                        height={32}
+                        alt=""
+                      />
+                    ) : (
+                      <BiSolidUserCircle fontSize={32} color="#0045E6" />
+                    )}
+                  </>
+                }
                 align={"end"}
                 drop="down-centered"
                 className={styles.navListItem}
-                style={{paddingRight:0}}
+                style={{ paddingRight: 0 }}
               >
-                <NavDropdown.ItemText className={styles.userName}>{authUser.firstName || ""} {authUser.lastName || ""}</NavDropdown.ItemText>
+                <NavDropdown.ItemText className={styles.userName}>
+                  {authUser.firstName || ""} {authUser.lastName || ""}
+                </NavDropdown.ItemText>
                 <NavDropdown.Item
             href="/settings"
           className={styles.navListItem}
@@ -192,50 +261,60 @@ const Header: React.FC = () => {
                
         </div>
 
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={styles.navContainer}>
-              <Link
-                className={`${styles.navListItem} ${
-                  pathname == "/" || pathname.includes('job') ? styles.active : ""
-                }`}
-                href="/"
-              >
-                {t("jobs")}
-              </Link>
-              
-              <Link href="/walk-in"  className={`${styles.navListItem} ${
-                  pathname.includes('walk-in') ? styles.active : ""
-                }`}>
-             {t("walkins")}
-               </Link> 
-             
-               <Link href="/agency"  className={`${styles.navListItem} ${
-                  pathname.includes('agency') ? styles.active : ""
-                }`}>
-                {t("agenices")}
-              </Link>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className={styles.navContainer}>
+            <Link
+              className={`${styles.navListItem} ${
+                pathname == "/" || pathname.includes("job") ? styles.active : ""
+              }`}
+              href="/"
+            >
+              {t("jobs")}
+            </Link>
 
-              <Link className={styles.navListItem}                     href="javascript:;"
-              >
-                {t("travel")}
-              </Link>
-              <NavDropdown title={t("services")} className={styles.navListItem} drop="down">
-                <NavDropdown.Item
-                  className={styles.navListItem}
-                >
-                  {t("documentAttestation")}
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  className={styles.navListItem}
-                >
-                  {t("medicalTests")}
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-            <Nav className={styles.rightNavItems}>
-              {authUser ? (
+            <Link
+              href="/walk-in"
+              className={`${styles.navListItem} ${
+                pathname.includes("walk-in") ? styles.active : ""
+              }`}
+            >
+              {t("walkins")}
+            </Link>
+
+            <Link
+              href="/agency"
+              className={`${styles.navListItem} ${
+                pathname.includes("agency") ? styles.active : ""
+              }`}
+            >
+              {t("agenices")}
+            </Link>
+
+            <Link className={styles.navListItem} href="javascript:;">
+              {t("travel")}
+            </Link>
+            <NavDropdown title={t("services")} className={styles.navListItem} drop="down">
+              <NavDropdown.Item className={styles.navListItem}>
+                {t("documentAttestation")}
+              </NavDropdown.Item>
+              <NavDropdown.Item className={styles.navListItem}>
+                {t("medicalTests")}
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+          <Nav className={styles.rightNavItems}>
+            {authUser ? (
+              <>
+              
                 <div className="d-none d-md-flex align-items-center">
+                     
+               <Nav.Link href="javascript:;" id='notification-menu' ref={ref} onClick={() => {setShowNotification(true)}} className={styles.notificationTrigger}>
+              <Image src="/bell.png" alt="bell" width={16} height={19} />
+              {!!unReadCount && <Badge className={styles.notificationBadge}>{unReadCount}</Badge>}
+              {showNotification && <Notifications notifications={notifications} handleClose={() => {setShowNotification(false)}}  isLoading={isNotifLoading} error={error}/>}
+            </Nav.Link>
                   <div className={styles.divider}> |</div>
+               
                   <NavDropdown
                     title={`${authUser.firstName || ""} ${authUser.lastName || ""}`}
                     className={styles.navListItem}
@@ -301,8 +380,8 @@ const Header: React.FC = () => {
                     {t('terms_conditions')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
-                    href="javascript:;"
-                    className={styles.navListItem}
+                      href="javascript:;"
+                      className={styles.navListItem}
                       onClick={logout}
                     >
                       {t('logout')}
@@ -313,17 +392,20 @@ const Header: React.FC = () => {
                   }
                   
                 </div>
-              ) : (
-                <>
+
+               
+              </>
+            ) : (
+              <>
+                <Nav.Link
+                  className={`${styles.navListItem} ${styles.navListItemBlue}`}
+                  href="javascript:;"
+                >
+                  {t("employer")}
+                </Nav.Link>
+                <div className={styles.divider}> |</div>
+                {isDesktop && (
                   <Nav.Link
-                    className={`${styles.navListItem} ${styles.navListItemBlue}`}
-                    href="javascript:;"
-                  >
-                    {t("employer")}
-                  </Nav.Link>
-                  <div className={styles.divider}> |</div>
-                  {
-                    isDesktop &&  <Nav.Link
                     className={`${styles.navListItem} ${styles.navListItemBlue}`}
                     href="javascript:;"
                     onClick={openPopup}
@@ -331,16 +413,12 @@ const Header: React.FC = () => {
                     {" "}
                     {t("signIn")}
                   </Nav.Link>
-                  }
-                 
-                </>
-              )}
-              {
-                isDesktop && <LocaleSwitcherSelect />
-              }
-              
-            </Nav>
-          </Navbar.Collapse>
+                )}
+              </>
+            )}
+            {isDesktop && <LocaleSwitcherSelect />}
+          </Nav>
+        </Navbar.Collapse>
       </Navbar>
       <LoginPopup show={openLogin} onClose={closePopup} />
     </>
