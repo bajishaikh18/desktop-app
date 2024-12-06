@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Navbar, Nav, NavDropdown, Badge } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./Header.module.scss";
@@ -34,6 +34,7 @@ const Header: React.FC = () => {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
+  const ref = useRef<any>(null);
   const [getDetails,setGetDetails]= useState(false);
   const { authUser, setAuthUser,setAuthUserLoading,openLogin,setOpenLogin } = useAuthUserStore();
   const {setIsDesktop} = useReponsiveStore();
@@ -58,6 +59,17 @@ const Header: React.FC = () => {
   const isTab = windowDimensions.width >= 768 && windowDimensions.width < 1024;
   const isMobile = windowDimensions.width < 768;
 
+  const outsideClose = (e: any) => {
+    let filterDiv = document.getElementById("notification-menu");
+    if (
+      filterDiv &&
+      !filterDiv?.contains(e.target) &&
+      ref?.current !== undefined
+    ) {
+      setShowNotification(false)
+    }
+  };
+
   useEffect(() => {
     if (windowDimensions.width) {
       setIsDesktop(isDesktop, isTab, isMobile);
@@ -79,7 +91,13 @@ const Header: React.FC = () => {
       setGetDetails(true);
     }
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    document.addEventListener("mousedown", (e: any) => outsideClose(e));
+    return () => {
+       window.removeEventListener("resize", handleResize)
+       document.removeEventListener("mousedown", (e: any) =>
+        outsideClose(e)
+       );
+     };
   }, []);
 
   const openPopup = () => {
@@ -290,10 +308,10 @@ const Header: React.FC = () => {
               
                 <div className="d-none d-md-flex align-items-center">
                      
-               <Nav.Link href="javascript:;" onClick={() => {setShowNotification(!showNotification)}} className={styles.notificationTrigger}>
+               <Nav.Link href="javascript:;" id='notification-menu' ref={ref} onClick={() => {setShowNotification(true)}} className={styles.notificationTrigger}>
               <Image src="/bell.png" alt="bell" width={16} height={19} />
               {!!unReadCount && <Badge className={styles.notificationBadge}>{unReadCount}</Badge>}
-              {showNotification && <Notifications notifications={notifications} isLoading={isNotifLoading} error={error}/>}
+              {showNotification && <Notifications notifications={notifications} handleClose={() => {setShowNotification(false)}}  isLoading={isNotifLoading} error={error}/>}
             </Nav.Link>
                   <div className={styles.divider}> |</div>
                
