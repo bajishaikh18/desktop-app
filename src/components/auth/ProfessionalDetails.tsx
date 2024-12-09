@@ -56,21 +56,20 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
       label: val
     }
   })
-
-  const yearsOfExpericence: any = [
-    {
-      value: "1",
-      label: "0-1 Years",
-    },
-    {
-      value: "2",
-      label: "1-2 Years",
-    },
-    {
-      value: "3",
-      label: "2-3 Years",
-    },
-  ];
+  
+  const yearsOfExperience  : any = [];
+  const rangeStep = 10; 
+  for (let i = 0; i < 10; i++) {
+    const start = i * rangeStep;
+    const end = start + rangeStep;
+    yearsOfExperience.push({
+      value: `${start}-${end}`,
+      label: `${start}-${end} Years`,
+    });
+  }
+  
+  
+  
 
   const gulfExp: any = [
     { label: "Yes", value: "yes" },
@@ -289,7 +288,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
                 indicatorSeparator: () => ({ display: "none" }),
               }}
               name="experienceYears"
-              options={yearsOfExpericence}
+              options={yearsOfExperience}
               value={formData.experienceYears}
               onChange={onChange}
             />

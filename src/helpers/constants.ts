@@ -3,7 +3,7 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://ec2-65-1-25-159.ap-south-1.compute.amazonaws.com';
 
 
-export const IMAGE_BASE_URL = "https://boon-backend-public-dev.s3.ap-south-1.amazonaws.com";
+export const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_IMAGE_BASE_URL ||"https://boon-backend-public-dev.s3.ap-south-1.amazonaws.com"
 
 export const COUNTRIES = {
     sa: { label: "Saudi Arabia", isdCode: "+966",currency:"SAR", iso3Code: "KSA" },
