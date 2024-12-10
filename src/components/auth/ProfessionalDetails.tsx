@@ -57,16 +57,31 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     }
   })
   
-const yearsOfExperience: { value: string; label: string }[] = [];
-const rangeStep = 10;
-for (let i = 0; i < 10; i++) {
-  const start = i * rangeStep;
-  const end = start + rangeStep;
-  yearsOfExperience.push({
-    value: `${start}`,
-    label: `${start}-${end} Years`, 
-  });
-}
+  const yearsOfExperience: { value: string; label: string }[] = [];
+  const rangeStep = 1; 
+  const maxYears = 10; 
+  
+  
+  for (let i = 0; i <= maxYears; i++) {
+    const start = i;
+    const end = start + rangeStep;
+    
+  
+    if (i < maxYears) {
+      yearsOfExperience.push({
+        value: `${start}`,
+        label: `${start}-${end} Years`,
+      });
+    } else {
+      yearsOfExperience.push({
+        value: `${start}`,
+        label: `${start}+ Years`,
+      });
+    }
+  }
+  
+ 
+  
 
 
 
