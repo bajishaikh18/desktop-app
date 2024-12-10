@@ -330,8 +330,9 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
   
   const validateForm = () => {
     const errors = {
-      firstName: profile.firstName ? "" : "First name is required",
-      lastName: profile.lastName ? "" : "Last name is required",
+      
+        firstName: /^[A-Za-z]+$/.test(profile.firstName) ? "" : "Enter valid First Name",
+        lastName: /^[A-Za-z]+$/.test(profile.lastName) ? "" : "Enter valid Last Name",
       email:
         profile.email && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(profile.email)
           ? ""
