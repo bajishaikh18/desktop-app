@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+
 import { Loader, NotFound } from "../common/Feedbacks";
 import agencyStyles from "./AgencyDetails.module.scss";
 import { Col, Row } from "react-bootstrap";

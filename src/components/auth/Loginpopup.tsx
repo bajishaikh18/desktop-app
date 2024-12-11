@@ -15,10 +15,10 @@ interface LoginPopupProps {
 const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
   const t = useTranslations("Authentication");
   const [phone, setPhone] = useState<string>("");
-  const [otpVisible, setOtpVisible] = useState<boolean>(false);
+  const [otpVisible] = useState<boolean>(false);
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [currentScreen, setCurrentScreen] = useState(0);
-  const [showRegistration, setShowRegistration] = useState<boolean>(false);
+  const [showRegistration] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSendOtp = async () => {

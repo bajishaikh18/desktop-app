@@ -20,7 +20,7 @@ import { IMAGE_BASE_URL } from "@/helpers/constants";
 import { Notifications } from "../notification/Notifications";
 import { getUserNotifications } from "@/apis/notification";
 import { Notification } from "@/stores/useNotificationStore";
-import toast from "react-hot-toast";
+
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {

@@ -8,13 +8,7 @@ interface SignupData {
   email: string;
 }
 
-interface ProfessionalDetails {
-  currentJobTitle: string;
-  industry: string;
-  experienceYears: string;
-  gulfExperience: boolean;
-  currentState: string;
-}
+
 
 export const loginWithPhone = async (phone: string) => {
   try {

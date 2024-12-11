@@ -17,9 +17,9 @@ export const VerifyOtp = ({
   successAction: () => void;
 }) => {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
-  const [otpError, setOtpError] = useState<string | null>(null);
+  const [otpError] = useState<string | null>(null);
   const [otpLoading, setOtpLoading] = useState<boolean>(false);
-  const [disableResent, setDisableResent] = useState<boolean>(false);
+  
   const [otpSent, setOtpSent] = useState<boolean>(false);
 
   const t = useTranslations("Register");
@@ -56,10 +56,11 @@ export const VerifyOtp = ({
       } else {
         toast.error("Failed to send OTP. Please try again.");
       }
-    } catch (e) {
+    } catch {
       toast.error("Failed to send OTP. Please try again.");
     }
   };
+  
 
   const handleVerifyOtp = async () => {
     try {

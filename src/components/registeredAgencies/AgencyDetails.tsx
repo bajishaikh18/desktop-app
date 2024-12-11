@@ -48,9 +48,7 @@ const AgencySummary = ({ data }: { data: any }) => {
     email,
   } = data?.agency || {};
 
-  const goBack = () => {
-    router.back();
-  };
+  router.back();
 
   const t = useTranslations("AgencyDetails");
   return (
@@ -196,7 +194,7 @@ const AgencyJobs = ({ data }: { data: any }) => {
     try {
       await reportagencyissue(_id);
       toast.success(t("report_success"));
-    } catch (error:any){
+    } catch{
       toast.error(t("report_error"));
     }
   };

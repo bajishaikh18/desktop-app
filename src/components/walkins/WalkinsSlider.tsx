@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import Image from 'next/image';
+
 import Slider from 'react-slick';
 import Search from '@/components/walkins/WalkinsSearch'; 
 import Portal from '@/components/walkins/WalkinsPortal';

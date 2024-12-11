@@ -1,15 +1,6 @@
 "use client";
 import JobDetails from "@/components/jobs/JobDetails";
-import React, { useState, useEffect } from "react";
-
-type JobData = {
-  media: string;
-  postedDate: string;
-  expiry: string;
-  agencyName: string;
-  location: string;
-  noOfPositions: number;
-};
+import React  from "react";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { id } = params;

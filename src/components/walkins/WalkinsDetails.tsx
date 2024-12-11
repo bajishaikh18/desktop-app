@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState} from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import styles from "../common/styles/Details.module.scss";
@@ -17,10 +17,9 @@ import {
   Col,
   Container,
   Dropdown,
-  DropdownItem,
+
   Row,
-  Tab,
-  Tabs,
+
 } from "react-bootstrap";
 import { DateTime } from "luxon";
 import Link from "next/link";
@@ -45,19 +44,12 @@ import { truncateText } from "@/helpers/truncate";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
-import { INDIAN_STATES } from "@/helpers/states";
-import { getAgencyDetails } from "@/apis/jobs";
+
 
 type PostedWalkinsDetailsProps = {
   walkinId: string;
 };
-type AgencyDetailsType = {
-  address: string;
-  name: string;
-  email: string;
-  phone: string;
-  state: string;
-};
+
 
 
 
@@ -66,12 +58,12 @@ type AgencyDetailsType = {
 
 const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
 
-  const [showMap, setShowMap] = useState(false);
-    const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
+  const [showMap, ] = useState(false);
+
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
-  const [showApplyModal, setShowApplyModal] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+ 
+  const [showSuccess, ] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const { setOpenLogin } = useAuthUserStore();
   const isLoggedIn = isTokenValid();
@@ -91,18 +83,18 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
 
 
   const {
-    _id,
+
     agencyId,
     createdAt,
     expiry,
-    agencyName,
+
     imageUrl,
     location,
     interviewDate,
-    positions,
+   
     contactNumbers,
     email,
-    status,
+ 
     interviewAddress,
     latitude, 
     longitude,
@@ -113,7 +105,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
     isSaved,
   } = data?.interview || {};
 
-  const { isDesktop, isTab, isMobile } = useReponsiveStore();
+  const { isDesktop,  } = useReponsiveStore();
 
   const addToCalendar = useCallback((e:any)=>{
     const date = DateTime.fromISO(interviewDate,{ zone: 'Asia/Kolkata' });
@@ -142,8 +134,8 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
         refetchType: "all",
       });
       toast.success(t('interview_saved'));
-    } catch (error) {
-      console.error("Failed to save Interview:", error);
+    } catch {
+      console.error("Failed to save Interview:");
       toast.error(t('submit_error'));
     } finally {
       setIsSaving(false);
@@ -159,8 +151,8 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
         refetchType: "all",
       });
       toast.success(t('interview_removed'));
-    } catch (error) {
-      console.error("Failed to remove saved interview:", error);
+    } catch  {
+      console.error("Failed to remove saved interview:");
       toast.error(t('remove_failed'));
     } finally {
       setIsSaving(false);
@@ -171,16 +163,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
     router.back();
   };
 
-  const handlePositionSelect = (positionId: string, checked: boolean) => {
-    let selectedPos;
-    if (checked) {
-      selectedPos = [...selectedPosition, positionId];
-    } else {
-      selectedPos = selectedPosition.filter((x) => x !== positionId);
-    }
-    setSelectedPosition(selectedPos);
-  };
-
+ 
   const handleReportJob = async () => {
     if (!isLoggedIn) {
       setOpenLogin(true);
@@ -191,7 +174,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
       await reportWalkins(walkinId);
       toast.dismiss(loading);
       toast.success(t('walkin_reported'));
-    } catch (error) {
+    } catch{
       toast.dismiss(loading);
       toast.error(t('walkin_report_failed'));
     }
@@ -202,10 +185,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
      window.open(url)
   };
 
-  const onSuccess = () => {
-    setShowSuccess(true);
-    setShowApplyModal(false);
-  };
+ 
   
   
   const t = useTranslations("WalkinDetails");

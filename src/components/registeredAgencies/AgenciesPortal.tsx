@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Card, Row, Col, Container } from "react-bootstrap";
-import { keepPreviousData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery} from "@tanstack/react-query";
 import { useRouter } from "nextjs-toploader/app";
 import styles from "./Agencies.module.scss";
 import { getAgencies } from "@/apis/agency";
