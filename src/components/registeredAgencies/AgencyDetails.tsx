@@ -48,7 +48,6 @@ const AgencySummary = ({ data }: { data: any }) => {
     email,
   } = data?.agency || {};
 
-  router.back();
 
   const t = useTranslations("AgencyDetails");
   return (
