@@ -229,8 +229,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
         refetchType: "all",
       });
       toast.success(t("job_saved"));
-    } catch (error) {
-      console.error("Failed to save job:", error);
+    } catch {
+      console.error("Failed to save job:");
       toast.error(t("submit_error"));
     } finally {
       setIsSaving(false);
@@ -246,8 +246,8 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
         refetchType: "all",
       });
       toast.success(t("job_removed"));
-    } catch (error) {
-      console.error("Failed to remove saved job:", error);
+    } catch  {
+      console.error("Failed to remove saved job:");
       toast.error(t("remove_failed"));
     } finally {
       setIsSaving(false);
@@ -278,7 +278,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
       await reportJob(jobId);
       toast.dismiss(loading);
       toast.success(t("job_reported"));
-    } catch (error) {
+    } catch {
       toast.dismiss(loading);
       toast.error(t("job_report_failed"));
     }

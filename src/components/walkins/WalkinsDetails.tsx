@@ -134,8 +134,8 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
         refetchType: "all",
       });
       toast.success(t('interview_saved'));
-    } catch (error) {
-      console.error("Failed to save Interview:", error);
+    } catch {
+      console.error("Failed to save Interview:");
       toast.error(t('submit_error'));
     } finally {
       setIsSaving(false);
@@ -151,8 +151,8 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
         refetchType: "all",
       });
       toast.success(t('interview_removed'));
-    } catch (error) {
-      console.error("Failed to remove saved interview:", error);
+    } catch  {
+      console.error("Failed to remove saved interview:");
       toast.error(t('remove_failed'));
     } finally {
       setIsSaving(false);
@@ -174,7 +174,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
       await reportWalkins(walkinId);
       toast.dismiss(loading);
       toast.success(t('walkin_reported'));
-    } catch (error) {
+    } catch{
       toast.dismiss(loading);
       toast.error(t('walkin_report_failed'));
     }

@@ -81,17 +81,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
   }
   
  
-  
-
-
-
- 
-  
-  
-  
-  
-
-  const gulfExp: any = [
+ const gulfExp: any = [
     { label: "Yes", value: "yes" },
     { label: "No", value: "no" },
   ];
@@ -99,11 +89,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
   const [loading, setLoading] = React.useState(false);
   const [, setShowUploadModal] = React.useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<any>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
-  };
+
 
   const loadOptionsDebounced = useCallback(
     debounce((inputValue: string, callback: (options: any) => void) => {
