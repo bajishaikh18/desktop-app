@@ -1,4 +1,3 @@
-import { isTokenValid } from "@/helpers/jwt";
 import { authorizedApiClient } from "./common";
 const baseRoutes = "application";
 

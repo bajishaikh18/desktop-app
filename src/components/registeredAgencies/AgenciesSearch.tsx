@@ -11,7 +11,7 @@ import AgencyPortal from "@/components/registeredAgencies/AgenciesPortal";
 
 const AgenciesSearch = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedLocation, setSelectedLocation] = useState<string>("ae");
+ 
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const { isDesktop } = useReponsiveStore();
   const [searchText, setSearchText] = useState<string>("");

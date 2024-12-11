@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import Image from 'next/image';
+
 import Slider from 'react-slick';
 import JobSearch from '@/components/jobs/JobSearch'; 
 import JobPortal from '@/components/jobs/JobPortal';

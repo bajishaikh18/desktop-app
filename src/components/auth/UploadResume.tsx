@@ -8,7 +8,7 @@ import Image from "next/image";
 import { getSignedUrl, uploadFile } from "@/apis/common";
 import toast from "react-hot-toast";
 import { updateUser } from "@/apis/auth";
-import { useAuthUserStore } from "@/stores/useAuthUserStore";
+
 
 interface UploadResumeModalProps {
   handleClose: () => void;
@@ -37,7 +37,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
   const [cvFiles, setCvFiles] = useState<File | null>(null);
   const [videoFiles, setVideoFiles] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const { authUser } = useAuthUserStore();
+ 
   const onVideoDrop = useCallback((acceptedFiles: any) => {
     const file = acceptedFiles[0];
     if (!file) {
@@ -111,19 +111,21 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
         }
       );
 
-      await updateUser(userPayload);
-      toast.success(t("files_uploaded_securly"));
-      if(onSuccess){
-        onSuccess();
-      }else{
-        handleClose();
+      
+        await updateUser(userPayload);
+        toast.success(t("files_uploaded_securly"));
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          handleClose();
+        }
+      } catch {
+        toast.error(t("failed_to_upload"));
+      } finally {
+        setLoading(false);
       }
-    } catch (e) {
-      toast.error(t("failed_to_upload"));
-    } finally {
-      setLoading(false);
-    }
-  }, [cvFiles, videoFiles]);
+      
+  },[cvFiles, videoFiles]);
 
   const {
     getRootProps: getCvRootProps,

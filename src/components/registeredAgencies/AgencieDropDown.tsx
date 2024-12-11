@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { GetState, GetCity } from "react-country-state-city";
+import { GetState } from "react-country-state-city";
 import styles from "./Agencies.module.scss";
 import { useTranslations } from "next-intl";
 import Select, { components } from "react-select";
@@ -172,15 +172,15 @@ const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> =
                 GroupHeading,
               }}
               styles={{
-                option: (baseStyles, state) => ({
+                option: (baseStyles) => ({
                   ...baseStyles,
                   borderBottom: "1px solid rgba(217, 217, 217, 1)",
                   padding: "12px 16px",
                 }),
-                control: (baseStyles, state) => ({
+                control: () => ({
                   display: "none",
                 }),
-                menuList: (baseStyles, state) => ({
+                menuList: (baseStyles) => ({
                   ...baseStyles,
                   padding: "0px",
                   fontSize: "14px",
@@ -189,11 +189,11 @@ const AgencyDropDown: React.FC<{ onCitiesChange: (cities: string[]) => void }> =
                   color: "rgba(0, 0, 0, 1)",
                   background: "rgba(250, 248, 255, 1)",
                 }),
-                group: (base, props) => ({
+                group: (base) => ({
                   ...base,
                   padding: "0px",
                 }),
-                groupHeading: (baseStyles, state) => ({
+                groupHeading: (baseStyles) => ({
                   ...baseStyles,
                   textAlign: "left",
                   textTransform: "capitalize",

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Modal, Button, Form, Spinner } from "react-bootstrap";
+import React, {  useState } from "react";
+import { Modal, Form, Spinner } from "react-bootstrap";
 import styles from "./JobApply.module.scss";
 import UploadResume from "../auth/UploadResume";
 import { useTranslations } from "next-intl";
@@ -35,7 +35,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
   onApplySuccess
 }) => {
   const t = useTranslations("JobApply");  
-  const [selectedOption, setSelectedOption] = useState<string>("existing");
+  const [, setSelectedOption] = useState<string>("existing");
   const [showUploadResume, setShowUploadResume] = useState(false);
   const [attachWorkVideo,setAttachWorkVideo] = useState(false);
   const [type, setType] = useState<"resume" | "video">("resume");
@@ -79,7 +79,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
       toast.success(t('application_submitted'));
       onApplySuccess();
       setLoading(false);
-    }catch(e){
+    }catch{
       setLoading(false);
       toast.error(t('submission_failed'));
     }

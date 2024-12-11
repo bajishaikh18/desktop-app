@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import styles from "../common/styles/Details.module.scss";
@@ -19,7 +19,7 @@ import {
   Tabs,
 } from "react-bootstrap";
 import { DateTime } from "luxon";
-import Link from "next/link";
+
 import { BsCheckCircleFill, BsThreeDots } from "react-icons/bs";
 import {
   COUNTRIES,
@@ -49,13 +49,6 @@ import { getJobApplication } from "@/apis/applications";
 
 type PostedJobDetailsProps = {
   jobId: string;
-};
-type AgencyDetailsType = {
-  address: string;
-  name: string;
-  email: string;
-  phone: string;
-  state: string;
 };
 
 const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
@@ -165,13 +158,13 @@ const AgencyDetails = ({ agencyDetailsId }: { agencyDetailsId: string }) => {
 
 const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const t = useTranslations("Details");
-  const [agencyDetails, setAgencyDetails] = useState<any>(null);
+  
 
   const [selectedPosition, setSelectedPosition] = useState<string[] | []>([]);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
   const [showApplyModal, setShowApplyModal] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [, setShowSuccess] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const { setOpenLogin } = useAuthUserStore();
   const isLoggedIn = isTokenValid();
@@ -189,17 +182,15 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   });
 
   const {
-    _id,
+  
     agencyId,
     createdAt,
     expiry,
-    agencyName,
+  
     imageUrl,
     location,
     positions,
-    contactNumbers,
-    email,
-    status,
+   
     applied,
     description,
     amenities,
@@ -209,7 +200,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const {
     data: application,
     isLoading: applicationLoading,
-    isError: applicationError,
+   
   } = useQuery({
     queryKey: ["jobApplications", jobId, applied],
     queryFn: () => {
@@ -223,7 +214,7 @@ const JobDetails: React.FC<PostedJobDetailsProps> = ({ jobId }) => {
   const { positions: appliedPositions, _id: applicationId } =
     application?.app || {};
 
-  const { isDesktop, isTab, isMobile } = useReponsiveStore();
+  const { isDesktop,  isMobile } = useReponsiveStore();
 
   const handleSaveJob = async () => {
     if (!isLoggedIn) {

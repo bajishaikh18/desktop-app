@@ -4,8 +4,7 @@ import {
   Form,
   Button,
   Card,
-  InputGroup,
-  Accordion,
+
   Container,
   Row,
   Col,
@@ -55,7 +54,7 @@ interface SettingsProfileProps {
   onCancel?: () => void;
 }
 
-const industries: any = Object.entries(INDUSTRIES).map(([key, val], i) => {
+const industries: any = Object.entries(INDUSTRIES).map(([key, val], ) => {
   return {
     value: key,
     label: val,
@@ -318,16 +317,14 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
   const {
     getRootProps,
     getInputProps,
-    isDragActive,
-    fileRejections: videoRejections,
   } = useDropzone({
     onDrop: onProfileDrop,
-    maxSize: 10 * 1024 * 1024, //10 MB
+    maxSize: 10 * 1024 * 1024, 
     accept: {
-      "image/*": [],
+      "image/*": [], 
     },
   });
-  
+    
   const validateForm = () => {
     const errors = {
       
@@ -605,7 +602,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                                   loadOptions={loadOptionsDebounced}
                                   placeholder={t("select_job_title")}
                                   styles={{
-                                    control: (baseStyles, state) => ({
+                                    control: (baseStyles) => ({
                                       ...baseStyles,
                                       fontSize: "16px",
                                       borderRadius: "8px",
@@ -670,7 +667,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                                     },
                                   })}
                                   styles={{
-                                    control: (baseStyles, state) => ({
+                                    control: (baseStyles) => ({
                                       ...baseStyles,
                                       fontSize: "16px",
                                       borderRadius: "8px",
@@ -726,7 +723,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                                     },
                                   })}
                                   styles={{
-                                    control: (baseStyles, state) => ({
+                                    control: (baseStyles) => ({
                                       ...baseStyles,
                                       fontSize: "16px",
                                       borderRadius: "8px",
@@ -798,7 +795,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                                     },
                                   })}
                                   styles={{
-                                    control: (baseStyles, state) => ({
+                                    control: (baseStyles) => ({
                                       ...baseStyles,
                                       fontSize: "16px",
                                       borderRadius: "8px",

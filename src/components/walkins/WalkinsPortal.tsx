@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { Row, Col, Card, Container } from "react-bootstrap";
 import styles from "../common/styles/Card.module.scss";

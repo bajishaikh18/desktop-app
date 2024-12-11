@@ -4,7 +4,7 @@ import Image from "next/image";
 import Select from "react-select";
 import styles from "./Slider.module.scss";
 import { useTranslations } from "next-intl";
-import { getJobs } from "@/apis/jobs";
+
 import { COUNTRIES } from "@/helpers/constants";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
 import { BsSearch } from "react-icons/bs";

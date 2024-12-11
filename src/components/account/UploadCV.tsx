@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UploadResumeModal from "../auth/UploadResume"; 
 import styles from "../../components/account/SettingsProfile.module.scss";
-import toast from "react-hot-toast";
+
 import { Modal } from "react-bootstrap";
 import { useTranslations } from "next-intl";
 import uploadStyles from "../../app/page.module.scss";

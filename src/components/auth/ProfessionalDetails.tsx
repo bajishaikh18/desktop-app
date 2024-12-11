@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Modal, Button, Form, Spinner } from "react-bootstrap";
+import {  Button, Form, Spinner } from "react-bootstrap";
 import styles from "../../app/page.module.scss";
 import { useTranslations } from "next-intl";
 import { updateUser } from "@/apis/auth";
@@ -50,7 +50,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     currentState: "",
   });
 
-  const industries: any = Object.entries(INDUSTRIES).map(([key,val],i)=>{
+  const industries: any = Object.entries(INDUSTRIES).map(([key,val],)=>{
     return {
       value:key,
       label: val
@@ -97,7 +97,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
   ];
 
   const [loading, setLoading] = React.useState(false);
-  const [showUploadModal, setShowUploadModal] = React.useState(false);
+  const [, setShowUploadModal] = React.useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<any>) => {
     const { name, value } = e.target;
@@ -189,7 +189,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
             loadOptions={loadOptionsDebounced}
             placeholder={t("select_your_job_title")}
             styles={{
-              control: (baseStyles, state) => ({
+              control: (baseStyles) => ({
                 ...baseStyles,
                 fontSize: "16px",
                 borderRadius: "8px",
@@ -243,7 +243,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
                 },
               })}
               styles={{
-                control: (baseStyles, state) => ({
+                control: (baseStyles) => ({
                   ...baseStyles,
                   fontSize: "16px",
                   borderRadius: "8px",
@@ -288,7 +288,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
                 },
               })}
               styles={{
-                control: (baseStyles, state) => ({
+                control: (baseStyles) => ({
                   ...baseStyles,
                   fontSize: "16px",
                   borderRadius: "8px",
@@ -333,7 +333,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               },
             })}
               styles={{
-                control: (baseStyles, state) => ({
+                control: (baseStyles) => ({
                   ...baseStyles,
                   fontSize: "16px",
                   borderRadius: "8px",

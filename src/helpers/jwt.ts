@@ -8,7 +8,7 @@ export const isTokenValid = () => {
         const decodedToken = jwtDecode(token);
         const currentTime = Date.now() / 1000;
         return (decodedToken?.exp||0) > currentTime;
-    }catch(e){
+    }catch{
         return false;
     }  
   };
@@ -20,7 +20,7 @@ export const getTokenClaims = (token:string)=>{
         const user = jwtDecode(token);
         console.log(user);
         return user;
-    }catch(e){
+    }catch{
         return null;
     }  
 };

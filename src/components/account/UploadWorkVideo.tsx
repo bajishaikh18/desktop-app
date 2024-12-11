@@ -4,7 +4,7 @@ import styles from "../../components/account/SettingsProfile.module.scss";
 import uploadStyles from "../../app/page.module.scss";
 import { Modal } from "react-bootstrap";
 import { useTranslations } from "next-intl";
-import toast from "react-hot-toast";
+
 
 const UploadWorkVideo: React.FC = () => {
   const [reset,setReset]= useState(false);

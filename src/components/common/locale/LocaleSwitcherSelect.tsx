@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { Locale } from "@/i18n/config";
 import { setUserLocale } from "@/services/locale";
 import { Dropdown } from "react-bootstrap";
-import { BsCheck2 } from 'react-icons/bs';
+
 
 import Image from "next/image";
 import styles from "../Header.module.scss";
 export default function LocaleSwitcherSelect() {
 
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   
   
   function onChange(value: string) {

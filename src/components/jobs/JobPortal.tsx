@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { Row, Col, Card, Container } from "react-bootstrap";
 import styles from "../common/styles/Card.module.scss";
@@ -27,7 +27,7 @@ const JobPortal: React.FC<{
     isFetching,
     isFetchingNextPage,
     refetch,
-    hasNextPage,
+    
   } = useInfiniteQuery<any>({
     queryKey: ["joblist", selectedCountry, field, filter],
     queryFn: ({ pageParam = 1 }) => {
