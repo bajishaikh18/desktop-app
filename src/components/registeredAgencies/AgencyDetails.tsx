@@ -27,6 +27,7 @@ import { reportagencyissue } from "@/apis/agency";
 import toast from "react-hot-toast";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
+import { MapView } from "../common/MapView";
 
 type PostedAgencyDetailsProps = {
   agencyId: string;
@@ -39,6 +40,8 @@ const AgencySummary = ({ data }: { data: any }) => {
   const {
     regNo,
     name,
+    latitude,
+    longitude,
     address,
     phone,
     activeJobCount,
@@ -104,12 +107,7 @@ const AgencySummary = ({ data }: { data: any }) => {
               ""}
           </p>
 
-          <iframe
-            height="216"
-            style={{ border: 0, width: "100%" }}
-            loading="lazy"
-            src="https://www.google.com/maps/place/Splitbit+Innovative+Solutions/@17.4449405,78.3856523,15z/data=!4m6!3m5!1s0x3bcb934575864743:0x4e49a96c37440063!8m2!3d17.4449405!4d78.3856523!16s%2Fg%2F11pw8r8w2c?entry=ttu&g_ep=EgoyMDI0MTAxMy4wIKXMDSoASAFQAw%3D%3D"
-          ></iframe>
+            { address && <MapView address={address} latitude={latitude} longitude={longitude}/>}
         </div>
         <div className={agencyStyles.contactSection}>
           <h3>{t("contact")}</h3>

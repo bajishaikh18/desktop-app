@@ -44,6 +44,7 @@ import { truncateText } from "@/helpers/truncate";
 import { useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
 import { useReponsiveStore } from "@/stores/useResponsiveStore";
+import { MapView } from "../common/MapView";
 
 
 type PostedWalkinsDetailsProps = {
@@ -181,7 +182,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
   };
 
   const openMaps = () => {
-    const url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude},${longitude}`;
+    const url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude && longitude ? `${longitude},${longitude}`:interviewAddress}`;
      window.open(url)
   };
 
@@ -503,19 +504,11 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                   </div>
                 </Col>
                 <Col md={6}>
+                { interviewAddress && <MapView address={interviewAddress} latitude={latitude} longitude={longitude}/>}
+
                 </Col>
                </Row>
-         
-               {showMap && (
-          <div className={styles.mapContainer}>
-           <iframe
-             title="Google Maps"
-             src={`https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${latitude},${longitude}`}
-            allowFullScreen
-           loading="lazy"
-           />
-         </div>
-    )}
+        
                 <div className={styles.jobActions}>
                   {showSuccess || applied ? (
                     <div className={styles.successMessage}>
