@@ -36,3 +36,6 @@ export const INDUSTRIES = {
   fcmg:"FMCG",
   retail:"Retail"
 };
+
+
+
