@@ -240,7 +240,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
           totalExperience: (profile.totalExperience as SelectOption).value,
           industry: (profile.industry as SelectOption).value,
           gulfExperience:
-            (profile.gulfExperience as SelectOption).value === "Yes"
+            (profile.gulfExperience as SelectOption).value === "yes"
               ? true
               : false,
         };
