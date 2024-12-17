@@ -11,6 +11,7 @@ import "react-country-state-city/dist/react-country-state-city.css";
 import { getFormattedJobTitles } from "@/helpers/jobTitles";
 import { debounce } from "lodash";
 import { INDUSTRIES } from "@/helpers/constants";
+import { generateExperienceRanges } from "@/helpers/experince";
 
 interface ProfessionalDetailsProps {
   onSubmit: (screen: number) => void;
@@ -57,28 +58,9 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     }
   })
   
-  const yearsOfExperience: { value: string; label: string }[] = [];
-  const rangeStep = 1; 
-  const maxYears = 10; 
-  
-  
-  for (let i = 0; i <= maxYears; i++) {
-    const start = i;
-    const end = start + rangeStep;
-    
-  
-    if (i < maxYears) {
-      yearsOfExperience.push({
-        value: `${start}`,
-        label: `${start}-${end} Years`,
-      });
-    } else {
-      yearsOfExperience.push({
-        value: `${start}`,
-        label: `${start}+ Years`,
-      });
-    }
-  }
+  const rangeStep = 1;  
+  const steps = 11;  
+  const yearsOfExperience = generateExperienceRanges(rangeStep, steps);
   
  
  const gulfExp: any = [
