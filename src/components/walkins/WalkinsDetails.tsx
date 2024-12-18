@@ -458,7 +458,7 @@ const WalkinsDetails: React.FC<PostedWalkinsDetailsProps> = ({ walkinId }) => {
                       </div>
                       <div className={styles.detailItem}>
                           <Image width={16} height={16} src={'/icons/calendar.svg'} alt="location"/>
-                          <h6>{DateTime.fromISO(interviewDate).toFormat("dd MMM yyyy (cccc)")}</h6>
+                          <h6>{DateTime.fromISO(interviewDate).toFormat("dd MMM yyyy hh:mm a")}</h6>                          
                       </div>
                       </div>
                       <div className={styles.detailItemsRow}>
