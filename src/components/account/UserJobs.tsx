@@ -15,6 +15,9 @@ type Job = {
   _id: string;
   imageUrl?: string;
   agency?: string;
+  agencyId?:{
+    name: string
+  },
   amenities: string[];
   createdAt?: string;
   expiry?: string;
@@ -98,7 +101,7 @@ const Jobscard: React.FC = () => {
                 />
                 <Card.Body className={styles.cardBody}>
                   <Card.Title className={styles.cardTitle}>
-                    {job.agency || "Unknown Agency"}
+                    {job?.agencyId?.name || "Unknown Agency"}
                     <Image
                       src="/icons/verified.svg"
                       width={16}
