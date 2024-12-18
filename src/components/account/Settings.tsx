@@ -27,6 +27,7 @@ import { useDropzone } from "react-dropzone";
 import { getSignedUrl, uploadFile } from "@/apis/common";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader } from "../common/Feedbacks";
+import { generateExperienceRanges } from "@/helpers/experince";
 
 interface UserProfile {
   firstName: string;
@@ -61,20 +62,9 @@ const industries: any = Object.entries(INDUSTRIES).map(([key, val], ) => {
   };
 });
 
-const yearsOfExpericence: any = [
-  {
-    value: "0",
-    label: "0-1 Years",
-  },
-  {
-    value: "1",
-    label: "1-2 Years",
-  },
-  {
-    value: "2",
-    label: "2-3 Years",
-  },
-];
+const rangeStep = 1;  
+  const steps = 11;  
+  const yearsOfExperience = generateExperienceRanges(rangeStep, steps);
 
 const gulfExp: any = [
   { label: "Yes", value: "yes" },
@@ -161,7 +151,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
         currentJobTitle: authUser.currentJobTitle._id,
         industry: { label: INDUSTRIES[authUser.industry as "oil_gas"] || "", value: authUser.industry },
         totalExperience: {
-          label: yearsOfExpericence.find(
+          label: yearsOfExperience.find(
             (x: any) => x.value === authUser.totalExperience.toString()
           )?.label,
           value: authUser.totalExperience.toString(),
@@ -193,7 +183,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
 
         industry: { label: INDUSTRIES[authUser.industry as "oil_gas"] || "", value: authUser.industry },
         totalExperience: {
-          label: yearsOfExpericence.find(
+          label: yearsOfExperience.find(
             (x: any) => x.value === (authUser.totalExperience?.toString() || "")
           )?.label || "",
           value: authUser.totalExperience?.toString() || "",
@@ -745,7 +735,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                                     }),
                                   }}
                                   name="totalExperience"
-                                  options={yearsOfExpericence}
+                                  options={yearsOfExperience}
                                   value={profile.totalExperience}
                                   onChange={(e: any) => {
                                     handleChange("totalExperience", e);
