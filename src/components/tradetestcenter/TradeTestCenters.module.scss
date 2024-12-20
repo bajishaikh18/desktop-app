@@ -1,0 +1,481 @@
+@import "../../app/variables";
+
+.container {
+  padding: 0px;
+  width: 100%;
+  margin-top: 24px;
+  margin-bottom: 20px;
+  background-color: #f8f8f8;
+}
+
+.tradeSearchBox {
+  background-color: #fff;
+  padding-top: 150px;
+  padding-bottom: 24px;
+}
+
+.tradeSearchContainer {
+  padding: 0px;
+}
+
+.mainCard {
+  width: 100%;
+  background-color: #fff;
+  padding: 0px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.tradeSection {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 24px !important;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.logo {
+  height: auto;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.companyName {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+}
+
+.regNo {
+  font-size: 16px;
+  color: #888;
+}
+
+.tradeRow {
+  justify-content: space-between;
+}
+
+.jobsPosted {
+  font-size: 16px;
+  white-space: nowrap;
+  color: #000;
+  margin-left: 12px;
+}
+
+.jobsPostedIcon {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.alarmIcon {
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: -40px;
+}
+
+.validity {
+  font-size: 16px;
+  color: #333;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.viewJobsButton {
+  white-space: nowrap;
+  padding: 10px 25px;
+  font-size: 14px;
+  color: blue;
+  background-color: white;
+  border: 1px solid blue;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: blue;
+    color: white;
+  }
+}
+
+
+@media (max-width: 576px) {
+  .tradeSection {
+    flex-direction: column;
+    padding: 15px 0;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+    margin-left: 0;
+  }
+
+  .companyName {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+}
+
+
+
+
+//Search
+.searchImageContainer {
+  background-color: #fff;
+  border-radius: 50px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 16px 40px 0px rgba(34, 34, 34, 0.16);
+  padding: 10px 20px;
+  max-width: 100%;
+  width: 960px;
+  // margin-top: 100px;
+
+}
+
+.searchBox {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.searchImageContainer input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 50px;
+  width: 100%;
+
+}
+
+.searchImageContainer .searchIcon {
+  margin-right: 10px;
+}
+
+.findJobsButton {
+  background-color: $color-brand-1;
+  border-radius: 60px;
+  color: white;
+  padding: 20px 45px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 70px;
+  border: none;
+  margin-bottom: -8px;
+  margin-right: -18px;
+  margin-top: -8px;
+}
+
+.locationDropdown:focus {
+  outline: none;
+}
+
+.locationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+
+}
+
+.separator {
+  width: 1px;
+  height: 30px;
+  background-color: #ccc;
+  margin-right: 20px;
+
+}
+
+
+
+.jobListingContainer {
+  margin-top: 48px;
+  padding: 0px 80px;
+  text-align: center;
+
+}
+
+.jobList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+
+  span {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    margin: 0;
+    cursor: pointer;
+
+    &.active {
+      color: $color-brand-1;
+    }
+
+    &:hover {
+      color: $color-brand-1;
+    }
+  }
+}
+
+.vectorIcon {
+  width: 10px;
+  height: 5px;
+  margin-left: 0px;
+  margin-top: 5px;
+}
+
+.jobList span {
+  display: inline-flex;
+}
+
+.jobList span:first-child {
+  margin-right: 15px;
+
+}
+
+.labelWithIcon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer !important;
+  position: relative;
+}
+
+.selectContainer {
+  width: 250px;
+  position: absolute;
+  z-index: 9;
+  bottom: 0px;
+  left: 0px;
+}
+
+.dropdownContainer {
+  position: relative;
+}
+
+.dropdownMenu {
+  position: absolute;
+  margin-top: 30px;
+  margin-left: -650px;
+  transform: translateX(-50%);
+  width: 250px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+  padding: 8px 0;
+  text-align: left;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.stateItem {
+  padding: 10px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+.stateLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.arrow {
+  font-size: 12px;
+  color: #888;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.cityDropdown {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #333;
+
+}
+
+.cityItem {
+  padding: 10px 16px;
+  cursor: pointer;
+  margin-left: -15px;
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+}
+
+.arrowSelected {
+  background-color: blue;
+  border-radius: 50%;
+  color: white;
+  padding: 5px;
+
+}
+
+.tradeStates {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+
+}
+
+.selectedCities {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .tag {
+    color: #fff;
+    border-radius: 5px;
+    padding: 2px 10px;
+    background-color: $color-brand-1;
+
+    .close {
+      cursor: pointer !important;
+    }
+  }
+
+  .moreCities {
+    color: $color-brand-1;
+    font-weight: 600;
+  }
+
+  .allCities {
+    color: $color-grey-1;
+    margin-bottom: 0px;
+  }
+}
+
+
+@media screen and (max-width:1190px) {
+  .sliderContainer {
+    padding-top: 70px;
+  }
+}
+
+@media screen and (max-width:991px) {
+  .tradeSearchBox{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .jobListingContainer{
+    padding: 0px;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .jobListingContainer {
+    margin-top: 40px;
+  }
+
+  .mainCard {
+    padding: 15px;
+  }
+
+  .companyName {
+    font-size: 17px;
+  }
+  .tradeSection{
+    padding: 20px !important;
+  }
+  .agencyStats{
+    margin-top: 20px;
+  }
+  .jobsPosted,
+  .validity,
+  .regNo {
+    font-size: 15px;
+  }
+
+
+  .slide {
+    padding-top: 20px;
+  }
+
+  .jobList {
+    gap: 20px;
+
+  }
+
+  .overlay {
+    display: block;
+  }
+
+  .textCommon {
+    font-size: 14px;
+  }
+
+  .searchImageContainer {
+    position: relative;
+    gap: 0px;
+    justify-content: flex-start;
+
+    .searchBox {
+      display: flex;
+      align-items: center;
+      width: 48%;
+      font-size: 12px;
+      flex: none;
+
+      .searchInput {
+        width: 100%;
+      }
+    }
+
+    .separator {
+      margin-right: 10px;
+    }
+
+    .findJobsButton {
+      padding: 16px 25px;
+      position: absolute;
+      margin-left: 0px;
+      right: 20px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+
+
+  .selectedCities {
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+
+    .tag {
+      font-size: 12px;
+      padding: 2px 8px;
+    }
+  }
+
+  .arrowSelected {
+    padding: 4px;
+  }
+}

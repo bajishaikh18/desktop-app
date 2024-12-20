@@ -14,6 +14,7 @@ export const getJobs = async ({
     jobTitle?: string;
     location?:string;
     agencyId?:string;
+    tradeId?:string;
   }
 }) => {
   try {
