@@ -8,7 +8,7 @@ import { gettrades } from "@/apis/trade";
 import { useRouter } from "nextjs-toploader/app";
 import { useTranslations } from "next-intl";
 import InfiniteScroll from "react-infinite-scroll-component";
-
+import { INDIAN_STATES } from "@/helpers/states";
 interface TradeTestCenter {
   _id: string;
   tradeId: number;
@@ -78,72 +78,63 @@ const TradeTestCenterPortal: React.FC<TradeTestCenterPortalProps> = ({
       hasMore={trades.length < total}
       loader={ <Loader text={t("fetching_details")} />}
     >
-      <Container className={styles.container}>
-        {trades && trades.length > 0 ? (
-          <Card className={`${styles.mainCard} shadow-sm bg-white rounded`}>
-            {trades.map((trade: TradeTestCenter, index: number) => (
-              <Card.Body
-                key={trade._id} 
-                className={`${styles.tradeSection} ${
-                  index < trades.length - 1 ? "border-bottom" : ""
-                }`}
+    <Container className={styles.container}>
+  {trades && trades.length > 0 ? (
+    <Card className={`${styles.mainCard} shadow-sm bg-white rounded`}>
+      {trades.map((trade: TradeTestCenter, index: number) => (
+        <Card.Body
+          key={trade._id}
+          className={`${styles.tradeSection} ${
+            index < trades.length - 1 ? "border-bottom" : ""
+          }`}
+        >
+          <Row className={`align-items-center ${styles.tradeRow}`}>
+            <Col xs={12} md={8} lg={6} className="d-flex align-items-center">
+              <div>
+                <h3 className={`${styles.companyName} h5 d-inline-block me-2`}>
+                  {trade.name}
+                </h3>
+                <span className={`${styles.regNo} text-muted small`}>
+                  {trade.address}
+                </span>
+              </div>
+            </Col>
+            <Col
+              xs={12}
+              md={2}
+              lg={2}
+              className={`d-flex align-items-center justify-content-start ${styles.tradeStats}`}
+            >
+                <p className={`${styles.testsPosted} mb-0`}>
+                {INDIAN_STATES.find((x) => x.state_code === trade.state)?.name ||
+                  trade.state ||
+                  ""}
+              </p>
+            </Col>
+            <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">
+              <p className={`${styles.validity} mb-0`}>
+                {trade.city}
+              </p>
+            </Col>
+            <Col xs={12} md={2} className="d-flex align-items-center justify-sm-content-end justify-content-start">
+              <button
+                className={styles.viewJobsButton}
+                onClick={() => router.push(`/trade/${trade._id}`)}
               >
-                <Row className={`align-items-center ${styles.tradeRow}`}>
-                  <Col xs={12} md={8} lg={6} className="d-flex align-items-center">
-                    <div>
-                      <h3 className={`${styles.companyName} h5`}>
-                        {trade.name}
-                      </h3>
-                      <p className={`${styles.regNo} text-muted small mb-0`}>
-                        {trade.address} 
-                      </p>
-                    </div>
-                  </Col>
-                  <Col
-                    xs={12}
-                    md={2}
-                    lg={2}
-                    className={`d-flex align-items-center justify-content-start ${styles.tradeStats}`}
-                  >
-                    <p className={`${styles.testsPosted} mb-0`}>
-                      {trade.state}
-                    </p>
-                  </Col>
-                  <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">
-                    <p className={`${styles.validity} mb-0`}>
-                      {trade.city} 
-                    </p>
-                  </Col>
-                  <Col xs={12} md={2} className="d-flex align-items-center justify-sm-content-end justify-content-start">
-                  <button
-                    className={styles.viewJobsButton}
-                    onClick={() => router.push(`/trade/${trade._id}`)}
-                  >
-                   {t('view_trades')}
-                  </button>
-                  </Col>
-                </Row>
+                {t('view_trades')}
+              </button>
+            </Col>
+          </Row>
 
-                
-                <Row>
-                  <Col xs={12} md={6}>
-                    <p className={`${styles.status} mb-0`}>
-                      Status: {trade.status} 
-                    </p>
-                  </Col>
-                  <Col xs={12} md={6}>
-                    <p className={`${styles.tradeId} mb-0`}>
-                      Trade ID: {trade.tradeId}
-                    </p>
-                  </Col>
-                </Row>
-              </Card.Body>
-            ))}
-          </Card>
-        ) : (
-           <NotFound text={t("not_found")} />
-        )}
-      </Container>
+          
+        </Card.Body>
+      ))}
+    </Card>
+  ) : (
+    <NotFound text={t("not_found")} />
+  )}
+</Container>
+
     </InfiniteScroll>
   );
 };
