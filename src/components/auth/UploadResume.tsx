@@ -140,6 +140,7 @@ const UploadResumeModal: React.FC<UploadResumeModalProps> = ({
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
         [".docx"],
         "image/jpeg": [".jpg", ".jpeg"],
+        "image/png": [".png"],
     },
   });
 
