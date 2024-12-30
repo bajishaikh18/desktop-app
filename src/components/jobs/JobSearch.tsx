@@ -71,7 +71,9 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch, onCountryChange }) => {
       zIndex: 9999,
     }),
   };
-
+  if (typeof document === "undefined") {
+    return null;
+  }
   return (
     <div className={styles.searchImageContainer}>
       <div className={styles.searchBox}>

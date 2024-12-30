@@ -22,10 +22,16 @@ import { getUserNotifications } from "@/apis/notification";
 import { Notification } from "@/stores/useNotificationStore";
 
 function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
+  if (typeof window !== "undefined") {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  }
   return {
-    width,
-    height,
+    width:0,
+    height: 0,
   };
 }
 
