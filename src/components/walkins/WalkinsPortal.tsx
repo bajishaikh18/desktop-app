@@ -13,7 +13,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "nextjs-toploader/app";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const fetchSize = 30;
+const fetchSize = 50;
 
 const WalkinsPortal: React.FC<{
   selectedCountry: string;
