@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { Loader, NotFound } from "../common/Feedbacks";
 import agencyStyles from "./AgencyDetails.module.scss";
 import { Col, Row } from "react-bootstrap";
@@ -27,7 +27,7 @@ type Job = {
   location: string;
   amenities: string[];
 };
-
+const fetchSize = 10;
 const JobCard = ({
   type,
   agencyId,
@@ -53,21 +53,26 @@ const JobCard = ({
       if (agencyId) {
         return getJobs({
           page: pageParam,
-          fetchSize: postedJobs,
+          fetchSize: fetchSize,
           filters: { agencyId: agencyId },
         });
       }
     },
-    getNextPageParam: (lastPage) => {
-      return lastPage?.nextPage ?? false;
-    },
     retry: 3,
-    initialPageParam: 1, 
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage?.jobs?.length === fetchSize
+        ? allPages.length + 1
+        : undefined;
+    },
+    refetchOnMount: true,
+    placeholderData: keepPreviousData,
   });
 
   const jobs: Job[] = data?.pages.flatMap((page) => page.jobs) ?? [];
+  const total = data?.pages[0].totalJobCount || 0;
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return <Loader text={t("fetching", { type })} />;
   }
   if (error) {
@@ -86,7 +91,7 @@ const JobCard = ({
       <InfiniteScroll
         dataLength={jobs.length}
         next={fetchNextPage}
-        hasMore={hasNextPage ?? false}
+        hasMore={jobs.length < total}
         loader={<Loader text="Loading jobs..." />}
       >
         <div className={`${agencyStyles.overFlowSection} scroll-box`}>
