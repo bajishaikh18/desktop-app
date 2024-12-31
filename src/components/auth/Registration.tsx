@@ -135,9 +135,12 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
         toast.success(t('success'));
         handleScreenChange(1);
       }
-    } catch (error) {
-      console.error("Error during registration:", error);
-      toast.error(t('submit_error'));
+    } catch (error:any) {
+      if (error?.status === 400) {
+        toast.error("User already exisits with the given phone number. Please login");
+      }else{
+        toast.error(t('submit_error'));
+      }
     } finally {
       setLoadingRegister(false);
     }

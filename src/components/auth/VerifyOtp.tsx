@@ -74,7 +74,7 @@ export const VerifyOtp = ({
       }
       toast.success("OTP verified successfully!");
     } catch (e: any) {
-      if (e.status === 401) {
+      if (e.status === 400) {
         toast.error("OTP entered is invalid");
       } else {
         toast.error("Something went wrong. Please try again later");
