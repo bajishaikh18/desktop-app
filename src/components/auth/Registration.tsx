@@ -137,7 +137,7 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
       }
     } catch (error:any) {
       if (error?.status === 400) {
-        toast.error("User already exisits with the given phone number. Please login");
+        toast.error(t("user_exisits"));
       }else{
         toast.error(t('submit_error'));
       }
