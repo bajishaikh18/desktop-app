@@ -27,7 +27,7 @@ type Job = {
   location: string;
   amenities: string[];
 };
-const fetchSize = 10;
+const fetchSize = 25;
 const JobCard = ({
   type,
   agencyId,
