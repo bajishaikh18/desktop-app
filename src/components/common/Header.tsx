@@ -296,6 +296,15 @@ const Header: React.FC = () => {
               {t("agenices")}
             </Link>
 
+            <Link
+              href="/trade"
+              className={`${styles.navListItem} ${
+                pathname.includes("trade") ? styles.active : ""
+              }`}
+            >
+             TradeTest Center
+            </Link>
+
             <Link className={styles.navListItem} href="javascript:;">
               {t("travel")}
             </Link>

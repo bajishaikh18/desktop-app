@@ -387,6 +387,58 @@
 "fetching_notifications":"Fetching notifications",
 "error_fetching":"Error while fetching notifications",
 "no_notifications":"No notifications yet"
+},
+
+"TradeDetails":{
+    "approved_by_mea":"Approved by Ministry of External Affairs Govt of India",
+    "jobs_posted":"Jobs Posted",
+    "address":"Address",
+    "contact":"Contact",
+    "notify":"Notify jobs for this Trade",
+    "not_notify":"Disable notifications",
+   "report_issue":"Report an issue",
+   "about":"About",
+   "notify_enabled":"Notifications enabled for any new job posted for this Trade",
+   "notify_error":"Something went wrong while enabling notification, please try again",
+   "notify_exist_error":"Notifications are enabled for this trade already",
+   "notify_disabled":"Notifications are disabled for this trade",
+   "notify_disabled_exist_error":"Notifications are disabled for this trade already",
+   "notify_disabled_error":"Something went wrong while enabling notification, please try again",
+   "jobs":"Jobs",
+    "loading_trade":"Loading Trade details",
+    "not_present":"Oops!, looks like Trade details are not present",
+    "trade_details_error":"Something went wrong while accessing Trade details. Please try again",
+    "report_success":"Trade Reported Succesfully",
+    "report_error":"Something went wrong while Reporting Trade"
+  },
+  "TradePostings":{
+    "jobs_for":"Jobs For",
+    "approved":"Approved",
+    "view_details":"View Job Details",
+    "fetch_error":"Something went wrong while fetching jobs",
+    "fetching":"Fetching Jobs",
+    "no_jobs":"No jobs found for the trade",
+    "food":"Food",
+    "transportation":"Transportation",
+    "stay":"Stay",
+    "recruitment":"Recruitment"
+ },
+ "Tradedropdown":{
+  "select":"Select State & City",
+  "showing":"Showing results across all cities"
+
+ },
+ "TradeSearch":{
+  "search_trade":"Search Trade By Name",
+  "find_trades":"Find Trades"
+ },
+  "TradePortal":{
+    "fetching_details":"Fetching trade details",
+    "fetching_trades":"Fetching trades",
+    "error_trades":"There was an error loading the trades",
+    "not_found":"No trades found",
+    "view_trades":"View Trades"
+    
 }
  
 
