@@ -74,7 +74,6 @@ const TradeSummary = ({ data }: { data: any }) => {
                 alt="agency-logo"
               />
             </div>
-            <p className={tradestyles.regNo}>{ tradeId || "N/A"}</p>
           </div>
         </div>
         <h5 className={`${tradestyles.approvedText} success`}>
@@ -87,52 +86,38 @@ const TradeSummary = ({ data }: { data: any }) => {
         <ul className={`${styles.jobInfoList} ${tradestyles.agencyInfoList}`}>
           <li>
             <Image
-              src={"/icons/suitcase.png"}
+              src={"/icons/location.svg"}
               width={24}
               height={20}
               alt="suitcase"
             />
             <span>
-              {activeJobCount} {t("jobs_posted")}
+              {t("city")} : {city || ""}
+            </span>
+          </li>
+          <li>
+            <Image
+              src={"/icons/location.svg"}
+              width={24}
+              height={20}
+              alt="suitcase"
+            />
+            <span>
+              {t("state")} : {INDIAN_STATES.find((x) => x.state_code === state)?.name ||
+              state ||
+              "" || ""}
             </span>
           </li>
         </ul>
         <div className={tradestyles.addressSection}>
           <h3>{t("address")}</h3>
           <p>
-            {address}, {city || ""},{" "}
-            {INDIAN_STATES.find((x) => x.state_code === state)?.name ||
-              state ||
-              ""}
+            {address}, 
+            
           </p>
           {address && (
             <MapView address={address} latitude={latitude} longitude={longitude} />
           )}
-        </div>
-        <div className={tradestyles.contactSection}>
-          <h3>{t("contact")}</h3>
-          <ul
-            className={`${styles.jobInfoList} ${tradestyles.agencyContactList}`}
-          >
-            <li>
-              <Image
-                src={"/icons/phone.png"}
-                width={16}
-                height={16}
-                alt="phone"
-              />
-              <a href={`tel:${phone}`}>{phone}</a>
-            </li>
-            <li>
-              <Image
-                src={"/icons/mail.svg"}
-                width={16}
-                height={16}
-                alt="mail"
-              />
-              <a href={`mailto:${email}`}>{email}</a>
-            </li>
-          </ul>
         </div>
       </CardBody>
     </Card>
@@ -240,7 +225,6 @@ const TradeJobs = ({ data }: { data: any }) => {
         </CardHeader>
       )}
       <CardBody className={tradestyles.detailCardBody}>
-        <TradeJobPostings tradeId={_id} postedJobs={activeJobCount} />
       </CardBody>
     </Card>
   );
@@ -360,11 +344,8 @@ const TradeDetails: React.FC<PostedTradeDetailsProps> = ({ tradeId }) => {
         ) : (
           <Container fluid>
             <Row>
-              <Col lg={4}>
+              <Col lg={12}>
                 <TradeSummary data={data} />
-              </Col>
-              <Col lg={8}>
-                <TradeJobs data={data} />
               </Col>
             </Row>{" "}
           </Container>

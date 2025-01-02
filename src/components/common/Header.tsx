@@ -302,7 +302,7 @@ const Header: React.FC = () => {
                 pathname.includes("trade") ? styles.active : ""
               }`}
             >
-             TradeTest Center
+             {t("tradeTestCenter")}
             </Link>
 
             <Link className={styles.navListItem} href="javascript:;">

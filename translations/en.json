@@ -2,6 +2,7 @@
   "Header": {
     "jobs": "Jobs",
     "walkins": "Walkins",
+    "tradeTestCenter":"Trade Test Centers",
     "agenices": "Registered Agencies",
     "travel": "Travel",
     "services": "Services",
@@ -405,7 +406,9 @@
    "notify_disabled_exist_error":"Notifications are disabled for this trade already",
    "notify_disabled_error":"Something went wrong while enabling notification, please try again",
    "jobs":"Jobs",
-    "loading_trade":"Loading Trade details",
+   "city":"City",
+   "state":"State",
+  "loading_trade":"Loading Trade details",
     "not_present":"Oops!, looks like Trade details are not present",
     "trade_details_error":"Something went wrong while accessing Trade details. Please try again",
     "report_success":"Trade Reported Succesfully",
@@ -437,8 +440,7 @@
     "fetching_trades":"Fetching trades",
     "error_trades":"There was an error loading the trades",
     "not_found":"No trades found",
-    "view_trades":"View Trades"
-    
+    "view_trades":"View Details"
 }
  
 
