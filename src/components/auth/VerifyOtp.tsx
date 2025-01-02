@@ -52,12 +52,12 @@ export const VerifyOtp = ({
       if (response) {
         setOtpSent(true);
         setResendOtpTimer(RESEND_OTP_TIMEOUT);
-        toast.success("OTP Resent successfully!");
+        toast.success(t("otp_resent"));
       } else {
-        toast.error("Failed to send OTP. Please try again.");
+        toast.error(t("failed_send"));
       }
     } catch {
-      toast.error("Failed to send OTP. Please try again.");
+      toast.error(t("failed_send"));
     }
   };
   
@@ -72,12 +72,12 @@ export const VerifyOtp = ({
         setAuthUser(user as AuthUser);
         successAction();
       }
-      toast.success("OTP verified successfully!");
+      toast.success(t("otp_verified"));
     } catch (e: any) {
       if (e.status === 400) {
-        toast.error("OTP entered is invalid");
+        toast.error(t("otp_invalid"));
       } else {
-        toast.error("Something went wrong. Please try again later");
+        toast.error(t("something_wrong"));
       }
     } finally {
       setOtpLoading(false);

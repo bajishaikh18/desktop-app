@@ -24,7 +24,12 @@
     "mobileNo": "Mobile Number",
     "sendotp": "SEND OTP",
     "register": "REGISTER",
-    "continue_with_out_login": "Continue without Login"
+    "continue_with_out_login": "Continue without Login",
+    "invalid_number":"Invalid mobile number",
+    "otp_sent":"OTP sent successfully!",
+    "failed_send":"Failed to send OTP. Please try again.",
+    "number_registered":"Looks like your the number is not registered with us",
+    "error_occurred":"An error occurred while sending OTP."
   },
 
   "Register": {
@@ -54,7 +59,13 @@
     "email_error": "Email is required",
     "email_valid_error": "Enter a valid email",
     "success": "Registered successfully!",
-    "submit_error": "Failed to register. Please try again."
+    "submit_error": "Failed to register. Please try again.",
+    "user_exisits":"User already exisits with the given phone number. Please login",
+    "otp_resent":"OTP Resent successfully!",
+    "failed_send":"Failed to send OTP. Please try again.",
+    "otp_verified":"OTP verified successfully!",
+    "otp_invalid":"OTP entered is invalid",
+    "something_wrong":"Something went wrong. Please try again later"
   },
   "Professional": {
     "current_job_title":"Current Job Title",
