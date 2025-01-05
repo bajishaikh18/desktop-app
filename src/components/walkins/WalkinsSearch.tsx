@@ -17,7 +17,7 @@ interface JobSearchProps {
 
 const WalkinsSearch: React.FC<JobSearchProps> = ({ onSearch, onCountryChange }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedLocation, setSelectedLocation] = useState<string>("ae");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
   const { isDesktop } = useReponsiveStore();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,12 +28,12 @@ const WalkinsSearch: React.FC<JobSearchProps> = ({ onSearch, onCountryChange }) 
     setSelectedLocation(option.value);
   };
 
-  const locationOptions = useMemo(()=>Object.entries(COUNTRIES)
+  const locationOptions = useMemo(()=>[{value:"",label:"All"},...Object.entries(COUNTRIES)
   .filter(([country]) => country != "in")
   .map(([country, data]) => ({
     value: country,
     label:isDesktop ? country === "ae" ? "UAE" : data.label : data.iso3Code ,
-  })),[isDesktop]);
+  }))],[isDesktop]);
 
   const handleFindJobs = async () => {
     onSearch(searchTerm);
@@ -93,14 +93,16 @@ const WalkinsSearch: React.FC<JobSearchProps> = ({ onSearch, onCountryChange }) 
       </div>
       <div className={styles.locationContainer}>
         <span className={styles.separator}></span>
-
-        <Image
+        {
+          selectedLocation && <Image
           src={`flags/${selectedLocation}.svg`}
           alt={`${selectedLocation} Flag`}
           width={24}
           height={24}
           className={styles.flagIcon}
-        />
+         />
+        }
+        
 
         <Select
           value={locationOptions.find(
