@@ -295,7 +295,7 @@ const Header: React.FC = () => {
             >
               {t("agenices")}
             </Link>
-
+         
             <Link
               href="/trade"
               className={`${styles.navListItem} ${
@@ -308,6 +308,16 @@ const Header: React.FC = () => {
             <Link className={styles.navListItem} href="javascript:;">
               {t("travel")}
             </Link>
+
+            <Link
+              href="/navbar"
+              className={`${styles.navListItem} ${
+                pathname.includes("navbar") ? styles.active : ""
+              }`}
+            >
+            Tutorials
+            </Link>
+
             <NavDropdown title={t("services")} className={styles.navListItem} drop="down">
               <NavDropdown.Item className={styles.navListItem}>
                 {t("documentAttestation")}
