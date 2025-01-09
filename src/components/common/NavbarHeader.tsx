@@ -24,19 +24,7 @@ const Navbar = () => {
         Articles
       </Link>
 
-      <Link
-        href="/blog"
-        className={`${styles.navListItem} ${pathname.includes('blog') ? styles.active : ''}`}
-      >
-        Blogs
-      </Link>
-
-      <Link
-        href="/faq"
-        className={`${styles.navListItem} ${pathname.includes('faq') ? styles.active : ''}`}
-      >
-        FAQs
-      </Link>
+     
     </div>
   );
 };

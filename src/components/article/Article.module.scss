@@ -6,7 +6,7 @@
   width: 100%; 
   max-width: 100%; 
   margin: auto;
-  margin-top: 150px;
+  margin-top: 20px;
 }
 
 .article-title {
@@ -37,6 +37,8 @@
   }
 }
 
+
+
 .sidebar-button {
   background-color: #fff;
   border: 1px solid #d4d4d4;
@@ -51,18 +53,17 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s, border-color 0.3s;
 
- 
   &:hover {
     background-color: #eef4ff;
-  
   }
 
   &.active {
     background-color: #e8f0ff;
-    border-color: #4a90e2;
-    font-weight: bold;
+    border-color: #0045E6;
+    //font-weight: bold;
   }
 }
+
 
 
 
@@ -93,18 +94,18 @@
 
 .back-button {
   background-color: #fff;
-  color: #4a90e2;
+  color: #0045E6;
   padding: 12px 34px;
   font-size: 14px; 
   font-weight: bold;
-  border: 2px solid #4a90e2;
+  border: 2px solid #0045E6;
   border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
   align-self: flex-end;
 
   &:hover {
-    background-color: #4a90e2;
+    background-color: #0045E6;
     color: #fff;
   }
 }

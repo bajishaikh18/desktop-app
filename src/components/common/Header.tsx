@@ -310,9 +310,9 @@ const Header: React.FC = () => {
             </Link>
 
             <Link
-              href="/navbar"
+              href="/tutorial"
               className={`${styles.navListItem} ${
-                pathname.includes("navbar") ? styles.active : ""
+                pathname.includes("tutorial") ? styles.active : ""
               }`}
             >
             Tutorials
