@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Article.module.scss";
-import Layout from "@/app/Navbarlayout";
+import Layout from "@/app/TutorialNavbarlayout";
 const Articles: React.FC = () => {
   const [selectedArticle, setSelectedArticle] = useState<string>("How to apply overseas");
   

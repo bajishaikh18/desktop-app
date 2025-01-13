@@ -1,5 +1,8 @@
 import React from "react";
-import Navbar from "@/components/common/NavbarHeader";
+import TutorialNavbar from "@/components/common/TutorialNavbar";
+
+
+
 import { usePathname } from "next/navigation";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -8,7 +11,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div>
     
-      <Navbar />
+      <TutorialNavbar />
       <div className="main-content">
         {children}
       </div>

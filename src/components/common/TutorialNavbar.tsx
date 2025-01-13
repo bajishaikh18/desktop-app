@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './Navbar.module.scss';
+import styles from './TutorialNavbar.module.scss';
 import Link from 'next/link';
 import { usePathname, useRouter } from "next/navigation";
 
-const Navbar = () => {
+const TutorialNavbar = () => {
     const pathname = usePathname();
     const router = useRouter();
 
@@ -29,4 +29,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default TutorialNavbar;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactPlayer from "react-player";
 import styles from "./Tutorial.module.scss";
 
-import Layout from "@/app/Navbarlayout";
+import Layout from "@/app/TutorialNavbarlayout";
 
 interface Video {
   title: string;
