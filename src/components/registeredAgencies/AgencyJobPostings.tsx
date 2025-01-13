@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { Loader, NotFound } from "../common/Feedbacks";
 import agencyStyles from "./AgencyDetails.module.scss";
@@ -31,11 +31,10 @@ const fetchSize = 25;
 const JobCard = ({
   type,
   agencyId,
-  postedJobs,
 }: {
   type: TabType;
   agencyId: string;
-  postedJobs: number;
+  postedJobs?: number;
 }) => {
   const router = useRouter();
   const t = useTranslations("AgencyPostings");
@@ -43,10 +42,8 @@ const JobCard = ({
   const {
     data,
     isLoading,
-    isFetching,
     error,
     fetchNextPage,
-    hasNextPage,
   } = useInfiniteQuery({
     queryKey: ["jobs", agencyId, type],
     queryFn: async ({ pageParam = 1 }) => {

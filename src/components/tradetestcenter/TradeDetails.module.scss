@@ -219,6 +219,9 @@
 }
 
 @media screen and (max-width:600px) {
+    .detailsCardBody{
+        padding: 0px !important;
+    }
     .detailsCardHeader{
         padding: 30px 15px !important;
         flex-direction: row !important;
@@ -238,7 +241,7 @@
         padding-right: 35px !important;
     }
     .detailsCard{
-        padding-left: 15px !important;
+        padding-left: 0px !important;
         box-shadow:  none !important;
     }
     .jobContainer{

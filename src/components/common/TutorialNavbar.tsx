@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from './TutorialNavbar.module.scss';
 import Link from 'next/link';
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const TutorialNavbar = () => {
     const pathname = usePathname();
-    const router = useRouter();
 
   return (
     <div className={styles.navbar}>

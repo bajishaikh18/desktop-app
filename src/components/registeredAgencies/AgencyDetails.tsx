@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import styles from "../common/styles/Details.module.scss";
 import agencyStyles from "./AgencyDetails.module.scss";
@@ -36,7 +35,6 @@ type PostedAgencyDetailsProps = {
 type TabType = "about" | "jobs";
 
 const AgencySummary = ({ data }: { data: any }) => {
-  const router = useRouter();
   const {
     regNo,
     name,

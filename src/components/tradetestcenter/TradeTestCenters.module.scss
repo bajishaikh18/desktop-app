@@ -79,9 +79,10 @@
   font-size: 16px;
   color: #333;
   white-space: nowrap;
-  margin-left: 10px;
 }
-
+.city{
+  margin-bottom: 0px;
+}
 .viewJobsButton {
   white-space: nowrap;
   padding: 10px 25px;
@@ -399,7 +400,7 @@
   }
 
   .companyName {
-    font-size: 17px;
+    font-size: 16px;
   }
   .tradeSection{
     padding: 20px !important;
@@ -408,12 +409,18 @@
     margin-top: 20px;
   }
   .jobsPosted,
+  .testsPosted,
   .validity,
   .regNo {
-    font-size: 15px;
+    font-size: 14px;
   }
-
-
+  .regNo{
+    display: block;
+  }
+  .city{
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
   .slide {
     padding-top: 20px;
   }

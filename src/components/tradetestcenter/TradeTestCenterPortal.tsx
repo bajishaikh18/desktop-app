@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { Card, Row, Col, Container } from "react-bootstrap";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { Loader, NotFound } from "../common/Feedbacks";
@@ -112,7 +111,7 @@ const TradeTestCenterPortal: React.FC<TradeTestCenterPortalProps> = ({
               </p>
             </Col>
             <Col xs={12} md={2} className="d-flex align-items-center justify-content-start">
-              <p className={`${styles.validity} mb-0`}>
+              <p className={styles.city}>
                 {trade.city}
               </p>
             </Col>

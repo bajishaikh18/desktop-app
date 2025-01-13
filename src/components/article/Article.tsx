@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import styles from "./Article.module.scss";
 import Layout from "@/app/TutorialNavbarlayout";
+import { Container } from "react-bootstrap";
+import { useRouter } from "next/navigation";
 const Articles: React.FC = () => {
   const [selectedArticle, setSelectedArticle] = useState<string>("How to apply overseas");
-  
+  const router = useRouter();
   const articles = [
     "How to apply overseas",
     "Documents needed for gulf visa",
@@ -24,6 +26,7 @@ const Articles: React.FC = () => {
 
   return (
     <Layout>
+      <Container>
     <div className={styles["article-container"]}>
       <h1 className={styles["article-title"]}>Articles</h1>
       <div className={styles["article-content"]}>
@@ -44,10 +47,11 @@ const Articles: React.FC = () => {
           <p className={styles["content-text"]}>
             {articleContent[selectedArticle]}
           </p>
-          <button className={styles["back-button"]}>Back</button>
+          <button className={styles["back-button"]} onClick={()=>router.back()}>Back</button>
+
         </div>
       </div>
-    </div>
+    </div></Container>
     </Layout>
   );
 };

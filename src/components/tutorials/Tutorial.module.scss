@@ -1,9 +1,4 @@
 
-.container {
-  padding: 32px;
-  background-color: #f8f9fc;
-  margin-top: -50px;
-}
 
 .heading {
   font-size: 16px;
@@ -18,6 +13,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.cardContainer{
+  width: 100%;
 }
 .cardContainer.featured {
   display: flex;
@@ -45,17 +43,28 @@
   .thumbnail {
     position: relative;
     height: 150px;
-   
-    background: url("/Frame%202087326402.png") center/cover no-repeat;
-
+    background-position: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
     &.largeThumbnail {
       height: 350px;
     }
-
+    &::before{
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+    img{
+      position: relative;
+    }
   }}
 
 .details {
-  margin-top: 14px;
+  margin-top: 24px;
 
   .title {
     font-size: 14px;
@@ -68,16 +77,13 @@
     font-size: 14px;
     color: #777;
     display: flex;
+    gap:32px;
     align-items: center;
 
-    .separator {
-      width: 4px;
-      height: 4px;
-     // background: #777;
-      border-radius: 50%;
-      margin: 0 8px;
+    .videoTime{
+      display: flex;
+      align-items: center;
     }
-
     .clockIcon {
       width: 16px;
       height: 16px;
@@ -90,15 +96,24 @@
 @media (max-width: 768px) {
   .heading {
     font-size: 20px;
-    text-align: center;
   }
+  .cardContainer{
+    margin-bottom: 10px;
+    &.featured{
+      margin-bottom: 30px;
 
+    }
+  }
   .card .thumbnail {
-    height: 120px;
-
+    height: 160px;
+    
     &.largeThumbnail {
       height: 200px;
+     ;
     }
+  }
+  .details{
+    margin-top: 24px;
   }
 
   .details .title {
@@ -133,6 +148,7 @@
 .popupContent {
   background: #fff;
   padding: 20px;
+  padding-top: 50px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -144,11 +160,11 @@
 .closeButton {
   color: black;
   position: absolute;
-  top: 10px;
+  top:-5px;
   right: 10px;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 34px;
   cursor: pointer;
 }
 
