@@ -16,7 +16,8 @@
     "needhelp":"సహాయం కావాలి",
     "privacypoilcy":"గోప్యతా విధానం",
     "terms_conditions":"నిబంధనలు & షరతులు",
-    "logout":"లాగ్అవుట్"
+    "logout":"లాగ్అవుట్",
+     "tradeTestCenter":"వాణిజ్య పరీక్షా కేంద్రాలు"
   },
   "Authentication": {
     "login": "లాగిన్ చేయండి",

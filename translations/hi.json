@@ -16,7 +16,8 @@
     "needhelp":"मदद की ज़रूरत है",
     "privacypoilcy":"गोपनीयता नीति",
     "terms_conditions":"नियम एवं शर्तें",
-    "logout":"लॉग आउट"
+    "logout":"लॉग आउट",
+    "tradeTestCenter":"ट्रेड टेस्ट सेंटर"
   },
   "Authentication": {
     "login": "लॉग इन करें",

@@ -16,7 +16,8 @@
     "needhelp":"സഹായം വേണം",
     "privacypoilcy":"സ്വകാര്യതാ നയം",
     "terms_conditions":"നിബന്ധനകളും വ്യവസ്ഥകളും",
-    "logout":"പുറത്തുകടക്കുക"
+    "logout":"പുറത്തുകടക്കുക",
+     "tradeTestCenter":"വ്യാപാര പരീക്ഷണ കേന്ദ്രങ്ങൾ"
   },
   "Authentication": {
     "login": "ലോഗിൻ",

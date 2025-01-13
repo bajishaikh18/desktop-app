@@ -16,7 +16,8 @@
     "needhelp":"உதவி தேவை",
     "privacypoilcy":"தனியுரிமைக் கொள்கை",
     "terms_conditions":"விதிமுறைகள் & நிபந்தனைகள்",
-    "logout":"வெளியேறு"
+    "logout":"வெளியேறு",
+     "tradeTestCenter":"வர்த்தக சோதனை மையங்கள்"
   },
   "Authentication": {
     "login": "உள்நுழைக",
