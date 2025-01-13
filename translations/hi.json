@@ -16,7 +16,8 @@
     "needhelp":"मदद की ज़रूरत है",
     "privacypoilcy":"गोपनीयता नीति",
     "terms_conditions":"नियम एवं शर्तें",
-    "logout":"लॉग आउट"
+    "logout":"लॉग आउट",
+    "tradeTestCenter":"ट्रेड टेस्ट सेंटर"
   },
   "Authentication": {
     "login": "लॉग इन करें",
@@ -410,7 +411,9 @@
     "not_present":"ओह!, ऐसा लगता है कि व्यापार विवरण मौजूद नहीं हैं",
     "trade_details_error":"व्यापार विवरण तक पहुँचने में कुछ गड़बड़ी हुई। कृपया पुनः प्रयास करें",
     "report_success":"व्यापार सफलतापूर्वक रिपोर्ट किया गया",
-    "report_error":"व्यापार रिपोर्टिंग करते समय कुछ गड़बड़ी हुई"
+    "report_error":"व्यापार रिपोर्टिंग करते समय कुछ गड़बड़ी हुई",
+    "city":"शहर",
+   "state":"राज्य"
   },
   "TradePostings":{
     "jobs_for":"नौकरियां",
@@ -430,7 +433,7 @@
  },
  "TradeSearch":{
   "search_trade":"नाम से व्यापार खोजें",
-  "find_trade":"ट्रेड खोजें"
+  "find_trades":"ट्रेड खोजें"
  },
   "TradePortal":{
     "fetching_details":"व्यापार विवरण प्राप्त किया जा रहा है",
