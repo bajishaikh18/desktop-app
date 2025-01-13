@@ -23,7 +23,7 @@ const videos: Video[] = [
     watchTime: "5 mins watch time",
     thumbnail: `${IMAGE_BASE_URL}/tutorials/thumbnail.png`,
     featured: true,
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    videoUrl: `${IMAGE_BASE_URL}/tutorials/video.mp4`,
   },
   {
     title: "High paying jobs in Dubai for Construction workers",
@@ -200,6 +200,7 @@ const Tutorial: React.FC = () => {
             </button>
             <ReactPlayer
               url={selectedVideo.videoUrl}
+              playing={true}
               width="100%"
               height="400px"
               controls
