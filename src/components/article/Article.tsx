@@ -6,22 +6,23 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 const Articles: React.FC = () => {
-  const [selectedArticle, setSelectedArticle] = useState<string>("How to apply overseas");
-  const router = useRouter();
   const t = useTranslations("Articles");
+  const [selectedArticle, setSelectedArticle] = useState<string>(t("apply_overseas"));
+  const router = useRouter();
+ 
 
   const articles = [
-    t("How to apply overseas"),
-    t("Documents needed for gulf visa"),
-    t("Top career opportunities in Dubai"),
-    t("How to build a career in the Middle East")
+    t("apply_overseas"),
+    t("documents_gulf_visa"),
+    t("opportunities_in_dubai"),
+    t("career_in_middle_east")
   ];
 
   const articleContent: { [key: string]: string } = {
-    [t("How to apply overseas")]: t("How to apply overseas content"),
-    [t("Documents needed for gulf visa")]: t("Documents needed for gulf visa content"),
-    [t("Top career opportunities in Dubai")]: t("Top career opportunities in Dubai content"),
-    [t("How to build a career in the Middle East")]: t("How to build a career in the Middle East content")
+    [t("apply_overseas")]: t("overseas_content"),
+    [t("documents_gulf_visa")]: t("gulf_visa_content"),
+    [t("opportunities_in_dubai")]: t("dubai_content"),
+    [t("career_in_middle_east")]: t("middle_east_content")
   };
 
   const handleButtonClick = (article: string) => {
