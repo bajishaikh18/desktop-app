@@ -44,6 +44,7 @@ const JobCard = ({
         });
       }
     },
+    staleTime: 30000,
     retry: 3,
   });
 

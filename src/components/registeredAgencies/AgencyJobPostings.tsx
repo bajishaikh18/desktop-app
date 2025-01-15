@@ -56,6 +56,7 @@ const JobCard = ({
       }
     },
     retry: 3,
+    staleTime: 30000,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       return lastPage?.jobs?.length === fetchSize

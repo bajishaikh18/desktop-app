@@ -143,7 +143,7 @@ const Header: React.FC = () => {
       }
       return null;
     },
-    refetchInterval: 10000,
+    refetchInterval: 50000,
     retry: 1,
   });
  

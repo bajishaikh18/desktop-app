@@ -59,6 +59,7 @@ const JobPortal: React.FC<{
         : undefined;
     },
     refetchOnMount: true,
+    staleTime: 30000,
     placeholderData: keepPreviousData,
   });
 

@@ -52,6 +52,7 @@ const WalkinsPortal: React.FC<{
         filters: filters,
       });
     },
+    staleTime: 30000,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       return lastPage?.interviews?.length === fetchSize
