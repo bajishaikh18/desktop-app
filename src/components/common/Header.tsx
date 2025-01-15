@@ -315,7 +315,7 @@ const Header: React.FC = () => {
                 pathname.includes("tutorial") ? styles.active : ""
               }`}
             >
-            Tutorials
+            {t('tutorials')}
             </Link>
 
             <NavDropdown title={t("services")} className={styles.navListItem} drop="down">
