@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './TutorialNavbar.module.scss';
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
-
+import { useTranslations } from "next-intl";
 const TutorialNavbar = () => {
     const pathname = usePathname();
-
+  const t = useTranslations("Tutorials");
   return (
     <div className={styles.navbar}>
      <Link
@@ -13,14 +13,14 @@ const TutorialNavbar = () => {
             className={`${styles.navListItem} ${pathname.includes('tutorial') ? styles.active : ''}`}
         
           >
-            Video Tutorials
+            {t('video_tutorials')}
           </Link>
 
       <Link
         href="/article"
         className={`${styles.navListItem} ${pathname.includes('article') ? styles.active : ''}`}
       >
-        Articles
+        {t('articles')}
       </Link>
 
      

@@ -17,7 +17,8 @@
     "needhelp":"Need Help",
     "privacypoilcy":"Privacy Poilcy",
     "terms_conditions":"Terms & Conditions",
-    "logout":"Logout"
+    "logout":"Logout",
+    "tutorials":"Tutorials"
 
   },
   "Authentication": {
@@ -441,7 +442,33 @@
     "error_trades":"There was an error loading the trades",
     "not_found":"No trades found",
     "view_trades":"View Details"
-}
- 
+},
+
+"Articles":{
+  "articles":"Articles",
+  "back":"Back",
+  "How to apply overseas":"How to apply overseas",
+  "How to apply overseas content":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  "Documents needed for gulf visa":"Documents needed for gulf visa",
+  "Documents needed for gulf visa content":"In order to apply for a Gulf visa, you will need the following documents: a valid passport, a completed visa application form, a recent passport-size photograph, proof of employment or an offer letter, and a medical certificate from an approved hospital.",
+  "Top career opportunities in Dubai":"Top career opportunities in Dubai",
+  "Top career opportunities in Dubai content":"Dubai offers a wide range of career opportunities in sectors such as construction, hospitality, finance, healthcare, and technology. Professionals in these fields can expect competitive salaries and opportunities for career growth.",
+  "How to build a career in the Middle East":"How to build a career in the Middle East",
+  "How to build a career in the Middle East content":"Building a successful career in the Middle East requires strategic networking, staying informed about local industry trends, and adapting to cultural differences. Key sectors in the region include oil and gas, construction, education, and technology."
+},
+
+"Tutorials":{
+  "watch_time":"5 mins watch time",
+  "jan":"Jan 10, 2024",
+  "watch_videos":"Watch Vidoes",
+  "first_video":"High paying jobs in Dubai for Construction workers",
+  "video_tutorials":"Video Tutorials",
+  "articles":"Articles"
 
 }
+
+}
+
+ 
+
+
