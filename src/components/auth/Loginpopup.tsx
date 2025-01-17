@@ -137,7 +137,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
           </Modal.Body>
           <Modal.Footer>
             <div className={styles.loginFooter}>
-                Copyright © 2024 Adobe. All rights reserved.
+                Copyright © {new Date().getFullYear()} Boon.ai. All rights reserved.
                
             </div>
           </Modal.Footer>
