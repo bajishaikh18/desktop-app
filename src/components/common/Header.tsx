@@ -16,7 +16,7 @@ import { HiMenuAlt1 } from "react-icons/hi";
 import { BiSolidUserCircle } from "react-icons/bi";
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
-import { BASE_URL ,IMAGE_BASE_URL } from "@/helpers/constants";
+import {EMPLOYER_URL, IMAGE_BASE_URL } from "@/helpers/constants";
 import { Notifications } from "../notification/Notifications";
 import { getUserNotifications } from "@/apis/notification";
 import { Notification } from "@/stores/useNotificationStore";
@@ -154,7 +154,8 @@ const Header: React.FC = () => {
       setNotifCount(notifications.length);
     }
   },[notifCount, notifications])
-  const employerUrl = BASE_URL;
+  
+  const employerUrl = EMPLOYER_URL;
 
 
   return (
@@ -430,12 +431,14 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <Nav.Link
-                  className={`${styles.navListItem} ${styles.navListItemBlue}`}
-                  href={employerUrl || "javascript:;"}
-                >
-                  {t("employer")}
-                </Nav.Link>
+              <Nav.Link
+  className={`${styles.navListItem} ${styles.navListItemBlue}`}
+  href={employerUrl || "javascript:;"}
+>
+  {t("employer")}
+</Nav.Link>
+
+
                 <div className={styles.divider}> |</div>
                 {isDesktop && (
                   <Nav.Link
