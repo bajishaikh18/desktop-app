@@ -55,9 +55,9 @@ const WalkinsSlider: React.FC = () => {
             </h2>
             </div>
             <div className={styles.buttonRightContainer}>
-              <button className={styles.viewJobsButton} onClick={() => window.location.href = '/jobs'}>
+              {/* <button className={styles.viewJobsButton} onClick={() => window.location.href = '/jobs'}>
               {t('view_Job')}
-              </button>
+              </button> */}
             </div>
           </div>
           </Container>
@@ -75,9 +75,9 @@ const WalkinsSlider: React.FC = () => {
             </h2>
             </div>
             <div className={styles.buttonRightContainer}>
-              <button className={styles.viewJobsButton} onClick={() => window.location.href = '/jobs'}>
+              {/* <button className={styles.viewJobsButton} onClick={() => window.location.href = '/jobs'}>
                 {t('view_Job')}
-              </button>
+              </button> */}
             </div>
           </div>
           </Container>
