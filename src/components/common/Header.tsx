@@ -4,7 +4,7 @@ import { Navbar, Nav, NavDropdown, Badge } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./Header.module.scss";
 import { useTranslations } from "next-intl";
-import LocaleSwitcherSelect from "./locale/LocaleSwitcherSelect";
+//import LocaleSwitcherSelect from "./locale/LocaleSwitcherSelect";
 import LoginPopup from "../auth/Loginpopup";
 import { AuthUser, useAuthUserStore } from "@/stores/useAuthUserStore";
 import { isTokenValid } from "@/helpers/jwt";
@@ -16,7 +16,7 @@ import { HiMenuAlt1 } from "react-icons/hi";
 import { BiSolidUserCircle } from "react-icons/bi";
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
-import { IMAGE_BASE_URL } from "@/helpers/constants";
+import { BASE_URL ,IMAGE_BASE_URL } from "@/helpers/constants";
 import { Notifications } from "../notification/Notifications";
 import { getUserNotifications } from "@/apis/notification";
 import { Notification } from "@/stores/useNotificationStore";
@@ -154,6 +154,7 @@ const Header: React.FC = () => {
       setNotifCount(notifications.length);
     }
   },[notifCount, notifications])
+  const employerUrl = `${BASE_URL}/employer`;
 
   return (
     <>
@@ -161,7 +162,7 @@ const Header: React.FC = () => {
         <Image src="/logo.svg" alt="Logo" width={136} height={28} />
         <div className={styles.mobileMenu}>
         {
-            !isDesktop && <LocaleSwitcherSelect />
+           // !isDesktop && <LocaleSwitcherSelect />
           }
         {
             !isDesktop && 
@@ -304,7 +305,7 @@ const Header: React.FC = () => {
             >
              {t("tradeTestCenter")}
             </Link>
-
+      {/* 
             <Link className={styles.navListItem} href="javascript:;">
               {t("travel")}
             </Link>
@@ -326,7 +327,9 @@ const Header: React.FC = () => {
                 {t("medicalTests")}
               </NavDropdown.Item>
             </NavDropdown>
+            */}
           </Nav>
+          
           <Nav className={styles.rightNavItems}>
             {authUser ? (
               <>
@@ -383,13 +386,15 @@ const Header: React.FC = () => {
                    
 
                     </NavDropdown.Item>
+                    {/*
                     <NavDropdown.Item
                     href="javascript:;"
                     className={styles.navListItem}
                      
                     >
-                    {t('needhelp')}
+                 {t('needhelp')}
                     </NavDropdown.Item>
+                    */}
                     <NavDropdown.Item
                     href="javascript:;"
                     className={styles.navListItem}
@@ -397,6 +402,7 @@ const Header: React.FC = () => {
                     >
                     {t('privacypoilcy')}
                     </NavDropdown.Item>
+                     {/*
                     <NavDropdown.Item
                     href="javascript:;"
                     className={styles.navListItem}
@@ -404,6 +410,7 @@ const Header: React.FC = () => {
                     >
                     {t('terms_conditions')}
                     </NavDropdown.Item>
+                     */}
                     <NavDropdown.Item
                       href="javascript:;"
                       className={styles.navListItem}
@@ -424,7 +431,7 @@ const Header: React.FC = () => {
               <>
                 <Nav.Link
                   className={`${styles.navListItem} ${styles.navListItemBlue}`}
-                  href="javascript:;"
+                  href={employerUrl || "javascript:;"}
                 >
                   {t("employer")}
                 </Nav.Link>
@@ -441,7 +448,7 @@ const Header: React.FC = () => {
                 )}
               </>
             )}
-            {isDesktop && <LocaleSwitcherSelect />}
+          {/* {isDesktop && <LocaleSwitcherSelect />} */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
