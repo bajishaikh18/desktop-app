@@ -154,7 +154,8 @@ const Header: React.FC = () => {
       setNotifCount(notifications.length);
     }
   },[notifCount, notifications])
-  const employerUrl = `${BASE_URL}/employer`;
+  const employerUrl = BASE_URL;
+
 
   return (
     <>
