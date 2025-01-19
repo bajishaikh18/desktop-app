@@ -48,7 +48,7 @@ const Features: React.FC = () => {
       <Container>
         <Row>
           {features.map((feature, index) => (
-            <Col md={6} lg={4} className="d-flex mb-4" key={index}>
+            <Col xs={12} sm={6} lg={4} className="d-flex mb-4" key={index}>
               <Card
                 style={{
                   background: "#ffffff",
@@ -61,8 +61,6 @@ const Features: React.FC = () => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  //height: "100%",
-                 // maxWidth: "100%", 
                 }}
                 className="d-flex flex-column"
               >
@@ -71,7 +69,7 @@ const Features: React.FC = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      marginBottom: "12px", 
+                      marginBottom: "12px",
                     }}
                   >
                     <div
@@ -79,19 +77,19 @@ const Features: React.FC = () => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        width: "36px", 
+                        width: "36px",
                         height: "43px",
                         backgroundColor: "#f1f5eb",
                         borderRadius: "50%",
-                        marginRight: "12px", 
+                        marginRight: "12px",
                         flexShrink: 0,
                       }}
                     >
                       <Image
                         src={feature.image}
                         alt={`Feature ${index + 1}`}
-                        width={21} 
-                        height={40} 
+                        width={21}
+                        height={40}
                       />
                     </div>
                     <Card.Title
@@ -104,15 +102,12 @@ const Features: React.FC = () => {
                     >
                       {feature.title}
                     </Card.Title>
-
-
-
                   </div>
                   <Card.Text
                     style={{
-                      fontSize: "14px", 
+                      fontSize: "14px",
                       color: "#727272",
-                      lineHeight: "24px", 
+                      lineHeight: "24px",
                     }}
                   >
                     {feature.description}
