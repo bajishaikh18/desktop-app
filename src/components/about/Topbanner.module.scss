@@ -1,0 +1,73 @@
+@import "../../app/variables";
+
+.sliderContainer {
+  width: 100%;
+  height: auto;
+  position: relative;
+  padding-top: 86px;
+}
+
+.slide {
+  width: 100%;
+  display: flex !important;
+  height: 170px;
+  padding-top: 38px;
+  background-position: center;
+  background-size: cover;
+  background-image: url('/slider.png');
+}
+
+.textCommon {
+  color: #fff;
+  font-weight: 300;
+  font-size: 24px;
+  text-align: left;
+  line-height: 24px;
+  margin-bottom: 0px;
+
+}
+.textCommon1{
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+
+&.subtitle2{
+  margin-top: -2px;
+}
+ }
+
+
+/* Content Section */
+.contentRow {
+  margin-top: 50px;
+}
+
+.textContainer {
+  padding-right: 20px;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.placeholderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.placeholder {
+    width: 688px;
+    height: 260px; 
+    margin-left: 30px;
+    background-image: url('/Rectangle 3268.png');
+    background-size: cover; 
+    background-position: center; 
+    border-radius: 8px; 
+  }
+  
+
