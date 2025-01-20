@@ -20,6 +20,7 @@ import {EMPLOYER_URL, IMAGE_BASE_URL } from "@/helpers/constants";
 import { Notifications } from "../notification/Notifications";
 import { getUserNotifications } from "@/apis/notification";
 import { Notification } from "@/stores/useNotificationStore";
+import LocaleSwitcherSelect from "./locale/LocaleSwitcherSelect";
 
 function getWindowDimensions() {
   if (typeof window !== "undefined") {
@@ -164,7 +165,7 @@ const Header: React.FC = () => {
         <Image src="/logo.png" alt="Logo" width={136} height={38} />
         <div className={styles.mobileMenu}>
         {
-           // !isDesktop && <LocaleSwitcherSelect />
+           !isDesktop && <LocaleSwitcherSelect />
           }
         {
             !isDesktop && 
@@ -452,7 +453,7 @@ const Header: React.FC = () => {
                 )}
               </>
             )}
-          {/* {isDesktop && <LocaleSwitcherSelect />} */}
+          {isDesktop && <LocaleSwitcherSelect />}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
