@@ -1,5 +1,7 @@
 {
   "Header": {
+    "home": "Home",
+    "profile": "Profile",
     "jobs": "Jobs",
     "walkins": "Walkins",
     "tradeTestCenter":"Trade Test Centers",
@@ -40,6 +42,7 @@
     "enter_lastname": "Enter last name",
     "enter_mobileNo": "Enter mobile number",
     "enter_email": "Enter email",
+    "name": "Name",
     "lastname": "Last Name",
     "dateofbirth": "Date of Birth",
     "Phone": "Phone",
@@ -195,7 +198,10 @@
     "job_report_failed":"Failed to report job. Please try again.",
     "job_details_not_present":"Oops!, looks like job details are not present",
     "job_details_error":"Something went wrong while accessing job details. Please try again",
-    "report_posting":"reporting the job posting"
+    "report_posting":"reporting the job posting",
+    "update": "Update",
+    "valid_up_to": "Valid up to",
+    "view_details": "View Details"
   },
   "JobApply": {
     "select":"Select",
@@ -348,7 +354,8 @@
     "not_present":"Oops!, looks like agency details are not present",
     "agency_details_error":"Something went wrong while accessing agency details. Please try again",
     "report_success":"Agenct Reported Succesfully",
-    "report_error":"Something went wrong while Reporting Agencies"
+    "report_error":"Something went wrong while Reporting Agencies",
+    "view_jobs": "View Jobs"
   },
   "AgencyPostings":{
     "jobs_for":"Jobs For",
