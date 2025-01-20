@@ -44,7 +44,7 @@ const Features: React.FC = () => {
   ];
 
   return (
-    <section style={{ padding: "36px 0", backgroundColor: "#f9f9fc" }}>
+    <section style={{ padding: "50px 0", backgroundColor: "#f9f9fc" }}>
       <Container>
         <Row>
           {features.map((feature, index) => (

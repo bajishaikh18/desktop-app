@@ -6,8 +6,8 @@ import VisionSection from "./Vision";
 
 const OverseasJobSeekers: React.FC = () => {
   return (
-    <div className="py-5">
-      <Card className="p-4 bg-white shadow-md rounded-lg w-100" style={{ width: "100%" }}>
+    <div>
+      <Card className="bg-white shadow-md rounded-lg w-100" style={{ width: "100%", padding: "50px 0" }}>
         <Container>
           <h1 className="display-4 text-primary mb-3" style={{ fontSize: "30px" }}>
             Ideal Solution for Overseas Job Seekers
