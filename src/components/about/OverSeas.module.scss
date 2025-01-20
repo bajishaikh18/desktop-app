@@ -105,13 +105,25 @@
         display: flex;
         align-items: flex-start;
         flex: 1;
-        border-left: 1px solid #e0e0e0;
         padding-left: 16px;
         margin-left: -46px;
-
-        &:first-child {
-          border-left: none;
+        position: relative; 
+    
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -30px; 
+            bottom: 0;
+            width: 1px;
+            background-color: #e0e0e0;
         }
+    
+        &:first-child:before {
+            display: none; 
+        }
+    
+    
 
         .phone-icon,
         .email-icon,
@@ -157,7 +169,7 @@
   .footer {
     font-size: 16px;
     color: #6c757d;
-    margin-top: 16px;
+    margin-top: 36px;
     border-top: 1px solid #e0e0e0;
     padding-top: 26px;
     margin-bottom: 20px;
