@@ -6,37 +6,37 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 const Features: React.FC = () => {
   const features = [
     {
-      image: "/1.png",
+      image: "/1.svg",
       title: "Specialized Platform for Gulf Jobs",
       description:
         "Boon.ai focuses exclusively on Gulf job opportunities for Indian workers, providing a centralized platform that consolidates job postings from registered agencies and employers in the Gulf. This tailored approach ensures better job matching and a more streamlined recruitment process.",
     },
     {
-      image: "/2.png",
+      image: "/2.svg",
       title: "AI–Powered Job Ad Conversion",
       description:
         "Boon.ai uses AI and ML to extract job titles and details from JPEG and PDF job ads. This allows job seekers to easily select relevant job titles and apply directly through the platform, eliminating the need to manually note down email IDs and draft emails with attachments for every job.",
     },
     {
-      image: "/3.png",
+      image: "/3.svg",
       title: "Direct Job Applications",
       description:
         "Job seekers can apply directly for jobs through the Boon.ai platform without the need to manually email documents or draft emails. This simplifies the application process and reduces the likelihood of errors such as missing attachments or incorrect email addresses.",
     },
     {
-      image: "/4.png",
+      image: "/4.svg",
       title: "Work Video Upload for Skilled Workers",
       description:
         "Skilled workers can upload work videos showcasing their skills, which will help licensed recruitment agencies and employers better assess their qualifications. This feature provides a powerful way for skilled workers to showcase their abilities beyond a traditional resume, increasing their chances of being shortlisted for roles.",
     },
     {
-      image: "/5.png",
+      image: "/5.svg",
       title: "Currency Calculator for Salary Transparency",
       description:
         "Boon.ai is the first job portal in the industry to provide a currency calculator for each job posting. This feature helps job seekers convert salary figures from foreign currencies to Indian Rupees (INR), offering greater transparency and clarity about the compensation they will receive in the Gulf region.",
     },
     {
-      image: "/6.png",
+      image: "/6.svg",
       title: "Complete Directory of Licensed Agencies & Trade Centers",
       description:
         "Boon.ai offers a comprehensive directory of licensed overseas recruitment agencies and technical trade centers across India. Each listing includes contact numbers, email IDs, and addresses, all linked to Google Maps for easy navigation, ensuring job seekers can confidently connect with legitimate agencies and avoid exploitation by unlicensed agents.",

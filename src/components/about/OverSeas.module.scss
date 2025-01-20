@@ -1,31 +1,34 @@
 .vision-section {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   background-color: #336b5a;
   color: #ffffff;
   padding: 32px;
   border-radius: 8px;
-
+  height: 100%; 
+  
   .vision-content {
     flex: 1;
-    margin-right: 32px;
-
+    max-width: 600px; 
+    margin-right: 50px;
+    text-align: center; 
+    
     h2 {
       font-size: 30px;
       font-weight: 900;
       margin-bottom: 36px;
-
+      margin-left: -400px;
       @media (max-width: 768px) {
         font-size: 24px;
         margin-bottom: 24px;
       }
     }
-
+    
     p {
       font-size: 16px;
       line-height: 24px;
-
+      
       @media (max-width: 768px) {
         font-size: 14px;
         line-height: 20px;
@@ -35,9 +38,9 @@
 
   .vision-placeholder {
     flex: 1;
-    width: 688px;
+    max-width: 688px;
     height: 260px;
-    background-image: url('/Rectangle 3268.png');
+    background-image: url('/vission2.png');
     background-size: cover;
     background-position: center;
     border-radius: 8px;
@@ -55,13 +58,14 @@
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 16px;
-
+    
     .vision-content {
       margin-right: 0;
       margin-bottom: 16px;
     }
   }
 }
+
 
 
 
@@ -172,12 +176,16 @@
     margin-top: 36px;
     border-top: 1px solid #e0e0e0;
     padding-top: 26px;
-    margin-bottom: 20px;
-
+   margin-bottom: -30px;
+    
+   
+    padding-left: 250px;
+  
     @media (max-width: 768px) {
       font-size: 14px;
       margin-top: 12px;
       padding-top: 20px;
+      padding-left: 10px; 
     }
   }
 }
