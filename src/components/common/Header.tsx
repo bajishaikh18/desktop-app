@@ -161,7 +161,7 @@ const Header: React.FC = () => {
   return (
     <>
       <Navbar className={styles.header} expand="lg" fixed="top">
-        <Image src="/logo.svg" alt="Logo" width={136} height={28} />
+        <Image src="/logo.png" alt="Logo" width={136} height={38} />
         <div className={styles.mobileMenu}>
         {
            // !isDesktop && <LocaleSwitcherSelect />

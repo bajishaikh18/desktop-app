@@ -11,8 +11,8 @@ import NextTopLoader from 'nextjs-toploader';
 
 
 export const metadata: Metadata = {
-  title: "Wonderly Desktop App",
-  description: "Your next job destination",
+  title: "Boon.ai - Job search",
+  description: "Your next job destination"
 };
 
 export default async function RootLayout({

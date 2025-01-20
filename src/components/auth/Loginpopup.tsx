@@ -6,6 +6,7 @@ import RegistrationPopup from "./Registration";
 import { useTranslations } from "next-intl";
 import toast  from "react-hot-toast";
 import { VerifyOtp } from "./VerifyOtp";
+import Image from "next/image";
 
 interface LoginPopupProps {
   show: boolean;
@@ -70,9 +71,11 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
           <Modal.Body className={`${otpVisible ? styles.visibleClass : ''} ${styles.modalContainer}`}>
 
             <div className={styles.logoContainer}>
-              <img
-                src="/logo-popup.png"
-                alt="Wonderly Logo"
+              <Image
+                src="/logo.png"
+                alt="boon Logo"
+                width={180}
+                height={100}
                 className={styles.logoImage}
               />
             </div>
@@ -134,7 +137,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
           </Modal.Body>
           <Modal.Footer>
             <div className={styles.loginFooter}>
-                Copyright © 2024 Adobe. All rights reserved.
+                Copyright © {new Date().getFullYear()} Boon.ai. All rights reserved.
                
             </div>
           </Modal.Footer>
