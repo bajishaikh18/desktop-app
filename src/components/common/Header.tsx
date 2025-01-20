@@ -161,7 +161,7 @@ const Header: React.FC = () => {
   return (
     <>
       <Navbar className={styles.header} expand="lg" fixed="top">
-        <Image src="/logo.png" alt="Logo" width={136} height={38} />
+        <Link href="/"><Image src="/logo.png" alt="Logo" width={136} height={38} /></Link> 
         <div className={styles.mobileMenu}>
         {
            // !isDesktop && <LocaleSwitcherSelect />
@@ -306,6 +306,15 @@ const Header: React.FC = () => {
               }`}
             >
              {t("tradeTestCenter")}
+            </Link>
+
+            <Link
+              href="/about"
+              className={`${styles.navListItem} ${
+                pathname.includes("about") ? styles.active : ""
+              }`}
+            >
+           About
             </Link>
       {/* 
             <Link className={styles.navListItem} href="javascript:;">
