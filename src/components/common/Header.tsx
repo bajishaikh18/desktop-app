@@ -315,7 +315,7 @@ const Header: React.FC = () => {
                 pathname.includes("about") ? styles.active : ""
               }`}
             >
-           About
+           {t("about")}
             </Link>
       {/* 
             <Link className={styles.navListItem} href="javascript:;">
