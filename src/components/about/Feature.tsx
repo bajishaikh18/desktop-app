@@ -44,7 +44,7 @@ const Features: React.FC = () => {
   ];
 
   return (
-    <section style={{ padding: "50px 0", backgroundColor: "#f9f9fc" }}>
+  <section style={{ padding: "50px 0", backgroundColor: "#f9f9fc" }}>
       <Container>
         <Row>
           {features.map((feature, index) => (
@@ -118,7 +118,6 @@ const Features: React.FC = () => {
           ))}
         </Row>
       </Container>
-      <OverseasJobSeekers />
     </section>
   );
 };

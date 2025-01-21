@@ -2,7 +2,6 @@ import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import Image from "next/image";
 
-import VisionSection from "./Vision";
 
 const OverseasJobSeekers: React.FC = () => {
   return (
@@ -91,7 +90,6 @@ const OverseasJobSeekers: React.FC = () => {
           </Row>
         </Container>
       </Card>
-      <VisionSection />
     </div>
    
   );

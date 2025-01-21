@@ -14,12 +14,12 @@
 .slide {
   width: 100%;
   display: flex !important;
-  height: 270px;
+  height: 400px;
   display: flex;
   align-items: center;
   background-position: center;
   background-size: cover;
-  background-image: url('/slider.png');
+  background-image: url('/about-banner.png');
 
   @media (max-width: 768px) {
     height: 120px;
@@ -28,12 +28,12 @@
 }
 
 .textCommon {
-  color: #fff;
-  font-weight: 300;
-  font-size: 24px;
+  color: #555;
+  font-weight: 600;
+  font-size: 40px;
   text-align: left;
   line-height: 24px;
-  margin-bottom: 0;
+  margin-bottom: 80px;
 
   @media (max-width: 768px) {
     font-size: 18px;
@@ -45,7 +45,7 @@
   margin-top: 15px;
   font-weight: 600;
   font-size: 16px;
-  color: #fff;
+  color: #000;
 
   &.subtitle2 {
     margin-top: -2px;
@@ -97,7 +97,7 @@
   width: 688px;
   height: 260px;
   margin-left: 30px;
-  background-image: url('/jobs.png');
+  background-image: url('/about.png');
   background-size: cover;
   background-position: center;
   border-radius: 8px;

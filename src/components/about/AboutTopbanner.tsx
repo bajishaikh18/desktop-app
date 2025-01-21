@@ -33,18 +33,11 @@ const settings = {
             <h1 className={`${styles.textCommon} ${styles.title}`}>
               About Boon.ai
             </h1>
-            <h2 className={`${styles.textCommon1} ${styles.subtitle}`}>
-              The Next generation Job Board for opportunities in
-            </h2>
-            <h3 className={`${styles.textCommon1} ${styles.subtitle2}`}>
-              gulf countries
-            </h3>
+            
           </Container>
         </div>
         
       </Slider>
-
-     
       <Container>
         <Row className={styles.contentRow}>
         
@@ -60,7 +53,6 @@ const settings = {
           </Col>
         </Row>
       </Container>
-      <Features/>
     </div>
   );
 };
