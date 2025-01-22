@@ -1,5 +1,18 @@
 {
+    "WalkinsSlider": {
+        "walkin_dubai": "Walkins in Dubai",
+        "walkin_bahrain": "Walkins in Bahrain",
+        "walkin_saudi": "Walkins in Saudi Arabia",
+        "walkin_qatar": "Walkins in Qatar",
+        "walkin_kuwait": "Walkins in Kuwait",
+        "walkin_oman": "Walkins in Oman",
+        "latest_walkins": "Latest Walkins",
+        "view_Job": "View Job",
+        "dubai,_Qatar,_Oman,_Bahrain_&_Saudi_Arabia": "Dubai, Qatar, Oman, Bahrain & Saudi Arabia",
+        "apply_International_Job_Openings_across": "Apply International Job Openings across"
+    },
     "Header": {
+        "walkins": "Walkins",
         "travel": "Travel",
         "tuition": "Tuition",
         "forex": "Forex",
@@ -23,7 +36,6 @@
         "documentAttestation": "Document Attestation",
         "services": "Services",
         "agenices": "Registered Agencies",
-        "walkins": "Walkins",
         "jobs": "Jobs"
     },
     "TradePostings": {
@@ -396,18 +408,6 @@
         "stay": "Stay",
         "transportation": "Transportation",
         "food": "Food"
-    },
-    "WalkinsSlider": {
-        "walkin_dubai": "Walkins in Dubai",
-        "walkin_bahrain": "Walkins in Bahrain",
-        "walkin_saudi": "Walkins in Saudi Arabia",
-        "walkin_qatar": "Walkins in Qatar",
-        "walkin_kuwait": "Walkins in Kuwait",
-        "walkin_oman": "Walkins in Oman",
-        "latest_walkins": "Latest Walkins",
-        "view_Job": "View Job",
-        "dubai,_Qatar,_Oman,_Bahrain_&_Saudi_Arabia": "Dubai, Qatar, Oman, Bahrain & Saudi Arabia",
-        "apply_International_Job_Openings_across": "Apply International Job Openings across"
     },
     "Currency": {
         "enter_amount": "Enter Amount",
