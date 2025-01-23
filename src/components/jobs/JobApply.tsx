@@ -68,7 +68,7 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
         "jobId": id as string,
         "resume": authUser?.resume.keyName!,
         "userId": authUser?._id!,
-        "workVideo":  attachWorkVideo ? authUser?.resume.keyName : undefined,
+        "workVideo":  attachWorkVideo ? authUser?.workVideo.keyName : undefined,
         "positions": compact([...appliedPositions,...selectedPosition!]),
       }
       if(applicationId){
