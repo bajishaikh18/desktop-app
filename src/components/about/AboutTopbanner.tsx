@@ -30,11 +30,7 @@ const settings = {
      <Slider {...settings}>
         <div className={styles.slide}>
           <Container>
-            <h1 className={`${styles.textCommon} ${styles.title}`}>
-              About Boon.ai
-            </h1>
-            
-          </Container>
+             </Container>
         </div>
         
       </Slider>
