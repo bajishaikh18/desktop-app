@@ -318,8 +318,8 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
   const validateForm = () => {
     const errors = {
       
-        firstName: /^[A-Za-z]+$/.test(profile.firstName) ? "" : "Enter valid First Name",
-        lastName: /^[A-Za-z]+$/.test(profile.lastName) ? "" : "Enter valid Last Name",
+        firstName: /^[A-Za-z\s]+$/.test(profile.firstName) ? "" : "Enter valid First Name",
+        lastName: /^[A-Za-z\s]+$/.test(profile.lastName) ? "" : "Enter valid Last Name",
       email:
         profile.email && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(profile.email)
           ? ""
