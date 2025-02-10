@@ -199,8 +199,9 @@ const JobApply: React.FC<EasyApplyModalProps> = ({
               {t("cancel")}
             </button>
             <button
-              className={`${styles.easyApplyButton} ${styles.smallButton}`}
+              className={`${styles.easyApplyButton} ${styles.smallButton} ${!authUser?.resume?.keyName ? styles.disabled : ''}`}
               onClick={handleApply}
+              disabled={!authUser?.resume?.keyName}
             >
               
               {loading ? (

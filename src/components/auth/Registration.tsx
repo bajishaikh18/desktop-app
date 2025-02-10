@@ -310,7 +310,7 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
               onSubmit={(screen) => handleScreenChange(screen)}
             />
           ),
-          3: <UploadResumeModal handleClose={handleClose} />,
+          3: <UploadResumeModal handleClose={()=>{location.reload();handleClose();}} />,
         }[currentScreen]
       }
     </>
