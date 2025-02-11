@@ -19,8 +19,8 @@ const ContactUs: React.FC = () => {
                     className={styles["phone-icon"]}
                   />
                   <div>
-                    <h4>Requesting A Call:</h4>
-                    <p>0091-9160163028</p>
+                    <h4>Call</h4>
+                    <p>+914035031461</p>
                   </div>
                 </div>
               </Col>
