@@ -75,7 +75,7 @@ const WalkinsPortal: React.FC<{
   }, [selectedCountry, refetch]);
 
   const t = useTranslations("WalkinPortal");
-
+  const td = useTranslations("Details");
   if (isLoading || (isFetching && !isFetchingNextPage)) {
     return <Loader text={t("fetching_walkin_details")} />;
   }
@@ -140,7 +140,7 @@ const WalkinsPortal: React.FC<{
                             width={16}
                             height={16}
                           />
-                          <span>{t(amenity.toLowerCase())}</span>
+                          <span>{td("free")} {t(amenity.toLowerCase())}</span>
                         </div>
                       ))}
                     </div>

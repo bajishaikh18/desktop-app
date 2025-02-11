@@ -12,6 +12,9 @@
       .cardBody{
         padding: 0px !important;
         padding-top: 16px !important;
+        display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         .cardTitle{
           font-size: 16px;
           font-weight: 700;
@@ -26,15 +29,13 @@
           margin-bottom: 5px;
           flex-wrap: wrap;
           align-items: flex-start;
-          .contentRight{
-            padding-left: 20px;
-          }
+          
           img{
             margin-right: 4px;
             vertical-align: middle;
           }
           span{
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 400;
             vertical-align: middle;
             color: rgba(117, 117, 117, 1);

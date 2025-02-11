@@ -1,6 +1,6 @@
 {
     "Register": {
-        "i_agree": "நான் BoonAI உடன் ஒப்புக்கொள்கிறேன்",
+        "i_agree": "நான் Boonai உடன் ஒப்புக்கொள்கிறேன்",
         "otp_resent": "OTP வெற்றிகரமாக மீண்டும் அனுப்பப்பட்டது",
         "firstname": "முதல் பெயர்",
         "enter_firstname": "முதல் பெயரை உள்ளிடவும்",
@@ -375,7 +375,7 @@
         "upload": "பதிவேற்றவும்",
         "files_uploaded_securly": "கோப்புகள் பாதுகாப்பாக பதிவேற்றப்பட்டன",
         "failed_to_upload": "கோப்புகளைப் பதிவேற்றுவதில் தோல்வி. மீண்டும் முயற்சிக்கவும்.",
-        "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "BoonAI இலிருந்து தொடர்புடைய வேலைகள் மற்றும் பரிந்துரைக்கப்பட்ட வேலைகளைக் கண்டறிய உங்கள் cv ஐப் பதிவேற்றலாம்"
+        "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "Boonai இலிருந்து தொடர்புடைய வேலைகள் மற்றும் பரிந்துரைக்கப்பட்ட வேலைகளைக் கண்டறிய உங்கள் cv ஐப் பதிவேற்றலாம்"
     },
     "Professional": {
         "exp_error": "அனுபவ ஆண்டுகள் தேவை",

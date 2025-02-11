@@ -73,6 +73,7 @@ const JobPortal: React.FC<{
   }, [selectedCountry, refetch]);
 
   const t = useTranslations("Portal");
+  const td = useTranslations("Details");
 
   const total = data?.pages[0].totalJobCount || 0;
 
@@ -138,7 +139,7 @@ const JobPortal: React.FC<{
                             width={16}
                             height={16}
                           />
-                          <span>{t(amenity.toLowerCase())}</span>
+                          <span>{td("free")} {t(amenity.toLowerCase())}</span>
                         </div>
                       ))}
                     </div>

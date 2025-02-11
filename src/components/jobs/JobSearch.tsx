@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { FormEvent, useMemo, useState } from "react";
 import Image from "next/image";
 import Select from "react-select";
 import styles from "./Slider.module.scss";
@@ -35,7 +35,8 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch, onCountryChange }) => {
     label:isDesktop ? country === "ae" ? "UAE" : data.label : data.iso3Code ,
   }))],[isDesktop]);
 
-  const handleFindJobs = async () => {
+  const handleFindJobs = async (e:FormEvent) => {
+    e.preventDefault();
     onSearch(searchTerm);
     onCountryChange(selectedLocation);
   };
@@ -75,7 +76,7 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch, onCountryChange }) => {
     return null;
   }
   return (
-    <div className={styles.searchImageContainer}>
+    <form onSubmit={handleFindJobs} className={styles.searchImageContainer}>
       <div className={styles.searchBox}>
         <Image
           src="/icons/search.svg"
@@ -118,10 +119,10 @@ const JobSearch: React.FC<JobSearchProps> = ({ onSearch, onCountryChange }) => {
         />
       </div>
 
-      <button className={styles.findJobsButton} onClick={handleFindJobs}>
+      <button type="submit" className={styles.findJobsButton} >
         {isDesktop ? t("find_Jobs") : <BsSearch />}
       </button>
-    </div>
+    </form>
   );
 };
 
