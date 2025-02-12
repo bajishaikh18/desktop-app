@@ -115,7 +115,9 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
         currentJobTitle: { label: jobTitle.title, value: jobTitle._id },
       };
       setProfile(prof);
-      setImagePreview(`${IMAGE_BASE_URL}/${profile.profilePic}?t=${new Date().getTime()}`)
+      if(profile.profilePic){
+        setImagePreview(`${IMAGE_BASE_URL}/${profile.profilePic}?t=${new Date().getTime()}`)
+      }
     },
     [profile]
   );
