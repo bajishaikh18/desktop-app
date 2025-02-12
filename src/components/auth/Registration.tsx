@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { FormEvent, useState} from "react";
 import {
   Form,
   Button,
@@ -104,7 +104,8 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
     setDatePickerVisible(false);
   };
 
-  const handleRegisterClick = async () => {
+  const handleRegisterClick = async (e:FormEvent) => {
+    e.preventDefault();
     const { firstName, lastName, dob, phone, email } = formData;
     const errors = {
       firstName: firstName ? "" : t('firstname_error'),
@@ -156,7 +157,7 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
         {
           0: (
             <>
-              <Form className="register-form">
+              <Form className="register-form" onSubmit={handleRegisterClick}>
                 <Form.Group className="form-group" controlId="formFirstName">
                   <Form.Label>{t("firstname")}</Form.Label>
                   <Form.Control
@@ -266,10 +267,9 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
                     {formErrors.email}
                   </Form.Control.Feedback>
                 </Form.Group>
-              </Form>
               <Button
                 variant="primary"
-                onClick={handleRegisterClick}
+                type="submit"
                 style={{
                   margin:"10px 0px"
                 }}
@@ -289,6 +289,7 @@ const RegistrationPopup = ({ handleClose, backToSignIn }: { handleClose: () => v
                   <> {t("register")}</>
                 )}{" "}
               </Button>
+              </Form>
 
               <div className={`${styles.resendText}`}>
                 {" "}

@@ -359,7 +359,7 @@ const SettingsProfile: React.FC<SettingsProfileProps> = () => {
                 </div>
                 <div className={styles.profileImageContainer}>
                   
-                  <img
+                  <Image
                     src={`${imagePreview ? imagePreview:'/no_image.jpg'}`}
                     alt="Profile Picture"
                     width={79}

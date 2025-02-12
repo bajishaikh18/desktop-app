@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { Modal, Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import styles from "../../app/page.module.scss";
 import { loginWithPhone } from "@/apis/auth";  
@@ -22,7 +22,8 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
   const [showRegistration] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSendOtp = async () => {
+  const handleSendOtp = async (e:FormEvent) => {
+    e.preventDefault();
     setLoading(true); 
     setPhoneError(null);
   
@@ -86,7 +87,7 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
                     <Modal.Title className={styles.modalTitle1}>
                       {t('login')}
                     </Modal.Title>
-                    <Form>
+                    <Form onSubmit={handleSendOtp}>
                       <InputGroup>
                         <InputGroup.Text id="basic-addon1">+91</InputGroup.Text>
                         <Form.Control
@@ -106,8 +107,8 @@ const LoginPopup: React.FC<LoginPopupProps> = ({ show, onClose }) => {
 
                       <Button
                         variant="primary"
+                        type="submit"
                         className={`w-100 ${styles.sendOtpButton}`}
-                        onClick={handleSendOtp}
                         disabled={loading} 
                       >
                         {loading ? (

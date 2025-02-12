@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, FormEvent } from "react";
 import { Modal, Form, Button, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../../app/page.module.scss";
@@ -62,8 +62,9 @@ export const VerifyOtp = ({
   };
   
 
-  const handleVerifyOtp = async () => {
+  const handleVerifyOtp = async (e:FormEvent) => {
     try {
+      e.preventDefault();
       setOtpLoading(true);
       const response = await verifyOtp(otp.join(""), phone);
       if (response.token) {
@@ -105,7 +106,7 @@ export const VerifyOtp = ({
       <Modal.Title className={styles.modalTitle3}>
         {t("otpverification")}
       </Modal.Title>
-      <Form>
+      <Form onSubmit={handleVerifyOtp}>
         <Form.Group className="mb-3" controlId="otp">
           <Form.Label className={styles.formLabelOtp} style={{ width: "100%" }}>
             {t("please_enter_the_OTP_sent_to")}
@@ -151,7 +152,7 @@ export const VerifyOtp = ({
 
           <Button
             variant="primary"
-            onClick={handleVerifyOtp}
+            type="submit"
             disabled={otpLoading || otp.some((x) => x === "")}
           >
             {otpLoading ? (

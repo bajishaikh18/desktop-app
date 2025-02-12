@@ -186,7 +186,7 @@
         "current_job_title": "Current Job Title"
     },
     "Register": {
-        "i_agree": "I Agree to Boonai",
+        "i_agree": "I Agree to BoonAI",
         "something_wrong": "Something went wrong. Please try again later",
         "otp_invalid": "OTP entered is invalid",
         "otp_verified": "OTP verified successfully!",
@@ -451,7 +451,7 @@
         "food": "Food"
     },
     "Upload": {
-        "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "You can upload your cv to find relevant jobs and recommended jobs from Boonai",
+        "you_can_upload_your_cv_to_find_relevant_jobs_and_recommended_jobs_from": "You can upload your cv to find relevant jobs and recommended jobs from BoonAI",
         "failed_to_upload": "Failed to upload files. Please try again.",
         "files_uploaded_securly": "Files have been uploaded securly",
         "upload": "Upload",

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { FormEvent, useCallback } from "react";
 import {  Button, Form, Spinner } from "react-bootstrap";
 import styles from "../../app/page.module.scss";
 import { useTranslations } from "next-intl";
@@ -99,7 +99,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     setErrors((prevErrors) => ({ ...prevErrors, currentState: "" }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e:FormEvent) => {
+    e.preventDefault();
     const newErrors = {
       currentJobTitle: (formData.currentJobTitle as SelectOption)?.value
         ? ""
@@ -148,7 +149,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
 
   return (
     <>
-      <Form className="register-form">
+      <Form className="register-form" onSubmit={handleSubmit}>
         <Form.Group className="form-group">
           <Form.Label>{t("current_job_title")}</Form.Label>
           <div className={styles.selectContainer}>
@@ -346,10 +347,9 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
             <Form.Text className="error">{errors.currentState}</Form.Text>
           )}
         </Form.Group>
-      </Form>
       <Button
         variant="primary"
-        onClick={handleSubmit}
+        type="submit"
         disabled={loading}
         style={{
           marginTop: "10px",
@@ -370,6 +370,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
           <>{t("submit")}</>
         )}
       </Button>
+      </Form>
     </>
   );
 };
