@@ -21,7 +21,10 @@
   padding-top: 38px;
   background-position: center;
   background-size: cover;
-  background-image: url('/slider.png');
+  background-image: url('/slide-1.png');
+  &.slide2{
+    background-image: url('/slide-2.png');
+  }
 }
 
 .textCommon {

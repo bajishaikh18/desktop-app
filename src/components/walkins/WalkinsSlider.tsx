@@ -62,7 +62,7 @@ const WalkinsSlider: React.FC = () => {
           </div>
           </Container>
         </div>
-        <div className={styles.slide}>
+        <div className={`${styles.slide} ${styles.slide2}`}>
           <Container>
           <div className={styles.overlay}>
           <div>
