@@ -227,21 +227,21 @@ const Header: React.FC = () => {
                     {t('uploadWorkVideo')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
-                    href="javascript:;"
+                    href="/privacy"
                     className={styles.navListItem}
                      
                     >
                     {t('privacypoilcy')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
-                    href="/privacy"
+                    href="/terms"
                     className={styles.navListItem}
                      
                     >
                     {t('terms_conditions')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
-                    href="/terms"
+                    href="javascript:;"
                     className={styles.navListItem}
                       onClick={logout}
                     >
@@ -412,7 +412,7 @@ const Header: React.FC = () => {
                     <NavDropdown.Item
                     href="/terms"
                     className={styles.navListItem}
-                     
+          
                     >
                     {t('terms_conditions')}
                     </NavDropdown.Item>
