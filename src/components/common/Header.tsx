@@ -162,7 +162,7 @@ const Header: React.FC = () => {
   return (
     <>
       <Navbar className={styles.header} expand="lg" fixed="top">
-        <Link href="/"><Image src="/logo.png" alt="Logo" width={170} height={48} /></Link> 
+        <Link href="/"><Image src="/logo.png" alt="Logo" width={isDesktop ? 170 : 130} height={isDesktop ? 48 : 38} /></Link> 
         <div className={styles.mobileMenu}>
         {
            !isDesktop && <LocaleSwitcherSelect />
@@ -201,14 +201,15 @@ const Header: React.FC = () => {
           className={styles.navListItem}
         >
                     
-                    Settings
+                    {t('settings')}
+
                     </NavDropdown.Item>
 
                     <NavDropdown.Item
                     href="/userjobs"
                     className={styles.navListItem}
                      
-                    > Jobs
+                    > {t('user_jobs')}
                     
                     </NavDropdown.Item>
                     <NavDropdown.Item
@@ -216,43 +217,36 @@ const Header: React.FC = () => {
                     className={styles.navListItem}
                      
                     >
-                    Upload CV
+                    {t('uploadCV')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
                     href="/uploadWorkVideo"
                     className={styles.navListItem}
                      
                     >
-                    Upload Work Video
+                    {t('uploadWorkVideo')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
                     href="javascript:;"
                     className={styles.navListItem}
                      
                     >
-                    Need Help
+                    {t('privacypoilcy')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
-                    href="javascript:;"
+                    href="/privacy"
                     className={styles.navListItem}
                      
                     >
-                    Privacy Poilcy
+                    {t('terms_conditions')}
                     </NavDropdown.Item>
                     <NavDropdown.Item
-                    href="javascript:;"
-                    className={styles.navListItem}
-                     
-                    >
-                    Terms & Conditions
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                    href="javascript:;"
+                    href="/terms"
                     className={styles.navListItem}
                       onClick={logout}
                     >
-                      Logout
-                    </NavDropdown.Item>
+                      {t('logout')}
+                      </NavDropdown.Item>
               </NavDropdown>
              
               
@@ -408,21 +402,21 @@ const Header: React.FC = () => {
                     </NavDropdown.Item>
                     */}
                     <NavDropdown.Item
-                    href="javascript:;"
+                    href="/privacy"
                     className={styles.navListItem}
                      
                     >
                     {t('privacypoilcy')}
                     </NavDropdown.Item>
-                     {/*
+                     
                     <NavDropdown.Item
-                    href="javascript:;"
+                    href="/terms"
                     className={styles.navListItem}
                      
                     >
                     {t('terms_conditions')}
                     </NavDropdown.Item>
-                     */}
+                    
                     <NavDropdown.Item
                       href="javascript:;"
                       className={styles.navListItem}
