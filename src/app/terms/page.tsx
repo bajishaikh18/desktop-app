@@ -138,8 +138,8 @@ const TermsPage: React.FC = () => {
                     <p>
                         You may contact us by approaching us at any of the following email addresses depending on the nature of the query/ complaint that you wish to address to us:
                         <ul>
-                        <li>General queries related to the functioning of the website: support@boonindia.ai</li>
-                        <li>Fraudulent listings on the Site or complaints related to the content may be reported at: compliance@boonindia.ai</li>
+                            <li>General queries related to the functioning of the website: support@boonindia.ai</li>
+                            <li>Fraudulent listings on the Site or complaints related to the content may be reported at: compliance@boonindia.ai</li>
                         </ul>
                     </p>
                 </div>
@@ -157,6 +157,12 @@ const TermsPage: React.FC = () => {
                         <li>By using the Platform, you agree that the Company is not responsible for the content of the Recruiter/employer’s application form, messages, screener questions, testing assessments; required documents, or their format or method of delivery.</li>
                         <li>You consent to your application, documents and any responses sent to you by the Recruiter/employer or vice versa through the Platform being processed and analyzed by the Company according to these Terms of Use and the Platform’s Privacy Policy. The Platform shall store and process such information regardless of whether a job vacancy has been filled. The Platform may use your application materials (including public CVs and responses to employer’s questions) to determine whether you may be interested in a job listing, and the Platform may reach out to you about such job listing.</li>
                         <li>Information you post in public areas of the Platform or applications or make visible in the resume and profile database, may be accessed, used, and stored by others around the world, including those in countries that might not have a legislation that guarantees adequate protection of personal information as defined by your country of residence. While the Platform takes measures to safeguard your information from unauthorized access or inappropriate use, the Platform does not control these third parties and we are not responsible for their use of information you give to us. Accordingly, you should not post sensitive information or any other information you would not want made public, to any portion of the Platform or to a public website.</li>
+                        <li>The Company merely offers a platform, therefore the Company neither guarantees nor offers any warranty about the credentials, Bonafide's, status or otherwise of the prospective Recruiter/employer/organization which downloads the resume/ insertion or information/data and uses it to contact you.</li>
+                        <li>The Company will not be held liable for loss of any data technical or otherwise, or of the resume/ insertion or information/data or particulars supplied by You due to acts of god as well as reasons beyond its control like corruption of data or delay or failure to perform as a result of any cause(s) or conditions that are beyond the Company’s reasonable control including but not limited to strikes, riots, civil unrest, Govt. policies, tampering of data by unauthorized persons like hackers, distributed denial of service attacks, virus attacks, war and natural calamities.</li>
+                        <li>Users are requested to conduct independent checks before proceeding with any transaction or exploring any employment opportunity, based on the data available on the platform. The Company assumes no responsibility in respect thereof and expressly disclaims any liability for any act, deed or
+
+                            thing which you may do, pursuant to the receipt of the response, if any, to the resume/ insertion or information/ data being fed into the network system of the Platform.</li>
+                        <li>We encourage users to visit www.emigrate.gov.in, a platform maintained by Ministry of External Affairs, Government of India to streamline the legal migration of Indians for overseas employment opportunities</li>
                     </ul>
                 </div>
                 <div>
@@ -165,26 +171,29 @@ const TermsPage: React.FC = () => {
                         By creating a recruiter account on the Platform, you agree to:
                     </p>
                     <ul>
-                        <li>Use the Platform only for lawful purposes and for the purpose of seeking prospective employees.</li>
-                        <li>Not use the Platform to post any false or misleading job information or advertisements.</li>
-                        <li>Ensure that any job postings comply with all applicable laws and regulations.</li>
-                        <li>Not use the Platform to engage in any discriminatory practices or to post any job advertisements that violate any anti-discrimination laws.</li>
-                        <li>Not use the Platform to post any job advertisements that require the payment of fees or other compensation from job seekers.</li>
-                        <li>Not use the Platform to post any job advertisements that involve pyramid schemes, multi-level marketing, or other similar practices.</li>
-                        <li>Not use the Platform to post any job advertisements that involve illegal activities or that promote illegal products or services.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any offensive, obscene, or defamatory content.</li>
-                        <li>Not use the Platform to post any job advertisements that infringe on the intellectual property rights of others.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any false or misleading information about the employer or the job.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any information that is not relevant to the job being advertised.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any information that is not relevant to the job being advertised.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any information that is not relevant to the job being advertised.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any information that is not relevant to the job being advertised.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any information that is not relevant to the job being advertised.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any information that is not relevant to the job being advertised.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any information that is not relevant to the job being advertised.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any information that is not relevant to the job being advertised.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any information that is not relevant to the job being advertised.</li>
-                        <li>Not use the Platform to post any job advertisements that contain any information that is not relevant to the job being advertised.</li>
+                        <li>The services provided to You are aimed at providing recruitment solutions and should be restricted to contacting suitable candidates for genuine jobs in existence.</li>
+                        <li>Posting jobs without authorization from E-Migrate (Ministry of External Affairs, Government of India) and from the end employer is an incorrect practice and is prohibited. We reserve the right to terminate services, without prior notice, to the originator of spam. No refund shall be admissible under such circumstances.</li>
+                        <li>You undertake that the jobs sought to be advertised on any section of the Platform or job opportunities with regard to which candidates are contacted through the BoonBio database are in existence, genuine and You have the authority to advertise or act as a recruiter to ensure that the job vacancies are closed.</li>
+                        <li>A User shall be subject to Quotas as applicable and as advised. The number of transactions i.e. CV access/views/downloads/job postings per day shall also be restricted as per the current prevalent limit per log in, each log in is required to be specific to identifiable one individual user alone.</li>
+                        <li>You shall ensure compliance with all applicable laws for the protection of the personal details of the users whose profiles are accessed by You through the Platform, including but not limited to compliance with any laws/regulations relating to unsolicited communications etc, the Telecom Commercial Communications Customer Preference Regulations.</li>
+                        <li>You will comply with all applicable data protection laws and not process personal data in an unlawful manner and excessive with regard to agreed purposes as defined in the privacy policy and these terms and conditions</li>
+                        <li>You agree to provide reasonable assistance as is necessary to facilitate the handling of any Data Security Breach (as applicable under GDPR or any other applicable Data Security law) in an expeditious and compliant manner</li>
+                        <li>The onus of any misuse of personal details accessed through your account lies on You. Access to services subscribed by You may be availed of and extended to authorized personnel only i.e. persons who are bound by employment agreements and confidentiality agreements.</li>
+                        <li>You shall retain or process shared personal data for no longer than is necessary to carry out the agreed purposes which in any case shall not exceed 90 day (in the case of response to a listing 180
+
+                            days) and thereafter destroy these. The Company reserves it right to seek a certificate to this effect from You.</li>
+                        <li>Any piece of personal data that is downloaded by You from the Platform, shall be used only for fulfilling hiring requirements, any usage for any other purposes is strictly prohibited. The Platform and the Recruiters etc. (as applicable) would act as independent controllers in their respective capacity.</li>
+                        <li>You agree that you are responsible for the documents, screening questions, comment threads, and additional information asked from the job seekers when they apply to a job posted by you through the Platform. You shall ensure that any additional information collected from the job seekers during their interaction with you in any form through the interface provided by the Platform shall not include special categories of information (such as racial or ethnic origin, political opinions, religious or philosophical beliefs, trade union membership, genetic data, biometric data, sexual orientation, passwords, financial information and health information) until explicit consent is taken from the job seekers (data subjects). In such cases where the Platform is processing information exclusively on your behalf, it acts in the capacity of a data processor with you acting as the data controller.</li>
+                        <li>The information related to job vacancies displayed on the Platform shall be for a fixed period (currently 45 days), which period is subject to change.</li>
+                        <li>By posting/uploading a job posting/listing on the Platform, You confirm that You have obtained all licenses/permits including RA ID from Ministry of External Affairs, Government of India as are necessary for the said activity and to indemnify the Company against all claims, damages arising out of actions/claims that may be made by third parties in relation to the same.</li>
+                        <li>The Company has the right to make all such modifications/editing of the vacancy details in order to fit its data structure and abide the laws stipulated by Ministry of External Affairs, Government of India.</li>
+                        <li>The Company will commence providing the services only upon receipt of amount/charges upfront either from You or from a third party on Your behalf</li>
+                        <li>The Company offers no guarantee nor warranties that there would be a satisfactory response or any response at all once the job vacancy is put on display or for any responses received/contacts made through the BoonBio database</li>
+                        <li>The Company shall in no way be held liable for any information obtained/received by You and it shall be Your sole responsibility to check, authenticate and verify the information/response received at Your own cost and expense.</li>
+                        <li>Any actions taken by an employer/recruiter on the basis of the background check report or otherwise, are the employer’s/recruiter's responsibility alone and the Company will not be liable in any manner for the consequences of such action taken by the user.</li>
+                        <li>No fee shall be charged by the Recruiter from any person who responds to jobs advertised on the Platform. You further undertake to use the database to contact candidates for jobs only.</li>
+                        <li>The Company reserves its right to change the look, feel, design, prominence, depiction, classification of the Platform or any portion thereof at any time without providing any prior intimation to you.</li>
+                        <li>The Company will not be responsible for restoring data against services that have expired or for job vacancies that have been removed.</li>
                     </ul>
                 </div>
             </div>
