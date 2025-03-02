@@ -200,3 +200,58 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
+.optionBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.optionHeader h5 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 19px;
+  text-align: left;
+}
+
+.optionDate,
+.optionClick {
+  font-size: 14px;
+  color: #000;
+  font-weight: 300;
+}
+.optionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+}
+.option {
+  border: 1px solid rgba(190, 190, 190, 1);
+  padding: 12px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s;
+  margin-bottom: 20px;
+
+
+  &:hover {
+    border-color: $color-brand-1;
+  }
+
+  &.selected {
+    border-color: $color-brand-1;
+    background-color: transparent;
+
+    .checkIcon {
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+    }
+
+  }
+}
