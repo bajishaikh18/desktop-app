@@ -57,7 +57,7 @@ const ContactUs: React.FC = () => {
           </div>
         </div>
         <div className={styles["footer"]}>
-          © BoonIndia.ai 2024 | All Rights Reserved
+          ©  {new Date().getFullYear()}  BoonInfomate Private Limited | All Rights Reserved
         </div>
       </Container>
     </section>
