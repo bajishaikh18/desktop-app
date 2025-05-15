@@ -36,7 +36,8 @@
         "documentAttestation": "Document Attestation",
         "services": "Services",
         "agenices": "Registered Agencies",
-        "jobs": "Jobs"
+        "jobs": "Jobs",
+        "gamca" : "GAMCA Medical"
     },
     "TradePostings": {
         "created_on": "Created On",

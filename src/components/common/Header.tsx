@@ -14,9 +14,9 @@ import { getUserDetails } from "@/apis/auth";
 import { useQuery } from "@tanstack/react-query";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { BiSolidUserCircle } from "react-icons/bi";
-import Link from 'next/link';
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {EMPLOYER_URL, IMAGE_BASE_URL } from "@/helpers/constants";
+import { EMPLOYER_URL, IMAGE_BASE_URL } from "@/helpers/constants";
 import { Notifications } from "../notification/Notifications";
 import { getUserNotifications } from "@/apis/notification";
 import { Notification } from "@/stores/useNotificationStore";
@@ -31,7 +31,7 @@ function getWindowDimensions() {
     };
   }
   return {
-    width:0,
+    width: 0,
     height: 0,
   };
 }
@@ -42,13 +42,14 @@ const Header: React.FC = () => {
     getWindowDimensions()
   );
   const ref = useRef<any>(null);
-  const [getDetails,setGetDetails]= useState(false);
-  const { authUser, setAuthUser,setAuthUserLoading,openLogin,setOpenLogin } = useAuthUserStore();
-  const {setIsDesktop} = useReponsiveStore();
+  const [getDetails, setGetDetails] = useState(false);
+  const { authUser, setAuthUser, setAuthUserLoading, openLogin, setOpenLogin } =
+    useAuthUserStore();
+  const { setIsDesktop } = useReponsiveStore();
   const pathname = usePathname();
 
-  const { data,isLoading } = useQuery({
-    queryKey: ["userDetail",getDetails],
+  const { data, isLoading } = useQuery({
+    queryKey: ["userDetail", getDetails],
     queryFn: () => {
       if (getDetails) {
         return getUserDetails();
@@ -61,7 +62,7 @@ const Header: React.FC = () => {
   function handleResize() {
     setWindowDimensions(getWindowDimensions());
   }
-  
+
   const isDesktop = windowDimensions.width > 1024;
   const isTab = windowDimensions.width >= 768 && windowDimensions.width < 1024;
   const isMobile = windowDimensions.width < 768;
@@ -73,7 +74,7 @@ const Header: React.FC = () => {
       !filterDiv?.contains(e.target) &&
       ref?.current !== undefined
     ) {
-      setShowNotification(false)
+      setShowNotification(false);
     }
   };
 
@@ -89,9 +90,9 @@ const Header: React.FC = () => {
     }
   }, [data]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setAuthUserLoading(isLoading);
-  },[isLoading])
+  }, [isLoading]);
 
   useEffect(() => {
     if (isTokenValid() && !authUser) {
@@ -100,11 +101,9 @@ const Header: React.FC = () => {
     window.addEventListener("resize", handleResize);
     document.addEventListener("mousedown", (e: any) => outsideClose(e));
     return () => {
-       window.removeEventListener("resize", handleResize)
-       document.removeEventListener("mousedown", (e: any) =>
-        outsideClose(e)
-       );
-     };
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("mousedown", (e: any) => outsideClose(e));
+    };
   }, []);
 
   const openPopup = () => {
@@ -123,11 +122,11 @@ const Header: React.FC = () => {
 
   const [showNotification, setShowNotification] = useState(false);
   const [unReadCount, setUnReadCount] = useState(0);
-  const [notifCount,setNotifCount] = useState(0);
+  const [notifCount, setNotifCount] = useState(0);
   const isLoggedIn = isTokenValid();
   const {
     data: notifications,
-    isLoading:isNotifLoading,
+    isLoading: isNotifLoading,
     error,
   } = useQuery<Notification[]>({
     queryKey: ["user-notifications", isLoggedIn],
@@ -135,10 +134,9 @@ const Header: React.FC = () => {
       if (isLoggedIn) {
         try {
           const data = await getUserNotifications();
-          
+
           return data;
         } catch (err) {
-         
           throw err;
         }
       }
@@ -147,37 +145,41 @@ const Header: React.FC = () => {
     refetchInterval: 50000,
     retry: 1,
   });
- 
-    useEffect(()=>{
-    if(notifications){
-      const unread =notifications.filter(x=>!x.dismissed).length;
-      setUnReadCount(unread)
+
+  useEffect(() => {
+    if (notifications) {
+      const unread = notifications.filter((x) => !x.dismissed).length;
+      setUnReadCount(unread);
       setNotifCount(notifications.length);
     }
-  },[notifCount, notifications])
-  
-  const employerUrl = EMPLOYER_URL;
+  }, [notifCount, notifications]);
 
+  const employerUrl = EMPLOYER_URL;
 
   return (
     <>
       <Navbar className={styles.header} expand="lg" fixed="top">
-        <Link href="/"><Image src="/logo.png" alt="Logo" width={isDesktop ? 170 : 130} height={isDesktop ? 48 : 38} /></Link> 
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={isDesktop ? 170 : 130}
+            height={isDesktop ? 48 : 38}
+          />
+        </Link>
         <div className={styles.mobileMenu}>
-        {
-           !isDesktop && <LocaleSwitcherSelect />
-          }
-        {
-            !isDesktop && 
-            
-              authUser ?  <div className={styles.authNav}>
+          {!isDesktop && <LocaleSwitcherSelect />}
+          {!isDesktop && authUser ? (
+            <div className={styles.authNav}>
               <div className={styles.divider}> |</div>
               <NavDropdown
                 title={
                   <>
                     {authUser.profilePic ? (
                       <Image
-                        src={`${IMAGE_BASE_URL}/${authUser.profilePic}?ts=${new Date().getTime()}`}
+                        src={`${IMAGE_BASE_URL}/${
+                          authUser.profilePic
+                        }?ts=${new Date().getTime()}`}
                         className={styles.profilePic}
                         width={32}
                         height={32}
@@ -197,72 +199,66 @@ const Header: React.FC = () => {
                   {authUser.firstName || ""} {authUser.lastName || ""}
                 </NavDropdown.ItemText>
                 <NavDropdown.Item
-            href="/settings"
-          className={styles.navListItem}
-        >
-                    
-                    {t('settings')}
+                  href="/settings"
+                  className={styles.navListItem}
+                >
+                  {t("settings")}
+                </NavDropdown.Item>
 
-                    </NavDropdown.Item>
-
-                    <NavDropdown.Item
-                    href="/userjobs"
-                    className={styles.navListItem}
-                     
-                    > {t('user_jobs')}
-                    
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                    href="/uploadCV"
-                    className={styles.navListItem}
-                     
-                    >
-                    {t('uploadCV')}
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                    href="/uploadWorkVideo"
-                    className={styles.navListItem}
-                     
-                    >
-                    {t('uploadWorkVideo')}
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                    href="/privacy"
-                    className={styles.navListItem}
-                     
-                    >
-                    {t('privacypoilcy')}
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                    href="/terms"
-                    className={styles.navListItem}
-                     
-                    >
-                    {t('terms_conditions')}
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                    href="javascript:;"
-                    className={styles.navListItem}
-                      onClick={logout}
-                    >
-                      {t('logout')}
-                      </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="/userjobs"
+                  className={styles.navListItem}
+                >
+                  {" "}
+                  {t("user_jobs")}
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="/uploadCV"
+                  className={styles.navListItem}
+                >
+                  {t("uploadCV")}
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="/uploadWorkVideo"
+                  className={styles.navListItem}
+                >
+                  {t("uploadWorkVideo")}
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="/privacy"
+                  className={styles.navListItem}
+                >
+                  {t("privacypoilcy")}
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/terms" className={styles.navListItem}>
+                  {t("terms_conditions")}
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="javascript:;"
+                  className={styles.navListItem}
+                  onClick={logout}
+                >
+                  {t("logout")}
+                </NavDropdown.Item>
               </NavDropdown>
-             
-              
-            </div>:<Nav.Link
-            className={`${styles.navListItem} ${styles.navListItemBlue}`}
-            onClick={openPopup}
-          >{t("signIn")}</Nav.Link>
+            </div>
+          ) : (
+            <Nav.Link
+              className={`${styles.navListItem} ${styles.navListItemBlue}`}
+              onClick={openPopup}
+            >
+              {t("signIn")}
+            </Nav.Link>
+          )}
 
-            
-          }
-        
-           <Navbar.Toggle aria-controls="basic-navbar-nav" children={
-            <><HiMenuAlt1 fontSize={25}/> </>
-          }/>
-         
-               
+          <Navbar.Toggle
+            aria-controls="basic-navbar-nav"
+            children={
+              <>
+                <HiMenuAlt1 fontSize={25} />{" "}
+              </>
+            }
+          />
         </div>
 
         <Navbar.Collapse id="basic-navbar-nav">
@@ -293,14 +289,40 @@ const Header: React.FC = () => {
             >
               {t("agenices")}
             </Link>
-         
+
             <Link
               href="/trade"
               className={`${styles.navListItem} ${
                 pathname.includes("trade") ? styles.active : ""
               }`}
             >
-             {t("tradeTestCenter")}
+              {t("tradeTestCenter")}
+            </Link>
+
+            <Link
+              href="/medical" // Update the href to point to the medical route
+              className={`${styles.navListItem} ${
+                pathname.includes("medical") ? styles.active : ""
+              }`}
+            >
+              <div style={{ position: "relative", display: "inline-block" }}>
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "-12px",
+                    right: "-8px",
+                    backgroundColor: "purple",
+                    color: "white",
+                    fontSize: "8px", // Smaller font size
+                    fontWeight: "bold",
+                    padding: "1px 3px", // Smaller padding
+                    borderRadius: "3px", // Smaller border radius
+                  }}
+                >
+                  New
+                </span>
+                {t("gamca")}
+              </div>
             </Link>
 
             <Link
@@ -309,9 +331,10 @@ const Header: React.FC = () => {
                 pathname.includes("about") ? styles.active : ""
               }`}
             >
-           {t("about")}
+              {t("about")}
             </Link>
-      {/* 
+
+            {/* 
             <Link className={styles.navListItem} href="javascript:;">
               {t("travel")}
             </Link>
@@ -335,62 +358,71 @@ const Header: React.FC = () => {
             </NavDropdown>
             */}
           </Nav>
-          
+
           <Nav className={styles.rightNavItems}>
             {authUser ? (
               <>
-              
                 <div className="d-none d-md-flex align-items-center">
-                     
-               <Nav.Link href="javascript:;" id='notification-menu' ref={ref} onClick={() => {setShowNotification(true)}} className={styles.notificationTrigger}>
-              <Image src="/bell.png" alt="bell" width={16} height={19} />
-              {!!unReadCount && <Badge className={styles.notificationBadge}>{unReadCount}</Badge>}
-              {showNotification && <Notifications notifications={notifications} handleClose={() => {setShowNotification(false)}}  isLoading={isNotifLoading} error={error}/>}
-            </Nav.Link>
-                  <div className={styles.divider}> |</div>
-               
-                  <NavDropdown
-                    title={`${authUser.firstName || ""} ${authUser.lastName || ""}`}
-                    className={styles.navListItem}
-                    style={{paddingRight:"20px"}}
+                  <Nav.Link
+                    href="javascript:;"
+                    id="notification-menu"
+                    ref={ref}
+                    onClick={() => {
+                      setShowNotification(true);
+                    }}
+                    className={styles.notificationTrigger}
                   >
-                    
-                    <NavDropdown.Item
-            href="/settings"
-          className={styles.navListItem}
-        >
-                    
-                    {t('settings')}
-                    </NavDropdown.Item>
+                    <Image src="/bell.png" alt="bell" width={16} height={19} />
+                    {!!unReadCount && (
+                      <Badge className={styles.notificationBadge}>
+                        {unReadCount}
+                      </Badge>
+                    )}
+                    {showNotification && (
+                      <Notifications
+                        notifications={notifications}
+                        handleClose={() => {
+                          setShowNotification(false);
+                        }}
+                        isLoading={isNotifLoading}
+                        error={error}
+                      />
+                    )}
+                  </Nav.Link>
+                  <div className={styles.divider}> |</div>
 
-                    <NavDropdown.Item
-                    href="/userjobs"
+                  <NavDropdown
+                    title={`${authUser.firstName || ""} ${
+                      authUser.lastName || ""
+                    }`}
                     className={styles.navListItem}
-                     
-                    > {t('user_jobs')}
-                    
-                    </NavDropdown.Item>
+                    style={{ paddingRight: "20px" }}
+                  >
                     <NavDropdown.Item
-                    href="/uploadCV"
-                    className={styles.navListItem}
-                     
+                      href="/settings"
+                      className={styles.navListItem}
                     >
+                      {t("settings")}
+                    </NavDropdown.Item>
 
-                    {t('uploadCV')}
-
-                    
-
+                    <NavDropdown.Item
+                      href="/userjobs"
+                      className={styles.navListItem}
+                    >
+                      {" "}
+                      {t("user_jobs")}
                     </NavDropdown.Item>
                     <NavDropdown.Item
-                    href="/uploadWorkVideo"
-                    className={styles.navListItem}
-                     
+                      href="/uploadCV"
+                      className={styles.navListItem}
                     >
-
-                    {t('uploadWorkVideo')}
-
-                   
-
+                      {t("uploadCV")}
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      href="/uploadWorkVideo"
+                      className={styles.navListItem}
+                    >
+                      {t("uploadWorkVideo")}
                     </NavDropdown.Item>
                     {/*
                     <NavDropdown.Item
@@ -402,46 +434,50 @@ const Header: React.FC = () => {
                     </NavDropdown.Item>
                     */}
                     <NavDropdown.Item
-                    href="/privacy"
-                    className={styles.navListItem}
-                     
+                      href="/privacy"
+                      className={styles.navListItem}
                     >
-                    {t('privacypoilcy')}
+                      {t("privacypoilcy")}
                     </NavDropdown.Item>
-                     
+
                     <NavDropdown.Item
-                    href="/terms"
-                    className={styles.navListItem}
-          
+                      href="/terms"
+                      className={styles.navListItem}
                     >
-                    {t('terms_conditions')}
+                      {t("terms_conditions")}
                     </NavDropdown.Item>
-                    
+
                     <NavDropdown.Item
                       href="javascript:;"
                       className={styles.navListItem}
                       onClick={logout}
                     >
-                      {t('logout')}
+                      {t("logout")}
                     </NavDropdown.Item>
                   </NavDropdown>
-                  {
-                    authUser.profilePic ? <Image src={`${IMAGE_BASE_URL}/${authUser.profilePic}?ts=${new Date().getTime()}`} className={styles.profilePic} width={32} height={32} alt=""/> : <BiSolidUserCircle fontSize={32} color="#0045E6" />
-                  }
-                  
+                  {authUser.profilePic ? (
+                    <Image
+                      src={`${IMAGE_BASE_URL}/${
+                        authUser.profilePic
+                      }?ts=${new Date().getTime()}`}
+                      className={styles.profilePic}
+                      width={32}
+                      height={32}
+                      alt=""
+                    />
+                  ) : (
+                    <BiSolidUserCircle fontSize={32} color="#0045E6" />
+                  )}
                 </div>
-
-               
               </>
             ) : (
               <>
-              <Nav.Link
-  className={`${styles.navListItem} ${styles.navListItemBlue}`}
-  href={employerUrl || "javascript:;"}
->
-  {t("employer")}
-</Nav.Link>
-
+                <Nav.Link
+                  className={`${styles.navListItem} ${styles.navListItemBlue}`}
+                  href={employerUrl || "javascript:;"}
+                >
+                  {t("employer")}
+                </Nav.Link>
 
                 <div className={styles.divider}> |</div>
                 {isDesktop && (
@@ -456,7 +492,7 @@ const Header: React.FC = () => {
                 )}
               </>
             )}
-          {isDesktop && <LocaleSwitcherSelect />}
+            {isDesktop && <LocaleSwitcherSelect />}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
