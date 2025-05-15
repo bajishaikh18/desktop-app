@@ -563,7 +563,6 @@ const MedicalPage = () => {
                 width: "200px",
                 height: "40px",
               }}
-              onClick={() => router.push("/medical/order")} // Navigate to order.tsx
             >
               Next
             </button>
