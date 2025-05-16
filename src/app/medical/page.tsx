@@ -700,6 +700,7 @@ const MedicalPage = () => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              onClick={() => router.push("/medical/order-summary")}
             >
               Next
             </button>
