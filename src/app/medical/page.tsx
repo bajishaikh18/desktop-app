@@ -19,6 +19,12 @@ const MedicalPage = () => {
   const [isChecked, setIsChecked] = useState(false); // State for checkbox
   const [otherPosition, setOtherPosition] = useState(""); // State for text field
   const [position, setPosition] = useState(""); // For dropdown
+  const [dob, setDob] = useState("");
+  const [dobError, setDobError] = useState("");
+  const [passportIssueDate, setPassportIssueDate] = useState("");
+  const [passportIssueDateError, setPassportIssueDateError] = useState("");
+  const [passportExpiryDate, setPassportExpiryDate] = useState("");
+  const [passportExpiryDateError, setPassportExpiryDateError] = useState("");
 
   const handleBackClick = () => {
     window.history.back(); // Navigates to the previous page in the browser history
@@ -158,7 +164,26 @@ const MedicalPage = () => {
                 className="form-control mt-1"
                 placeholder="Select date"
                 style={formControlStyle}
+                value={dob}
+                onChange={(e) => {
+                  setDob(e.target.value);
+                  setDobError("");
+                }}
+                onBlur={(e) => {
+                  const selectedDate = new Date(e.target.value);
+                  const today = new Date();
+                  if (selectedDate > today) {
+                    setDobError("Date of Birth cannot be in the future.");
+                  }
+                }}
               />
+              {dobError && (
+                <div
+                  style={{ color: "red", fontSize: "13px", marginTop: "2px" }}
+                >
+                  {dobError}
+                </div>
+              )}
             </div>
             <div className="col-md-6 mb-3">
               <label
@@ -397,7 +422,28 @@ const MedicalPage = () => {
                 className="form-control mt-1"
                 placeholder="Select date"
                 style={formControlStyle}
+                value={passportIssueDate}
+                onChange={(e) => {
+                  setPassportIssueDate(e.target.value);
+                  setPassportIssueDateError("");
+                }}
+                onBlur={(e) => {
+                  const selectedDate = new Date(e.target.value);
+                  const today = new Date();
+                  if (selectedDate > today) {
+                    setPassportIssueDateError(
+                      "Passport Issue Date cannot be in the future."
+                    );
+                  }
+                }}
               />
+              {passportIssueDateError && (
+                <div
+                  style={{ color: "red", fontSize: "13px", marginTop: "2px" }}
+                >
+                  {passportIssueDateError}
+                </div>
+              )}
             </div>
             <div className="col-md-6 mb-3">
               <label
@@ -411,7 +457,31 @@ const MedicalPage = () => {
                 className="form-control mt-1"
                 placeholder="Select date"
                 style={formControlStyle}
+                value={passportExpiryDate}
+                onChange={(e) => {
+                  setPassportExpiryDate(e.target.value);
+                  setPassportExpiryDateError("");
+                }}
+                onBlur={(e) => {
+                  const selectedDate = new Date(e.target.value);
+                  const today = new Date();
+                  // Remove time part for accurate comparison
+                  selectedDate.setHours(0, 0, 0, 0);
+                  today.setHours(0, 0, 0, 0);
+                  if (selectedDate < today) {
+                    setPassportExpiryDateError(
+                      "Passport Expiry Date cannot be in the past."
+                    );
+                  }
+                }}
               />
+              {passportExpiryDateError && (
+                <div
+                  style={{ color: "red", fontSize: "13px", marginTop: "2px" }}
+                >
+                  {passportExpiryDateError}
+                </div>
+              )}
             </div>
           </div>
 
