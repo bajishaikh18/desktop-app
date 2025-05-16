@@ -16,6 +16,9 @@ const MedicalPage = () => {
   const [confirmPassportNumber, setConfirmPassportNumber] = useState("");
   const [confirmPassportNumberError, setConfirmPassportNumberError] =
     useState("");
+  const [isChecked, setIsChecked] = useState(false); // State for checkbox
+  const [otherPosition, setOtherPosition] = useState(""); // State for text field
+  const [position, setPosition] = useState(""); // For dropdown
 
   const handleBackClick = () => {
     window.history.back(); // Navigates to the previous page in the browser history
@@ -33,7 +36,7 @@ const MedicalPage = () => {
       style={{
         maxWidth:
           "calc(100% - 520px)" /* 100% width minus left and right margins */,
-        margin: "5rem 260px 2rem 260px",
+        margin: "6rem 260px 1rem 260px",
         padding: "2rem",
       }}
     >
@@ -101,6 +104,8 @@ const MedicalPage = () => {
                 <option value="" disabled selected>
                   Select your city
                 </option>
+                <option value="mumbai">Mumbai</option>
+                <option value="delhi">Delhi</option>
               </select>
             </div>
           </div>
@@ -220,12 +225,65 @@ const MedicalPage = () => {
               >
                 Position Applied For <span className="text-danger">*</span>
               </label>
-              <input
-                type="text"
-                className="form-control mt-1"
-                placeholder="Enter position"
-                style={formControlStyle}
-              />
+              <select
+                className="form-select mt-1"
+                style={{ ...formControlStyle, height: "42px", width: "100%" }}
+                value={position}
+                onChange={(e) => {
+                  setPosition(e.target.value);
+                  setOtherPosition(""); // Clear other field if dropdown is used
+                  setIsChecked(false); // Uncheck "Other"
+                }}
+              >
+                <option value="" disabled>
+                  ------------
+                </option>
+                <option value="doctor">Doctor</option>
+                <option value="nurse">Nurse</option>
+                <option value="engineer">Engineer</option>
+                <option value="driver">Driver</option>
+                <option value="technician">Technician</option>
+                <option value="labour">Labour</option>
+                {/* Add more options as needed */}
+              </select>
+            </div>
+
+            {/* Merge: Other option with checkbox and text field */}
+            <div className="col-md-6 mb-3">
+              <label
+                className="form-label mb-1 fw-bold"
+                style={{ fontSize: "14px" }}
+              >
+                Other
+              </label>
+              <div className="d-flex align-items-center">
+                <input
+                  className="form-check-input me-2 mt-0"
+                  type="checkbox"
+                  id="otherOption"
+                  checked={isChecked}
+                  onChange={() => {
+                    setIsChecked((prev) => {
+                      if (!prev) {
+                        setPosition(""); // Clear dropdown if "Other" is checked
+                      } else {
+                        setOtherPosition(""); // Clear text if "Other" is unchecked
+                      }
+                      return !prev;
+                    });
+                  }}
+                  style={{ width: "16px", height: "16px" }}
+                />
+                <input
+                  type="text"
+                  className="form-control"
+                  style={{ ...formControlStyle, height: "42px", flex: "1" }}
+                  placeholder="Specify other position"
+                  disabled={!isChecked}
+                  value={otherPosition}
+                  onChange={(e) => setOtherPosition(e.target.value)}
+                />
+              </div>
             </div>
           </div>
 
@@ -513,7 +571,7 @@ const MedicalPage = () => {
             </div>
           </div>
 
-          <div className="mb-4">
+          <div className="mb-2">
             <div className="form-check">
               <input
                 className="form-check-input"
@@ -531,37 +589,46 @@ const MedicalPage = () => {
                   marginRight: 0,
                 }}
               >
-                I Confirm that the information given in this form is true,
-                complete and accurate. Please note that the actual charges for
-                Wafid (GAMCA Medical Slip Generation) is USD 10$ which is
-                equivalent to INR 880 apx including Foreign Currency Conversion
-                and Bank Transfer charges. Rs 120 is the Boon.ai platform
-                convenience Fee. Please proceed if you agree to pay the charges
-                as explained above.
+                I hereby confirm that the information provided in this form is
+                true, complete, and accurate to the best of my knowledge. Please
+                note that the official charge for Wafid (GAMCA Medical Slip
+                Generation) is USD 10$, approximately equivalent to INR 880,
+                which includes foreign currency conversion and bank transfer
+                fees. An additional convenience fee of INR 119 is charged by the
+                Boon.ai platform. By proceeding, you acknowledge and agree to
+                pay the total charges as detailed above.
               </label>
             </div>
           </div>
 
           <div className="d-flex justify-content-end align-items-center gap-3">
             <button
-              className="btn btn-light"
+              className="btn btn-light d-flex justify-content-center align-items-center"
               style={{
                 border: "1.5px solid #D8CEFF",
                 borderRadius: "8px",
                 width: "100px",
                 height: "40px",
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
               onClick={() => window.history.back()}
             >
               Cancel
             </button>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary d-flex justify-content-center align-items-center"
               style={{
                 border: "1.5px solid #D8CEFF",
                 borderRadius: "8px",
                 width: "200px",
                 height: "40px",
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               Next
