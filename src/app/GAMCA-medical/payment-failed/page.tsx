@@ -33,8 +33,9 @@ const STYLES = {
     opacity: 1,
   },
   paymentButton: {
-    backgroundColor: "#0045E6",
-    borderColor: "#0045E6",
+    backgroundColor: "#5986EF",
+    border: "none",
+    borderRadius: "8px",
     height: "46px",
   },
   backButton: {
