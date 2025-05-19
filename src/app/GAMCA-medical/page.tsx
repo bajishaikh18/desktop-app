@@ -1,220 +1,23 @@
 "use client";
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { CSSProperties } from "react";
-
-// Define interfaces for your data structures
-interface FormData {
-  // Location section
-  country: string;
-  city: string;
-
-  // Personal details section
-  firstName: string;
-  lastName: string;
-  dob: string;
-  gender: string;
-  nationality: string;
-  travelingToCountry: string;
-  position: string;
-  otherPosition: string;
-
-  // Passport section
-  passportNumber: string;
-  confirmPassportNumber: string;
-  passportIssuePlace: string;
-  passportIssueDate: string;
-  passportExpiryDate: string;
-
-  // Contact section
-  email: string;
-  phone: string;
-
-  // Additional info section
-  maritalStatus: string;
-  visaType: string;
-  nationalId: string;
-
-  // Confirmation
-  isTermsAccepted: boolean;
-  isOtherPositionChecked: boolean;
-}
-
-interface FormErrors {
-  email: string;
-  phone: string;
-  nationalId: string;
-  passportNumber: string;
-  confirmPassportNumber: string;
-  passportIssueDate: string;
-  passportExpiryDate: string;
-  dob: string;
-}
-
-interface SelectOption {
-  value: string;
-  label: string;
-}
-
-// Form field validation patterns
-const VALIDATION_PATTERNS = {
-  email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-  phone: /^[0-9]+$/,
-  nationalId: /^[0-9]+$/,
-  passport: /^[A-Z0-9]{6,9}$/,
-};
-
-// Common styles for form controls (with proper typing)
-const STYLES = {
-  formControl: {
-    height: "36px",
-    borderRadius: "8px",
-    fontSize: "16px",
-  } as CSSProperties,
-  formControlSelect: {
-    height: "42px",
-    borderRadius: "8px",
-    fontSize: "16px",
-  } as CSSProperties,
-  sectionHeading: {
-    fontSize: "18px",
-  } as CSSProperties,
-  mainHeading: {
-    fontSize: "28px",
-  } as CSSProperties,
-  formLabel: {
-    fontSize: "14px",
-  } as CSSProperties,
-  errorMessage: {
-    color: "red",
-    fontSize: "13px",
-    marginTop: "2px",
-  } as CSSProperties,
-  buttonPrimary: {
-    border: "1.5px solid #D8CEFF",
-    borderRadius: "8px",
-    width: "200px",
-    height: "40px",
-    textAlign: "center" as const,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  } as CSSProperties,
-  buttonSecondary: {
-    border: "1.5px solid #D8CEFF",
-    borderRadius: "8px",
-    width: "100px",
-    height: "40px",
-    textAlign: "center" as const,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  } as CSSProperties,
-};
-
-// Props interfaces for components
-interface FormFieldProps {
-  label: string;
-  required?: boolean;
-  type?: string;
-  placeholder: string;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
-  style?: CSSProperties;
-  [x: string]: any; // For additional props
-}
-
-// Reusable form field component
-const FormField: React.FC<FormFieldProps> = ({
-  label,
-  required = false,
-  type = "text",
-  placeholder,
-  value,
-  onChange,
-  onBlur,
-  error,
-  style = {},
-  ...props
-}) => (
-  <div className="col-md-6 mb-3">
-    <label className="form-label mb-1 fw-bold" style={STYLES.formLabel}>
-      {label} {required && <span className="text-danger">*</span>}
-    </label>
-    <input
-      type={type}
-      className="form-control mt-1"
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      onBlur={onBlur}
-      style={{ ...STYLES.formControl, ...style }}
-      {...props}
-    />
-    {error && <div style={STYLES.errorMessage}>{error}</div>}
-  </div>
-);
-
-interface SelectFieldProps {
-  label: string;
-  required?: boolean;
-  options: SelectOption[];
-  value: string;
-  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  placeholder?: string;
-  disabled?: boolean;
-  [x: string]: any; // For additional props
-}
-
-// Reusable select field component
-const SelectField: React.FC<SelectFieldProps> = ({
-  label,
-  required = false,
-  options = [],
-  value,
-  onChange,
-  placeholder = "Select",
-  ...props
-}) => (
-  <div className="col-md-6 mb-3">
-    <label className="form-label mb-1 fw-bold" style={STYLES.formLabel}>
-      {label} {required && <span className="text-danger">*</span>}
-    </label>
-    <select
-      className="form-select mt-1"
-      style={STYLES.formControlSelect}
-      value={value}
-      onChange={onChange}
-      {...props}
-    >
-      <option value="" disabled>
-        {placeholder}
-      </option>
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
-  </div>
-);
-
-interface SectionHeadingProps {
-  children: React.ReactNode;
-}
-
-// Section heading component
-const SectionHeading: React.FC<SectionHeadingProps> = ({ children }) => (
-  <h2
-    className="fs-6 fw-semibold mb-3 mt-4 section-heading"
-    style={STYLES.sectionHeading}
-  >
-    {children}
-  </h2>
-);
+import {
+  countryOptions,
+  cityOptions,
+  genderOptions,
+  nationalityOptions,
+  gccCountryOptions,
+  positionOptions,
+  maritalStatusOptions,
+  visaTypeOptions,
+  VALIDATION_PATTERNS,
+} from "./constants/formConstants";
+import FormField from "./components/FormField";
+import SelectField from "./components/SelectField";
+import SectionHeading from "./components/SectionHeading";
+import "./styles/formStyles.scss";
+import { FormData, FormErrors } from "./types/formTypes";
 
 const MedicalPage: React.FC = () => {
   const router = useRouter();
@@ -381,60 +184,8 @@ const MedicalPage: React.FC = () => {
   const handleNextClick = () => {
     // Implement form validation here before navigating
     // For now, just navigate as in the original code
-    router.push("/medical/order-summary");
+    router.push("/GAMCA-medical/payment-summary");
   };
-
-  // Country and city options
-  const countryOptions: SelectOption[] = [
-    { value: "india", label: "India" },
-    { value: "uae", label: "UAE" },
-    { value: "saudi", label: "Saudi Arabia" },
-  ];
-
-  const cityOptions: SelectOption[] = [
-    { value: "mumbai", label: "Mumbai" },
-    { value: "delhi", label: "Delhi" },
-  ];
-
-  const genderOptions: SelectOption[] = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-  ];
-
-  const nationalityOptions: SelectOption[] = [
-    { value: "indian", label: "Indian" },
-    { value: "american", label: "American" },
-    { value: "british", label: "British" },
-  ];
-
-  const gccCountryOptions: SelectOption[] = [
-    { value: "bahrain", label: "Bahrain" },
-    { value: "kuwait", label: "Kuwait" },
-    { value: "oman", label: "Oman" },
-    { value: "qatar", label: "Qatar" },
-    { value: "saudiarabia", label: "Saudi Arabia" },
-    { value: "uae", label: "UAE" },
-    { value: "yemen", label: "Yemen" },
-  ];
-
-  const positionOptions: SelectOption[] = [
-    { value: "doctor", label: "Doctor" },
-    { value: "nurse", label: "Nurse" },
-    { value: "engineer", label: "Engineer" },
-    { value: "driver", label: "Driver" },
-    { value: "technician", label: "Technician" },
-    { value: "labour", label: "Labour" },
-  ];
-
-  const maritalStatusOptions: SelectOption[] = [
-    { value: "married", label: "Married" },
-    { value: "single", label: "Single" },
-  ];
-
-  const visaTypeOptions: SelectOption[] = [
-    { value: "workvisa", label: "Work Visa" },
-    { value: "familyvisa", label: "Family Visa" },
-  ];
 
   // Utility to format Aadhar with spaces after every 4 digits
   const formatAadhar = (value: string) =>
@@ -467,7 +218,7 @@ const MedicalPage: React.FC = () => {
             >
               <Image src="/back.svg" alt="Back" width={26} height={26} />
             </button>
-            <h1 className="ms-3 mb-0 fw-bold" style={STYLES.mainHeading}>
+            <h1 className="ms-3 mb-0 fw-bold main-heading-custom">
               GAMCA Slot Booking
             </h1>
           </div>
@@ -592,10 +343,7 @@ const MedicalPage: React.FC = () => {
 
             {/* Other position option */}
             <div className="col-md-6 mb-3">
-              <label
-                className="form-label mb-1 fw-bold"
-                style={STYLES.formLabel}
-              >
+              <label className="form-label mb-1 fw-bold form-label-custom">
                 Other
               </label>
               <div className="d-flex align-items-center">
@@ -609,8 +357,7 @@ const MedicalPage: React.FC = () => {
                 />
                 <input
                   type="text"
-                  className="form-control"
-                  style={{ ...STYLES.formControl, height: "42px", flex: "1" }}
+                  className="form-control form-control-custom"
                   placeholder="Specify other position"
                   disabled={!formData.isOtherPositionChecked}
                   value={formData.otherPosition}
@@ -788,16 +535,14 @@ const MedicalPage: React.FC = () => {
           {/* Form Actions */}
           <div className="d-flex justify-content-end align-items-center gap-3">
             <button
-              className="btn btn-light d-flex justify-content-center align-items-center"
-              style={STYLES.buttonSecondary}
+              className="btn btn-light d-flex justify-content-center align-items-center button-secondary-custom"
               onClick={handleBackClick}
               type="button"
             >
               Cancel
             </button>
             <button
-              className="btn btn-primary d-flex justify-content-center align-items-center"
-              style={STYLES.buttonPrimary}
+              className="btn btn-primary d-flex justify-content-center align-items-center button-primary-custom"
               onClick={handleNextClick}
               type="button"
             >
@@ -811,3 +556,43 @@ const MedicalPage: React.FC = () => {
 };
 
 export default MedicalPage;
+
+// The most common reasons for "so many errors" on this page are:
+
+// 1. **Missing Imports for Types:**
+//    You use `FormData` and `FormErrors` in your state, but you did not import them from your types file.
+//    **Fix:**
+//    ```tsx
+//    import { FormData, FormErrors } from "./types/formTypes";
+//    ```
+
+// 2. **Missing or Incorrect File/Folder Structure:**
+//    If the `components`, `constants`, `types`, or `styles` folders/files do not exist or are misnamed, all related imports will fail.
+
+// 3. **Incorrect SCSS Import Path:**
+//    The import
+//    ```tsx
+//    import "./styles/formStyles.scss";
+//    ```
+//    expects a `styles` folder with `formStyles.scss` inside `GAMCA-medical`.
+
+// 4. **Leftover Inline Styles:**
+//    You still have inline styles in some places (e.g., the Terms and Conditions label). If you moved to SCSS, these should be replaced with class names.
+
+// 5. **Component/Prop Mismatches:**
+//    If you changed the props or structure of your components (e.g., removed `style`), but still pass them, you will get errors.
+
+// 6. **TypeScript Errors:**
+//    If you use types or interfaces that are not imported or defined, or if you pass props of the wrong type, TypeScript will show errors.
+
+// 7. **Case Sensitivity:**
+//    On some systems, file and folder names are case-sensitive.
+
+// **Summary:**
+// - Double-check all imports and file/folder names.
+// - Make sure all types and components are imported from the correct paths.
+// - Remove or update any leftover inline styles if you moved to SCSS.
+// - Ensure your folder structure matches your import paths.
+// - Check for any prop mismatches or missing props in your components.
+
+// Fixing these issues should resolve most errors on this page.

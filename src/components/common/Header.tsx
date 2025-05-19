@@ -300,9 +300,9 @@ const Header: React.FC = () => {
             </Link>
 
             <Link
-              href="/medical" // Update the href to point to the medical route
+              href="/GAMCA-medical" // Update the href to point to the new GAMCA-medical route
               className={`${styles.navListItem} ${
-                pathname.includes("medical") ? styles.active : ""
+                pathname.includes("GAMCA-medical") ? styles.active : ""
               }`}
             >
               <div style={{ position: "relative", display: "inline-block" }}>
