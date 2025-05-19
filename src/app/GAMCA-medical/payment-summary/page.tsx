@@ -21,12 +21,13 @@ interface OrderDetails {
 // Constants for styling to maintain consistency
 const STYLES = {
   container: {
-    minHeight: "100vh",
-    marginTop: 6,
+    minHeight: "calc(100vh - 6rem)",
+    marginTop: "6rem", // Account for the fixed navbar height
     padding: 0,
   },
   card: {
-    width: "450px",
+    maxWidth: "450px",
+    width: "100%",
   },
   dashedDivider: {
     borderTop: "2px dashed #EDEDED",
@@ -89,32 +90,38 @@ const OrderSummaryPage: React.FC = () => {
 
   return (
     <main
-      className="container d-flex justify-content-center align-items-center"
+      className="container-fluid px-3 px-sm-4 py-3 py-sm-4 d-flex flex-column justify-content-start"
       style={STYLES.container}
       aria-label="Order Summary Page"
     >
-      <div className="row justify-content-center w-100">
-        {/* Back Button */}
-        <div className="col-auto">
+      {/* Back Button - Always visible at top */}
+      <div className="row mb-3 mb-md-4">
+        <div className="col-12 px-2 px-md-4">
           <button
             onClick={handleBackClick}
             style={STYLES.backButton}
             aria-label="Go back"
             type="button"
+            className="me-auto d-block"
           >
-            <Image src="/back.svg" alt="Back" width={30} height={30} />
+            <Image src="/back.svg" alt="Back" width={30} height={30} priority />
           </button>
         </div>
+      </div>
 
+      {/* Cards Container */}
+      <div className="row justify-content-center g-4">
         {/* Summary Card */}
         <section
-          className="col-md-5"
-          style={STYLES.card}
+          className="col-12 col-md-6 col-lg-5"
           aria-label="Order Summary"
         >
-          <div className="card rounded-4 shadow-sm border">
-            <div className="card-body p-4">
-              <h5 className="fw-bold mb-4">Summary</h5>
+          <div
+            className="card rounded-4 shadow-sm border mx-auto"
+            style={STYLES.card}
+          >
+            <div className="card-body p-3 p-sm-4">
+              <h5 className="fw-bold mb-3 mb-sm-4">Summary</h5>
 
               <InfoRow label="Service" value={ORDER.service} />
               <InfoRow label="Order ID" value={ORDER.orderId} />
@@ -134,13 +141,15 @@ const OrderSummaryPage: React.FC = () => {
 
         {/* Payment Details Card */}
         <section
-          className="col-md-5"
-          style={STYLES.card}
+          className="col-12 col-md-6 col-lg-5"
           aria-label="Payment Details"
         >
-          <div className="card rounded-4 shadow-sm border">
-            <div className="card-body p-4">
-              <div className="bg-light rounded-3 p-3 mb-4">
+          <div
+            className="card rounded-4 shadow-sm border mx-auto"
+            style={STYLES.card}
+          >
+            <div className="card-body p-3 p-sm-4">
+              <div className="bg-light rounded-3 p-3 mb-3 mb-sm-4">
                 <h5 className="text-center fw-bold m-0">Payment details</h5>
               </div>
 

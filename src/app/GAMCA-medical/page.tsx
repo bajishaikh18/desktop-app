@@ -186,24 +186,10 @@ const MedicalPage: React.FC = () => {
     // For now, just navigate as in the original code
     router.push("/GAMCA-medical/payment-summary");
   };
-
-  // Utility to format Aadhar with spaces after every 4 digits
-  const formatAadhar = (value: string) =>
-    value
-      .replace(/\D/g, "")
-      .replace(/(.{4})/g, "$1 ")
-      .trim();
-
   return (
-    <div
-      style={{
-        maxWidth: "calc(100% - 520px)",
-        margin: "6rem 260px 1rem 260px",
-        padding: "2rem",
-      }}
-    >
-      <div className="row">
-        <div className="col-12">
+    <div className="container-fluid py-4 margin-top-custom">
+      <div className="row justify-content-center">
+        <div className="col-12 col-md-10 col-lg-8 col-xl-7">
           {/* Header */}
           <div className="d-flex align-items-center mb-3">
             <button
