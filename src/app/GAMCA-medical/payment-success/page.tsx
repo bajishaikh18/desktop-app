@@ -18,10 +18,11 @@ interface PaymentDetails {
 // Constants for styling to maintain consistency
 const STYLES = {
   container: {
-    width: "450px",
-    height: "auto",
-    marginTop: "5rem",
-    marginBottom: "1rem",
+    width: '90%',
+    maxWidth: '450px',
+    height: 'auto',
+    marginTop: '2rem',
+    marginBottom: '1rem',
   },
   dashedDivider: {
     borderTop: "2px dashed #EDEDED",
@@ -88,10 +89,10 @@ const PaymentSuccessPage: React.FC = () => {
   };
 
   return (
-    <main className="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-light my-4">
-      <section className="bg-white rounded-4 p-4 shadow" style={STYLES.container}>
+    <main className="min-vh-100 d-flex flex-column justify-content-center align-items-center bg-light p-3">
+      <section className="bg-white rounded-4 p-3 p-sm-4 shadow w-100" style={STYLES.container}>
         {/* Payment Success Details */}
-        <div className="mb-2 border rounded-4 p-3 shadow-sm">
+        <div className="mb-2 border rounded-4 p-2 p-sm-3 shadow-sm">
           <h2
             className="text-center fs-5 fw-bold mb-4 mt-3"
             style={STYLES.successTitle}
@@ -112,7 +113,7 @@ const PaymentSuccessPage: React.FC = () => {
         </div>
 
         {/* Payment Amount Details */}
-        <div className="mb-2 border rounded-4 p-3 shadow-sm">
+        <div className="mb-2 border rounded-4 p-2 p-sm-3 shadow-sm">
           <InfoRow 
             label="Medical Test Fee (Wafid):" 
             value={PAYMENT.testFee} 
@@ -132,9 +133,9 @@ const PaymentSuccessPage: React.FC = () => {
           </div>
           
           {/* Action Buttons */}
-          <div className="d-flex justify-content-between gap-2 mt-3">
+          <div className="d-flex flex-column flex-sm-row justify-content-between gap-2 mt-3">
             <button
-              className="btn btn-outline-secondary w-50 d-flex align-items-center justify-content-center gap-2 fw-bold text-dark rounded-5"
+              className="btn btn-outline-secondary w-100 w-sm-50 d-flex align-items-center justify-content-center gap-2 fw-bold text-dark rounded-5 py-2"
               style={STYLES.downloadButton}
               type="button"
               onClick={handleDownloadPdf}
@@ -147,10 +148,11 @@ const PaymentSuccessPage: React.FC = () => {
                 height={20}
                 aria-hidden="true"
               />
-              Get PDF Receipt
+              <span className="d-none d-sm-inline">Get PDF Receipt</span>
+              <span className="d-inline d-sm-none">Download PDF</span>
             </button>
             <button
-              className="btn btn-primary w-50 fw-bold rounded-5"
+              className="btn btn-primary w-100 w-sm-50 fw-bold rounded-5 py-2"
               style={STYLES.homeButton}
               type="button"
               onClick={handleHomeClick}
@@ -162,7 +164,7 @@ const PaymentSuccessPage: React.FC = () => {
         </div>
       </section>
       
-      <p className="text-center text-secondary small mt-2 mb-4">
+      <p className="text-center text-secondary small mt-2 mb-4 px-3">
         Note: You will receive your <b>GAMCA</b> slip within short time
       </p>
     </main>
