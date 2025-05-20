@@ -21,7 +21,7 @@ const STYLES = {
     width: '90%',
     maxWidth: '450px',
     height: 'auto',
-    marginTop: '2rem',
+    marginTop: '6rem',
     marginBottom: '1rem',
   },
   dashedDivider: {
