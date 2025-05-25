@@ -1,0 +1,68 @@
+.interestedRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.interestedContainer {
+  padding-left: 6px;
+  border-radius: 4px;
+  outline: 0.2px var(--Colors-Primary-2, #b7b6fc) solid;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  display: flex;
+  margin-left: auto;
+}
+
+.interestedCount {
+  color: var(--Colors-Dark-shade-1, #2d3a48);
+  font-size: 12px;
+  font-family: Inter;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0.4px;
+  word-wrap: break-word;
+  min-width: 24px;
+  text-align: center;
+}
+
+.interestedButton {
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: var(--Stroke, #d8ceff);
+  border-radius: 4px;
+  outline: 0.5px var(--Colors-Primary-2, #b7b6fc) solid;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  display: flex;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.interestedButton.active {
+  background: var(--Colors-Primary-2, #b7b6fc);
+}
+
+.interestedText {
+  color: var(--Colors-Dark-shade-1, #2d3a48);
+  font-size: 14px;
+  font-family: Inter;
+  font-weight: 400;
+  text-transform: capitalize;
+  word-wrap: break-word;
+}
+
+.interestedText.activeText {
+  color: #fff;
+}
+
+.activeIcon {
+  filter: brightness(0) invert(1);
+  transition: filter 0.2s;
+}
